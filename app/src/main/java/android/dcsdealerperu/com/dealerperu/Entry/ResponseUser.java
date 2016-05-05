@@ -29,6 +29,9 @@ public class ResponseUser {
     @SerializedName("id_distri")
     private String id_distri;
 
+    @SerializedName("perfil")
+    private int perfil;
+
     public static ResponseUser responseUserStatic;
 
     public int getId() {
@@ -101,5 +104,13 @@ public class ResponseUser {
 
     public static void setResponseUserStatic(ResponseUser responseUserStatic) {
         ResponseUser.responseUserStatic = responseUserStatic;
+    }
+
+    public int getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(int perfil) {
+        this.perfil = perfil;
     }
 }

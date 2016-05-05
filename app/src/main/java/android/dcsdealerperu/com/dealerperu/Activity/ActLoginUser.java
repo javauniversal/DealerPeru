@@ -59,8 +59,8 @@ public class ActLoginUser extends AppCompatActivity {
         editUsuario = (EditText) findViewById(R.id.editUsuario);
         editPassword = (EditText) findViewById(R.id.editPassword);
 
-        editUsuario.setText("123");
-        editPassword.setText("123");
+        editUsuario.setText("vcali");
+        editPassword.setText("pro_123");
 
 
         btnIngresar = (Button) findViewById(R.id.btnIngresar);
@@ -136,9 +136,13 @@ public class ActLoginUser extends AppCompatActivity {
                 ResponseUser login = gson.fromJson(response, ResponseUser.class);
                 setResponseUserStatic(login);
 
-                startActivity(new Intent(this, ActMainPeru.class));
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                finish();
+                if (login.getPerfil() == 0) {
+                    Snackbar.make(coordinatorLayout, "El usuario no tiene permisos", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                } else {
+                    startActivity(new Intent(this, ActMainPeru.class));
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                    finish();
+                }
 
             } catch (IllegalStateException ex) {
                 ex.printStackTrace();

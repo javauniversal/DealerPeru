@@ -144,6 +144,7 @@ public class FragmentHome extends BaseVolleyFragment {
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
                 params.put("iddis", getResponseUserStatic().getId_distri());
                 params.put("db", getResponseUserStatic().getBd());
+                params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
 
                 return params;
 
@@ -172,6 +173,8 @@ public class FragmentHome extends BaseVolleyFragment {
             } finally {
                 alertDialog.dismiss();
             }
+        } else {
+            alertDialog.dismiss();
         }
 
     }
