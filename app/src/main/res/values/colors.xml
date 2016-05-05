@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#10628a</color>
+    <color name="colorPrimaryDark">#1C90C0</color>
+    <color name="colorAccent">#10628a</color>
+
+    <color name="transparent_holo_light_blue">#4433b5e5</color>
+    <color name="actionBarColor">#3e699c</color>
+    <color name="actionBarColorText">#ffffff</color>
+    <color name="color_gris">#E6E6E6</color>
+    <color name="grid_item_bg_pressed">#D8D8D8</color>
+    <color name="color_negro">#000</color>
+    <color name="cyan_500">#00bcd4</color>
+    <color name="bckg">#FF5722</color>
+    <color name="filn">#607D8B</color>
+    <color name="colorSinDatos">#fbc02d</color>
+    <color name="colorErrorConexion">#42a5f5</color>
+
+
+    <color name="black_alpha_40">#66000000</color>
+
+</resources>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Inicio" />
+
+        <item
+            android:id="@+id/nav_sol_producto"
+            android:icon="@drawable/ic_add_shopping_cart_black_24dp"
+            android:title="Solicitar Producto" />
+
+        <item
+            android:id="@+id/nav_crear_punto"
+            android:icon="@drawable/ic_create_black_24dp"
+            android:title="Crear Punto" />
+
+        <item
+            android:id="@+id/nav_pdv"
+            android:icon="@drawable/ic_person_pin_black_24dp"
+            android:title="Visita PDV" />
+
+        <item android:title="Venta Directa">
+            <menu>
+                <item
+                    android:id="@+id/nav_simcard"
+                    android:icon="@drawable/ic_sim_card_black_24dp"
+                    android:title="Venta Simcard" />
+
+                <item
+                    android:id="@+id/nav_producto"
+                    android:icon="@drawable/ic_phone_iphone_black_24dp"
+                    android:title="Venta Producto" />
+            </menu>
+        </item>
+
+        <item android:title="Reportes">
+            <menu>
+                <item
+                    android:id="@+id/nav_reporte"
+                    android:icon="@drawable/ic_assignment_black_24dp"
+                    android:title="Mi inventario" />
+                <item
+                    android:id="@+id/nav_ventas"
+                    android:icon="@drawable/ic_assignment_turned_in_black_24dp"
+                    android:title="Mis ventas" />
+                <item
+                    android:id="@+id/nav_rutero"
+                    android:icon="@drawable/ic_directions_walk_black_24dp"
+                    android:title="Mi Rutero" />
+            </menu>
+        </item>
+
+
+    </group>
+
+
+</menu>
+
