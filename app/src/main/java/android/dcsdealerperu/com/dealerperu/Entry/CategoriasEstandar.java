@@ -3,7 +3,9 @@ package android.dcsdealerperu.com.dealerperu.Entry;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CategoriasEstandar {
+import java.io.Serializable;
+
+public class CategoriasEstandar implements Serializable {
 
     @SerializedName("id")
     private int id;

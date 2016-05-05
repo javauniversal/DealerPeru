@@ -24,6 +24,14 @@ public class Detalle implements Serializable {
     @SerializedName("total")
     private double total;
 
+    public Detalle(String nombre_usuario, String hora, String pn, int cantidad, double total) {
+        this.nombre_usuario = nombre_usuario;
+        this.hora = hora;
+        this.pn = pn;
+        this.cantidad = cantidad;
+        this.total = total;
+    }
+
     public String getNombre_usuario() {
         return nombre_usuario;
     }

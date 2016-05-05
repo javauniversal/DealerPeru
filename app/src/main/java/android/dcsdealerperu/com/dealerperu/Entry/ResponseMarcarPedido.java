@@ -44,6 +44,17 @@ public class ResponseMarcarPedido implements Serializable {
     @SerializedName("msg")
     private String msg;
 
+    @SerializedName("motivos")
+    private List<Motivos> motivosList;
+
+    public List<Motivos> getMotivosList() {
+        return motivosList;
+    }
+
+    public void setMotivosList(List<Motivos> motivosList) {
+        this.motivosList = motivosList;
+    }
+
     public String getMsg() {
         return msg;
     }

@@ -3,6 +3,7 @@ package android.dcsdealerperu.com.dealerperu.Activity;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseUser;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -33,6 +34,8 @@ import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
 
+import static android.dcsdealerperu.com.dealerperu.Entry.Coordenadas.setLatitud;
+import static android.dcsdealerperu.com.dealerperu.Entry.Coordenadas.setLongitud;
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.setResponseUserStatic;
 
 public class ActLoginUser extends AppCompatActivity {
@@ -44,6 +47,7 @@ public class ActLoginUser extends AppCompatActivity {
     private SpotsDialog alertDialog;
     private RequestQueue rq;
     public static final String TAG = "MyTag";
+    private GpsServices gpsServices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,8 @@ public class ActLoginUser extends AppCompatActivity {
         setContentView(R.layout.activity_login_user);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        gpsServices = new GpsServices(this);
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
 
@@ -68,17 +74,23 @@ public class ActLoginUser extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (isValidNumber(editUsuario.getText().toString().trim())) {
-                    editUsuario.setError("Campo requerido");
-                    editUsuario.requestFocus();
-                } else if (isValidNumber(editPassword.getText().toString().trim())){
-                    editPassword.setError("Campo requerido");
-                    editPassword.requestFocus();
-                }else {
-                    loginServices();
+                if (gpsServices.getLatitude() == 0.0) {
+                    gpsServices.showSettingsAlert();
+                } else {
+                    if (isValidNumber(editUsuario.getText().toString().trim())) {
+                        editUsuario.setError("Campo requerido");
+                        editUsuario.requestFocus();
+                    } else if (isValidNumber(editPassword.getText().toString().trim())){
+                        editPassword.setError("Campo requerido");
+                        editPassword.requestFocus();
+                    }else {
+                        loginServices();
+                    }
                 }
             }
         });
+
+
     }
 
     private boolean isValidNumber(String number){return number == null || number.length() == 0;}
@@ -139,6 +151,10 @@ public class ActLoginUser extends AppCompatActivity {
                 if (login.getPerfil() == 0) {
                     Snackbar.make(coordinatorLayout, "El usuario no tiene permisos", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 } else {
+
+                    setLatitud(gpsServices.getLatitude());
+                    setLongitud(gpsServices.getLongitude());
+
                     startActivity(new Intent(this, ActMainPeru.class));
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     finish();
@@ -171,6 +187,14 @@ public class ActLoginUser extends AppCompatActivity {
         if (rq != null) {
             rq.cancelAll(TAG);
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        gpsServices = new GpsServices(this);
+
     }
 
 }

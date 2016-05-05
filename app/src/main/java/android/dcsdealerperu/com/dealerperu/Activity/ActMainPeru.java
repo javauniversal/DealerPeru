@@ -182,7 +182,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
 
             implementarFragmetMarcarPunto(fManager);
 
-        } else if(id == R.id.nav_crear_punto) {
+        } else if(id == R.id.nav_gestion_pdv) {
 
             toolbar.setTitle("Crear Punto");
             if (fragmentCrearPunto == null)
@@ -342,6 +342,9 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
                     //El punto no existe
                     Snackbar.make(coordinatorLayout, responseMarcarPedido.getMsg(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 } else {
+
+
+
                     fragmenMarcarvisita = new FragmenMarcarvisita();
                     fManager.beginTransaction().replace(R.id.contentPanel, fragmenMarcarvisita.newInstance(responseMarcarPedido)).commit();
                 }
