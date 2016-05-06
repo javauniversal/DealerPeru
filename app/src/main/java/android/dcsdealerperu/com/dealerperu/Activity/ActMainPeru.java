@@ -10,25 +10,24 @@ import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHome;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentInventario;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentProducto;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentRutero;
+import android.dcsdealerperu.com.dealerperu.Fragment.FragmentRuteroVendedor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentSimcard;
-import android.dcsdealerperu.com.dealerperu.Fragment.FragmentSolPedido;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentVentas;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentVisitaPdv;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +63,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
     private FragmentInventario fragmentInventario;
     private FragmentProducto fragmentProducto;
     private FragmentRutero fragmentRutero;
+    private FragmentRuteroVendedor fragmentRuteroVendedor;
     private FragmentSimcard fragmentSimcard;
     private FragmenMarcarvisita fragmenMarcarvisita;
     private FragmentVentas fragmentVentas;
@@ -84,7 +84,8 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         alertDialog = new SpotsDialog(this, R.style.Custom);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -135,6 +136,28 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         }
 
         mBackPressed = System.currentTimeMillis();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.act_main_peru, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -215,7 +238,14 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
 
             fManager.beginTransaction().replace(R.id.contentPanel, fragmentRutero).commit();
 
-        } else if(id == R.id.nav_rutero_vendedor) { }
+        } else if(id == R.id.nav_rutero_vendedor){
+            toolbar.setTitle("Mi Rutero");
+            if (fragmentRuteroVendedor == null)
+                fragmentRuteroVendedor = new FragmentRuteroVendedor();
+
+            fManager.beginTransaction().replace(R.id.contentPanel, fragmentRuteroVendedor).commit();
+        }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

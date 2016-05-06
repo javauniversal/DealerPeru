@@ -34,11 +34,11 @@
         <activity
             android:name=".Activity.ActNoVenta"
             android:label="@string/title_activity_act_no_venta"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.ActBuscarPunto"
             android:label="@string/title_activity_act_buscar_punto"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -15,6 +15,7 @@
     <string name="detalle"><u>Detalle</u></string>
     <string name="title_activity_act_no_venta">No Venta</string>
     <string name="title_activity_act_buscar_punto">ActBuscarPunto</string>
+    <string name="title_activity_act_mi_rutero">ActMiRutero</string>
 
 
 </resources>
