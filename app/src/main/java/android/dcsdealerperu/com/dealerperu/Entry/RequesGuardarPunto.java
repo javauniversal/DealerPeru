@@ -21,13 +21,13 @@ public class RequesGuardarPunto {
     private String dir_3;
     private int otro_dir;
     private String des_otro;
-    private String venta_recarga;
+    private int venta_recarga;
 
-    public String getVenta_recarga() {
+    public int getVenta_recarga() {
         return venta_recarga;
     }
 
-    public void setVenta_recarga(String venta_recarga) {
+    public void setVenta_recarga(int venta_recarga) {
         this.venta_recarga = venta_recarga;
     }
 

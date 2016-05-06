@@ -70,8 +70,6 @@ public class FragmentCrearPunto extends BaseVolleyFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setHasOptionsMenu(true);
-
         FragmentManager fManager = getFragmentManager();
         fragmentDatosPersonales = new FragmentDatosPersonales();
         fManager.beginTransaction().replace(R.id.contentPanel, fragmentDatosPersonales).commit();

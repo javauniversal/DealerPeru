@@ -2,6 +2,9 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 
 
 import android.app.FragmentManager;
+import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.Activity.ActBuscarPunto;
+import android.dcsdealerperu.com.dealerperu.Activity.ActMainPeru;
 import android.dcsdealerperu.com.dealerperu.Entry.RequesGuardarPunto;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,7 +35,7 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
     private Button btn_siguiente_per;
     private FragmentDireccion fragmentDireccion;
     private Switch switch1;
-    private String venta_recarga;
+    private int venta_recarga = 2;
 
     public FragmentDatosPersonales() {
         // Required empty public constructor
@@ -79,14 +82,13 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
         setHasOptionsMenu(true);
 
         btn_siguiente_per.setOnClickListener(this);
-
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    venta_recarga = "Si";
+                    venta_recarga = 1;
                 }else{
-                    venta_recarga = "No";
+                    venta_recarga = 2;
                 }
             }
         });
@@ -102,11 +104,16 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
         item2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                //DialogMenu();
+                buscarPunto();
                 return true;
             }
         });
 
+    }
+
+    private void buscarPunto() {
+        startActivity(new Intent(getActivity(), ActBuscarPunto.class));
+        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     private boolean isValidNumber(String number){return number == null || number.length() == 0;}
@@ -208,7 +215,7 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
         objeto.setNombre_punto(edit_nombres.getText().toString());
         objeto.setCedula(edit_cedula.getText().toString());
         objeto.setNombre_cliente(edit_nom_cli.getText().toString());
-        objeto.setEmail(edit_correo_edit.getText().toString());
+        objeto.setEmail(edit_correo_edit.getText().toString().trim());
         objeto.setTelefono(edit_tel_edit.getText().toString());
         objeto.setCelular(edit_cel_edit.getText().toString());
         objeto.setVenta_recarga(venta_recarga);

@@ -9,7 +9,7 @@ public class GuardarEditarPunto {
     private String nombre_punto;
 
     @SerializedName("cedula")
-    public int cedula;
+    public String cedula;
 
     @SerializedName("nombre_cliente")
     public String nombre_cliente;
@@ -114,11 +114,11 @@ public class GuardarEditarPunto {
         this.nombre_punto = nombre_punto;
     }
 
-    public int getCedula() {
+    public String getCedula() {
         return cedula;
     }
 
-    public void setCedula(int cedula) {
+    public void setCedula(String cedula) {
         this.cedula = cedula;
     }
 

@@ -263,8 +263,7 @@
                             android:id="@+id/edit_codigo_cum"
                             android:hint="Código CUM"
                             android:textSize="@dimen/dimen_letra_app"
-                            android:digits="abcdefghijklmnñopqrstuvwxyz ABCDEFGHIJKLMNÑOPQRSTUVWXYZ áéíóú ÁÉÍÓÚ 0123456789"
-                            android:inputType="text"/>
+                            android:inputType="number"/>
 
                     </android.support.design.widget.TextInputLayout>
 

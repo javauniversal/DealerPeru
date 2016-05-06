@@ -86,7 +86,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
     private int estado_interior;
     private int estado_urbanizacion;
     private int estado_ciudad_poblado;
-    private int departamento, ciudad, distrito;
+    private int departamento, ciudad_pro, distrito;
     ResponseCreatePunt responseCreatePunt;
 
 
@@ -561,7 +561,8 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
         spinner_provincia.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ciudad = departamentos.getCiudadList().get(position).getId();
+                ciudad_pro = departamentos.getCiudadList().get(position).getId();
+
                 loadDistrito(departamentos.getCiudadList().get(position).getDistritoList());
             }
 
@@ -599,7 +600,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                     DataDireccionForm objet = new DataDireccionForm();
 
                     objet.setDepartamento(departamento);
-                    objet.setProvincia(ciudad);
+                    objet.setProvincia(ciudad_pro);
                     objet.setDistrito(distrito);
                     objet.setTipo_via(estado_cliente);
                     objet.setNombre_via(edit_nombre_via.getText().toString());
@@ -622,6 +623,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                     objet.setNombre_urbanizacion(edit_urbanizacion.getText().toString());
                     objet.setCiudad_prueba(estado_ciudad_poblado);
                     objet.setNombre_ciudad_prueba(edit_descripcion.getText().toString());
+                    objet.setDir_concatenada(direccionConcat.getText().toString());
 
                     DataDireccionForm.setDataDireccionFormStatic(objet);
 

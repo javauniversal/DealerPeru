@@ -1,12 +1,18 @@
 package android.dcsdealerperu.com.dealerperu.Fragment;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
+import android.dcsdealerperu.com.dealerperu.Entry.GuardarEditarPunto;
+import android.dcsdealerperu.com.dealerperu.Entry.RequesGuardarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseCreatePunt;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseInsert;
 import android.dcsdealerperu.com.dealerperu.Entry.Subcategorias;
 import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
 import android.dcsdealerperu.com.dealerperu.Entry.Zona;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +44,9 @@ import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
 
+import static android.dcsdealerperu.com.dealerperu.Entry.DataDireccionForm.getDataDireccionFormStatic;
+import static android.dcsdealerperu.com.dealerperu.Entry.RequesGuardarPunto.getRequesGuardarPuntoStatic;
+import static android.dcsdealerperu.com.dealerperu.Entry.RequesGuardarPunto.setRequesGuardarPuntoStatic;
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
 /**
@@ -56,6 +65,11 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
     private EditText edit_referencia;
     private Button btn_guardar;
     private Button btn_regresar_ref;
+    private int estado_comercial;
+    private int estado_categoria;
+    private int estado_sub_categoria;
+    private int estado_territorio;
+    private int estado_ruta;
 
     private SpotsDialog alertDialog;
 
@@ -118,17 +132,8 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
 
                 loadSubCategoria(categoriasList.get(position).getListSubCategoria());
 
-                /*estado_ciudad_poblado = tipoCiudadList.get(position).getId();
-                if (estado_ciudad_poblado == 0) {
-                    liner_ciudad_poblado.setVisibility(View.GONE);
-                    data12 = "";
-                    data13 = "";
-                    ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
-                } else {
-                    liner_ciudad_poblado.setVisibility(View.VISIBLE);
-                    data12 = tipoCiudadList.get(position).getSiglas();
-                    ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
-                }*/
+                estado_categoria = categoriasList.get(position).getId();
+
 
             }
 
@@ -138,24 +143,14 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
         });
     }
 
-    private void loadSubCategoria(List<Subcategorias> listSubCategoria) {
+    private void loadSubCategoria(final List<Subcategorias> listSubCategoria) {
         ArrayAdapter<Subcategorias> prec3 = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, listSubCategoria);
         spinner_sub_categoria.setAdapter(prec3);
         spinner_sub_categoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                /*estado_ciudad_poblado = tipoCiudadList.get(position).getId();
-                if (estado_ciudad_poblado == 0) {
-                    liner_ciudad_poblado.setVisibility(View.GONE);
-                    data12 = "";
-                    data13 = "";
-                    ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
-                } else {
-                    liner_ciudad_poblado.setVisibility(View.VISIBLE);
-                    data12 = tipoCiudadList.get(position).getSiglas();
-                    ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
-                }*/
+                estado_sub_categoria = listSubCategoria.get(position).getId();
 
             }
 
@@ -173,19 +168,9 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                loadRuta(territorioList.get(position).getZonaList());
+                estado_territorio = territorioList.get(position).getId();
 
-                /*estado_ciudad_poblado = tipoCiudadList.get(position).getId();
-                if (estado_ciudad_poblado == 0) {
-                    liner_ciudad_poblado.setVisibility(View.GONE);
-                    data12 = "";
-                    data13 = "";
-                    ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
-                } else {
-                    liner_ciudad_poblado.setVisibility(View.VISIBLE);
-                    data12 = tipoCiudadList.get(position).getSiglas();
-                    ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
-                }*/
+                loadRuta(territorioList.get(position).getZonaList());
 
             }
 
@@ -195,7 +180,7 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
         });
     }
 
-    private void loadRuta(List<Zona> zonaList) {
+    private void loadRuta(final List<Zona> zonaList) {
 
         ArrayAdapter<Zona> prec3 = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, zonaList);
         spinner_ruta.setAdapter(prec3);
@@ -203,17 +188,7 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                /*estado_ciudad_poblado = tipoCiudadList.get(position).getId();
-                if (estado_ciudad_poblado == 0) {
-                    liner_ciudad_poblado.setVisibility(View.GONE);
-                    data12 = "";
-                    data13 = "";
-                    ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
-                } else {
-                    liner_ciudad_poblado.setVisibility(View.VISIBLE);
-                    data12 = tipoCiudadList.get(position).getSiglas();
-                    ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
-                }*/
+                estado_ruta = zonaList.get(position).getId();
 
             }
 
@@ -223,7 +198,7 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
         });
     }
 
-    private void loadComercial(List<CategoriasEstandar> estadoComunList) {
+    private void loadComercial(final List<CategoriasEstandar> estadoComunList) {
 
         ArrayAdapter<CategoriasEstandar> prec3 = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, estadoComunList);
         spinner_estado_comercial.setAdapter(prec3);
@@ -231,17 +206,7 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                /*estado_ciudad_poblado = tipoCiudadList.get(position).getId();
-                if (estado_ciudad_poblado == 0) {
-                    liner_ciudad_poblado.setVisibility(View.GONE);
-                    data12 = "";
-                    data13 = "";
-                    ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
-                } else {
-                    liner_ciudad_poblado.setVisibility(View.VISIBLE);
-                    data12 = tipoCiudadList.get(position).getSiglas();
-                    ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
-                }*/
+                estado_comercial = estadoComunList.get(position).getId();
 
             }
 
@@ -257,7 +222,24 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
 
             case R.id.btn_guardar:
 
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getActivity());
+                dialogo1.setTitle("Confirmar");
+                dialogo1.setMessage("¿ Desea guardar los datos del punto ?");
+                dialogo1.setCancelable(false);
 
+                dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo1, int id) {
+                        setupGrid();
+                    }
+
+                });
+                dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo1, int id) {
+                        dialogo1.dismiss();
+                    }
+                });
+
+                dialogo1.show();
 
                 break;
 
@@ -268,11 +250,12 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
 
     private void setupGrid() {
         alertDialog.show();
-        String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_filtros_puntos");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "guardar_punto");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>(){
                     @Override
                     public void onResponse(final String response) {
+
                         parseJSON(response);
                     }
                 },
@@ -302,9 +285,59 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
             protected Map<String, String> getParams(){
                 Map<String, String> params = new HashMap<>();
 
+                GuardarEditarPunto gep = new GuardarEditarPunto();
+
+                gep.setNombre_punto(getRequesGuardarPuntoStatic().getNombre_punto());
+                gep.setCedula(getRequesGuardarPuntoStatic().getCedula());
+                gep.setNombre_cliente(getRequesGuardarPuntoStatic().getNombre_cliente());
+                gep.setEmail(getRequesGuardarPuntoStatic().getEmail().trim());
+                gep.setTelefono(Integer.parseInt(getRequesGuardarPuntoStatic().getTelefono()));
+                gep.setCelular(Integer.parseInt(getRequesGuardarPuntoStatic().getCelular()));
+                gep.setVende_recargas(getRequesGuardarPuntoStatic().getVenta_recarga());
+
+
+                gep.setDepto(getDataDireccionFormStatic().getDepartamento());
+                gep.setCiudad(getDataDireccionFormStatic().getProvincia());
+                gep.setDistrito(getDataDireccionFormStatic().getDistrito());
+                gep.setTexto_direccion(getDataDireccionFormStatic().getDir_concatenada());
+
+                int valor;
+
+                if (isValidNumber(edit_codigo_cum.getText().toString().trim()))
+                    valor = 0;
+                else
+                    valor = Integer.parseInt(edit_codigo_cum.getText().toString().trim());
+
+                gep.setCodigo_cum(valor);
+
+                gep.setTipo_via(getDataDireccionFormStatic().getTipo_via());
+                gep.setNombre_via(getDataDireccionFormStatic().getNombre_via());
+                gep.setNro_via(getDataDireccionFormStatic().getNumero_puesta());
+                gep.setNombre_mzn(getDataDireccionFormStatic().getNombre_manzana());
+                gep.setTipo_interior(getDataDireccionFormStatic().getTipo_interior());
+                gep.setNro_interior(getDataDireccionFormStatic().getNombre_interior());
+                gep.setTipo_vivienda(getDataDireccionFormStatic().getTipo_vivienda());
+                gep.setDescripcion_vivienda(getDataDireccionFormStatic().getNombre_vivienda());
+                gep.setTipo_urbanizacion(getDataDireccionFormStatic().getTipo_urbanizacion());
+                gep.setNum_int_urbanizacion(getDataDireccionFormStatic().getNombre_urbanizacion());
+                gep.setTipo_ciudad(getDataDireccionFormStatic().getCiudad_prueba());
+                gep.setDes_tipo_ciudad(getDataDireccionFormStatic().getNombre_ciudad_prueba());
+
+
+                gep.setEstado_com(estado_comercial);
+                gep.setCategoria(estado_categoria);
+                gep.setSubcategoria(estado_sub_categoria);
+                gep.setTerritorio(estado_territorio);
+                gep.setZona(estado_ruta);
+                gep.setRef_direccion(edit_referencia.getText().toString());
+
+                String parJSON = new Gson().toJson(gep, GuardarEditarPunto.class);
+
+                params.put("datos", parJSON);
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
                 params.put("iddis", getResponseUserStatic().getId_distri());
                 params.put("db", getResponseUserStatic().getBd());
+                params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
 
                 return params;
 
@@ -315,14 +348,42 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
 
     }
 
+    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+
     private void parseJSON(String response) {
         Gson gson = new Gson();
 
         if (!response.equals("[]")) {
             try {
 
-                responseCreatePunt = gson.fromJson(response, ResponseCreatePunt.class);
+                ResponseInsert responseInsert = gson.fromJson(response, ResponseInsert.class);
 
+                if (responseInsert.getId() == 0) {
+
+                    AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getActivity());
+                    dialogo1.setTitle(responseInsert.getMsg());
+                    dialogo1.setMessage(getRequesGuardarPuntoStatic().getNombre_punto() + "\n" + "ID POS: " +responseInsert.getIdpos());
+                    dialogo1.setCancelable(false);
+                    dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo1, int id) {
+
+                            RequesGuardarPunto requesGuardarPunto = new RequesGuardarPunto();
+                            requesGuardarPunto = null;
+                            setRequesGuardarPuntoStatic(requesGuardarPunto);
+
+                        }
+                    });
+                    dialogo1.setNegativeButton("Vender", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo1, int id) {
+                            //cancelar();
+                        }
+                    });
+
+                    dialogo1.show();
+
+                } else if (responseInsert.getId() == -1) {
+
+                }
 
             } catch (IllegalStateException ex) {
                 ex.printStackTrace();
