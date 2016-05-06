@@ -31,13 +31,14 @@
             android:name=".Activity.ActLoginUser"
             android:label="@string/title_activity_act_login_user"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Activity.ActNoVenta"
             android:label="@string/title_activity_act_no_venta"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Activity.ActBuscarPunto"
+            android:label="@string/title_activity_act_buscar_punto"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
