@@ -76,24 +76,6 @@ public class FragmentCrearPunto extends BaseVolleyFragment {
         fragmentDatosPersonales = new FragmentDatosPersonales();
         fManager.beginTransaction().replace(R.id.contentPanel, fragmentDatosPersonales).commit();
 
-
-    }
-
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Implementing ActionBar Search inside a fragment
-        MenuItem item2 = menu.add("Filtrar");
-        item2.setIcon(R.drawable.ic_search_white_24dp); // sets icon
-        item2.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        item2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                //DialogMenu();
-                return true;
-            }
-        });
-
     }
 
 }

@@ -53,7 +53,7 @@ public class ActNoVenta extends AppCompatActivity implements View.OnClickListene
     private RequestQueue rq;
     public static final String TAG = "MyTag";
     private SpotsDialog alertDialog;
-
+    private GpsServices gpsServices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +63,8 @@ public class ActNoVenta extends AppCompatActivity implements View.OnClickListene
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        gpsServices = new GpsServices(this);
 
         alertDialog = new SpotsDialog(this, R.style.Custom);
 
@@ -173,8 +175,8 @@ public class ActNoVenta extends AppCompatActivity implements View.OnClickListene
                 params.put("idpos", String.valueOf(thumbs.getId_pos()));
                 params.put("motivo", String.valueOf(id_estado));
                 params.put("observacion", EditComment.getText().toString());
-                params.put("latitud", String.valueOf(getLatitud()));
-                params.put("longitud", String.valueOf(getLongitud()));
+                params.put("latitud", String.valueOf(gpsServices.getLatitude()));
+                params.put("longitud", String.valueOf(gpsServices.getLongitude()));
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
                 params.put("iddis", getResponseUserStatic().getId_distri());

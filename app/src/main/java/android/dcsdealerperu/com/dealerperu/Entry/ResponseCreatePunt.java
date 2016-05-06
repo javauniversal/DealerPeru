@@ -3,9 +3,10 @@ package android.dcsdealerperu.com.dealerperu.Entry;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ResponseCreatePunt {
+public class ResponseCreatePunt implements Serializable {
 
     @SerializedName("territorios")
     private List<Territorio> territorioList;
@@ -18,6 +19,17 @@ public class ResponseCreatePunt {
 
     @SerializedName("categorias")
     private List<CategoriasEstandar> categoriasList;
+
+    @SerializedName("nomenclaturas")
+    private Nomenclatura nomenclaturaList;
+
+    public Nomenclatura getNomenclaturaList() {
+        return nomenclaturaList;
+    }
+
+    public void setNomenclaturaList(Nomenclatura nomenclaturaList) {
+        this.nomenclaturaList = nomenclaturaList;
+    }
 
     public List<Territorio> getTerritorioList() {
         return territorioList;

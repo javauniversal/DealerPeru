@@ -1,17 +1,20 @@
 package android.dcsdealerperu.com.dealerperu.Entry;
 
-
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class Zona implements Serializable {
+/**
+ * Created by germangarcia on 6/05/16.
+ */
+public class Subcategorias {
 
     @SerializedName("id")
     private int id;
 
     @SerializedName("descripcion")
-    public String descripcion;
+    private String descripcion;
+
+    @SerializedName("id_categoria")
+    private int id_categoria;
 
     public int getId() {
         return id;
@@ -29,20 +32,16 @@ public class Zona implements Serializable {
         this.descripcion = descripcion;
     }
 
-    @SerializedName("id_territorio")
-    private int id_territorio;
-
-    public int getId_territorio() {
-        return id_territorio;
+    public int getId_categoria() {
+        return id_categoria;
     }
 
-    public void setId_territorio(int id_territorio) {
-        this.id_territorio = id_territorio;
+    public void setId_categoria(int id_categoria) {
+        this.id_categoria = id_categoria;
     }
 
     @Override
     public String toString() {
         return descripcion;
     }
-
 }

@@ -4,6 +4,7 @@ package android.dcsdealerperu.com.dealerperu.Entry;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class CategoriasEstandar implements Serializable {
 
@@ -12,6 +13,17 @@ public class CategoriasEstandar implements Serializable {
 
     @SerializedName("descripcion")
     public String descripcion;
+
+    @SerializedName("subcategorias")
+    public List<Subcategorias> listSubCategoria;
+
+    public List<Subcategorias> getListSubCategoria() {
+        return listSubCategoria;
+    }
+
+    public void setListSubCategoria(List<Subcategorias> listSubCategoria) {
+        this.listSubCategoria = listSubCategoria;
+    }
 
     public CategoriasEstandar(int id, String descripcion) {
         this.id = id;

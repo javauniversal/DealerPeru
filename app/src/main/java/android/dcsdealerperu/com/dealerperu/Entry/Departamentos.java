@@ -2,9 +2,10 @@ package android.dcsdealerperu.com.dealerperu.Entry;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Departamentos extends CategoriasEstandar {
+public class Departamentos extends CategoriasEstandar implements Serializable {
 
     @SerializedName("ciudades")
     private List<Ciudad> ciudadList;

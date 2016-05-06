@@ -21,6 +21,25 @@ public class RequesGuardarPunto {
     private String dir_3;
     private int otro_dir;
     private String des_otro;
+    private String venta_recarga;
+
+    public String getVenta_recarga() {
+        return venta_recarga;
+    }
+
+    public void setVenta_recarga(String venta_recarga) {
+        this.venta_recarga = venta_recarga;
+    }
+
+    public static RequesGuardarPunto requesGuardarPuntoStatic;
+
+    public static RequesGuardarPunto getRequesGuardarPuntoStatic() {
+        return requesGuardarPuntoStatic;
+    }
+
+    public static void setRequesGuardarPuntoStatic(RequesGuardarPunto requesGuardarPuntoStatic) {
+        RequesGuardarPunto.requesGuardarPuntoStatic = requesGuardarPuntoStatic;
+    }
 
     public String getNombre_punto() {
         return nombre_punto;

@@ -2,9 +2,10 @@ package android.dcsdealerperu.com.dealerperu.Entry;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Territorio {
+public class Territorio implements Serializable {
 
     @SerializedName("id")
     private int id;
