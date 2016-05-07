@@ -70,7 +70,7 @@ public class FavoriteTabFragment2 extends Fragment {
     private ArrayList<String> getXAxisValues() {
         ArrayList<String> xAxis = new ArrayList<>();
         xAxis.add("Visitas del día");
-        xAxis.add("Visitas con comptras");
+        xAxis.add("Visitas con compras");
         return xAxis;
     }
 }

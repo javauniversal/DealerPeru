@@ -59,6 +59,7 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
         mListView = (SwipeMenuListView) rootView.findViewById(R.id.listView);
 
         return rootView;
+
     }
 
     @Override
