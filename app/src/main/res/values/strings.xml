@@ -14,13 +14,9 @@
 
     <string name="detalle"><u>Detalle</u></string>
     <string name="title_activity_act_no_venta">No Venta</string>
-    <string name="title_activity_act_buscar_punto">Buscar Punto</string>
-
-    <string-array name="tabs">
-        <item>Dashboard</item>
-        <item>Rutero</item>
-    </string-array>
-    <string name="title_activity_act_marcar_visita">Marcar Visita</string>
+    <string name="title_activity_act_buscar_punto">ActBuscarPunto</string>
+    <string name="title_activity_act_mi_rutero">ActMiRutero</string>
+    <string name="title_activity_act_reporte_rutero">ActReporteRutero</string>
 
 
 </resources>

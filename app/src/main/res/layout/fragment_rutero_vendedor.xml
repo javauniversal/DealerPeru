@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_marginTop="12dp"
+            android:layout_marginBottom="55dp"
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.CardView
@@ -26,15 +27,16 @@
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="4dp"
-                app:contentPaddingBottom="16dp"
-                app:contentPaddingLeft="16dp"
-                app:contentPaddingRight="16dp"
-                app:contentPaddingTop="16dp">
+                app:contentPaddingBottom="30dp"
+                app:contentPaddingLeft="20dp"
+                app:contentPaddingRight="20dp"
+                app:contentPaddingTop="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginBottom="25dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -209,7 +211,7 @@
                             <Spinner
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/spinner_provincia"
+                                android:id="@+id/spinner_ruta"
                                 android:layout_marginStart="8dp"
                                 android:layout_toEndOf="@+id/image_ruta"
                                 android:textSize="@dimen/dimen_letra_app"
@@ -374,5 +376,11 @@
             </android.support.v7.widget.CardView>
         </LinearLayout>
     </ScrollView>
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/cargar_reporte_rutero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_search_white_24dp" />
 </FrameLayout>

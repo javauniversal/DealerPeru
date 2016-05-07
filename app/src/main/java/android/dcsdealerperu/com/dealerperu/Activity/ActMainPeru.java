@@ -3,6 +3,7 @@ package android.dcsdealerperu.com.dealerperu.Activity;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmenMarcarvisita;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentCrearPunto;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHome;
+import android.dcsdealerperu.com.dealerperu.Fragment.FragmentRuteroVendedor;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -120,6 +121,9 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             fragmentClass = FragmenMarcarvisita.class;
         } else if(id == R.id.nav_gestion_pdv) {
             fragmentClass = FragmentCrearPunto.class;
+        } else if(id == R.id.nav_rutero_vendedor) {
+            toolbar.setTitle("Mi Rutero");
+            fragmentClass = FragmentRuteroVendedor.class;
         }
 
         try {

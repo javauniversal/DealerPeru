@@ -2,7 +2,10 @@ package android.dcsdealerperu.com.dealerperu.Entry;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ResponseHome {
+import java.io.Serializable;
+import java.util.List;
+
+public class ResponseHome implements Serializable {
 
     @SerializedName("idpos")
     private int idpos;
@@ -54,6 +57,16 @@ public class ResponseHome {
 
     @SerializedName("tipo_visita")
     private int tipo_visita;
+
+    public static List<ResponseHome> responseHomeListS;
+
+    public static List<ResponseHome> getResponseHomeListS() {
+        return responseHomeListS;
+    }
+
+    public static void setResponseHomeListS(List<ResponseHome> responseHomeListS) {
+        ResponseHome.responseHomeListS = responseHomeListS;
+    }
 
     public int getIdpos() {
         return idpos;

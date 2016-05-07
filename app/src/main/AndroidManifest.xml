@@ -40,8 +40,8 @@
             android:label="@string/title_activity_act_buscar_punto"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activity.ActMarcarVisita"
-            android:label="@string/title_activity_act_marcar_visita"
+            android:name=".Activity.ActReporteRutero"
+            android:label="@string/title_activity_act_reporte_rutero"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
