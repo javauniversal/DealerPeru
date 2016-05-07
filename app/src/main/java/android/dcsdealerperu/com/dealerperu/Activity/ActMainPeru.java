@@ -120,6 +120,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             toolbar.setTitle("Marcar Visita");
             fragmentClass = FragmenMarcarvisita.class;
         } else if(id == R.id.nav_gestion_pdv) {
+            toolbar.setTitle("Gestión PDV");
             fragmentClass = FragmentCrearPunto.class;
         } else if(id == R.id.nav_rutero_vendedor) {
             toolbar.setTitle("Mi Rutero");

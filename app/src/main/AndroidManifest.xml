@@ -13,6 +13,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".Activity.ActSplash"
             android:label="@string/app_name"
@@ -23,25 +24,40 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Activity.ActMainPeru"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".Activity.ActLoginUser"
             android:label="@string/title_activity_act_login_user"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".Activity.ActNoVenta"
             android:label="@string/title_activity_act_no_venta"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".Activity.ActBuscarPunto"
             android:label="@string/title_activity_act_buscar_punto"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".Activity.ActMarcarVisita"
+            android:label="@string/title_activity_act_marcar_visita"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".Activity.ActDetalleBuscarPunto"
+            android:label="@string/title_activity_act_detalle_buscar_punto"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
         <activity
             android:name=".Activity.ActReporteRutero"
-            android:label="@string/title_activity_act_reporte_rutero"
+            android:label="@string/title_activity_act_detalle_buscar_punto"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

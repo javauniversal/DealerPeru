@@ -42,22 +42,18 @@ public class AppAdapterRutero extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = View.inflate(actx, R.layout.item_list_app, null);
-            new ViewHolder(convertView);
-        }
+
+        convertView = View.inflate(actx, R.layout.item_list_app, null);
+        new ViewHolder(convertView);
 
         ViewHolder holder = (ViewHolder) convertView.getTag();
 
         holder.title.setText(data.get(position).getRazon());
         holder.sub.setText(data.get(position).getNombre_cli());
 
-        if(data.get(position).getTipo_visita() == 1)
-        {
+        if(data.get(position).getTipo_visita() == 1) {
             holder.img_estado_visita.setImageResource(R.drawable.ic_radio_button_checked_black_24dp);
-        }
-        else
-        {
+        } else {
             holder.img_estado_visita.setImageResource(R.drawable.ic_radio_button_unchecked_black_24dp);
         }
 

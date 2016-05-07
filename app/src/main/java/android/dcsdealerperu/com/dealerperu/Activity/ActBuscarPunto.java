@@ -1,21 +1,24 @@
 package android.dcsdealerperu.com.dealerperu.Activity;
 
+import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.Entry.BuscarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.Ciudad;
 import android.dcsdealerperu.com.dealerperu.Entry.Departamentos;
 import android.dcsdealerperu.com.dealerperu.Entry.Distrito;
+import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseCreatePunt;
 import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
 import android.dcsdealerperu.com.dealerperu.Entry.Zona;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -39,6 +42,7 @@ import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
 
+import static android.dcsdealerperu.com.dealerperu.Entry.ResponseHome.setResponseHomeListS;
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
 public class ActBuscarPunto extends AppCompatActivity {
@@ -52,6 +56,15 @@ public class ActBuscarPunto extends AppCompatActivity {
     private Spinner spinner_circuito;
     private Spinner spinner_ruta;
     private Spinner spinner_est_comercial;
+    private EditText edit_idpos;
+    private EditText edit_cedula;
+    private EditText edit_nombre;
+    private int departamento;
+    private int ciudad_pro;
+    private int distrito;
+    private int estado_circuito;
+    private int estado_ruta;
+    private int estado_comercial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +83,9 @@ public class ActBuscarPunto extends AppCompatActivity {
         spinner_circuito = (Spinner) findViewById(R.id.spinner_circuito);
         spinner_ruta = (Spinner) findViewById(R.id.spinner_ruta);
         spinner_est_comercial = (Spinner) findViewById(R.id.spinner_est_comercial);
+        edit_idpos = (EditText) findViewById(R.id.edit_idpos);
+        edit_cedula = (EditText) findViewById(R.id.edit_cedula);
+        edit_nombre = (EditText) findViewById(R.id.edit_nombre);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -93,11 +109,11 @@ public class ActBuscarPunto extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // response
-                        parseJSON(response);
+                        parseJSONBuscar(response);
 
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -121,6 +137,23 @@ public class ActBuscarPunto extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
 
+                BuscarPunto buscarPunto = new BuscarPunto();
+
+                int values = 0;
+
+                if (!isValidNumber(edit_idpos.getText().toString().trim()))
+                    values = Integer.parseInt(edit_idpos.getText().toString().trim());
+
+                params.put("idpos", String.valueOf(values));
+                params.put("cedula", edit_cedula.getText().toString());
+                params.put("nombre", edit_nombre.getText().toString());
+                params.put("depto", String.valueOf(departamento));
+                params.put("ciudad", String.valueOf(ciudad_pro));
+                params.put("distrito", String.valueOf(distrito));
+                params.put("circuito", String.valueOf(estado_circuito));
+                params.put("ruta", String.valueOf(estado_ruta));
+                params.put("est_comercial", String.valueOf(estado_comercial));
+
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
                 params.put("iddis", getResponseUserStatic().getId_distri());
                 params.put("db", getResponseUserStatic().getBd());
@@ -133,6 +166,33 @@ public class ActBuscarPunto extends AppCompatActivity {
 
         rq.add(jsonRequest);
     }
+
+    private void parseJSONBuscar(String response) {
+        Gson gson = new Gson();
+
+        if (!response.equals("[]")) {
+            try {
+
+                ListHome responseHomeList = gson.fromJson(response, ListHome.class);
+
+                setResponseHomeListS(responseHomeList);
+
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(this, ActDetalleBuscarPunto.class);
+                bundle.putSerializable("value", responseHomeList);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+            } catch (IllegalStateException ex) {
+                ex.printStackTrace();
+                alertDialog.dismiss();
+            } finally {
+                alertDialog.dismiss();
+            }
+        }
+    }
+
+    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
 
     private void setupGrid() {
         alertDialog.show();
@@ -211,7 +271,7 @@ public class ActBuscarPunto extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                //estado_territorio = territorioList.get(position).getId();
+                estado_circuito = territorioList.get(position).getId();
 
                 loadRuta(territorioList.get(position).getZonaList());
 
@@ -230,7 +290,7 @@ public class ActBuscarPunto extends AppCompatActivity {
         spinner_ruta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //estado_ruta = zonaList.get(position).getId();
+                estado_ruta = zonaList.get(position).getId();
             }
 
             @Override
@@ -247,7 +307,7 @@ public class ActBuscarPunto extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                //estado_comercial = estadoComunList.get(position).getId();
+                estado_comercial = estadoComunList.get(position).getId();
 
             }
 
@@ -265,7 +325,7 @@ public class ActBuscarPunto extends AppCompatActivity {
         spinner_depto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //departamento = responseCreatePunt.getDepartamentosList().get(position).getId();
+                departamento = responseCreatePunt.getDepartamentosList().get(position).getId();
                 loadCiudad(responseCreatePunt.getDepartamentosList().get(position));
             }
 
@@ -282,7 +342,7 @@ public class ActBuscarPunto extends AppCompatActivity {
         spinner_provincia.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //ciudad_pro = departamentos.getCiudadList().get(position).getId();
+                ciudad_pro = departamentos.getCiudadList().get(position).getId();
 
                 loadDistrito(departamentos.getCiudadList().get(position).getDistritoList());
             }
@@ -300,7 +360,7 @@ public class ActBuscarPunto extends AppCompatActivity {
         spinner_distrito.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //distrito = distritoList.get(position).getId();
+                distrito = distritoList.get(position).getId();
                 //loadDistrito(departamentos.getCiudadList().get(position).getDistritoList());
             }
 
