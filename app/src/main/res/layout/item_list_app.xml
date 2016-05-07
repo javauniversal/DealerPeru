@@ -20,6 +20,12 @@
         android:layout_alignRight="@+id/image_departamento"
         android:layout_alignEnd="@+id/image_departamento">
 
+        <ImageView
+            android:id="@+id/image_estado_visita"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/colorPrimary"
+            android:src="@drawable/ic_radio_button_unchecked_black_24dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

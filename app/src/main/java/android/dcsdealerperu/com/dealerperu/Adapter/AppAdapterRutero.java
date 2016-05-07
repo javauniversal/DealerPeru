@@ -49,8 +49,17 @@ public class AppAdapterRutero extends BaseAdapter {
 
         ViewHolder holder = (ViewHolder) convertView.getTag();
 
-        holder.title.setText(data.get(position).getNombre_cli());
-        holder.sub.setText(data.get(position).getRazon());
+        holder.title.setText(data.get(position).getRazon());
+        holder.sub.setText(data.get(position).getNombre_cli());
+
+        if(data.get(position).getTipo_visita() == 1)
+        {
+            holder.img_estado_visita.setImageResource(R.drawable.ic_radio_button_checked_black_24dp);
+        }
+        else
+        {
+            holder.img_estado_visita.setImageResource(R.drawable.ic_radio_button_unchecked_black_24dp);
+        }
 
         return convertView;
     }
@@ -60,10 +69,13 @@ public class AppAdapterRutero extends BaseAdapter {
 
         TextView title;
         TextView sub;
+        ImageView img_estado_visita;
 
         public ViewHolder(View view) {
             title = (TextView) view.findViewById(R.id.title);
             sub = (TextView) view.findViewById(R.id.sub);
+
+            img_estado_visita = (ImageView) view.findViewById(R.id.image_estado_visita);
 
             view.setTag(this);
         }
