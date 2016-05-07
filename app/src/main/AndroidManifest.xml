@@ -39,6 +39,10 @@
             android:name=".Activity.ActBuscarPunto"
             android:label="@string/title_activity_act_buscar_punto"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ActMarcarVisita"
+            android:label="@string/title_activity_act_marcar_visita"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -38,7 +38,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/dimen_letra_app"
-                        android:text="Información del Punto"
+                        android:text="Consulta Punto"
                         android:textColor="@color/colorAccent"
                         android:textStyle="bold" />
 
@@ -56,310 +56,29 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_domain_black_24dp"
+                            android:src="@drawable/ic_search_white_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true" />
 
-                        <TextView
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Id Pos"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="13dp"
-                            android:textSize="@dimen/dimen_letra_app"
                             android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/image_idpos"
-                            android:layout_toEndOf="@+id/image_idpos" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_idpos"
                             android:layout_height="wrap_content"
-                            android:id="@+id/text_idpos"
-                            android:textSize="@dimen/dimen_letra_app"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
+                            android:layout_marginLeft="8dp"
+                            android:layout_toRightOf="@+id/image_idpos">
 
-                    </RelativeLayout>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/edit_buscar"
+                                android:hint="ID POS"
+                                android:textSize="@dimen/dimen_letra_app"
+                                android:inputType="number" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="27dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
-
-                        <ImageView
-                            android:id="@+id/image_razon_social"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_domain_black_24dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Razón Social"
-                            android:layout_marginLeft="13dp"
-                            android:textSize="@dimen/dimen_letra_app"
-                            android:textStyle="bold"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/image_razon_social"
-                            android:layout_toEndOf="@+id/image_razon_social" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/text_razon"
-                            android:textSize="@dimen/dimen_letra_app"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="27dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
-
-                        <ImageView
-                            android:id="@+id/image_circuito"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_domain_black_24dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Circuito"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="13dp"
-                            android:textSize="@dimen/dimen_letra_app"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/image_circuito"
-                            android:layout_toEndOf="@+id/image_circuito" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/text_circuito"
-                            android:textSize="@dimen/dimen_letra_app"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="27dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
-
-                        <ImageView
-                            android:id="@+id/image_ruta"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_domain_black_24dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Ruta"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="13dp"
-                            android:textSize="@dimen/dimen_letra_app"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/image_ruta"
-                            android:layout_toEndOf="@+id/image_ruta" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/text_ruta"
-                            android:textSize="@dimen/dimen_letra_app"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="27dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
-
-                        <ImageView
-                            android:id="@+id/image_direccion"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_domain_black_24dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Dirección"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="13dp"
-                            android:textSize="@dimen/dimen_letra_app"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/image_direccion"
-                            android:layout_toEndOf="@+id/image_direccion" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/text_direccion"
-                            android:textSize="@dimen/dimen_letra_app"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="27dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
-
-                        <ImageView
-                            android:id="@+id/image_departamento"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_domain_black_24dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Departamento"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="13dp"
-                            android:textSize="@dimen/dimen_letra_app"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/image_departamento"
-                            android:layout_toEndOf="@+id/image_departamento" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/text_departamento"
-                            android:textSize="@dimen/dimen_letra_app"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="27dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
-
-                        <ImageView
-                            android:id="@+id/image_provincia"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_domain_black_24dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Provincia"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="13dp"
-                            android:textSize="@dimen/dimen_letra_app"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/image_provincia"
-                            android:layout_toEndOf="@+id/image_provincia" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/text_provincia"
-                            android:textSize="@dimen/dimen_letra_app"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="27dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
-
-                        <ImageView
-                            android:id="@+id/image_distrito"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_domain_black_24dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Distrito"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="13dp"
-                            android:textSize="@dimen/dimen_letra_app"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/image_distrito"
-                            android:layout_toEndOf="@+id/image_distrito" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/text_distrito"
-                            android:textSize="@dimen/dimen_letra_app"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
+                        </android.support.design.widget.TextInputLayout>
 
                     </RelativeLayout>
 
@@ -377,37 +96,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     style="@style/BrandButtonStyle2"
-                    android:text="Pedidos pendientes"
+                    android:text="Busqueda Avanzada"
                     android:layout_weight="1"
-                    android:id="@+id/btn_pedidos_pendientes"
-                    android:visibility="gone"
+                    android:id="@+id/btnAvBus"
                     android:gravity="center_vertical|center_horizontal" />
-
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     style="@style/BrandButtonStyle2"
+                    android:text="Buscar"
                     android:layout_weight="1"
-                    android:text="Tomar pedido"
-                    android:id="@+id/btn_tomar_pedido"
+                    android:id="@+id/btnBuscar"
                     android:gravity="center_vertical|center_horizontal" />
 
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    style="@style/BrandButtonStyle2"
-                    android:layout_height="match_parent"
-                    android:text="No venta"
-                    android:id="@+id/btn_no_venta"
-                    android:visibility="gone"
-                    android:gravity="center_vertical|center_horizontal" />
 
             </LinearLayout>
-
         </LinearLayout>
-
 
     </ScrollView>
 

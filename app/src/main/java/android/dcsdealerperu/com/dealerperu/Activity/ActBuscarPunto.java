@@ -81,8 +81,57 @@ public class ActBuscarPunto extends AppCompatActivity {
     }
 
     private void buscarPunto() {
+        buscarPuntoJSO();
+    }
+
+    private void buscarPuntoJSO() {
+        alertDialog.show();
+        String url = String.format("%1$s%2$s", getString(R.string.url_base),"consultar_puntos");
+        rq = Volley.newRequestQueue(this);
+        StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        parseJSON(response);
+
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(ActBuscarPunto.this, "Error de tiempo de espera", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(ActBuscarPunto.this, "Error Servidor", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(ActBuscarPunto.this, "Server Error", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NetworkError) {
+                            Toast.makeText(ActBuscarPunto.this, "Error de red", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(ActBuscarPunto.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
+                        }
+
+                        alertDialog.dismiss();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
+                params.put("iddis", getResponseUserStatic().getId_distri());
+                params.put("db", getResponseUserStatic().getBd());
+                params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
 
 
+                return params;
+            }
+        };
+
+        rq.add(jsonRequest);
     }
 
     private void setupGrid() {

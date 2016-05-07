@@ -4,45 +4,54 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.Activity.ActMarcarVisita;
 import android.dcsdealerperu.com.dealerperu.Activity.ActNoVenta;
 import android.dcsdealerperu.com.dealerperu.Adapter.ExpandableListAdapter;
 import android.dcsdealerperu.com.dealerperu.Adapter.ExpandableListDataPump;
 import android.dcsdealerperu.com.dealerperu.Entry.Detalle;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import dmax.dialog.SpotsDialog;
+
+import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
 
-public class FragmenMarcarvisita extends BaseVolleyFragment implements View.OnClickListener {
+public class FragmenMarcarvisita extends BaseVolleyFragment {
 
     private static final String DESCRIBABLE_KEY = "describable_key";
-    private ResponseMarcarPedido mDescribable;
-    private TextView text_idpos;
-    private TextView text_razon;
-    private TextView text_ruta;
-    private TextView text_direccion;
-    private TextView text_departamento;
-    private TextView text_provincia;
-    private TextView text_distrito;
-    private TextView text_circuito;
-    private Button btn_pedidos_pendientes;
-    private Button btn_no_venta;
-    private ExpandableListAdapter expandableListAdapter;
-    private ExpandableListView expandableListView;
-
-    private ArrayList<String> expandableListTitle;
-    private HashMap<String, List<Detalle>> expandableListDetail;
+    private Button btnBuscar;
+    private SpotsDialog alertDialog;
+    private EditText edit_buscar;
 
     public static FragmenMarcarvisita newInstance(ResponseMarcarPedido describable) {
         FragmenMarcarvisita fragment = new FragmenMarcarvisita();
@@ -57,32 +66,16 @@ public class FragmenMarcarvisita extends BaseVolleyFragment implements View.OnCl
         // Required empty public constructor
     }
 
+    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_marcarvisita, container, false);
-
-        text_idpos = (TextView) view.findViewById(R.id.text_idpos);
-        text_razon = (TextView) view.findViewById(R.id.text_razon);
-        text_ruta = (TextView) view.findViewById(R.id.text_ruta);
-        text_direccion = (TextView) view.findViewById(R.id.text_direccion);
-        text_departamento = (TextView) view.findViewById(R.id.text_departamento);
-        text_provincia = (TextView) view.findViewById(R.id.text_provincia);
-        text_distrito = (TextView) view.findViewById(R.id.text_distrito);
-        text_circuito = (TextView) view.findViewById(R.id.text_circuito);
-
-        btn_pedidos_pendientes = (Button) view.findViewById(R.id.btn_pedidos_pendientes);
-        btn_pedidos_pendientes.setOnClickListener(this);
-
-        btn_no_venta = (Button) view.findViewById(R.id.btn_no_venta);
-        btn_no_venta.setOnClickListener(this);
-
-
-
-        mDescribable = (ResponseMarcarPedido) getArguments().getSerializable(DESCRIBABLE_KEY);
-
+        btnBuscar = (Button) view.findViewById(R.id.btnBuscar);
+        edit_buscar = (EditText) view.findViewById(R.id.edit_buscar);
+        alertDialog = new SpotsDialog(getActivity(), R.style.Custom);
 
         return view;
 
@@ -92,67 +85,109 @@ public class FragmenMarcarvisita extends BaseVolleyFragment implements View.OnCl
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setDataPunto();
-    }
-
-    private void setDataPunto() {
-
-        text_idpos.setText(String.format("%1$s", mDescribable.getId_pos()));
-        text_razon.setText(String.format("%1$s", mDescribable.getRazon_social()));
-        text_ruta.setText(String.format("%1$s", mDescribable.getZona()));
-        text_direccion.setText(String.format("%1$s", mDescribable.getDireccion()));
-        text_departamento.setText(String.format("%1$s", mDescribable.getDepto()));
-        text_provincia.setText(String.format("%1$s", mDescribable.getProvincia()));
-        text_distrito.setText(String.format("%1$s", mDescribable.getDistrito()));
-        text_circuito.setText(String.format("%1$s", mDescribable.getTerritorio()));
-
-
-        if (mDescribable.getPedidosList().size() > 0)
-            btn_pedidos_pendientes.setVisibility(View.VISIBLE);
-
-        if (mDescribable.getEstado() == 0)
-            btn_no_venta.setVisibility(View.VISIBLE);
+        btnBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isValidNumber(edit_buscar.getText().toString().trim())) {
+                    edit_buscar.setFocusable(true);
+                    edit_buscar.setFocusableInTouchMode(true);
+                    edit_buscar.requestFocus();
+                    edit_buscar.setText("");
+                    edit_buscar.setError("Este campo es obligatorio");
+                } else {
+                    buscarIdPos(edit_buscar);
+                }
+            }
+        });
 
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_no_venta:
+    private void buscarIdPos(final EditText buscar) {
 
-                Bundle bundle = new Bundle();
-                Intent intent = new Intent(getActivity(), ActNoVenta.class);
-                bundle.putSerializable("value", mDescribable);
-                intent.putExtras(bundle);
-                startActivity(intent);
-
-                break;
-
-            case R.id.btn_pedidos_pendientes:
-
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                View dialoglayout = inflater.inflate(R.layout.dialog_pedidos_pendientes, null);
-
-                expandableListView = (ExpandableListView) dialoglayout.findViewById(R.id.expandableListView);
-
-                expandableListDetail = ExpandableListDataPump.getData(mDescribable.getPedidosList());
-                expandableListTitle = new ArrayList<>(expandableListDetail.keySet());
-
-                expandableListAdapter = new ExpandableListAdapter(getActivity(), expandableListTitle, expandableListDetail);
-                expandableListView.setAdapter(expandableListAdapter);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setCancelable(false);
-                builder.setTitle("Pedidos PDV");
-                builder.setView(dialoglayout).setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "buscar_punto_visita");
+        StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(final String response) {
+                        parseJSONVisita(response);
                     }
-                });
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        String error_string = "";
 
-                builder.show();
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            error_string = "Error de tiempo de espera";
+                        } else if (error instanceof AuthFailureError) {
+                            error_string = "Error Servidor";
+                        } else if (error instanceof ServerError) {
+                            error_string = "Server Error";
+                        } else if (error instanceof NetworkError) {
+                            error_string = "Error de red";
+                        } else if (error instanceof ParseError) {
+                            error_string = "Error al serializar los datos";
+                        }
 
-                break;
-        }
+                        onConnectionFailed(error_string);
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<>();
+
+                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
+                params.put("iddis", getResponseUserStatic().getId_distri());
+                params.put("db", getResponseUserStatic().getBd());
+                params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
+                params.put("idpos", buscar.getText().toString().trim());
+
+                return params;
+
+            }
+        };
+
+        addToQueue(jsonRequest);
+
     }
+
+
+    private void parseJSONVisita(String response) {
+
+        Gson gson = new Gson();
+        if (!response.equals("[]")) {
+            try {
+
+                ResponseMarcarPedido responseMarcarPedido = gson.fromJson(response, ResponseMarcarPedido.class);
+
+                if (responseMarcarPedido.getEstado() == -1) {
+                    //No tiene permisos del punto
+                    Toast.makeText(getActivity(), responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
+                } else if (responseMarcarPedido.getEstado() == -2) {
+                    //El punto no existe
+                    Toast.makeText(getActivity(), responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
+                } else {
+                    //Activity Detalle
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(getActivity(), ActMarcarVisita.class);
+                    bundle.putSerializable("value", responseMarcarPedido);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+
+            } catch (IllegalStateException ex) {
+                ex.printStackTrace();
+                alertDialog.dismiss();
+            } finally {
+                alertDialog.dismiss();
+            }
+        } else {
+            alertDialog.dismiss();
+        }
+
+    }
+
+
 }

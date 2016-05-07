@@ -1,12 +1,11 @@
 package android.dcsdealerperu.com.dealerperu.Fragment;
 
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Activity.ActBuscarPunto;
-import android.dcsdealerperu.com.dealerperu.Activity.ActMainPeru;
 import android.dcsdealerperu.com.dealerperu.Entry.RequesGuardarPunto;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;

@@ -7,4 +7,5 @@
     <dimen name="dimen_letra_app">13sp</dimen>
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">180dp</dimen>
+    <dimen name="size_menu_text">4sp</dimen>
 </resources>

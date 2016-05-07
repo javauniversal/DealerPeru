@@ -1,29 +1,22 @@
 package android.dcsdealerperu.com.dealerperu.Fragment;
 
-import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 
-import dmax.dialog.SpotsDialog;
 
-
-public class BaseVolleyFragment extends Fragment {
-
+public class BaseVolleyFragmentSoport extends Fragment {
     private VolleyS volley;
     protected RequestQueue fRequestQueue;
-    private SpotsDialog alertDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         volley = VolleyS.getInstance(getActivity().getApplicationContext());
         fRequestQueue = volley.getRequestQueue();
-        alertDialog = new SpotsDialog(getActivity(), R.style.Custom);
     }
 
     @Override
@@ -42,23 +35,21 @@ public class BaseVolleyFragment extends Fragment {
             request.setRetryPolicy(new DefaultRetryPolicy(
                     60000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
             ));
-
-            //onPreStartConnection(alertDialog);
-
+            onPreStartConnection();
             fRequestQueue.add(request);
         }
     }
 
-    public void onPreStartConnection(SpotsDialog spotsDialog) {
-        spotsDialog.show();
+    public void onPreStartConnection() {
+        //getActivity().setProgressBarIndeterminateVisibility(true);
     }
 
-    public void onConnectionFinished(SpotsDialog spotsDialog) {
-        spotsDialog.dismiss();
+    public void onConnectionFinished() {
+        //getActivity().setProgressBarIndeterminateVisibility(false);
     }
 
     public void onConnectionFailed(String error) {
-        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
-        onConnectionFinished(alertDialog);
+        //getActivity().setProgressBarIndeterminateVisibility(false);
+        //Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
     }
 }

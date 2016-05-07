@@ -1,13 +1,9 @@
 package android.dcsdealerperu.com.dealerperu.Fragment;
 
-
-import android.app.FragmentManager;
-import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.Ciudad;
 import android.dcsdealerperu.com.dealerperu.Entry.DataDireccionForm;
 import android.dcsdealerperu.com.dealerperu.Entry.Departamentos;
 import android.dcsdealerperu.com.dealerperu.Entry.Distrito;
-import android.dcsdealerperu.com.dealerperu.Entry.Nomenclatura;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseCreatePunt;
 import android.dcsdealerperu.com.dealerperu.Entry.TipoCiudad;
 import android.dcsdealerperu.com.dealerperu.Entry.TipoInterior;
@@ -15,6 +11,7 @@ import android.dcsdealerperu.com.dealerperu.Entry.TipoUrbanizacion;
 import android.dcsdealerperu.com.dealerperu.Entry.TipoVia;
 import android.dcsdealerperu.com.dealerperu.Entry.TipoVivienda;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;

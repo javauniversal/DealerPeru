@@ -1,18 +1,20 @@
 package android.dcsdealerperu.com.dealerperu.Fragment;
 
-
-import android.app.Fragment;
+import android.annotation.SuppressLint;
 import android.dcsdealerperu.com.dealerperu.Adapter.AppAdapterRutero;
 import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -35,101 +37,36 @@ import java.util.Map;
 
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
-public class FragmentSolPedido extends BaseVolleyFragment {
+@SuppressLint("ValidFragment")
+public class FavoriteTabFragment extends BaseVolleyFragment {
 
+    private int mPosition;
     private AppAdapterRutero appAdapterRutero;
     private SwipeMenuListView mListView;
 
-
-    public FragmentSolPedido() {
-        // Required empty public constructor
+    public FavoriteTabFragment(int position) {
+        mPosition = position;
     }
 
+    public FavoriteTabFragment() {
+    }
+
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_rutero_menu, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_rutero_menu, container, false);
+        mListView = (SwipeMenuListView) rootView.findViewById(R.id.listView);
 
-        mListView = (SwipeMenuListView) view.findViewById(R.id.listView);
-
-        return view;
+        return rootView;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        SwipeMenuCreator creator = new SwipeMenuCreator() {
-            @Override
-            public void create(SwipeMenu menu) {
-                // create "open" item
-                SwipeMenuItem openItem = new SwipeMenuItem(getActivity());
-                // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
-                // set item width
-                openItem.setWidth(dp2px(90));
-                // set item title
-                openItem.setTitle("Editar");
-                // set item title fontsize
-                openItem.setTitleSize(18);
-                // set item title font color
-                openItem.setTitleColor(Color.WHITE);
-                // add to menu
-                menu.addMenuItem(openItem);
-                // create "delete" item
-                SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity());
-                // set item background
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,0x3F, 0x25)));
-                // set item width
-                deleteItem.setWidth(dp2px(90));
-                // set a icon
-                //deleteItem.setIcon(R.drawable.ic_delete);
-                deleteItem.setTitle("Eliminar");
-
-                deleteItem.setTitleSize(18);
-                // set item title font color
-                deleteItem.setTitleColor(Color.WHITE);
-
-                // add to menu
-                menu.addMenuItem(deleteItem);
-            }
-        };
-
-        mListView.setMenuCreator(creator);
-
-        // step 2. listener item click event
-        mListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
-                //AddProductCar item = mAppList.get(position);
-                switch (index) {
-                    case 0:
-                        // Edit
-                        break;
-                    case 1:
-                        // delete
-                        break;
-                }
-                return false;
-            }
-        });
-
-        // test item long click
-        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //deletePrduct(position);
-                return false;
-            }
-        });
 
         setupGrid();
 
-    }
-
-    private int dp2px(int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                getResources().getDisplayMetrics());
     }
 
     private void llenarData(ListHome listHome) {
@@ -205,5 +142,4 @@ public class FragmentSolPedido extends BaseVolleyFragment {
         }
 
     }
-
 }
