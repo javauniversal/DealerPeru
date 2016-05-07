@@ -15,7 +15,7 @@ public class TabsAdapter extends FragmentPagerAdapter {
     public TabsAdapter(FragmentManager fm) {
         super(fm);
     }
-
+    //
     public void addFragment(Fragment fragment, String title) {
         mFragments.add(fragment);
         mFragmentTitles.add(title);
@@ -35,4 +35,5 @@ public class TabsAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return mFragmentTitles.get(position);
     }
+
 }
