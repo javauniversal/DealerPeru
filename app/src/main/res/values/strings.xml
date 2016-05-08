@@ -22,6 +22,8 @@
     </string-array>
     <string name="title_activity_act_marcar_visita">Marcar Visita</string>
     <string name="title_activity_act_detalle_buscar_punto">Resultado busqueda</string>
+    <string name="title_activity_act_reporte_mis_bajas">ActReporteMisBajas</string>
+    <string name="title_activity_act_reporte_bajas">ActReporteBajas</string>
 
 
 </resources>

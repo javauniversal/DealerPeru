@@ -2,15 +2,17 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 
 
 import android.content.Intent;
-import android.dcsdealerperu.com.dealerperu.Activity.ActReporteRutero;
+import android.dcsdealerperu.com.dealerperu.Activity.ActReporteMisPedidos;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
-import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
+import android.dcsdealerperu.com.dealerperu.Entry.MisPedidos;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseCreatePunt;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseMisPedidos;
 import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
 import android.dcsdealerperu.com.dealerperu.Entry.Zona;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,27 +41,29 @@ import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
 
-import static android.dcsdealerperu.com.dealerperu.Entry.ResponseHome.setResponseHomeListS;
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
-public class FragmentRuteroVendedor extends BaseVolleyFragment {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class FragmentMisPedidos extends BaseVolleyFragment {
 
-
-    private Spinner estado_visita;
-    private Spinner tipo_frecuencia;
-    private Spinner dia;
+    private EditText fecha_inicial;
+    private EditText fecha_final;
     private Spinner spinner_circuito;
     private Spinner spinner_ruta;
+    private Spinner spinner_estado;
+    private EditText numero_pedido;
     private EditText idpos;
-    private EditText cedula;
 
     private SpotsDialog alertDialog;
 
-    private ResponseCreatePunt responseCreatePuntos;
+    private ResponseMisPedidos responseMisPedidos;
+    private ResponseCreatePunt responseCretePunt;
 
-    private int circuito,ruta,frecuencia, visita,sdia;
+    private int circuito,ruta,estado;
 
-    public FragmentRuteroVendedor() {
+    public FragmentMisPedidos() {
         // Required empty public constructor
     }
 
@@ -68,22 +72,22 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_rutero_vendedor, container, false);
-
-        estado_visita = (Spinner) view.findViewById(R.id.spinner_estado_visita);
-        tipo_frecuencia = (Spinner) view.findViewById(R.id.spinner_tipo_frecuencia);
-        dia = (Spinner) view.findViewById(R.id.spinner_dia);
+        View view = inflater.inflate(R.layout.fragment_mis_pedidos, container, false);
 
         spinner_circuito = (Spinner) view.findViewById(R.id.spinner_circuito);
         spinner_ruta = (Spinner) view.findViewById(R.id.spinner_ruta);
+        spinner_estado = (Spinner) view.findViewById(R.id.spinner_estado);
 
+        fecha_inicial = (EditText) view.findViewById(R.id.edit_fecha_ini);
+        fecha_final = (EditText) view.findViewById(R.id.edit_fecha_fin);
         idpos = (EditText) view.findViewById(R.id.edit_idpos);
-        cedula = (EditText) view.findViewById(R.id.edit_cedula);
+        numero_pedido = (EditText) view.findViewById(R.id.edit_nro_pedido);
+        idpos = (EditText) view.findViewById(R.id.edit_idpos);
 
         alertDialog = new SpotsDialog(getActivity(), R.style.Custom);
-        LoadSpinners();
+
         // Accion del boton buscar
-        FloatingActionButton btn_buscar = (FloatingActionButton) view.findViewById(R.id.cargar_reporte_rutero);
+        FloatingActionButton btn_buscar = (FloatingActionButton) view.findViewById(R.id.cargar_reporte_pedidos);
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,16 +97,16 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
         return view;
     }
 
-
     private void ConsultarReporte()
     {
         alertDialog.show();
-        String url = String.format("%1$s%2$s", getString(R.string.url_base), "consultar_rutero");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "consultar_reporte_pedidos");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>(){
                     @Override
                     public void onResponse(final String response) {
                         mostrarReporte(response);
+                        alertDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener(){
@@ -136,14 +140,14 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
                 params.put("db", getResponseUserStatic().getBd());
                 params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
 
+                params.put("fecha_ini", fecha_inicial.getText().toString().trim());
+                params.put("fecha_fin", fecha_final.getText().toString().trim());
                 params.put("idpos", idpos.getText().toString().trim());
-                params.put("cedula", cedula.getText().toString().trim());
+
+                params.put("nro_ped", numero_pedido.getText().toString().trim());
                 params.put("circuito", String.valueOf(circuito));
                 params.put("ruta", String.valueOf(ruta));
-                params.put("estado_visita", String.valueOf(visita));
-                params.put("tipo_frecuencia", String.valueOf(frecuencia));
-                params.put("dia", String.valueOf(sdia));
-
+                params.put("estado", String.valueOf(estado));
                 return params;
 
             }
@@ -151,20 +155,18 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
         addToQueue(jsonRequest);
     }
 
-    private void  mostrarReporte(String response)
-    {
+    private void mostrarReporte(String response) {
         Gson gson = new Gson();
 
         if (!response.equals("[]")) {
             try {
 
-                ListHome responseHomeList = gson.fromJson(response, ListHome.class);
+                MisPedidos responseMisPedidos = gson.fromJson(response, MisPedidos.class);
 
-                setResponseHomeListS(responseHomeList);
 
                 Bundle bundle = new Bundle();
-                Intent intent = new Intent(getActivity(), ActReporteRutero.class);
-                bundle.putSerializable("value", responseHomeList);
+                Intent intent = new Intent(getActivity(), ActReporteMisPedidos.class);
+                bundle.putSerializable("value", responseMisPedidos);
                 intent.putExtras(bundle);
                 startActivity(intent);
 
@@ -181,79 +183,32 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
         }
     }
 
-    private void LoadSpinners() {
-        // llena Spinner de Estados Visita
-        final List<CategoriasEstandar> ListaEstadosVista = new ArrayList<>();
-        ListaEstadosVista.add(new CategoriasEstandar(0,"Seleccionar"));
-        ListaEstadosVista.add(new CategoriasEstandar(1,"Visitado"));
-        ListaEstadosVista.add(new CategoriasEstandar(2,"Sin Visitar"));
-
-        ArrayAdapter<CategoriasEstandar> adapterEstadoVisita = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner,ListaEstadosVista);
-        estado_visita.setAdapter(adapterEstadoVisita);
-        estado_visita.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                visita = ListaEstadosVista.get(position).getId();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-
-        });
-
-        // llena Spinner de Tipo Frecuencia
-        final List<CategoriasEstandar> ListaTipoFrecuencia = new ArrayList<>();
-        ListaTipoFrecuencia.add(new CategoriasEstandar(0,"Seleccionar"));
-        ListaTipoFrecuencia.add(new CategoriasEstandar(1,"Semanal"));
-        ListaTipoFrecuencia.add(new CategoriasEstandar(2,"Quincenal"));
-        ListaTipoFrecuencia.add(new CategoriasEstandar(3,"Mensual"));
-
-        ArrayAdapter<CategoriasEstandar> adapterTipoFrecuencia = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner,ListaTipoFrecuencia);
-        tipo_frecuencia.setAdapter(adapterTipoFrecuencia);
-        tipo_frecuencia.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                frecuencia = ListaTipoFrecuencia.get(position).getId();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-
-        });
-
-        //llenar Spinner de Dia
-        final List<CategoriasEstandar> ListaDia = new ArrayList<>();
-        ListaDia.add(new CategoriasEstandar(0,"Seleccionar"));
-        ListaDia.add(new CategoriasEstandar(1,"Lunes"));
-        ListaDia.add(new CategoriasEstandar(2,"Martes"));
-        ListaDia.add(new CategoriasEstandar(3,"Miercoles"));
-        ListaDia.add(new CategoriasEstandar(4,"Jueves"));
-        ListaDia.add(new CategoriasEstandar(5,"Viernes"));
-        ListaDia.add(new CategoriasEstandar(6,"Sabado"));
-        ListaDia.add(new CategoriasEstandar(7,"Domingo"));
-
-        ArrayAdapter<CategoriasEstandar> adapterDia = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner,ListaDia);
-        dia.setAdapter(adapterDia);
-        dia.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sdia = ListaDia.get(position).getId();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-
-        });
-
-
-
-
-    }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        //llenar Spinner de Estados
+        final List<CategoriasEstandar> ListaEstados = new ArrayList<>();
+        ListaEstados.add(new CategoriasEstandar(-1,"Seleccionar"));
+        ListaEstados.add(new CategoriasEstandar(0,"Pendiente"));
+        ListaEstados.add(new CategoriasEstandar(1,"Aceptado"));
+        ListaEstados.add(new CategoriasEstandar(2,"Picking"));
+        ListaEstados.add(new CategoriasEstandar(3,"Cancelado"));
+        ListaEstados.add(new CategoriasEstandar(4,"Despachado"));
+        ListaEstados.add(new CategoriasEstandar(5,"Entregado"));
+        ListaEstados.add(new CategoriasEstandar(6,"Rechazado por punto"));
 
+        ArrayAdapter<CategoriasEstandar> adapterEstados = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner,ListaEstados);
+        spinner_estado.setAdapter(adapterEstados);
+        spinner_estado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                estado = ListaEstados.get(position).getId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+
+        });
         setupGrid();
     }
 
@@ -296,6 +251,7 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
                 params.put("iddis", getResponseUserStatic().getId_distri());
                 params.put("db", getResponseUserStatic().getBd());
+                params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
 
                 return params;
 
@@ -303,7 +259,6 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
         };
 
         addToQueue(jsonRequest);
-
     }
 
     private void parseJSON(String response) {
@@ -312,9 +267,8 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
         if (!response.equals("[]")) {
             try {
 
-               responseCreatePuntos = gson.fromJson(response, ResponseCreatePunt.class);
-
-                loadTerritorio(responseCreatePuntos);
+                responseCretePunt = gson.fromJson(response, ResponseCreatePunt.class);
+                loadTerritorio(responseCretePunt);
 
             } catch (IllegalStateException ex) {
                 ex.printStackTrace();
@@ -352,14 +306,11 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ruta = zonas.get(position).getId();
-                //loadZona(territorioRes.getTerritorioList().get(position));
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
 
         });
 
     }
-
 }

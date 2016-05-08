@@ -3,6 +3,8 @@ package android.dcsdealerperu.com.dealerperu.Activity;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmenMarcarvisita;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentCrearPunto;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHome;
+import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisBajas;
+import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisPedidos;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentRuteroVendedor;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
@@ -125,7 +127,14 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         } else if(id == R.id.nav_rutero_vendedor) {
             toolbar.setTitle("Mi Rutero");
             fragmentClass = FragmentRuteroVendedor.class;
+        }else if(id == R.id.nav_pedido_vendedor) {
+            toolbar.setTitle("Mis Pedidos");
+            fragmentClass = FragmentMisPedidos.class;
+        }else if(id == R.id.nav_baja_vendedor) {
+            toolbar.setTitle("Mis Bajas");
+            fragmentClass = FragmentMisBajas.class;
         }
+
 
         try {
             Fragment fragment = (Fragment) fragmentClass.newInstance();

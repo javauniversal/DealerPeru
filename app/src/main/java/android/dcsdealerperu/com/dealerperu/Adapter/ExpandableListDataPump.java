@@ -3,7 +3,6 @@ package android.dcsdealerperu.com.dealerperu.Adapter;
 import android.dcsdealerperu.com.dealerperu.Entry.Detalle;
 import android.dcsdealerperu.com.dealerperu.Entry.Pedidos;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -36,4 +35,6 @@ public class ExpandableListDataPump {
         }
         return expandableListDetail;
     }
+
+
 }
