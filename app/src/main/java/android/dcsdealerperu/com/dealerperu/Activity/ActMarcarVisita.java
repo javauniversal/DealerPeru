@@ -36,6 +36,7 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
     private TextView text_circuito;
     private Button btn_pedidos_pendientes;
     private Button btn_no_venta;
+    private Button btn_tomar_pedido;
     private ExpandableListAdapter expandableListAdapter;
     private ExpandableListView expandableListView;
     private Bundle bundle;
@@ -63,6 +64,9 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
 
         btn_no_venta = (Button) findViewById(R.id.btn_no_venta);
         btn_no_venta.setOnClickListener(this);
+
+        btn_tomar_pedido = (Button) findViewById(R.id.btn_tomar_pedido);
+        btn_tomar_pedido.setOnClickListener(this);
 
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
@@ -131,6 +135,16 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
                 });
 
                 builder.show();
+
+                break;
+
+            case R.id.btn_tomar_pedido:
+
+                Bundle bundle2 = new Bundle();
+                Intent intent2 = new Intent(this, ActTomarPedido.class);
+                bundle2.putSerializable("value", mDescribable);
+                intent2.putExtras(bundle2);
+                startActivity(intent2);
 
                 break;
         }

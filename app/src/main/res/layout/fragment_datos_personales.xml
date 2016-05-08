@@ -306,7 +306,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 style="@style/BrandButtonStyle2"
-                android:text="Cancelar"
+                android:text="Limpiar"
                 android:layout_weight="1"
                 android:id="@+id/btn_cancelar_per"
                 android:gravity="center_vertical|center_horizontal" />

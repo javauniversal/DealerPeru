@@ -55,7 +55,20 @@
         <activity
             android:name=".Activity.ActReporteBajas"
             android:label="@string/title_activity_act_reporte_bajas"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".Activity.ActBusquedaAvan"
+            android:label="@string/title_activity_act_buscar_punto"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".Activity.ActResponAvanBusqueda"
+            android:label="Busqueda Avanzada"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".Activity.ActTomarPedido"
+            android:label="Tomar Pedido"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>

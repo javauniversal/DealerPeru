@@ -4,6 +4,7 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.Activity.ActBusquedaAvan;
 import android.dcsdealerperu.com.dealerperu.Activity.ActMarcarVisita;
 import android.dcsdealerperu.com.dealerperu.Activity.ActNoVenta;
 import android.dcsdealerperu.com.dealerperu.Adapter.ExpandableListAdapter;
@@ -50,6 +51,7 @@ public class FragmenMarcarvisita extends BaseVolleyFragment {
 
     private static final String DESCRIBABLE_KEY = "describable_key";
     private Button btnBuscar;
+    private Button btnAvBus;
     private SpotsDialog alertDialog;
     private EditText edit_buscar;
 
@@ -74,6 +76,7 @@ public class FragmenMarcarvisita extends BaseVolleyFragment {
 
         View view = inflater.inflate(R.layout.fragment_marcarvisita, container, false);
         btnBuscar = (Button) view.findViewById(R.id.btnBuscar);
+        btnAvBus = (Button) view.findViewById(R.id.btnAvBus);
         edit_buscar = (EditText) view.findViewById(R.id.edit_buscar);
         alertDialog = new SpotsDialog(getActivity(), R.style.Custom);
 
@@ -97,6 +100,14 @@ public class FragmenMarcarvisita extends BaseVolleyFragment {
                 } else {
                     buscarIdPos(edit_buscar);
                 }
+            }
+        });
+
+        btnAvBus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ActBusquedaAvan.class));
+                getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
 
@@ -152,7 +163,6 @@ public class FragmenMarcarvisita extends BaseVolleyFragment {
         addToQueue(jsonRequest);
 
     }
-
 
     private void parseJSONVisita(String response) {
 

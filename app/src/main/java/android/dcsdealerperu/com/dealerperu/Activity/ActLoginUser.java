@@ -90,7 +90,6 @@ public class ActLoginUser extends AppCompatActivity {
             }
         });
 
-
     }
 
     private boolean isValidNumber(String number){return number == null || number.length() == 0;}
@@ -123,6 +122,8 @@ public class ActLoginUser extends AppCompatActivity {
                         } else if (error instanceof ParseError) {
                             Toast.makeText(ActLoginUser.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
                         }
+
+                        alertDialog.dismiss();
                     }
                 }
         ) {
@@ -172,6 +173,7 @@ public class ActLoginUser extends AppCompatActivity {
         }
 
     }
+
 
     @Override
     protected void onStop() {

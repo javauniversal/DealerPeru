@@ -32,6 +32,7 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
     private EditText edit_tel_edit;
     private EditText edit_cel_edit;
     private Button btn_siguiente_per;
+    private Button btn_cancelar_per;
     private FragmentDireccion fragmentDireccion;
     private Switch switch1;
     private int venta_recarga = 2;
@@ -56,6 +57,8 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
         switch1 = (Switch) view.findViewById(R.id.switch1);
 
         btn_siguiente_per = (Button) view.findViewById(R.id.btn_siguiente_per);
+
+        btn_cancelar_per = (Button) view.findViewById(R.id.btn_siguiente_per);
 
         if (RequesGuardarPunto.getRequesGuardarPuntoStatic() != null) {
             cargarDataPre();
@@ -91,6 +94,8 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
                 }
             }
         });
+
+        btn_cancelar_per.setOnClickListener(this);
 
     }
 
@@ -204,7 +209,22 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
                 }
 
                 break;
+            case R.id.btn_cancelar_per:
+                limpiarCampos();
+                break;
         }
+    }
+
+    private void limpiarCampos() {
+
+        edit_nombres.setText("");
+        edit_cedula.setText("");
+        edit_nom_cli.setText("");
+        edit_correo_edit.setText("");
+        edit_correo_edit.setText("");
+        edit_tel_edit.setText("");
+        edit_cel_edit.setText("");
+
     }
 
     private void dataPersonal() {

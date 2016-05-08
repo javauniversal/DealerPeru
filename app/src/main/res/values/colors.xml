@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#10628a</color>
     <color name="colorPrimaryDark">#1C90C0</color>
-    <color name="colorAccent">#10628a</color>
+    <color name="colorAccent">#1C90C0</color>
 
 
     <color name="transparent_holo_light_blue">#4433b5e5</color>
@@ -19,5 +19,6 @@
 
 
     <color name="black_alpha_40">#66000000</color>
+    <color name="activity_bg">#e4e5e5</color>
 
 </resources>

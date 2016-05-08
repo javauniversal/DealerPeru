@@ -31,12 +31,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
     private Toolbar toolbar;
     private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
     private long mBackPressed;
-
     FragmentManager fragmentManager;
-
-    private RequestQueue rq;
-    private CoordinatorLayout coordinatorLayout;
-    public static final String TAG = "MyTag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +44,9 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         fragmentManager = getSupportFragmentManager();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.mensaje_id);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -147,23 +139,6 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         drawer.closeDrawer(GravityCompat.START);
         return true;
 
-    }
-
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (rq != null) {
-            rq.cancelAll(TAG);
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (rq != null) {
-            rq.cancelAll(TAG);
-        }
     }
 
 }

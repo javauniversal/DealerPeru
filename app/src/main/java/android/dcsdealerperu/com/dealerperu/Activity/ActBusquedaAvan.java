@@ -12,6 +12,7 @@ import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
 import android.dcsdealerperu.com.dealerperu.Entry.Zona;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -45,7 +46,7 @@ import dmax.dialog.SpotsDialog;
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseHome.setResponseHomeListS;
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
-public class ActBuscarPunto extends AppCompatActivity {
+public class ActBusquedaAvan extends AppCompatActivity {
 
     private SpotsDialog alertDialog;
     private RequestQueue rq;
@@ -56,9 +57,6 @@ public class ActBuscarPunto extends AppCompatActivity {
     private Spinner spinner_circuito;
     private Spinner spinner_ruta;
     private Spinner spinner_est_comercial;
-    private EditText edit_idpos;
-    private EditText edit_cedula;
-    private EditText edit_nombre;
     private int departamento;
     private int ciudad_pro;
     private int distrito;
@@ -66,10 +64,14 @@ public class ActBuscarPunto extends AppCompatActivity {
     private int estado_ruta;
     private int estado_comercial;
 
+    private EditText edit_nombre_punto;
+    private EditText edit_nit_punto;
+    private EditText edit_nombre_cliente;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buscar_punto);
+        setContentView(R.layout.activity_busqueda_avan);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -83,26 +85,24 @@ public class ActBuscarPunto extends AppCompatActivity {
         spinner_circuito = (Spinner) findViewById(R.id.spinner_circuito);
         spinner_ruta = (Spinner) findViewById(R.id.spinner_ruta);
         spinner_est_comercial = (Spinner) findViewById(R.id.spinner_est_comercial);
-        edit_idpos = (EditText) findViewById(R.id.edit_idpos);
-        edit_cedula = (EditText) findViewById(R.id.edit_cedula);
-        edit_nombre = (EditText) findViewById(R.id.edit_nombre);
+
+        edit_nombre_punto = (EditText) findViewById(R.id.edit_nombre_punto);
+        edit_nit_punto = (EditText) findViewById(R.id.edit_nit_punto);
+        edit_nombre_cliente = (EditText) findViewById(R.id.edit_nombre_cliente);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buscarPunto();
+                validarFormt();
             }
         });
     }
 
-    private void buscarPunto() {
-        buscarPuntoJSO();
-    }
-
     private void buscarPuntoJSO() {
         alertDialog.show();
-        String url = String.format("%1$s%2$s", getString(R.string.url_base),"consultar_puntos");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base),"consultar_puntos_avanzados");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>(){
@@ -118,15 +118,15 @@ public class ActBuscarPunto extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         // error
                         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                            Toast.makeText(ActBuscarPunto.this, "Error de tiempo de espera", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActBusquedaAvan.this, "Error de tiempo de espera", Toast.LENGTH_LONG).show();
                         } else if (error instanceof AuthFailureError) {
-                            Toast.makeText(ActBuscarPunto.this, "Error Servidor", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActBusquedaAvan.this, "Error Servidor", Toast.LENGTH_LONG).show();
                         } else if (error instanceof ServerError) {
-                            Toast.makeText(ActBuscarPunto.this, "Server Error", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActBusquedaAvan.this, "Server Error", Toast.LENGTH_LONG).show();
                         } else if (error instanceof NetworkError) {
-                            Toast.makeText(ActBuscarPunto.this, "Error de red", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActBusquedaAvan.this, "Error de red", Toast.LENGTH_LONG).show();
                         } else if (error instanceof ParseError) {
-                            Toast.makeText(ActBuscarPunto.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActBusquedaAvan.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
                         }
 
                         alertDialog.dismiss();
@@ -137,16 +137,9 @@ public class ActBuscarPunto extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
 
-                BuscarPunto buscarPunto = new BuscarPunto();
-
-                int values = 0;
-
-                if (!isValidNumber(edit_idpos.getText().toString().trim()))
-                    values = Integer.parseInt(edit_idpos.getText().toString().trim());
-
-                params.put("idpos", String.valueOf(values));
-                params.put("cedula", edit_cedula.getText().toString());
-                params.put("nombre", edit_nombre.getText().toString());
+                params.put("nit_punto", edit_nit_punto.getText().toString());
+                params.put("nombre_punto", edit_nombre_punto.getText().toString());
+                params.put("responsable", edit_nombre_cliente.getText().toString());
                 params.put("depto", String.valueOf(departamento));
                 params.put("ciudad", String.valueOf(ciudad_pro));
                 params.put("distrito", String.valueOf(distrito));
@@ -178,7 +171,7 @@ public class ActBuscarPunto extends AppCompatActivity {
                 setResponseHomeListS(responseHomeList);
 
                 Bundle bundle = new Bundle();
-                Intent intent = new Intent(this, ActDetalleBuscarPunto.class);
+                Intent intent = new Intent(this, ActResponAvanBusqueda.class);
                 bundle.putSerializable("value", responseHomeList);
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -189,7 +182,28 @@ public class ActBuscarPunto extends AppCompatActivity {
             } finally {
                 alertDialog.dismiss();
             }
+        } else {
+
+            Toast.makeText(this, "No se encontraron puntos", Toast.LENGTH_LONG).show();
+            alertDialog.dismiss();
         }
+    }
+
+    private void validarFormt() {
+        if (isValidNumber(edit_nombre_punto.getText().toString()) && isValidNumber(edit_nit_punto.getText().toString()) && isValidNumber(edit_nombre_cliente.getText().toString()) && isValiSpinner()){
+            Toast.makeText(this, "Ingrese al menos un parámetro", Toast.LENGTH_LONG).show();
+        } else {
+            buscarPuntoJSO();
+        }
+    }
+
+    private boolean isValiSpinner() {
+
+        if (estado_circuito == 0 && departamento == 0 && ciudad_pro == 0 && distrito == 0 && estado_circuito == 0 && estado_ruta == 0 && estado_comercial == 0)
+            return true;
+        else
+            return false;
+
     }
 
     private boolean isValidNumber(String number){return number == null || number.length() == 0;}
@@ -212,15 +226,15 @@ public class ActBuscarPunto extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         // error
                         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                            Toast.makeText(ActBuscarPunto.this, "Error de tiempo de espera", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActBusquedaAvan.this, "Error de tiempo de espera", Toast.LENGTH_LONG).show();
                         } else if (error instanceof AuthFailureError) {
-                            Toast.makeText(ActBuscarPunto.this, "Error Servidor", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActBusquedaAvan.this, "Error Servidor", Toast.LENGTH_LONG).show();
                         } else if (error instanceof ServerError) {
-                            Toast.makeText(ActBuscarPunto.this, "Server Error", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActBusquedaAvan.this, "Server Error", Toast.LENGTH_LONG).show();
                         } else if (error instanceof NetworkError) {
-                            Toast.makeText(ActBuscarPunto.this, "Error de red", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActBusquedaAvan.this, "Error de red", Toast.LENGTH_LONG).show();
                         } else if (error instanceof ParseError) {
-                            Toast.makeText(ActBuscarPunto.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActBusquedaAvan.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
                         }
 
                         alertDialog.dismiss();
