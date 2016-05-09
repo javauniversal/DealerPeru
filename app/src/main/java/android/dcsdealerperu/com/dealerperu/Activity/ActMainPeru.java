@@ -46,11 +46,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         toolbar.setTitle("Inicio");
         setSupportActionBar(toolbar);
 
-
-
         fragmentManager = getSupportFragmentManager();
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -86,7 +82,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         TextView txt_sub = (TextView) header.findViewById(R.id.txt_sub);
         txt_sub.setText(String.format("%1$s %2$s", getResponseUserStatic().getNombre(), getResponseUserStatic().getApellido()));
 
-        // Accion Para la Edicion del Punto
+        // Accion Para la Edicion del
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         if (bundle != null) {
