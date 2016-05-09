@@ -32,6 +32,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
     FragmentManager fragmentManager;
 
     private int editaPunto;
+    private int accionNav;
     private Bundle bundle;
     private String accion = "Guardar";
 
@@ -89,13 +90,19 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         if (bundle != null) {
+
             editaPunto = bundle.getInt("edit_punto");
-            if(editaPunto != 0)
-            {
+            accionNav = bundle.getInt("accion");
+
+            if(accionNav == 1) {
                 accion = "Editar";
-                bundle.clear();
                 onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_gestion_pdv));
             }
+
+            if (accionNav == 2 ) {
+                onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_marcar_visita));
+            }
+
         }else{
             onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_home));
         }
@@ -167,6 +174,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
                 fragment.setArguments(args);
             }
             fragmentManager.beginTransaction().replace(R.id.contentPanel, fragment).commit();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

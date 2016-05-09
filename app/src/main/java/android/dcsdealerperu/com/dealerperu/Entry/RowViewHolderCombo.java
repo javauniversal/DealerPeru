@@ -15,13 +15,8 @@ public class RowViewHolderCombo extends RecyclerView.ViewHolder {
     public TextView txtReferencia;
     public TextView txtValorR;
     public TextView txtValorR2;
-    public TextView txtTaPantalla;
-    public TextView txtCamara;
-    public TextView txtFlash;
-    public TextView txtCamaraFron;
-    public TextView txtMemoria;
-    public TextView txtBateria;
     public ImageView img_producto;
+    public Button btnpedido;
 
     public RowViewHolderCombo(View itemView, Context context) {
         super(itemView);
@@ -29,13 +24,8 @@ public class RowViewHolderCombo extends RecyclerView.ViewHolder {
         this.txtReferencia = (TextView) itemView.findViewById(R.id.txtReferencia);
         this.txtValorR = (TextView) itemView.findViewById(R.id.txtValorR);
         this.txtValorR2 = (TextView) itemView.findViewById(R.id.txtValorR2);
+        this.btnpedido = (Button) itemView.findViewById(R.id.btnpedido);
 
-        //this.txtTaPantalla = (TextView) itemView.findViewById(R.id.txtTaPantalla);
-        //this.txtCamara = (TextView) itemView.findViewById(R.id.txtCamara);
-        //this.txtFlash = (TextView) itemView.findViewById(R.id.txtFlash);
-        //this.txtCamaraFron = (TextView) itemView.findViewById(R.id.txtCamaraFron);
-        //this.txtMemoria = (TextView) itemView.findViewById(R.id.txtMemoria);
-        //this.txtBateria = (TextView) itemView.findViewById(R.id.txtBateria);
         this.img_producto = (ImageView) itemView.findViewById(R.id.img_producto);
 
     }

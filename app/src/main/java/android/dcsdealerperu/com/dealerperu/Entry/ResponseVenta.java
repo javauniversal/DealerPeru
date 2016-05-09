@@ -12,6 +12,16 @@ public class ResponseVenta {
     @SerializedName("referencias_combos")
     private List<ReferenciasCombos> referenciasCombosList;
 
+    public static int id_posStacti;
+
+    public static int getId_posStacti() {
+        return id_posStacti;
+    }
+
+    public static void setId_posStacti(int id_posStacti) {
+        ResponseVenta.id_posStacti = id_posStacti;
+    }
+
     public static ResponseVenta responseVentaStatic;
 
     public static ResponseVenta getResponseVentaStatic() {

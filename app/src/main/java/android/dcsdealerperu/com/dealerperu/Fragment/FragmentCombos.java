@@ -1,6 +1,8 @@
 package android.dcsdealerperu.com.dealerperu.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.Activity.ActCarritoPedido;
 import android.dcsdealerperu.com.dealerperu.Activity.ActTomarPedido;
 import android.dcsdealerperu.com.dealerperu.Activity.SpacesItemDecoration;
 import android.dcsdealerperu.com.dealerperu.Adapter.AdapterRecyclerCombos;
@@ -101,6 +103,24 @@ public class FragmentCombos extends BaseVolleyFragment {
 
         adapter2.notifyDataSetChanged();
 
+        MenuItem item2 = menu.add("Carrito");
+        item2.setIcon(R.drawable.ic_shopping_cart_white_24dp); // sets icon
+        item2.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        item2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(getActivity(), ActCarritoPedido.class);
+                bundle.putInt("id_punto", mPosition);
+                bundle.putInt("id_usuario", getResponseUserStatic().getId());
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+                return true;
+            }
+
+        });
 
         // Implementing ActionBar Search inside a fragment
         MenuItem item = menu.add("Search");

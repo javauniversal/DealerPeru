@@ -30,6 +30,57 @@ public class Referencia implements Serializable {
     @SerializedName("descripcion")
     private String descripcion;
 
+    @SerializedName("img")
+    private String url_imagen;
+
+    public int cantidadPedida;
+
+    public int id_punto;
+
+    public int id_usuario;
+
+    public int tipo_producto;
+
+    public int getCantidadPedida() {
+        return cantidadPedida;
+    }
+
+    public void setCantidadPedida(int cantidadPedida) {
+        this.cantidadPedida = cantidadPedida;
+    }
+
+    public int getId_punto() {
+        return id_punto;
+    }
+
+    public void setId_punto(int id_punto) {
+        this.id_punto = id_punto;
+    }
+
+    public int getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
+    public int getTipo_producto() {
+        return tipo_producto;
+    }
+
+    public void setTipo_producto(int tipo_producto) {
+        this.tipo_producto = tipo_producto;
+    }
+
+    public String getUrl_imagen() {
+        return url_imagen;
+    }
+
+    public void setUrl_imagen(String url_imagen) {
+        this.url_imagen = url_imagen;
+    }
+
     public int getId() {
         return id;
     }

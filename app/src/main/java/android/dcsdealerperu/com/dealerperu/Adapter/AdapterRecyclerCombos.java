@@ -2,6 +2,7 @@ package android.dcsdealerperu.com.dealerperu.Adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.Activity.ActDetalleComboPedir;
 import android.dcsdealerperu.com.dealerperu.Activity.ActDetalleProducto;
 import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasCombos;
 import android.dcsdealerperu.com.dealerperu.Entry.RowViewHolderCombo;
@@ -68,12 +69,6 @@ public class AdapterRecyclerCombos extends RecyclerView.Adapter<RowViewHolderCom
         holder.txtReferencia.setText(items.getDescripcion());
         holder.txtValorR.setText(String.format("S/. %s", format.format(items.getPrecio_referencia())));
         holder.txtValorR2.setText(String.format("PVP: S/. %s", format.format(items.getPrecio_publico())));
-        //holder.txtTaPantalla.setText(String.format("Pantalla %s", items.getPantalla()));
-        //holder.txtCamara.setText(String.format("Camara %s", items.getCam_tras()));
-        //holder.txtFlash.setText(String.format("Flash %s", items.getFlash()));
-        //holder.txtCamaraFron.setText(String.format("Camara Fro %s", items.getCam_frontal()));
-        //holder.txtMemoria.setText(String.format("Memoria %s", items.getMemoria()));
-        //holder.txtBateria.setText(String.format("Bateria %s", items.getBateria()));
 
         loadeImagenView(holder.img_producto, items.getImg());
 
@@ -86,8 +81,22 @@ public class AdapterRecyclerCombos extends RecyclerView.Adapter<RowViewHolderCom
                 bundle.putSerializable("value", responseHomeList.get(position));
                 intent.putExtras(bundle);
                 context.startActivity(intent);
+
             }
         });
+
+        holder.btnpedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(context, ActDetalleComboPedir.class);
+                bundle.putSerializable("value", responseHomeList.get(position));
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
+
 
     }
 

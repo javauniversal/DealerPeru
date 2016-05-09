@@ -76,6 +76,7 @@
                 android:layout_marginTop="6dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
+                android:layout_marginBottom="6dp"
                 app:cardBackgroundColor="@color/actionBarColorText"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="4dp"

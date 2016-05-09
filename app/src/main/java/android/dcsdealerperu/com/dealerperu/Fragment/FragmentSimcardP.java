@@ -1,6 +1,8 @@
 package android.dcsdealerperu.com.dealerperu.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.Activity.ActCarritoPedido;
 import android.dcsdealerperu.com.dealerperu.Activity.ActTomarPedido;
 import android.dcsdealerperu.com.dealerperu.Activity.SpacesItemDecoration;
 import android.dcsdealerperu.com.dealerperu.Adapter.AdapterRecyclerSimcard;
@@ -41,6 +43,7 @@ import java.util.Map;
 import dmax.dialog.SpotsDialog;
 
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
+import static android.dcsdealerperu.com.dealerperu.Entry.ResponseVenta.setId_posStacti;
 
 @SuppressLint("ValidFragment")
 public class FragmentSimcardP extends BaseVolleyFragment {
@@ -91,6 +94,26 @@ public class FragmentSimcardP extends BaseVolleyFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
+
+        MenuItem item2 = menu.add("Carrito");
+        item2.setIcon(R.drawable.ic_shopping_cart_white_24dp); // sets icon
+        item2.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        item2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(getActivity(), ActCarritoPedido.class);
+                bundle.putInt("id_punto", mPosition);
+                bundle.putInt("id_usuario", getResponseUserStatic().getId());
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+                return true;
+            }
+
+        });
+
         // Implementing ActionBar Search inside a fragment
         MenuItem item = menu.add("Search");
         item.setIcon(R.drawable.abc_ic_search_api_mtrl_alpha); // sets icon
@@ -115,9 +138,7 @@ public class FragmentSimcardP extends BaseVolleyFragment {
             public boolean onQueryTextChange(String newText) {
 
                 newText = newText.toLowerCase();
-
                 filterList = getNewListFromFilter(newText);
-
                 adapter = new AdapterRecyclerSimcard(getActivity(), filterList);
                 recycler.setAdapter(adapter);
 
@@ -206,6 +227,8 @@ public class FragmentSimcardP extends BaseVolleyFragment {
             try {
 
                 responseVenta = gson.fromJson(response, ResponseVenta.class);
+
+                setId_posStacti(mPosition);
 
                 adapter = new AdapterRecyclerSimcard(getActivity(), responseVenta.getReferenciasSimsList());
                 recycler.setAdapter(adapter);

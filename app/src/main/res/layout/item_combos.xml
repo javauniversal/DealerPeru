@@ -85,7 +85,7 @@
                 style="@style/BrandButtonStyle2"
                 android:layout_weight="1"
                 android:text="Pedir Equipo"
-                android:id="@+id/btnCatalogo"
+                android:id="@+id/btnpedido"
                 android:gravity="center_vertical|center_horizontal" />
 
         </LinearLayout>

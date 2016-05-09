@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName;
  */
 public class ReferenciasSims {
 
+    private int id_auto_carrito;
+
     @SerializedName("id")
     private int id;
 
@@ -24,6 +26,56 @@ public class ReferenciasSims {
 
     @SerializedName("ped_sugerido")
     private String ped_sugerido;
+
+    public int cantidadPedida;
+
+    public int id_punto;
+
+    public int id_usuario;
+
+    public int tipo_producto;
+
+    public String url_imagen;
+
+    public String getUrl_imagen() {
+        return url_imagen;
+    }
+
+    public void setUrl_imagen(String url_imagen) {
+        this.url_imagen = url_imagen;
+    }
+
+    public int getTipo_producto() {
+        return tipo_producto;
+    }
+
+    public void setTipo_producto(int tipo_producto) {
+        this.tipo_producto = tipo_producto;
+    }
+
+    public int getId_punto() {
+        return id_punto;
+    }
+
+    public void setId_punto(int id_punto) {
+        this.id_punto = id_punto;
+    }
+
+    public int getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
+    public int getCantidadPedida() {
+        return cantidadPedida;
+    }
+
+    public void setCantidadPedida(int cantidadPedida) {
+        this.cantidadPedida = cantidadPedida;
+    }
 
     public int getId() {
         return id;
@@ -71,5 +123,13 @@ public class ReferenciasSims {
 
     public void setPed_sugerido(String ped_sugerido) {
         this.ped_sugerido = ped_sugerido;
+    }
+
+    public int getId_auto_carrito() {
+        return id_auto_carrito;
+    }
+
+    public void setId_auto_carrito(int id_auto_carrito) {
+        this.id_auto_carrito = id_auto_carrito;
     }
 }

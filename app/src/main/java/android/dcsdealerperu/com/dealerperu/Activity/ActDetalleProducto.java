@@ -11,7 +11,6 @@ import android.dcsdealerperu.com.dealerperu.R;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,10 +32,8 @@ public class ActDetalleProducto extends AppCompatActivity implements ViewPager.O
     public TextView txtValorR;
     public TextView txtTaPantalla;
     public TextView txtCamara;
-    public TextView txtFlash;
     public TextView txtCamaraFron;
     public TextView txtMemoria;
-    public TextView txtBateria;
     private DecimalFormat format;
 
     @Override
@@ -61,10 +58,8 @@ public class ActDetalleProducto extends AppCompatActivity implements ViewPager.O
         txtValorR = (TextView) findViewById(R.id.txtPecioP);
         txtTaPantalla = (TextView) findViewById(R.id.txtPantalla);
         txtCamara = (TextView) findViewById(R.id.txtCamara);
-        //txtFlash = (TextView) findViewById(R.id.txtFlash);
         txtCamaraFron = (TextView) findViewById(R.id.txtCamaraFrontal);
         txtMemoria = (TextView) findViewById(R.id.txtMemoria);
-        //txtBateria = (TextView) findViewById(R.id.txtBateria);
 
 
         pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);

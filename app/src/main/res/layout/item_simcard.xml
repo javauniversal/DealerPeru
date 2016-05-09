@@ -44,6 +44,7 @@
                     android:paddingLeft="4dp"
                     android:textSize="20sp"
                     android:id="@+id/txt_referemcia"
+                    android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
                     android:layout_weight="1"
                     android:layout_gravity="center_horizontal"
@@ -58,6 +59,20 @@
                     android:textSize="20sp"
                     android:id="@+id/txtStock"
                     android:layout_weight="1"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:text="Large Text"
+                    android:paddingLeft="4dp"
+                    android:textSize="20sp"
+                    android:id="@+id/txtCantidadPedida"
+                    android:layout_weight="1"
+                    android:textColor="@color/bckg"
+                    android:visibility="gone"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal" />
 
@@ -77,7 +92,7 @@
                 style="@style/BrandButtonStyle2"
                 android:layout_weight="1"
                 android:text="Pedir Simcard"
-                android:id="@+id/btnCatalogo"
+                android:id="@+id/btnCatalogoSim"
                 android:gravity="center_vertical|center_horizontal" />
 
         </LinearLayout>

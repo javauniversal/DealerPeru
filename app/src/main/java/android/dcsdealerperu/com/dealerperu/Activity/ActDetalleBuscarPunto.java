@@ -28,7 +28,6 @@ import static android.dcsdealerperu.com.dealerperu.Entry.ResponseHome.getRespons
 public class ActDetalleBuscarPunto extends AppCompatActivity {
 
     private AppAdapterRutero appAdapterRutero;
-    private SwipeMenuListView mListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +146,7 @@ public class ActDetalleBuscarPunto extends AppCompatActivity {
         Bundle bundle = new Bundle();
         Intent intent = new Intent(this, ActMainPeru.class);
         bundle.putInt("edit_punto",idpos);
+        bundle.putInt("accion", 1);
         intent.putExtras(bundle);
         startActivity(intent);
 
