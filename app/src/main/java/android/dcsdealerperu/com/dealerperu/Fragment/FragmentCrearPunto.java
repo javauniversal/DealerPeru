@@ -10,19 +10,16 @@ import android.view.ViewGroup;
 public class FragmentCrearPunto extends BaseVolleyFragment {
 
     private FragmentDatosPersonales fragmentDatosPersonales;
-
-
+    private int editaPunto = 0;
+    private String accion = "";
     public FragmentCrearPunto() {
-        // Required empty public constructor
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_crear_punto, container, false);
-
         return view;
 
     }
@@ -30,9 +27,17 @@ public class FragmentCrearPunto extends BaseVolleyFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (getArguments() != null) {
+            editaPunto = getArguments().getInt("idpos");
+            accion = getArguments().getString("accion");
 
-        FragmentManager fManager = getFragmentManager();
+        }
+        FragmentManager  fManager = getFragmentManager();
         fragmentDatosPersonales = new FragmentDatosPersonales();
+        Bundle args = new Bundle();
+        args.putInt("idpos", editaPunto);
+        args.putString("accion", accion);
+        fragmentDatosPersonales.setArguments(args);
         fManager.beginTransaction().replace(R.id.contentPanel, fragmentDatosPersonales).commit();
 
     }

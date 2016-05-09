@@ -2,17 +2,19 @@ package android.dcsdealerperu.com.dealerperu.Activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Adapter.AppAdapterRutero;
 import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
@@ -98,6 +100,9 @@ public class ActDetalleBuscarPunto extends AppCompatActivity {
                     case 0:
                         cargarDetalle(position);
                         break;
+                    case 1:
+                        EditarPunto(position);
+                        break;
                 }
 
                 return false;
@@ -127,10 +132,26 @@ public class ActDetalleBuscarPunto extends AppCompatActivity {
 
     }
 
+
     private int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 getResources().getDisplayMetrics());
     }
+
+    FragmentManager fragmentManager;
+    private void EditarPunto(int position) {
+        int idpos = 0;
+        idpos = getResponseHomeListS().get(position).getIdpos();
+
+        //Activity Principal, Para acceder al fragment
+        Bundle bundle = new Bundle();
+        Intent intent = new Intent(this, ActMainPeru.class);
+        bundle.putInt("edit_punto",idpos);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+    }
+
 
     private void cargarDetalle(int position) {
         LayoutInflater inflater = getLayoutInflater();

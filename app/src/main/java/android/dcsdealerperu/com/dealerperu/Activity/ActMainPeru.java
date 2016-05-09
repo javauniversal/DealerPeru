@@ -1,5 +1,6 @@
 package android.dcsdealerperu.com.dealerperu.Activity;
 
+import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmenMarcarvisita;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentCrearPunto;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHome;
@@ -8,7 +9,6 @@ import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisPedidos;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentRuteroVendedor;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,8 +22,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
 public class ActMainPeru extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,15 +31,25 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
     private long mBackPressed;
     FragmentManager fragmentManager;
 
+    private int editaPunto;
+    private Bundle bundle;
+    private String accion = "Guardar";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main_peru);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Inicio");
         setSupportActionBar(toolbar);
 
+
+
         fragmentManager = getSupportFragmentManager();
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -77,13 +85,22 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         TextView txt_sub = (TextView) header.findViewById(R.id.txt_sub);
         txt_sub.setText(String.format("%1$s %2$s", getResponseUserStatic().getNombre(), getResponseUserStatic().getApellido()));
 
-        Class fragmentClass = FragmentHome.class;
-        try {
-            Fragment fragment = (Fragment) fragmentClass.newInstance();
-            fragmentManager.beginTransaction().replace(R.id.contentPanel, fragment).commit();
-        } catch (Exception e) {
-            e.printStackTrace();
+        // Accion Para la Edicion del Punto
+        Intent intent = this.getIntent();
+        bundle = intent.getExtras();
+        if (bundle != null) {
+            editaPunto = bundle.getInt("edit_punto");
+            if(editaPunto != 0)
+            {
+                accion = "Editar";
+                bundle.clear();
+                onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_gestion_pdv));
+            }
+        }else{
+            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_home));
         }
+
+
     }
 
 
@@ -109,27 +126,46 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
 
         if (id == R.id.nav_home) {
             toolbar.setTitle("Inicio");
+            editaPunto = 0; accion = "Guardar";
             fragmentClass = FragmentHome.class;
+
         } else if(id == R.id.nav_marcar_visita) {
             toolbar.setTitle("Marcar Visita");
+            editaPunto = 0; accion = "Guardar";
             fragmentClass = FragmenMarcarvisita.class;
+
         } else if(id == R.id.nav_gestion_pdv) {
             toolbar.setTitle("Gestión PDV");
             fragmentClass = FragmentCrearPunto.class;
+
         } else if(id == R.id.nav_rutero_vendedor) {
             toolbar.setTitle("Mi Rutero");
+            editaPunto = 0; accion = "Guardar";
             fragmentClass = FragmentRuteroVendedor.class;
+
         }else if(id == R.id.nav_pedido_vendedor) {
             toolbar.setTitle("Mis Pedidos");
+            editaPunto = 0; accion = "Guardar";
             fragmentClass = FragmentMisPedidos.class;
+
         }else if(id == R.id.nav_baja_vendedor) {
             toolbar.setTitle("Mis Bajas");
+            editaPunto = 0; accion = "Guardar";
             fragmentClass = FragmentMisBajas.class;
+
         }
 
 
         try {
+
             Fragment fragment = (Fragment) fragmentClass.newInstance();
+            if(id == R.id.nav_gestion_pdv)
+            {
+                Bundle args = new Bundle();
+                args.putInt("idpos", editaPunto);
+                args.putString("accion", accion);
+                fragment.setArguments(args);
+            }
             fragmentManager.beginTransaction().replace(R.id.contentPanel, fragment).commit();
         } catch (Exception e) {
             e.printStackTrace();

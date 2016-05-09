@@ -4,6 +4,7 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Activity.ActBuscarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.RequesGuardarPunto;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -12,15 +13,33 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import dmax.dialog.SpotsDialog;
+
+import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
 
 public class FragmentDatosPersonales extends BaseVolleyFragment implements View.OnClickListener{
@@ -36,11 +55,24 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
     private FragmentDireccion fragmentDireccion;
     private Switch switch1;
     private int venta_recarga = 2;
+    private int editaPunto = 0;
+    private String accion;
 
-    public FragmentDatosPersonales() {
-        // Required empty public constructor
+    private RequestQueue rq;
+
+    private SpotsDialog alertDialog;
+
+    public static FragmentDatosPersonales newInstance(int idpos, String accion) {
+
+        Bundle args = new Bundle();
+        FragmentDatosPersonales fragment = new FragmentDatosPersonales();
+        args.putInt("edit_punto",idpos);
+        args.putString("accion",accion);
+        fragment.setArguments(args);
+        return fragment;
     }
-
+    public FragmentDatosPersonales() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,13 +91,72 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
         btn_siguiente_per = (Button) view.findViewById(R.id.btn_siguiente_per);
 
         btn_cancelar_per = (Button) view.findViewById(R.id.btn_siguiente_per);
+        if(getArguments() != null)
+        {
+            editaPunto = getArguments().getInt("idpos");
+            accion = getArguments().getString("accion");
+        }
 
-        if (RequesGuardarPunto.getRequesGuardarPuntoStatic() != null) {
-            cargarDataPre();
+        if(editaPunto != 0){
+            CargarDatosPunto();
+        }else
+        {
+            if (RequesGuardarPunto.getRequesGuardarPuntoStatic() != null) {
+                cargarDataPre();
+            }
         }
 
         return view;
 
+    }
+
+    private void CargarDatosPunto() {
+        String url = String.format("%1$s%2$s", getString(R.string.url_base),"consultar_info_puntos");
+        rq = Volley.newRequestQueue(getActivity());
+        StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        //parseJSONVisita(response);
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(getActivity(), "Error de tiempo de espera", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(getActivity(), "Error Servidor", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NetworkError) {
+                            Toast.makeText(getActivity(), "Error de red", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(getActivity(), "Error al serializar los datos", Toast.LENGTH_LONG).show();
+                        }
+
+                        alertDialog.dismiss();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
+                params.put("iddis", getResponseUserStatic().getId_distri());
+                params.put("db", getResponseUserStatic().getBd());
+                params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
+                params.put("idpos", String.valueOf(editaPunto)); // aqui va el idpos a consultar.!
+
+                return params;
+            }
+        };
+
+        rq.add(jsonRequest);
     }
 
     private void cargarDataPre() {
