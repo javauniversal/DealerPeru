@@ -8,6 +8,9 @@ public class GuardarEditarPunto {
     @SerializedName("nombre_punto")
     private String nombre_punto;
 
+    @SerializedName("tipo_documento")
+    private int tipo_documento;
+
     @SerializedName("cedula")
     public String cedula;
 
@@ -360,5 +363,13 @@ public class GuardarEditarPunto {
 
     public void setDes_tipo_ciudad(String des_tipo_ciudad) {
         this.des_tipo_ciudad = des_tipo_ciudad;
+    }
+
+    public int getTipo_documento() {
+        return tipo_documento;
+    }
+
+    public void setTipo_documento(int tipo_documento) {
+        this.tipo_documento = tipo_documento;
     }
 }

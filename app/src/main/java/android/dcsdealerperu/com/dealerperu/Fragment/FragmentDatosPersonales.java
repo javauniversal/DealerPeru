@@ -3,6 +3,7 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Activity.ActBuscarPunto;
+import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.RequesGuardarPunto;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
@@ -13,9 +14,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -32,7 +36,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,10 +58,12 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
     private EditText edit_cel_edit;
     private Button btn_siguiente_per;
     private Button btn_cancelar_per;
+    private Spinner spinnerTipoDocumento;
     private FragmentDireccion fragmentDireccion;
     private Switch switch1;
     private int venta_recarga = 2;
     private int editaPunto = 0;
+    private int tipoDocumento = 0;
     private String accion;
 
     private RequestQueue rq;
@@ -91,6 +99,34 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
         btn_siguiente_per = (Button) view.findViewById(R.id.btn_siguiente_per);
 
         btn_cancelar_per = (Button) view.findViewById(R.id.btn_siguiente_per);
+
+        spinnerTipoDocumento = (Spinner) view.findViewById(R.id.spinner_tipo_documento);
+        final List<CategoriasEstandar> ListaTipoDoc = new ArrayList<>();
+        ListaTipoDoc.add(new CategoriasEstandar(1,"RUC"));
+        ListaTipoDoc.add(new CategoriasEstandar(2,"DNI"));
+
+        ArrayAdapter<CategoriasEstandar> adapterEstados = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner,ListaTipoDoc);
+        spinnerTipoDocumento.setAdapter(adapterEstados);
+        spinnerTipoDocumento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                tipoDocumento = ListaTipoDoc.get(position).getId();
+                edit_cedula.setHint("");
+                if(tipoDocumento == 1)
+                {
+                    edit_cedula.setHint("Ruc Responsable");
+                }
+                else
+                {
+                    edit_cedula.setHint("Dni Responsable");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+
+        });
+
         if(getArguments() != null)
         {
             editaPunto = getArguments().getInt("idpos");
@@ -329,6 +365,7 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
         objeto.setTelefono(edit_tel_edit.getText().toString());
         objeto.setCelular(edit_cel_edit.getText().toString());
         objeto.setVenta_recarga(venta_recarga);
+        objeto.setTipo_documento(tipoDocumento);
 
         RequesGuardarPunto.setRequesGuardarPuntoStatic(objeto);
 

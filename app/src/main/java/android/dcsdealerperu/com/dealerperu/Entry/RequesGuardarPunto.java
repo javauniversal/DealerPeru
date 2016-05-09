@@ -3,6 +3,7 @@ package android.dcsdealerperu.com.dealerperu.Entry;
 public class RequesGuardarPunto {
 
     private String nombre_punto;
+    private int tipo_documento;
     private String cedula;
     private String nombre_cliente;
     private String email;
@@ -191,5 +192,14 @@ public class RequesGuardarPunto {
 
     public void setDes_otro(String des_otro) {
         this.des_otro = des_otro;
+    }
+
+
+    public int getTipo_documento() {
+        return tipo_documento;
+    }
+
+    public void setTipo_documento(int tipo_documento) {
+        this.tipo_documento = tipo_documento;
     }
 }

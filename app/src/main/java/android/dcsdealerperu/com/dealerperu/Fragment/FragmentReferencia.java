@@ -11,14 +11,12 @@ import android.dcsdealerperu.com.dealerperu.Entry.ResponseInsert;
 import android.dcsdealerperu.com.dealerperu.Entry.Subcategorias;
 import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
 import android.dcsdealerperu.com.dealerperu.Entry.Zona;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,7 +35,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -288,6 +285,7 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
                 GuardarEditarPunto gep = new GuardarEditarPunto();
 
                 gep.setNombre_punto(getRequesGuardarPuntoStatic().getNombre_punto());
+                gep.setTipo_documento(getRequesGuardarPuntoStatic().getTipo_documento());
                 gep.setCedula(getRequesGuardarPuntoStatic().getCedula());
                 gep.setNombre_cliente(getRequesGuardarPuntoStatic().getNombre_cliente());
                 gep.setEmail(getRequesGuardarPuntoStatic().getEmail().trim());
