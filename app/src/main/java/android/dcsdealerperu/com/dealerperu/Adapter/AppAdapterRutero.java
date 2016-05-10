@@ -1,9 +1,12 @@
 package android.dcsdealerperu.com.dealerperu.Adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseHome;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -41,7 +44,7 @@ public class AppAdapterRutero extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = View.inflate(actx, R.layout.item_list_app, null);
             new ViewHolder(convertView);
@@ -49,10 +52,10 @@ public class AppAdapterRutero extends BaseAdapter {
 
         ViewHolder holder = (ViewHolder) convertView.getTag();
 
-        ResponseHome responseHome = getItem(position);
+        final ResponseHome responseHome = getItem(position);
 
         holder.title.setText(responseHome.getRazon());
-        holder.sub.setText(responseHome.getNombre_cli());
+        holder.sub.setText(responseHome.getDireccion());
 
         if(responseHome.getTipo_visita() == 1) {
             holder.img_estado_visita.setImageResource(R.drawable.ic_radio_button_checked_black_24dp);

@@ -107,6 +107,7 @@ public class ActReporteRutero extends AppCompatActivity {
     }
 
     private void cargarDetalle(int position) {
+
         LayoutInflater inflater = getLayoutInflater();
         View dialoglayout = inflater.inflate(R.layout.dialog_detalle, null);
 
@@ -148,7 +149,9 @@ public class ActReporteRutero extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+
         builder.show();
+
     }
 
     private int dp2px(int dp) {

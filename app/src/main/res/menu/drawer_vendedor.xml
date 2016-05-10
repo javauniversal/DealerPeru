@@ -21,7 +21,7 @@
         <item
             android:id="@+id/nav_gestion_pdv"
             android:icon="@drawable/ic_create_black_24dp"
-            android:title="Gestión PDV" />
+            android:title="Gestión PDVS" />
 
         <item android:title="Reportes">
             <menu>
@@ -39,6 +39,12 @@
                     android:title="Mis Bajas" />
             </menu>
         </item>
+
+        <item
+            android:id="@+id/nav_cerrar_sesion"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="Cerrar Sesión" />
+
     </group>
 
 

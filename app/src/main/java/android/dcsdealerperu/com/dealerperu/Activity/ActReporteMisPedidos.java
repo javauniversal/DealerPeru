@@ -21,20 +21,24 @@ import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 
+import java.text.DecimalFormat;
+
 import dmax.dialog.SpotsDialog;
 
 public class ActReporteMisPedidos extends AppCompatActivity {
 
     private MisPedidos mDescribable;
     private Bundle bundle;
-    private SpotsDialog alertDialog;
     private AdapterMisPedidos adapterMisPedidos;
+    private DecimalFormat format;
 
     private SwipeMenuListView mListView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reporte_mis_pedidos);
+
+        format = new DecimalFormat("#,###.##");
 
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
@@ -63,13 +67,28 @@ public class ActReporteMisPedidos extends AppCompatActivity {
                 openItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(openItem);
+
+                // create "open" item
+                SwipeMenuItem openItem2 = new SwipeMenuItem(getApplicationContext());
+                // set item background
+                openItem2.setBackground(new ColorDrawable(Color.rgb(219, 68, 55)));
+                // set item width
+                openItem2.setWidth(dp2px(90));
+                // set item title
+                openItem2.setTitle("Cancelar");
+                // set item title fontsize
+                openItem2.setTitleSize(18);
+                // set item title font color
+                openItem2.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(openItem2);
             }
         };
 
-// set creator
+        // set creator
         mListView.setMenuCreator(creator);
 
-// step 2. listener item click event
+        // step 2. listener item click event
         mListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
@@ -107,6 +126,7 @@ public class ActReporteMisPedidos extends AppCompatActivity {
     }
 
     private void cargarDetalle(int position) {
+
         LayoutInflater inflater = getLayoutInflater();
         View dialoglayout = inflater.inflate(R.layout.dialog_detalle_mis_pedidos, null);
 
@@ -120,7 +140,7 @@ public class ActReporteMisPedidos extends AppCompatActivity {
         txt_cantidad.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getCantidad()));
 
         TextView txt_total = (TextView) dialoglayout.findViewById(R.id.txt_total);
-        txt_total.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getTotal()));
+        txt_total.setText(String.format("$ %1$s", format.format(mDescribable.getResponseMisPedidosList().get(position).getTotal())));
 
         TextView txt_cant_picking = (TextView) dialoglayout.findViewById(R.id.txt_cant_picking);
         txt_cant_picking.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getCantidad_picking()));

@@ -10,6 +10,7 @@ import android.dcsdealerperu.com.dealerperu.Entry.RequestGuardarEditarPunto;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -105,7 +106,7 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
 
         btn_siguiente_per = (Button) view.findViewById(R.id.btn_siguiente_per);
 
-        btn_cancelar_per = (Button) view.findViewById(R.id.btn_siguiente_per);
+        btn_cancelar_per = (Button) view.findViewById(R.id.btn_cancelar_per);
 
         alertDialog = new SpotsDialog(getActivity(), R.style.Custom);
 
@@ -122,12 +123,17 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 tipoDocumento = ListaTipoDoc.get(position).getId();
                 edit_cedula.setHint("");
+                edit_cedula.setText("");
                 if(tipoDocumento == 1)
                 {
+                    int maxLength = 11;
+                    edit_cedula.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
                     edit_cedula.setHint("Ruc Responsable");
                 }
                 else
                 {
+                    int maxLength = 8;
+                    edit_cedula.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
                     edit_cedula.setHint("Dni Responsable");
                 }
             }
@@ -410,6 +416,10 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
         edit_correo_edit.setText("");
         edit_tel_edit.setText("");
         edit_cel_edit.setText("");
+
+        edit_nombres.setFocusable(true);
+        edit_nombres.setFocusableInTouchMode(true);
+        edit_nombres.requestFocus();
 
     }
 

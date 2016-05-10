@@ -2,19 +2,20 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 
 
 import android.content.Intent;
-import android.dcsdealerperu.com.dealerperu.Activity.ActReporteMisPedidos;
+import android.dcsdealerperu.com.dealerperu.Activity.ActDetalleAproPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
-import android.dcsdealerperu.com.dealerperu.Entry.MisPedidos;
-import android.dcsdealerperu.com.dealerperu.Entry.ResponseCreatePunt;
-import android.dcsdealerperu.com.dealerperu.Entry.ResponseMisPedidos;
-import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
-import android.dcsdealerperu.com.dealerperu.Entry.Zona;
-import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Entry.ListAprobarPunto;
+import android.dcsdealerperu.com.dealerperu.Entry.ListCategoria;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseMisBajas;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.test.SingleLaunchActivityTestCase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -33,6 +34,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,71 +47,64 @@ import dmax.dialog.SpotsDialog;
 
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
-public class FragmentMisPedidos extends BaseVolleyFragment implements DatePickerDialog.OnDateSetListener {
+public class FragmenteAproPdv extends BaseVolleyFragment implements DatePickerDialog.OnDateSetListener {
 
-    private EditText fecha_inicial;
-    private EditText fecha_final;
-    private Spinner spinner_circuito;
-    private Spinner spinner_ruta;
-    private Spinner spinner_estado;
-    private EditText numero_pedido;
-    private EditText idpos;
     private boolean fecha_idicador;
-    private SpotsDialog alertDialog;
-    private ResponseCreatePunt responseCretePunt;
-    private int circuito, ruta,estado;
     private Date dia_inicial;
     private Date dia_final;
+    private EditText edit_fecha_inicial;
+    private EditText edit_fecha_final;
+    private EditText edit_idpos;
+    private Spinner spinner_vendedor;
+    private Spinner spinner_solicitud;
+    private SpotsDialog alertDialog;
+    private int estado;
+    private int estado_vendedor;
 
-    public FragmentMisPedidos() {
+    public FragmenteAproPdv() {
         // Required empty public constructor
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_mis_pedidos, container, false);
+        View view = inflater.inflate(R.layout.fragmente_apro_pdv, container, false);
 
-        spinner_circuito = (Spinner) view.findViewById(R.id.spinner_circuito);
-        spinner_ruta = (Spinner) view.findViewById(R.id.spinner_ruta);
-        spinner_estado = (Spinner) view.findViewById(R.id.spinner_estado);
-
-        fecha_inicial = (EditText) view.findViewById(R.id.edit_fecha_ini);
-        fecha_final = (EditText) view.findViewById(R.id.edit_fecha_fin);
-        idpos = (EditText) view.findViewById(R.id.edit_idpos);
-        numero_pedido = (EditText) view.findViewById(R.id.edit_nro_pedido);
-        idpos = (EditText) view.findViewById(R.id.edit_idpos);
+        spinner_vendedor = (Spinner) view.findViewById(R.id.spinner_vendedor);
+        spinner_solicitud = (Spinner) view.findViewById(R.id.spinner_solicitud);
+        edit_fecha_inicial = (EditText) view.findViewById(R.id.edit_fecha_ini);
+        edit_fecha_final = (EditText) view.findViewById(R.id.edit_fecha_fin);
+        edit_idpos = (EditText) view.findViewById(R.id.edit_idpos);
 
         alertDialog = new SpotsDialog(getActivity(), R.style.Custom);
 
-        // Accion del boton buscar
-        FloatingActionButton btn_buscar = (FloatingActionButton) view.findViewById(R.id.cargar_reporte_pedidos);
+        FloatingActionButton btn_buscar = (FloatingActionButton) view.findViewById(R.id.aprobacion_punto);
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (isValidNumber(fecha_inicial.getText().toString())) {
+                if (isValidNumber(edit_fecha_inicial.getText().toString())) {
                     Toast.makeText(getActivity(), "La fecha inicial es un campo requerido", Toast.LENGTH_LONG).show();
-                } else if (isValidNumber(fecha_final.getText().toString())) {
+                } else if (isValidNumber(edit_fecha_final.getText().toString())) {
                     Toast.makeText(getActivity(), "La fecha final es un campo requerido", Toast.LENGTH_LONG).show();
                 } else {
                     if (checkDate(dia_inicial, dia_final)) {
                         Toast.makeText(getActivity(), "La fecha no puede superar más de 5 días de rango", Toast.LENGTH_LONG).show();
                     } else {
-                        ConsultarReporte();
+                        consltarPuntos();
                     }
                 }
             }
         });
 
-        fecha_inicial.setOnClickListener(new View.OnClickListener() {
+
+        edit_fecha_inicial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar now = Calendar.getInstance();
                 DatePickerDialog dpd = com.borax12.materialdaterangepicker.date.DatePickerDialog.newInstance(
-                        FragmentMisPedidos.this,
+                        FragmenteAproPdv.this,
                         now.get(Calendar.YEAR),
                         now.get(Calendar.MONTH),
                         now.get(Calendar.DAY_OF_MONTH)
@@ -118,17 +113,15 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
                 fecha_idicador = true;
 
                 dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
-
-
             }
         });
 
-        fecha_final.setOnClickListener(new View.OnClickListener() {
+        edit_fecha_final.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar now = Calendar.getInstance();
                 DatePickerDialog dpd = com.borax12.materialdaterangepicker.date.DatePickerDialog.newInstance(
-                        FragmentMisPedidos.this,
+                        FragmenteAproPdv.this,
                         now.get(Calendar.YEAR),
                         now.get(Calendar.MONTH),
                         now.get(Calendar.DAY_OF_MONTH)
@@ -143,19 +136,19 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
         });
 
         return view;
+
     }
 
     private boolean isValidNumber(String number){return number == null || number.length() == 0;}
 
-    private void ConsultarReporte() {
+    private void consltarPuntos() {
         alertDialog.show();
-        String url = String.format("%1$s%2$s", getString(R.string.url_base), "consultar_reporte_pedidos");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_peticiones_aprobacion");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>(){
                     @Override
                     public void onResponse(final String response) {
-                        mostrarReporte(response);
-                        alertDialog.dismiss();
+                        responseAprobacion(response);
                     }
                 },
                 new Response.ErrorListener(){
@@ -189,14 +182,12 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
                 params.put("db", getResponseUserStatic().getBd());
                 params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
 
-                params.put("fecha_ini", fecha_inicial.getText().toString().trim());
-                params.put("fecha_fin", fecha_final.getText().toString().trim());
-                params.put("idpos", idpos.getText().toString().trim());
+                params.put("fecha_ini", edit_fecha_inicial.getText().toString());
+                params.put("fecha_fin", edit_fecha_final.getText().toString());
+                params.put("idpos", edit_idpos.getText().toString().trim());
+                params.put("solicitud", String.valueOf(estado));
+                params.put("vendedor", String.valueOf(estado_vendedor));
 
-                params.put("nro_ped", numero_pedido.getText().toString().trim());
-                params.put("circuito", String.valueOf(circuito));
-                params.put("ruta", String.valueOf(ruta));
-                params.put("estado", String.valueOf(estado));
                 return params;
 
             }
@@ -204,20 +195,19 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
         addToQueue(jsonRequest);
     }
 
-    private void mostrarReporte(String response) {
+    private void responseAprobacion(String response) {
         Gson gson = new Gson();
 
         if (!response.equals("[]")) {
             try {
 
-                MisPedidos responseMisPedidos = gson.fromJson(response, MisPedidos.class);
+                ListAprobarPunto listAprobarPunto = gson.fromJson(response, ListAprobarPunto.class);
 
                 Bundle bundle = new Bundle();
-                Intent intent = new Intent(getActivity(), ActReporteMisPedidos.class);
-                bundle.putSerializable("value", responseMisPedidos);
+                Intent intent = new Intent(getActivity(), ActDetalleAproPunto.class);
+                bundle.putSerializable("value", listAprobarPunto);
                 intent.putExtras(bundle);
                 startActivity(intent);
-
 
             } catch (IllegalStateException ex) {
                 ex.printStackTrace();
@@ -234,40 +224,21 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //llenar Spinner de Estados
-        final List<CategoriasEstandar> ListaEstados = new ArrayList<>();
-        ListaEstados.add(new CategoriasEstandar(-1,"Seleccionar"));
-        ListaEstados.add(new CategoriasEstandar(0,"Pendiente"));
-        ListaEstados.add(new CategoriasEstandar(1,"Aceptado"));
-        ListaEstados.add(new CategoriasEstandar(2,"Picking"));
-        ListaEstados.add(new CategoriasEstandar(3,"Cancelado"));
-        ListaEstados.add(new CategoriasEstandar(4,"Despachado"));
-        ListaEstados.add(new CategoriasEstandar(5,"Entregado"));
-        ListaEstados.add(new CategoriasEstandar(6,"Rechazado por punto"));
 
-        ArrayAdapter<CategoriasEstandar> adapterEstados = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner,ListaEstados);
-        spinner_estado.setAdapter(adapterEstados);
-        spinner_estado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                estado = ListaEstados.get(position).getId();
-            }
+        loadVendedor();
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+        loadSolicitud();
 
-        });
-        setupGrid();
     }
 
-    private void setupGrid() {
+    private void loadVendedor() {
         alertDialog.show();
-        String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_filtros_puntos");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_vendedores_aprobacion");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>(){
                     @Override
                     public void onResponse(final String response) {
-                        parseJSON(response);
+                        mostrarReporte(response);
                     }
                 },
                 new Response.ErrorListener(){
@@ -305,18 +276,28 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
 
             }
         };
-
         addToQueue(jsonRequest);
     }
 
-    private void parseJSON(String response) {
+    private void mostrarReporte(String response) {
         Gson gson = new Gson();
 
         if (!response.equals("[]")) {
             try {
 
-                responseCretePunt = gson.fromJson(response, ResponseCreatePunt.class);
-                loadTerritorio(responseCretePunt);
+                final ListCategoria listCategoria = gson.fromJson(response, ListCategoria.class);
+                ArrayAdapter<CategoriasEstandar> adapterEstado = new ArrayAdapter<>(getActivity(),R.layout.textview_spinner,listCategoria);
+                spinner_vendedor.setAdapter(adapterEstado);
+                spinner_vendedor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        estado_vendedor = listCategoria.get(position).getId();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) { }
+
+                });
 
             } catch (IllegalStateException ex) {
                 ex.printStackTrace();
@@ -330,31 +311,21 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
         }
     }
 
-    private void loadTerritorio(final ResponseCreatePunt territorioRes) {
+    private void loadSolicitud() {
 
-        ArrayAdapter<Territorio> prec3 = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, territorioRes.getTerritorioList());
-        spinner_circuito.setAdapter(prec3);
-        spinner_circuito.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        final List<CategoriasEstandar> listaEstados = new ArrayList<>();
+        listaEstados.add(new CategoriasEstandar(0,"Seleccionar"));
+        listaEstados.add(new CategoriasEstandar(1,"Creación"));
+        listaEstados.add(new CategoriasEstandar(2,"Modificación"));
+
+        ArrayAdapter<CategoriasEstandar> adapterEstado = new ArrayAdapter<>(getActivity(),R.layout.textview_spinner,listaEstados);
+        spinner_solicitud.setAdapter(adapterEstado);
+        spinner_solicitud.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                circuito = territorioRes.getTerritorioList().get(position).getId();
-                loadZona(territorioRes.getTerritorioList().get(position).getZonaList());
+                estado = listaEstados.get(position).getId();
             }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-
-        });
-    }
-
-    private void loadZona(final List<Zona> zonas) {
-        ArrayAdapter<Zona> prec3 = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, zonas);
-        spinner_ruta.setAdapter(prec3);;
-        spinner_ruta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ruta = zonas.get(position).getId();
-            }
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
 
@@ -368,14 +339,13 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
         monthOfYear = (monthOfYear+1);
 
         if (fecha_idicador) {
-            fecha_inicial.setText(year+"/"+monthOfYear+"/"+dayOfMonth);
+            edit_fecha_inicial.setText(year+"/"+monthOfYear+"/"+dayOfMonth);
             dia_inicial = converFecha(year, monthOfYear, dayOfMonth);
         } else {
-            fecha_final.setText(year+"/"+monthOfYear+"/"+dayOfMonth);
+            edit_fecha_final.setText(year+"/"+monthOfYear+"/"+dayOfMonth);
             dia_final = converFecha(year, monthOfYear, dayOfMonth);
         }
     }
-
 
     public Date converFecha(int year, int mes, int dia){
 

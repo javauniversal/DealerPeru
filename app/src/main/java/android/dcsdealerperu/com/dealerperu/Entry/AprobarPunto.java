@@ -1,0 +1,108 @@
+package android.dcsdealerperu.com.dealerperu.Entry;
+
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+import java.util.List;
+
+public class AprobarPunto implements Serializable {
+
+    @SerializedName("id_soli")
+    private int id_soli;
+
+    @SerializedName("tipo_solicitud")
+    private int tipo_solicitud;
+
+    @SerializedName("fecha")
+    private String fecha;
+
+    @SerializedName("solicitud")
+    private String solicitud;
+
+    @SerializedName("estado")
+    private String estado;
+
+    @SerializedName("idpdv")
+    private int idpdv;
+
+    @SerializedName("nombre_vende")
+    private String   nombre_vende;
+
+    @SerializedName("id_pos")
+    private int id_pos;
+
+    @SerializedName("detalle")
+    private List<DetalleAprobacion> detalleAprobacionList;
+
+    public int getId_soli() {
+        return id_soli;
+    }
+
+    public void setId_soli(int id_soli) {
+        this.id_soli = id_soli;
+    }
+
+    public int getTipo_solicitud() {
+        return tipo_solicitud;
+    }
+
+    public void setTipo_solicitud(int tipo_solicitud) {
+        this.tipo_solicitud = tipo_solicitud;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getSolicitud() {
+        return solicitud;
+    }
+
+    public void setSolicitud(String solicitud) {
+        this.solicitud = solicitud;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public int getIdpdv() {
+        return idpdv;
+    }
+
+    public void setIdpdv(int idpdv) {
+        this.idpdv = idpdv;
+    }
+
+    public String getNombre_vende() {
+        return nombre_vende;
+    }
+
+    public void setNombre_vende(String nombre_vende) {
+        this.nombre_vende = nombre_vende;
+    }
+
+    public int getId_pos() {
+        return id_pos;
+    }
+
+    public void setId_pos(int id_pos) {
+        this.id_pos = id_pos;
+    }
+
+    public List<DetalleAprobacion> getDetalleAprobacionList() {
+        return detalleAprobacionList;
+    }
+
+    public void setDetalleAprobacionList(List<DetalleAprobacion> detalleAprobacionList) {
+        this.detalleAprobacionList = detalleAprobacionList;
+    }
+}

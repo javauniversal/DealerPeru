@@ -7,6 +7,7 @@ import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHome;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisBajas;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisPedidos;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentRuteroVendedor;
+import android.dcsdealerperu.com.dealerperu.Fragment.FragmenteAproPdv;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -138,7 +139,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             fragmentClass = FragmenMarcarvisita.class;
 
         } else if(id == R.id.nav_gestion_pdv) {
-            toolbar.setTitle("Gestión PDV");
+            toolbar.setTitle("Gestión PDVS");
             fragmentClass = FragmentCrearPunto.class;
 
         } else if(id == R.id.nav_rutero_vendedor) {
@@ -146,15 +147,26 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             editaPunto = 0; accion = "Guardar";
             fragmentClass = FragmentRuteroVendedor.class;
 
-        }else if(id == R.id.nav_pedido_vendedor) {
+        } else if(id == R.id.nav_pedido_vendedor) {
             toolbar.setTitle("Mis Pedidos");
             editaPunto = 0; accion = "Guardar";
             fragmentClass = FragmentMisPedidos.class;
 
-        }else if(id == R.id.nav_baja_vendedor) {
+        } else if(id == R.id.nav_baja_vendedor) {
             toolbar.setTitle("Mis Bajas");
             editaPunto = 0; accion = "Guardar";
             fragmentClass = FragmentMisBajas.class;
+
+        } else if(id == R.id.nav_pdv_aprp) {
+            toolbar.setTitle("Aprobación PDVS");
+            editaPunto = 0; accion = "Guardar";
+            fragmentClass = FragmenteAproPdv.class;
+        } else if(id == R.id.nav_cerrar_sesion) {
+
+            Intent intent = new Intent(this, ActLoginUser.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
 
         }
 
@@ -162,13 +174,14 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         try {
 
             Fragment fragment = (Fragment) fragmentClass.newInstance();
-            if(id == R.id.nav_gestion_pdv)
-            {
+
+            if(id == R.id.nav_gestion_pdv) {
                 Bundle args = new Bundle();
                 args.putInt("idpos", editaPunto);
                 args.putString("accion", accion);
                 fragment.setArguments(args);
             }
+
             fragmentManager.beginTransaction().replace(R.id.contentPanel, fragment).commit();
 
         } catch (Exception e) {

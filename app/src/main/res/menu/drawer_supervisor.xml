@@ -9,20 +9,41 @@
             android:title="Inicio" />
 
         <item
-            android:id="@+id/nav_sol_producto"
-            android:icon="@drawable/ic_add_shopping_cart_black_24dp"
-            android:title="Solicitar Producto" />
-
-        <item
-            android:id="@+id/nav_crear_punto"
-            android:icon="@drawable/ic_create_black_24dp"
-            android:title="Crear Punto" />
-
-        <item
-            android:id="@+id/nav_pdv"
+            android:id="@+id/nav_marcar_visita"
             android:icon="@drawable/ic_person_pin_black_24dp"
-            android:title="Visita PDV" />
+            android:title="Marcar Visita" />
 
+        <item
+            android:id="@+id/nav_gestion_pdv"
+            android:icon="@drawable/ic_create_black_24dp"
+            android:title="Gestión PDVS" />
+
+        <item
+            android:id="@+id/nav_pdv_aprp"
+            android:icon="@drawable/ic_assignment_turned_in_black_24dp"
+            android:title="Aprobación de PDVS" />
+
+        <item android:title="Reportes">
+            <menu>
+                <item
+                    android:id="@+id/nav_rutero_pedido_super"
+                    android:icon="@drawable/ic_directions_walk_black_24dp"
+                    android:title="Pedidos" />
+                <item
+                    android:id="@+id/nav_bajas_super"
+                    android:icon="@drawable/ic_done_all_black_24dp"
+                    android:title="Bajas" />
+                <item
+                    android:id="@+id/nav_aprobaciones_super"
+                    android:icon="@drawable/ic_assignment_black_24dp"
+                    android:title="Aprobaciones" />
+            </menu>
+        </item>
+
+        <item
+            android:id="@+id/nav_cerrar_sesion"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="Cerrar Sesión" />
 
     </group>
 
