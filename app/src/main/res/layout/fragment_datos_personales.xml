@@ -154,7 +154,7 @@
                             android:layout_height="match_parent"
                             android:id="@+id/edit_cedula"
                             android:textSize="@dimen/dimen_letra_app"
-                            android:inputType="text" />
+                            android:inputType="number" />
 
                     </android.support.design.widget.TextInputLayout>
 

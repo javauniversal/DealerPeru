@@ -3,7 +3,20 @@ package android.dcsdealerperu.com.dealerperu.Entry;
 
 import com.google.gson.annotations.SerializedName;
 
-public class GuardarEditarPunto{
+import java.io.Serializable;
+
+public class RequestGuardarEditarPunto implements Serializable{
+
+    public int getIdpos() {
+        return idpos;
+    }
+
+    public void setIdpos(int idpos) {
+        this.idpos = idpos;
+    }
+
+    @SerializedName("idpos")
+    private int idpos;
 
     @SerializedName("nombre_punto")
     private String nombre_punto;
@@ -108,6 +121,7 @@ public class GuardarEditarPunto{
 
     @SerializedName("des_tipo_ciudad")
     public String des_tipo_ciudad;
+
 
     public String getNombre_punto() {
         return nombre_punto;

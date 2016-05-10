@@ -4,7 +4,9 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Activity.ActBuscarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
+import android.dcsdealerperu.com.dealerperu.Entry.GuardarEditarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.RequesGuardarPunto;
+import android.dcsdealerperu.com.dealerperu.Entry.RequestGuardarEditarPunto;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -35,6 +37,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,8 +68,12 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
     private int editaPunto = 0;
     private int tipoDocumento = 0;
     private String accion;
+    private RequestGuardarEditarPunto requestGuardarEditarPunto;
 
+    private GuardarEditarPunto guardarEditarPunto;
     private RequestQueue rq;
+    private List<CategoriasEstandar> ListaTipoDoc = new ArrayList<>();
+    RequestGuardarEditarPunto datos;
 
     private SpotsDialog alertDialog;
 
@@ -100,9 +107,12 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
 
         btn_cancelar_per = (Button) view.findViewById(R.id.btn_siguiente_per);
 
+        alertDialog = new SpotsDialog(getActivity(), R.style.Custom);
+
         spinnerTipoDocumento = (Spinner) view.findViewById(R.id.spinner_tipo_documento);
-        final List<CategoriasEstandar> ListaTipoDoc = new ArrayList<>();
+
         ListaTipoDoc.add(new CategoriasEstandar(1,"RUC"));
+        ListaTipoDoc.add(new CategoriasEstandar(2,"DNI"));
         ListaTipoDoc.add(new CategoriasEstandar(2,"DNI"));
 
         ArrayAdapter<CategoriasEstandar> adapterEstados = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner,ListaTipoDoc);
@@ -147,6 +157,7 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
     }
 
     private void CargarDatosPunto() {
+        alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base),"consultar_info_puntos");
         rq = Volley.newRequestQueue(getActivity());
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
@@ -154,7 +165,7 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
                     @Override
                     public void onResponse(String response) {
                         // response
-                        //parseJSONVisita(response);
+                        CargarDatos(response);
 
                     }
                 },
@@ -193,6 +204,49 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
         };
 
         rq.add(jsonRequest);
+    }
+
+    private void CargarDatos(String response) {
+        Gson gson = new Gson();
+        if (!response.equals("[]")) {
+            try {
+
+                datos = gson.fromJson(response, RequestGuardarEditarPunto.class);
+                edit_nombres.setText(datos.getNombre_punto());
+                edit_cedula.setText(datos.getCedula());
+                edit_nom_cli.setText(datos.getNombre_cliente());
+                edit_correo_edit.setText(datos.getEmail());
+                edit_tel_edit.setText( String.valueOf((datos.getTelefono())));
+                edit_cel_edit.setText( String.valueOf((datos.getCelular())));
+
+
+                selectSpinnerValue(ListaTipoDoc,spinnerTipoDocumento,datos.getTipo_documento());
+                if(datos.getVende_recargas() == 1) {
+                    switch1.setChecked(true);
+                }
+                else{
+                    switch1.setChecked(false);
+                }
+
+            } catch (IllegalStateException ex) {
+                ex.printStackTrace();
+                alertDialog.dismiss();
+            } finally {
+                alertDialog.dismiss();
+            }
+        } else {
+            alertDialog.dismiss();
+        }
+    }
+
+    private void selectSpinnerValue(List<CategoriasEstandar> ListaEstado, Spinner spinner, int id)
+    {
+        for(int i = 0; i < ListaEstado.size(); i++){
+            if(ListaEstado.get(i).getId() == id){
+                spinner.setSelection(id);
+                break;
+            }
+        }
     }
 
     private void cargarDataPre() {
@@ -326,15 +380,20 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
 
                 if (!validarCampos()) {
                     // Siguiente
-
                     dataPersonal();
 
                     FragmentManager fManager = getFragmentManager();
                     fragmentDireccion = new FragmentDireccion();
+                    if(editaPunto != 0)
+                    {
+                        Bundle args = new Bundle();
+                        args.putSerializable("datos_punto", datos);
+                        args.putInt("edit_punto", editaPunto);
+                        args.putString("accion",accion);
+                        fragmentDireccion.setArguments(args);
+                    }
                     fManager.beginTransaction().replace(R.id.contentPanel, fragmentDireccion).commit();
-
                 }
-
                 break;
             case R.id.btn_cancelar_per:
                 limpiarCampos();
