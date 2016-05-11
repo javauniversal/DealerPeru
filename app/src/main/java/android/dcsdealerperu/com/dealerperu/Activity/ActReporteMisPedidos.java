@@ -124,47 +124,51 @@ public class ActReporteMisPedidos extends AppCompatActivity {
                         break;
                     case 1:
                         //Cancelar Pedido
-                        LayoutInflater inflater = getLayoutInflater();
-                        View dialoglayout = inflater.inflate(R.layout.dialog_comentario_aproba, null);
+                        if(!mDescribable.getResponseMisPedidosList().get(position).getEstado().equals("Cancelado")) {
+                            LayoutInflater inflater = getLayoutInflater();
+                            View dialoglayout = inflater.inflate(R.layout.dialog_comentario_aproba, null);
 
-                        final EditText editTextComent = (EditText) dialoglayout.findViewById(R.id.EditComment);
+                            final EditText editTextComent = (EditText) dialoglayout.findViewById(R.id.EditComment);
 
-                        android.support.v7.app.AlertDialog.Builder builder2 = new android.support.v7.app.AlertDialog.Builder(ActReporteMisPedidos.this);
-                        builder2.setCancelable(false);
-                        builder2.setTitle("Motivo de Cancelación");
-                        builder2.setView(dialoglayout).setPositiveButton("Cancelar Pedido", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                            android.support.v7.app.AlertDialog.Builder builder2 = new android.support.v7.app.AlertDialog.Builder(ActReporteMisPedidos.this);
+                            builder2.setCancelable(false);
+                            builder2.setTitle("Motivo de Cancelación");
+                            builder2.setView(dialoglayout).setPositiveButton("Cancelar Pedido", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
 
-                                if (isValidNumber(editTextComent.getText().toString().trim())) {
-                                    Toast.makeText(ActReporteMisPedidos.this, "El comentario es un campo requerido", Toast.LENGTH_LONG).show();
-                                } else {
-                                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(ActReporteMisPedidos.this);
-                                    builder.setCancelable(false);
-                                    builder.setTitle("Alerta");
-                                    builder.setMessage("¿ Estas seguro de cancelar el pedido ?");
-                                    builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            comentario = editTextComent.getText().toString();
-                                            cancelarPedido(position);
-                                        }
+                                    if (isValidNumber(editTextComent.getText().toString().trim())) {
+                                        Toast.makeText(ActReporteMisPedidos.this, "El comentario es un campo requerido", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(ActReporteMisPedidos.this);
+                                        builder.setCancelable(false);
+                                        builder.setTitle("Alerta");
+                                        builder.setMessage("¿ Estas seguro de cancelar el pedido ?");
+                                        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                comentario = editTextComent.getText().toString();
+                                                cancelarPedido(position);
+                                            }
 
-                                    }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.dismiss();
-                                        }
-                                    });
-                                    builder.show();
+                                        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                        builder.show();
+
+                                    }
 
                                 }
+                            }).setNegativeButton("Salir", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+                            });
 
-                            }
-                        }).setNegativeButton("Salir", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                        builder2.show();
+                            builder2.show();
+                        }else{
+                            Toast.makeText(ActReporteMisPedidos.this,"Este pedido ya se encuentra en estado cancelado",Toast.LENGTH_LONG).show();
+                        }
                         break;
                 }
                 return false;
@@ -266,6 +270,7 @@ public class ActReporteMisPedidos extends AppCompatActivity {
                 if (responseMarcarPedido.getEstado() == 0) {
                     //Se guardó bien.!
                     Toast.makeText(this, responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
+                    this.finish();
                 } else if (responseMarcarPedido.getEstado() == -2) {
                     //Error al intentar guardar la cancelacion del pedido
                     Toast.makeText(this, responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();

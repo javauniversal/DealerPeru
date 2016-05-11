@@ -4,15 +4,12 @@ import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.RequestGuardarEditarPunto;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentDireccion;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.view.View;
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -88,6 +85,8 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
 
         spinnerTipoDocumento = (Spinner) findViewById(R.id.spinner_tipo_documento);
 
+        btn_siguiente_per.setOnClickListener(this);
+        btn_cancelar_per.setOnClickListener(this);
         loadSpinnerTipo();
     }
 

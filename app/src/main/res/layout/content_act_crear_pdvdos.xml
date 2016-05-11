@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="android.dcsdealerperu.com.dealerperu.Activity.ActCrearPdvdos"
+    tools:showIn="@layout/activity_crear_pdvdos">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:elevation="20dp"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="17sp"
+            android:text=""
+            android:id="@+id/direccionConcat"
+            android:textColor="@color/actionBarColorText"
+            android:textStyle="bold"
+            android:gravity="center_vertical|center_horizontal" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_large"
+                android:layout_marginLeft="@dimen/spacing_large"
+                android:layout_marginRight="@dimen/spacing_large"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="4dp"
+                app:contentPaddingBottom="16dp"
+                app:contentPaddingLeft="16dp"
+                app:contentPaddingRight="16dp"
+                app:contentPaddingTop="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dimen_letra_app"
+                        android:text="Dirección"
+                        android:textColor="@color/colorAccent"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="27dp"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:textColor="@color/colorAccent"
+                        android:text="Departamento" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
+
+
+                        <ImageView
+                            android:id="@+id/image_departamento"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tint="@color/colorPrimary"
+                            android:src="@drawable/ic_pin_drop_black_24dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true" />
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/spinner_departamento"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_departamento"
+                            android:textSize="@dimen/dimen_letra_app"
+                            android:layout_toRightOf="@+id/image_departamento"
+                            android:layout_marginLeft="8dp" />
+
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:textColor="@color/colorAccent"
+                        android:text="Provincia" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
+
+                        <ImageView
+                            android:id="@+id/image_ciudad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tint="@color/colorPrimary"
+                            android:src="@drawable/ic_location_city_black_24dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true" />
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/spinner_provincia"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_ciudad"
+                            android:textSize="@dimen/dimen_letra_app"
+                            android:layout_toRightOf="@+id/image_ciudad"
+                            android:layout_marginLeft="8dp" />
+
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:textColor="@color/colorAccent"
+                        android:text="Distrito" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
+
+                        <ImageView
+                            android:id="@+id/image_distrito"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tint="@color/colorPrimary"
+                            android:src="@drawable/ic_map_black_24dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true" />
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/spinner_distrito"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_distrito"
+                            android:textSize="@dimen/dimen_letra_app"
+                            android:layout_toRightOf="@+id/image_distrito"
+                            android:layout_marginLeft="8dp" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:textColor="@color/colorAccent"
+                        android:text="Tipo de vía" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
+
+                        <ImageView
+                            android:id="@+id/image_tipo_via"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tint="@color/colorPrimary"
+                            android:src="@drawable/ic_map_black_24dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true" />
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/spinner_tipo"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_tipo_via"
+                            android:textSize="@dimen/dimen_letra_app"
+                            android:layout_toRightOf="@+id/image_tipo_via"
+                            android:layout_marginLeft="8dp" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:id="@+id/layouttipovia"
+                        android:orientation="vertical">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_correo"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_toRightOf="@+id/image_correo">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/edit_nombre_via"
+                                android:hint="Nombre vía"
+                                android:textSize="@dimen/dimen_letra_app"
+                                android:inputType="text" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_correo"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_toRightOf="@+id/image_correo">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/edit_numero_puerta"
+                                android:hint="Número puerta"
+                                android:textSize="@dimen/dimen_letra_app"
+                                android:inputType="number" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_correo"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_toRightOf="@+id/image_correo">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/edit_manzana"
+                                android:hint="Nombre manzana"
+                                android:textSize="@dimen/dimen_letra_app"
+                                android:inputType="text" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_correo"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_toRightOf="@+id/image_correo">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/edit_lote"
+                                android:hint="Lote"
+                                android:textSize="@dimen/dimen_letra_app"
+                                android:inputType="text" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:textColor="@color/colorAccent"
+                        android:text="Tipo Vivienda" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
+
+                        <ImageView
+                            android:id="@+id/image_tipo_vivienda"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tint="@color/colorPrimary"
+                            android:src="@drawable/ic_map_black_24dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true" />
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/spinner_tipo_vivienda"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_tipo_vivienda"
+                            android:textSize="@dimen/dimen_letra_app"
+                            android:layout_toRightOf="@+id/image_tipo_vivienda"
+                            android:layout_marginLeft="8dp" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/liner_tipo_vivienda"
+                        android:orientation="vertical">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_correo"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_toRightOf="@+id/image_correo">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/edit_numero_vivienda"
+                                android:hint="Descripción de vivienda"
+                                android:textSize="@dimen/dimen_letra_app"
+                                android:inputType="text" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:textColor="@color/colorAccent"
+                        android:text="Tipo de interior" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
+
+                        <ImageView
+                            android:id="@+id/image_tipo_interior"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tint="@color/colorPrimary"
+                            android:src="@drawable/ic_map_black_24dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true" />
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/spinner_tipo_interior"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_tipo_interior"
+                            android:textSize="@dimen/dimen_letra_app"
+                            android:layout_toRightOf="@+id/image_tipo_interior"
+                            android:layout_marginLeft="8dp" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/liner_tipo_interior"
+                        android:orientation="vertical">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_correo"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_toRightOf="@+id/image_correo">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/edit_numero_interior"
+                                android:hint="Número de interior"
+                                android:textSize="@dimen/dimen_letra_app"
+                                android:inputType="text" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:textColor="@color/colorAccent"
+                        android:text="Tipo de urbanización" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
+
+                        <ImageView
+                            android:id="@+id/image_tipo_urbanizacion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tint="@color/colorPrimary"
+                            android:src="@drawable/ic_map_black_24dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true" />
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/spinner_urbanizacion"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_tipo_urbanizacion"
+                            android:textSize="@dimen/dimen_letra_app"
+                            android:layout_toRightOf="@+id/image_tipo_urbanizacion"
+                            android:layout_marginLeft="8dp" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/liner_urbanizacion"
+                        android:orientation="vertical">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_correo"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_toRightOf="@+id/image_correo">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/edit_urbanizacion"
+                                android:hint="Número de urbanización"
+                                android:textSize="@dimen/dimen_letra_app"
+                                android:inputType="text" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:textColor="@color/colorAccent"
+                        android:text="Tipo de ciudad/Centro poblado" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
+
+                        <ImageView
+                            android:id="@+id/image_tipo_via_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tint="@color/colorPrimary"
+                            android:src="@drawable/ic_map_black_24dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true" />
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/spinner_ciudad_poblado"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_tipo_via_2"
+                            android:textSize="@dimen/dimen_letra_app"
+                            android:layout_toRightOf="@+id/image_tipo_via_2"
+                            android:layout_marginLeft="8dp" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/liner_ciudad_poblado"
+                        android:orientation="vertical">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_correo"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_toRightOf="@+id/image_correo">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/edit_descripcion"
+                                android:hint="Descripción"
+                                android:textSize="@dimen/dimen_letra_app"
+                                android:inputType="text" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/BrandButtonStyle2"
+                    android:text="Regresar"
+                    android:layout_weight="1"
+                    android:id="@+id/btn_regresar_dir"
+                    android:gravity="center_vertical|center_horizontal" />
+
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/BrandButtonStyle2"
+                    android:layout_weight="1"
+                    android:text="Siguiente"
+                    android:id="@+id/btn_siguiente_dir"
+                    android:gravity="center_vertical|center_horizontal" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

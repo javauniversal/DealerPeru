@@ -30,6 +30,7 @@
     <string name="title_activity_act_detalle_apro_punto">Aprobación de puntos</string>
     <string name="title_activity_act_reporte_aprobacion_pdv">Reporte Aprobacion Pdvs</string>
     <string name="title_activity_act_crear_pdvuno">Crear Punto</string>
+    <string name="title_activity_act_crear_pdvdos">Crear Punto</string>
 
 
 </resources>
