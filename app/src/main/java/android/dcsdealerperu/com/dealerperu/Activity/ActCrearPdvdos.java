@@ -49,7 +49,7 @@ import dmax.dialog.SpotsDialog;
 
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
-public class ActCrearPdvdos extends AppCompatActivity {
+public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickListener{
 
     private Button btn_siguiente_dir;
     private Button btn_regresar_dir;
@@ -129,6 +129,8 @@ public class ActCrearPdvdos extends AppCompatActivity {
         direccionConcat = (TextView) findViewById(R.id.direccionConcat);
         edit_descripcion = (EditText) findViewById(R.id.edit_descripcion);
 
+        btn_siguiente_dir.setOnClickListener(this);
+        btn_regresar_dir.setOnClickListener(this);
 
         edit_nombre_via.addTextChangedListener(new TextWatcher() {
 
@@ -308,6 +310,59 @@ public class ActCrearPdvdos extends AppCompatActivity {
         alertDialog = new SpotsDialog(this, R.style.Custom);
 
         setupGrid();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_siguiente_dir:
+
+                if (!validarCampos()) {
+
+                    mDescribable.setDepto(departamento);
+                    mDescribable.setCiudad(ciudad_pro);
+                    mDescribable.setDistrito(distrito);
+                    mDescribable.setTipo_via(estado_cliente);
+                    mDescribable.setNombre_via(edit_nombre_via.getText().toString());
+                    mDescribable.setNombre_mzn(edit_manzana.getText().toString());
+
+                    int valor;
+
+                    if (isValidNumber(edit_numero_puerta.getText().toString().trim()))
+                        valor = 0;
+                    else
+                        valor = Integer.parseInt(edit_numero_puerta.getText().toString().trim());
+
+                    mDescribable.setNro_via(valor);
+
+                    mDescribable.setLote(edit_lote.getText().toString());
+                    mDescribable.setTipo_vivienda(estado_vivienda);
+                    mDescribable.setDescripcion_vivienda(edit_numero_vivienda.getText().toString());
+                    mDescribable.setTipo_interior(estado_interior);
+                    mDescribable.setNro_interior(edit_numero_interior.getText().toString());
+                    mDescribable.setTipo_urbanizacion(estado_urbanizacion);
+                    mDescribable.setNum_int_urbanizacion(edit_urbanizacion.getText().toString());
+                    mDescribable.setTipo_ciudad(estado_ciudad_poblado);
+                    mDescribable.setDes_tipo_ciudad(edit_descripcion.getText().toString());
+                    mDescribable.setTexto_direccion(direccionConcat.getText().toString());
+
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(this, ActCrearPdvtres.class);
+                    bundle.putSerializable("value", mDescribable);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
+                }
+
+                break;
+
+            case R.id.btn_regresar_dir:
+
+                // Regresar
+
+                break;
+
+        }
     }
 
     private boolean isValidNumber(String number){return number == null || number.length() == 0;}
