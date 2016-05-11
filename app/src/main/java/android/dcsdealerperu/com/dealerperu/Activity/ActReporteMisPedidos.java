@@ -97,6 +97,9 @@ public class ActReporteMisPedidos extends AppCompatActivity {
                     case 0:
                         cargarDetalle(position);
                         break;
+                    case 1:
+                        //Cancelar Pedido
+                        break;
                 }
                 return false;
             }
