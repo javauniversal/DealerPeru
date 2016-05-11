@@ -128,7 +128,7 @@ public class ActResponAvanBusqueda extends AppCompatActivity {
                 getResources().getDisplayMetrics());
     }
 
-    private void buscarIdPos(final int idPos) {
+    public void buscarIdPos(final int idPos) {
 
         String url = String.format("%1$s%2$s", getString(R.string.url_base),"buscar_punto_visita");
         rq = Volley.newRequestQueue(this);
@@ -179,7 +179,7 @@ public class ActResponAvanBusqueda extends AppCompatActivity {
 
     }
 
-    private void parseJSONVisita(String response) {
+    public void parseJSONVisita(String response) {
 
         Gson gson = new Gson();
         if (!response.equals("[]")) {
@@ -189,10 +189,10 @@ public class ActResponAvanBusqueda extends AppCompatActivity {
 
                 if (responseMarcarPedido.getEstado() == -1) {
                     //No tiene permisos del punto
-                    Toast.makeText(this, responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
                 } else if (responseMarcarPedido.getEstado() == -2) {
                     //El punto no existe
-                    Toast.makeText(this, responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
                 } else {
                     //Activity Detalle
                     Bundle bundle = new Bundle();

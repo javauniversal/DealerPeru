@@ -69,9 +69,7 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
     private int editaPunto = 0;
     private int tipoDocumento = 0;
     private String accion;
-    private RequestGuardarEditarPunto requestGuardarEditarPunto;
 
-    private GuardarEditarPunto guardarEditarPunto;
     private RequestQueue rq;
     private List<CategoriasEstandar> ListaTipoDoc = new ArrayList<>();
     RequestGuardarEditarPunto datos;
@@ -82,8 +80,8 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
 
         Bundle args = new Bundle();
         FragmentDatosPersonales fragment = new FragmentDatosPersonales();
-        args.putInt("edit_punto",idpos);
-        args.putString("accion",accion);
+        args.putInt("edit_punto", idpos);
+        args.putString("accion",  accion);
         fragment.setArguments(args);
         return fragment;
     }
@@ -105,15 +103,34 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
         switch1 = (Switch) view.findViewById(R.id.switch1);
 
         btn_siguiente_per = (Button) view.findViewById(R.id.btn_siguiente_per);
-
         btn_cancelar_per = (Button) view.findViewById(R.id.btn_cancelar_per);
-
         alertDialog = new SpotsDialog(getActivity(), R.style.Custom);
 
         spinnerTipoDocumento = (Spinner) view.findViewById(R.id.spinner_tipo_documento);
 
+        loadSpinnerTipo();
+
+        if(getArguments() != null) {
+            editaPunto = getArguments().getInt("idpos");
+            accion = getArguments().getString("accion");
+        }
+
+        if(accion.equals("Editar")) {
+            CargarDatosPunto();
+        } else {
+            if (RequesGuardarPunto.getRequesGuardarPuntoStatic() != null) {
+                cargarDataPre();
+            }
+        }
+
+
+        return view;
+
+    }
+
+    public void loadSpinnerTipo() {
+
         ListaTipoDoc.add(new CategoriasEstandar(1,"RUC"));
-        ListaTipoDoc.add(new CategoriasEstandar(2,"DNI"));
         ListaTipoDoc.add(new CategoriasEstandar(2,"DNI"));
 
         ArrayAdapter<CategoriasEstandar> adapterEstados = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner,ListaTipoDoc);
@@ -124,17 +141,17 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
                 tipoDocumento = ListaTipoDoc.get(position).getId();
                 edit_cedula.setHint("");
                 edit_cedula.setText("");
-                if(tipoDocumento == 1)
-                {
+                if(tipoDocumento == 1) {
                     int maxLength = 11;
                     edit_cedula.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
                     edit_cedula.setHint("Ruc Responsable");
-                }
-                else
-                {
+                } else {
                     int maxLength = 8;
                     edit_cedula.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
                     edit_cedula.setHint("Dni Responsable");
+                    if(accion.equals("Editar")) {
+                        edit_cedula.setText(datos.getCedula());
+                    }
                 }
             }
 
@@ -143,26 +160,10 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
 
         });
 
-        if(getArguments() != null)
-        {
-            editaPunto = getArguments().getInt("idpos");
-            accion = getArguments().getString("accion");
-        }
-
-        if(editaPunto != 0){
-            CargarDatosPunto();
-        }else
-        {
-            if (RequesGuardarPunto.getRequesGuardarPuntoStatic() != null) {
-                cargarDataPre();
-            }
-        }
-
-        return view;
-
     }
 
     private void CargarDatosPunto() {
+
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base),"consultar_info_puntos");
         rq = Volley.newRequestQueue(getActivity());
@@ -172,7 +173,6 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
                     public void onResponse(String response) {
                         // response
                         CargarDatos(response);
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -218,19 +218,20 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
             try {
 
                 datos = gson.fromJson(response, RequestGuardarEditarPunto.class);
+
+
+                selectSpinnerValue(ListaTipoDoc, spinnerTipoDocumento, datos.getTipo_documento());
+
                 edit_nombres.setText(datos.getNombre_punto());
-                edit_cedula.setText(datos.getCedula());
+
                 edit_nom_cli.setText(datos.getNombre_cliente());
                 edit_correo_edit.setText(datos.getEmail());
                 edit_tel_edit.setText( String.valueOf((datos.getTelefono())));
                 edit_cel_edit.setText( String.valueOf((datos.getCelular())));
 
-
-                selectSpinnerValue(ListaTipoDoc,spinnerTipoDocumento,datos.getTipo_documento());
                 if(datos.getVende_recargas() == 1) {
                     switch1.setChecked(true);
-                }
-                else{
+                } else {
                     switch1.setChecked(false);
                 }
 
@@ -248,8 +249,8 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
     private void selectSpinnerValue(List<CategoriasEstandar> ListaEstado, Spinner spinner, int id)
     {
         for(int i = 0; i < ListaEstado.size(); i++){
-            if(ListaEstado.get(i).getId() == id){
-                spinner.setSelection(id);
+            if(ListaEstado.get(i).getId() == id) {
+                spinner.setSelection(i);
                 break;
             }
         }
@@ -314,7 +315,6 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
         Pattern Plantilla = null;
         Matcher Resultado = null;
         Plantilla = Pattern.compile("^([0-9a-zA-Z]([_.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+([a-zA-Z]{2,9}.)+[a-zA-Z]{2,3})$");
-        System.out.println("Ingrese email:");
 
         Resultado = Plantilla.matcher(number);
 
@@ -386,19 +386,27 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
 
                 if (!validarCampos()) {
                     // Siguiente
-                    dataPersonal();
-
+                    Bundle args = new Bundle();
                     FragmentManager fManager = getFragmentManager();
                     fragmentDireccion = new FragmentDireccion();
-                    if(editaPunto != 0)
-                    {
-                        Bundle args = new Bundle();
+                    if(accion.equals("Editar")) {
+
+
                         args.putSerializable("datos_punto", datos);
                         args.putInt("edit_punto", editaPunto);
-                        args.putString("accion",accion);
-                        fragmentDireccion.setArguments(args);
+                        args.putString("accion", accion);
+
+
+                    } else {
+                        args.putString("accion", accion);
                     }
+
+                    fragmentDireccion.setArguments(args);
+
+                    dataPersonal();
+
                     fManager.beginTransaction().replace(R.id.contentPanel, fragmentDireccion).commit();
+
                 }
                 break;
             case R.id.btn_cancelar_per:

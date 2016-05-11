@@ -1,5 +1,6 @@
 package android.dcsdealerperu.com.dealerperu.Fragment;
 
+import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.Ciudad;
 import android.dcsdealerperu.com.dealerperu.Entry.DataDireccionForm;
 import android.dcsdealerperu.com.dealerperu.Entry.Departamentos;
@@ -50,10 +51,10 @@ import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getRespons
 
 public class FragmentDireccion extends BaseVolleyFragment implements View.OnClickListener {
 
+    //region Variables Globales
     private Button btn_siguiente_dir;
     private Button btn_regresar_dir;
     private FragmentReferencia fragmentReferencia;
-    private FragmentDatosPersonales fragmentDatosPersonales;
     private Spinner spinner_departamento;
     private Spinner spinner_provincia;
     private Spinner spinner_distrito;
@@ -78,7 +79,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
     private EditText edit_lote;
     private EditText edit_descripcion;
     private TextView direccionConcat;
-    String data1 = "", data2 = "", data3 = "", data4 = "", data5 = "", data6 = "", data7 = "", data8 = "", data9 = "", data10 = "", data11 = "", data12 = "", data13 = "", accion = "";
+    private String data1 = "", data2 = "", data3 = "", data4 = "", data5 = "", data6 = "", data7 = "", data8 = "", data9 = "", data10 = "", data11 = "", data12 = "", data13 = "", accion = "";
     private int estado_vivienda;
     private int estado_interior;
     private int estado_urbanizacion;
@@ -86,11 +87,9 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
     private int departamento, ciudad_pro, distrito, editaPunto = 0;
     ResponseCreatePunt responseCreatePunt;
     private RequestGuardarEditarPunto requestGuardarEditarPunto = new RequestGuardarEditarPunto();
+    //endregion
 
-
-    public FragmentDireccion() {
-        // Required empty public constructor
-    }
+    public FragmentDireccion() { }
 
 
     @Override
@@ -98,6 +97,12 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_direccion, container, false);
+
+        if(getArguments() != null) {
+            editaPunto = getArguments().getInt("edit_punto");
+            accion = getArguments().getString("accion");
+            requestGuardarEditarPunto = (RequestGuardarEditarPunto) getArguments().getSerializable("datos_punto");
+        }
 
         btn_siguiente_dir = (Button) view.findViewById(R.id.btn_siguiente_dir);
         btn_regresar_dir = (Button) view.findViewById(R.id.btn_regresar_dir);
@@ -124,25 +129,15 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
         direccionConcat = (TextView) view.findViewById(R.id.direccionConcat);
         edit_descripcion = (EditText) view.findViewById(R.id.edit_descripcion);
 
-        if(getArguments() != null)
-        {
-            editaPunto = getArguments().getInt("edit_punto");
-            accion = getArguments().getString("accion");
-            requestGuardarEditarPunto = (RequestGuardarEditarPunto) getArguments().getSerializable("datos_punto");
-        }
-
         edit_nombre_via.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-
             }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // TODO Auto-generated method stub
-
             }
 
             @Override
@@ -150,7 +145,6 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                 data2 = s.toString();
                 ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
             }
-
         });
 
         edit_numero_puerta.addTextChangedListener(new TextWatcher() {
@@ -158,13 +152,11 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-
             }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // TODO Auto-generated method stub
-
             }
 
             @Override
@@ -172,7 +164,6 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                 data3 = s.toString();
                 ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
             }
-
         });
 
         edit_manzana.addTextChangedListener(new TextWatcher() {
@@ -309,6 +300,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
         alertDialog = new SpotsDialog(getActivity(), R.style.Custom);
 
         return view;
+
     }
 
     @Override
@@ -387,8 +379,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                 loadTipoVivienda(responseCreatePunt.getNomenclaturaList().getTipoViviendaList());
 
                 // Entra Para ver si va a editar el punto..!
-                if(editaPunto != 0)
-                {
+                if(accion.equals("Editar")) {
                     CargarDatosEditaPunto();
                 }
             } catch (IllegalStateException ex) {
@@ -402,51 +393,109 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
 
     private void CargarDatosEditaPunto() {
         SetearSpinners();
-
     }
 
     private void SetearSpinners() {
-        SetSpinerDepartamento(responseCreatePunt.getDepartamentosList(),spinner_departamento,requestGuardarEditarPunto.getDepto());
-        SetSpinerProvincia(responseCreatePunt.getDepartamentosList(),spinner_provincia,requestGuardarEditarPunto.getDepto(),requestGuardarEditarPunto.getCiudad());
-        SetSpinerDistrito(responseCreatePunt.getDepartamentosList(),spinner_provincia,requestGuardarEditarPunto.getDepto(),requestGuardarEditarPunto.getCiudad(),requestGuardarEditarPunto.getDistrito());
+
+        setSpinerDepartamento(responseCreatePunt.getDepartamentosList(), spinner_departamento, requestGuardarEditarPunto.getDepto());
+
+        setSpinerProvincia(responseCreatePunt.getDepartamentosList(), spinner_provincia, requestGuardarEditarPunto.getCiudad());
+
+        setSpinerDistrito(responseCreatePunt.getDepartamentosList(), spinner_provincia, requestGuardarEditarPunto.getDistrito());
+
+        setSpinerTipoVia(responseCreatePunt.getNomenclaturaList().getTipoViaList(), spinner_tipo, requestGuardarEditarPunto.getViaEnt());
+
+        setSpinerTipoViVienda(responseCreatePunt.getNomenclaturaList().getTipoViviendaList(), spinner_tipo_vivienda, requestGuardarEditarPunto.getVivendaEnt());
+
+        setSpinerTipoInterior(responseCreatePunt.getNomenclaturaList().getTipoInteriorList(), spinner_tipo_interior, requestGuardarEditarPunto.getInterEnt());
+
+        setSpinerUrbanizacion(responseCreatePunt.getNomenclaturaList().getTipoUrbanizacionList(), spinner_urbanizacion, requestGuardarEditarPunto.getUrbaEnt());
+
+        setSpinerCiuPoblado(responseCreatePunt.getNomenclaturaList().getTipoCiudadList(), spinner_ciudad_poblado, requestGuardarEditarPunto.getCiuEnt());
+
     }
 
-    private void SetSpinerTipo_Via(List<TipoVia> tipoViaList, Spinner spinner, int id) {
-        for(int i = 0; i < tipoViaList.size(); i++){
-            if(tipoViaList.get(i).getId() == id){
-                spinner.setSelection(id);
+    private void setSpinerCiuPoblado(List<TipoCiudad> tipoCiudadList, Spinner spinner_ciudad_poblado, CategoriasEstandar ciuEnt) {
+        for(int i = 0; i < tipoCiudadList.size(); i++) {
+            if(tipoCiudadList.get(i).getId() == ciuEnt.getId()) {
+                spinner_ciudad_poblado.setSelection(i);
                 break;
             }
         }
     }
 
-    private void SetSpinerDepartamento(List<Departamentos> departamentosList, Spinner spinner, int id)
-    {
-        for(int i = 0; i < departamentosList.size(); i++){
-            if(departamentosList.get(i).getId() == id){
-                spinner.setSelection(id);
+    private void setSpinerUrbanizacion(List<TipoUrbanizacion> tipoUrbanizacionList, Spinner spinner_urbanizacion, CategoriasEstandar urbaEnt) {
+        for(int i = 0; i < tipoUrbanizacionList.size(); i++) {
+            if(tipoUrbanizacionList.get(i).getId() == urbaEnt.getId()) {
+                spinner_urbanizacion.setSelection(i);
                 break;
             }
         }
     }
-    private void SetSpinerProvincia(List<Departamentos> departamentosList, Spinner spinner, int id_depto, int id_pro)
-    {
-        for(int i = 0; i < departamentosList.get(id_depto).getCiudadList().size(); i++){
-            if(departamentosList.get(id_depto).getCiudadList().get(i).getId() == id_pro){
-                spinner.setSelection(id_pro);
+
+    private void setSpinerTipoInterior(List<TipoInterior> tipoInteriorList, Spinner spinner_tipo_interior, CategoriasEstandar interEnt) {
+        for(int i = 0; i < tipoInteriorList.size(); i++) {
+            if(tipoInteriorList.get(i).getId() == interEnt.getId()) {
+                spinner_tipo_interior.setSelection(i);
                 break;
             }
         }
     }
-    private void SetSpinerDistrito(List<Departamentos> departamentosList, Spinner spinner, int id_depto, int id_pro, int id_dis)
-    {
-        for(int i = 0; i < departamentosList.get(id_depto).getCiudadList().get(id_pro).getDistritoList().size(); i++){
-            if(departamentosList.get(id_depto).getCiudadList().get(id_pro).getDistritoList().get(i).getId() == id_dis){
-                spinner.setSelection(id_dis);
+
+    private void setSpinerTipoViVienda(List<TipoVivienda> tipoViviendaList, Spinner spinner_tipo_vivienda, CategoriasEstandar vivendaEnt) {
+        for(int i = 0; i < tipoViviendaList.size(); i++) {
+            if(tipoViviendaList.get(i).getId() == vivendaEnt.getId()) {
+                spinner_tipo_vivienda.setSelection(i);
                 break;
             }
         }
     }
+
+    private void setSpinerTipoVia(List<TipoVia> tipoViaList, Spinner spinner_tipo, CategoriasEstandar tipo_via) {
+        for(int i = 0; i < tipoViaList.size(); i++) {
+            if(tipoViaList.get(i).getId() == tipo_via.getId()) {
+                spinner_tipo.setSelection(i);
+                break;
+            }
+        }
+    }
+
+    private void setSpinerDepartamento(List<Departamentos> departamentosList, Spinner spinner, int id) {
+        for(int i = 0; i < departamentosList.size(); i++) {
+            if(departamentosList.get(i).getId() == id) {
+                spinner.setSelection(i);
+                break;
+            }
+        }
+    }
+
+    private void setSpinerProvincia(List<Departamentos> departamentosList, Spinner spinner, int id_pro) {
+
+        for(int i = 0; i < departamentosList.size(); i++) {
+            for (int f = 0; f < departamentosList.get(i).getCiudadList().size(); f++) {
+                if(departamentosList.get(i).getCiudadList().get(f).getId() == id_pro) {
+                    spinner.setSelection(f);
+                    break;
+                }
+            }
+
+        }
+    }
+
+    private void setSpinerDistrito(List<Departamentos> departamentosList, Spinner spinner, int id_depto) {
+
+        for(int i = 0; i < departamentosList.size(); i++) {
+            for(int t = 0; t < departamentosList.get(i).getCiudadList().size(); t++) {
+                for (int f = 0; f < departamentosList.get(i).getCiudadList().get(t).getDistritoList().size(); f++) {
+                    if(departamentosList.get(i).getCiudadList().get(t).getDistritoList().get(f).getId() == id_depto) {
+                        spinner.setSelection(i);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     private void loadTipoVivienda(final List<TipoVivienda> tipoViviendaList) {
 
         ArrayAdapter<TipoVivienda> prec3 = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, tipoViviendaList);
@@ -466,6 +515,10 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                     liner_tipo_vivienda.setVisibility(View.VISIBLE);
                     data6 = tipoViviendaList.get(position).getSiglas();
                     ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
+
+                    if(accion.equals("Editar")) {
+                        edit_numero_vivienda.setText(String.format("%1$s", requestGuardarEditarPunto.getVivendaEnt().descripcion));
+                    }
                 }
 
             }
@@ -494,6 +547,10 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                     liner_ciudad_poblado.setVisibility(View.VISIBLE);
                     data12 = tipoCiudadList.get(position).getSiglas();
                     ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
+
+                    if(accion.equals("Editar")) {
+                        edit_descripcion.setText(String.format("%1$s", requestGuardarEditarPunto.getUrbaEnt().descripcion));
+                    }
                 }
 
             }
@@ -523,6 +580,11 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                     liner_urbanizacion.setVisibility(View.VISIBLE);
                     data10 = tipoUrbanizacionList.get(position).getSiglas();
                     ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
+
+                    if(accion.equals("Editar")) {
+                        edit_urbanizacion.setText(String.format("%1$s", requestGuardarEditarPunto.getUrbaEnt().descripcion));
+                    }
+
                 }
 
             }
@@ -551,8 +613,11 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                     liner_tipo_interior.setVisibility(View.VISIBLE);
                     data8 = tipoInteriorList.get(position).getSiglas();
                     ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
-                }
 
+                    if(accion.equals("Editar")) {
+                        edit_numero_interior.setText(String.format("%1$s", requestGuardarEditarPunto.getInterEnt().descripcion));
+                    }
+                }
             }
 
             @Override
@@ -583,6 +648,14 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                     data1 = estadoComunList.get(position).getSiglas();
                     ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
 
+                    if(accion.equals("Editar")) {
+
+                        edit_nombre_via.setText(String.format("%1$s", requestGuardarEditarPunto.getViaEnt().descripcion));
+                        edit_numero_puerta.setText(String.format("%1$s", requestGuardarEditarPunto.getViaEnt().descripcion1));
+                        edit_manzana.setText(String.format("%1$s", requestGuardarEditarPunto.getViaEnt().descripcion2));
+                        edit_lote.setText(String.format("%1$s", requestGuardarEditarPunto.getViaEnt().descripcion3));
+
+                    }
                 }
 
             }
@@ -619,7 +692,6 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ciudad_pro = departamentos.getCiudadList().get(position).getId();
-
                 loadDistrito(departamentos.getCiudadList().get(position).getDistritoList());
             }
 
@@ -637,7 +709,6 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 distrito = distritoList.get(position).getId();
-                //loadDistrito(departamentos.getCiudadList().get(position).getDistritoList());
             }
 
             @Override
@@ -661,6 +732,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                     objet.setDistrito(distrito);
                     objet.setTipo_via(estado_cliente);
                     objet.setNombre_via(edit_nombre_via.getText().toString());
+                    objet.setNombre_manzana(edit_manzana.getText().toString());
 
                     int valor;
 
@@ -682,23 +754,34 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                     objet.setNombre_ciudad_prueba(edit_descripcion.getText().toString());
                     objet.setDir_concatenada(direccionConcat.getText().toString());
 
+                    objet.setAccion(accion);
+                    objet.setEditaPunto(editaPunto);
+
+                    objet.setRequestGuardarEditarPunto(requestGuardarEditarPunto);
+
                     DataDireccionForm.setDataDireccionFormStatic(objet);
 
                     FragmentManager fManager = getFragmentManager();
                     fragmentReferencia = new FragmentReferencia();
                     fManager.beginTransaction().replace(R.id.contentPanel, fragmentReferencia.newInstance(responseCreatePunt)).commit();
+
                 }
 
                 break;
 
             case R.id.btn_regresar_dir:
 
-                FragmentManager fManager2 = getFragmentManager();
+                FragmentManager fManager = getFragmentManager();
+                FragmentDatosPersonales fragmentDatosPersonales = new FragmentDatosPersonales();
+                if(accion.equals("Editar")) {
+                    Bundle args = new Bundle();
+                    args.putSerializable("datos_punto", requestGuardarEditarPunto);
+                    args.putInt("idpos", editaPunto);
+                    args.putString("accion", accion);
+                    fragmentDatosPersonales.setArguments(args);
+                }
 
-                if (fragmentDatosPersonales == null)
-                    fragmentDatosPersonales = new FragmentDatosPersonales();
-
-                fManager2.beginTransaction().replace(R.id.contentPanel, fragmentDatosPersonales).commit();
+                fManager.beginTransaction().replace(R.id.contentPanel, fragmentDatosPersonales).commit();
 
                 break;
 

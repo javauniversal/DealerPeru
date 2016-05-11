@@ -23,7 +23,7 @@ import java.util.List;
 
 public class ActMarcarVisita extends AppCompatActivity implements View.OnClickListener {
 
-    private ResponseMarcarPedido mDescribable = new ResponseMarcarPedido();
+    private ResponseMarcarPedido mDescribable;
     private TextView text_idpos;
     private TextView text_razon;
     private TextView text_ruta;
@@ -87,9 +87,10 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
         text_distrito.setText(String.format("%1$s", mDescribable.getDistrito()));
         text_circuito.setText(String.format("%1$s", mDescribable.getTerritorio()));
 
-
-        if (mDescribable.getPedidosList().size() > 0)
-            btn_pedidos_pendientes.setVisibility(View.VISIBLE);
+        if (mDescribable.getPedidosList() != null) {
+            if (mDescribable.getPedidosList().size() > 0)
+                btn_pedidos_pendientes.setVisibility(View.VISIBLE);
+        }
 
         if (mDescribable.getEstado() == 0)
             btn_no_venta.setVisibility(View.VISIBLE);

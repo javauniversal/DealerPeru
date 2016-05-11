@@ -28,10 +28,11 @@ public class FragmentCrearPunto extends BaseVolleyFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getArguments() != null) {
+
             editaPunto = getArguments().getInt("idpos");
             accion = getArguments().getString("accion");
-
         }
+
         FragmentManager  fManager = getFragmentManager();
         fragmentDatosPersonales = new FragmentDatosPersonales();
         Bundle args = new Bundle();

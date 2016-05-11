@@ -35,10 +35,10 @@ public class GuardarEditarPunto{
 
 
     @SerializedName("telefono")
-    public int telefono;
+    public String telefono;
 
     @SerializedName("celular")
-    public int celular;
+    public String celular;
 
     @SerializedName("estado_com")
     public int estado_com;
@@ -165,19 +165,19 @@ public class GuardarEditarPunto{
         this.distrito = distrito;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
-    public int getCelular() {
+    public String getCelular() {
         return celular;
     }
 
-    public void setCelular(int celular) {
+    public void setCelular(String celular) {
         this.celular = celular;
     }
 

@@ -62,4 +62,5 @@ public class ResponseCreatePunt implements Serializable {
     public void setCategoriasList(List<CategoriasEstandar> categoriasList) {
         this.categoriasList = categoriasList;
     }
+
 }

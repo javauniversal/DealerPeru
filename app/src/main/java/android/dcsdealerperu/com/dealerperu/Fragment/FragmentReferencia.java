@@ -3,15 +3,20 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.Activity.ActMainPeru;
+import android.dcsdealerperu.com.dealerperu.Activity.ActMarcarVisita;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.GuardarEditarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.RequesGuardarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseCreatePunt;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseInsert;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.Subcategorias;
 import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
 import android.dcsdealerperu.com.dealerperu.Entry.Zona;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -35,6 +41,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +74,7 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
     private int estado_sub_categoria;
     private int estado_territorio;
     private int estado_ruta;
+    private GpsServices gpsServices;
 
     private SpotsDialog alertDialog;
 
@@ -87,7 +95,6 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_referencia, container, false);
 
         spinner_estado_comercial = (Spinner) view.findViewById(R.id.spinner_estado_comercial);
@@ -107,7 +114,70 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
 
         alertDialog = new SpotsDialog(getActivity(), R.style.Custom);
 
+        gpsServices = new GpsServices(getActivity());
+
         return view;
+    }
+
+    private void dataEditReference() {
+
+        setEstadoComercial(responseCreatePunt.getEstadoComunList(), spinner_estado_comercial, getDataDireccionFormStatic().getRequestGuardarEditarPunto().getEstado_com());
+        setCircuito(responseCreatePunt.getTerritorioList(), spinner_circuito, getDataDireccionFormStatic().getRequestGuardarEditarPunto().getTerritorio());
+        setRuta(responseCreatePunt.getTerritorioList(), spinner_ruta, getDataDireccionFormStatic().getRequestGuardarEditarPunto().getZona());
+        setCategoria(responseCreatePunt.getCategoriasList(), spinner_categoria, getDataDireccionFormStatic().getRequestGuardarEditarPunto().getCategoria());
+        setSubCategoria(responseCreatePunt.getCategoriasList(), spinner_sub_categoria, getDataDireccionFormStatic().getRequestGuardarEditarPunto().getSubcategoria());
+
+        edit_referencia.setText(getDataDireccionFormStatic().getRequestGuardarEditarPunto().getRef_direccion());
+
+    }
+
+    private void setSubCategoria(List<CategoriasEstandar> categoriasList, Spinner spinner_sub_categoria, int subcategoria) {
+        for(int i = 0; i < categoriasList.size(); i++) {
+            for(int a = 0; a < categoriasList.get(i).getListSubCategoria().size(); a++) {
+                if(categoriasList.get(i).getListSubCategoria().get(a).getId() == subcategoria) {
+                    spinner_sub_categoria.setSelection(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void setCategoria(List<CategoriasEstandar> categoriasList, Spinner spinner_categoria, int categoria) {
+        for(int i = 0; i < categoriasList.size(); i++) {
+            if(categoriasList.get(i).getId() == categoria) {
+                spinner_categoria.setSelection(i);
+                break;
+            }
+        }
+    }
+
+    private void setRuta(List<Territorio> territorioList, Spinner spinner_ruta, int zona) {
+        for(int i = 0; i < territorioList.size(); i++) {
+            for(int a = 0; a < territorioList.get(i).getZonaList().size(); a++) {
+                if(territorioList.get(i).getZonaList().get(a).getId() == zona) {
+                    spinner_ruta.setSelection(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void setCircuito(List<Territorio> territorioList, Spinner spinner_circuito, int territorio) {
+        for(int i = 0; i < territorioList.size(); i++) {
+            if(territorioList.get(i).getId() == territorio) {
+                spinner_circuito.setSelection(i);
+                break;
+            }
+        }
+    }
+
+    private void setEstadoComercial(List<CategoriasEstandar> estadoComunList, Spinner spinner_estado_comercial, int estado_com) {
+        for(int i = 0; i < estadoComunList.size(); i++) {
+            if(estadoComunList.get(i).getId() == estado_com) {
+                spinner_estado_comercial.setSelection(i);
+                break;
+            }
+        }
     }
 
     @Override
@@ -117,6 +187,10 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
         loadComercial(responseCreatePunt.getEstadoComunList());
         loadCircuito(responseCreatePunt.getTerritorioList());
         loadCategoria(responseCreatePunt.getCategoriasList());
+
+        if (getDataDireccionFormStatic().getAccion().equals("Editar")) {
+            dataEditReference();
+        }
 
     }
 
@@ -289,10 +363,11 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
                 gep.setCedula(getRequesGuardarPuntoStatic().getCedula());
                 gep.setNombre_cliente(getRequesGuardarPuntoStatic().getNombre_cliente());
                 gep.setEmail(getRequesGuardarPuntoStatic().getEmail().trim());
-                gep.setTelefono(Integer.parseInt(getRequesGuardarPuntoStatic().getTelefono()));
-                gep.setCelular(Integer.parseInt(getRequesGuardarPuntoStatic().getCelular()));
-                gep.setVende_recargas(getRequesGuardarPuntoStatic().getVenta_recarga());
 
+                gep.setTelefono(getRequesGuardarPuntoStatic().getTelefono());
+
+                gep.setCelular(getRequesGuardarPuntoStatic().getCelular());
+                gep.setVende_recargas(getRequesGuardarPuntoStatic().getVenta_recarga());
 
                 gep.setDepto(getDataDireccionFormStatic().getDepartamento());
                 gep.setCiudad(getDataDireccionFormStatic().getProvincia());
@@ -312,6 +387,7 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
                 gep.setNombre_via(getDataDireccionFormStatic().getNombre_via());
                 gep.setNro_via(getDataDireccionFormStatic().getNumero_puesta());
                 gep.setNombre_mzn(getDataDireccionFormStatic().getNombre_manzana());
+                gep.setLote(getDataDireccionFormStatic().getLote());
                 gep.setTipo_interior(getDataDireccionFormStatic().getTipo_interior());
                 gep.setNro_interior(getDataDireccionFormStatic().getNombre_interior());
                 gep.setTipo_vivienda(getDataDireccionFormStatic().getTipo_vivienda());
@@ -320,7 +396,6 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
                 gep.setNum_int_urbanizacion(getDataDireccionFormStatic().getNombre_urbanizacion());
                 gep.setTipo_ciudad(getDataDireccionFormStatic().getCiudad_prueba());
                 gep.setDes_tipo_ciudad(getDataDireccionFormStatic().getNombre_ciudad_prueba());
-
 
                 gep.setEstado_com(estado_comercial);
                 gep.setCategoria(estado_categoria);
@@ -332,18 +407,21 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
                 String parJSON = new Gson().toJson(gep, GuardarEditarPunto.class);
 
                 params.put("datos", parJSON);
+                params.put("idpos", String.valueOf(getDataDireccionFormStatic().getEditaPunto()));
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
                 params.put("iddis", getResponseUserStatic().getId_distri());
                 params.put("db", getResponseUserStatic().getBd());
                 params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
+                params.put("latitud", String.valueOf(gpsServices.getLatitude()));
+                params.put("longitud", String.valueOf(gpsServices.getLongitude()));
+
+                params.put("accion", getDataDireccionFormStatic().getAccion());
 
                 return params;
-
             }
         };
 
         addToQueue(jsonRequest);
-
     }
 
     private boolean isValidNumber(String number){return number == null || number.length() == 0;}
@@ -354,7 +432,13 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
         if (!response.equals("[]")) {
             try {
 
-                ResponseInsert responseInsert = gson.fromJson(response, ResponseInsert.class);
+                Charset.forName("UTF-8").encode(response);
+
+                byte ptext[] = response.getBytes(Charset.forName("ISO-8859-1"));
+
+                String value = new String(ptext, Charset.forName("UTF-8"));
+
+                final ResponseInsert responseInsert = gson.fromJson(value, ResponseInsert.class);
 
                 if (responseInsert.getId() == 0) {
 
@@ -368,19 +452,23 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
                             RequesGuardarPunto requesGuardarPunto = new RequesGuardarPunto();
                             requesGuardarPunto = null;
                             setRequesGuardarPuntoStatic(requesGuardarPunto);
+                            Intent intent = new Intent(getActivity(), ActMainPeru.class);
+                            startActivity(intent);
 
                         }
                     });
                     dialogo1.setNegativeButton("Vender", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogo1, int id) {
-                            //cancelar();
+                            //Vender ();
+                            buscarIdPunto(Integer.parseInt(responseInsert.getIdpos()));
+
                         }
                     });
 
                     dialogo1.show();
 
                 } else if (responseInsert.getId() == -1) {
-
+                    Toast.makeText(getActivity(), responseInsert.getMsg(), Toast.LENGTH_LONG).show();
                 }
 
             } catch (IllegalStateException ex) {
@@ -390,5 +478,100 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
                 alertDialog.dismiss();
             }
         }
+        else {
+            alertDialog.dismiss();
+        }
     }
+
+    public void buscarIdPunto(final int idPos) {
+
+        String url = String.format("%1$s%2$s", getString(R.string.url_base),"buscar_punto_visita");
+
+        StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        parseJSONPunto(response);
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(getActivity(), "Error de tiempo de espera", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(getActivity(), "Error Servidor", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NetworkError) {
+                            Toast.makeText(getActivity(), "Error de red", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(getActivity(), "Error al serializar los datos", Toast.LENGTH_LONG).show();
+                        }
+
+                        alertDialog.dismiss();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
+                params.put("iddis", getResponseUserStatic().getId_distri());
+                params.put("db", getResponseUserStatic().getBd());
+                params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
+                params.put("idpos", String.valueOf(idPos));
+
+                return params;
+            }
+        };
+
+        addToQueue(jsonRequest);
+
+    }
+
+    public void parseJSONPunto(String response) {
+
+        Gson gson = new Gson();
+        if (!response.equals("[]")) {
+            try {
+
+                ResponseMarcarPedido responseMarcarPedido = gson.fromJson(response, ResponseMarcarPedido.class);
+
+                if (responseMarcarPedido.getEstado() == -1) {
+                    //No tiene permisos del punto
+                    Toast.makeText(getActivity(), responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
+                } else if (responseMarcarPedido.getEstado() == -2) {
+                    //El punto no existe
+                    Toast.makeText(getActivity(), responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
+                } else {
+
+                    /*RequesGuardarPunto requesGuardarPunto = new RequesGuardarPunto();
+                    requesGuardarPunto = null;
+                    setRequesGuardarPuntoStatic(requesGuardarPunto);*/
+
+                    //Activity Detalle
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(getActivity(), ActMarcarVisita.class);
+                    bundle.putSerializable("value", responseMarcarPedido);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+
+            } catch (IllegalStateException ex) {
+                ex.printStackTrace();
+                alertDialog.dismiss();
+            } finally {
+                alertDialog.dismiss();
+            }
+        } else {
+            alertDialog.dismiss();
+        }
+
+    }
+
 }

@@ -7,14 +7,6 @@ import java.io.Serializable;
 
 public class RequestGuardarEditarPunto implements Serializable{
 
-    public int getIdpos() {
-        return idpos;
-    }
-
-    public void setIdpos(int idpos) {
-        this.idpos = idpos;
-    }
-
     @SerializedName("idpos")
     private int idpos;
 
@@ -30,31 +22,32 @@ public class RequestGuardarEditarPunto implements Serializable{
     @SerializedName("nombre_cliente")
     public String nombre_cliente;
 
-
     @SerializedName("email")
     public String email;
-
 
     @SerializedName("depto")
     public int depto;
 
-
     @SerializedName("ciudad")
     public int ciudad;
-
 
     @SerializedName("distrito")
     public int distrito;
 
-
     @SerializedName("telefono")
-    public int telefono;
+    public String telefono;
 
     @SerializedName("celular")
-    public int celular;
+    public String celular;
 
     @SerializedName("estado_com")
     public int estado_com;
+
+    @SerializedName("zona")
+    public int zona;
+
+    @SerializedName("territorio")
+    public int territorio;
 
     @SerializedName("categoria")
     public int categoria;
@@ -62,29 +55,23 @@ public class RequestGuardarEditarPunto implements Serializable{
     @SerializedName("subcategoria")
     public int subcategoria;
 
-    @SerializedName("territorio")
-    public int territorio;
-
-    @SerializedName("descripcion")
-    public String descripcion;
-
-    @SerializedName("zona")
-    public int zona;
+    @SerializedName("vende_recargas")
+    public int vende_recargas;
 
     @SerializedName("texto_direccion")
     public String texto_direccion;
 
-    @SerializedName("vende_recargas")
-    public int vende_recargas;
+    @SerializedName("ref_direccion")
+    public String ref_direccion;
 
     @SerializedName("codigo_cum")
     public int codigo_cum;
 
-    @SerializedName("ref_direccion")
-    public String ref_direccion;
-
     @SerializedName("tipo_via")
     public int tipo_via;
+
+    @SerializedName("descripcion")
+    public String descripcion;
 
     @SerializedName("nombre_via")
     public String nombre_via;
@@ -122,6 +109,60 @@ public class RequestGuardarEditarPunto implements Serializable{
     @SerializedName("des_tipo_ciudad")
     public String des_tipo_ciudad;
 
+    @SerializedName("tipo_via_")
+    public CategoriasEstandar viaEnt;
+
+    @SerializedName("tipo_interior_")
+    public CategoriasEstandar interEnt;
+
+    @SerializedName("tipo_vivienda_")
+    public CategoriasEstandar vivendaEnt;
+
+    @SerializedName("tipo_urbanizacion_")
+    public CategoriasEstandar urbaEnt;
+
+    @SerializedName("tipo_ciudad_")
+    public CategoriasEstandar ciuEnt;
+
+    public CategoriasEstandar getViaEnt() {
+        return viaEnt;
+    }
+
+    public void setViaEnt(CategoriasEstandar viaEnt) {
+        this.viaEnt = viaEnt;
+    }
+
+    public CategoriasEstandar getInterEnt() {
+        return interEnt;
+    }
+
+    public void setInterEnt(CategoriasEstandar interEnt) {
+        this.interEnt = interEnt;
+    }
+
+    public CategoriasEstandar getVivendaEnt() {
+        return vivendaEnt;
+    }
+
+    public void setVivendaEnt(CategoriasEstandar vivendaEnt) {
+        this.vivendaEnt = vivendaEnt;
+    }
+
+    public CategoriasEstandar getUrbaEnt() {
+        return urbaEnt;
+    }
+
+    public void setUrbaEnt(CategoriasEstandar urbaEnt) {
+        this.urbaEnt = urbaEnt;
+    }
+
+    public CategoriasEstandar getCiuEnt() {
+        return ciuEnt;
+    }
+
+    public void setCiuEnt(CategoriasEstandar ciuEnt) {
+        this.ciuEnt = ciuEnt;
+    }
 
     public String getNombre_punto() {
         return nombre_punto;
@@ -179,19 +220,19 @@ public class RequestGuardarEditarPunto implements Serializable{
         this.distrito = distrito;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
-    public int getCelular() {
+    public String getCelular() {
         return celular;
     }
 
-    public void setCelular(int celular) {
+    public void setCelular(String celular) {
         this.celular = celular;
     }
 
@@ -363,6 +404,14 @@ public class RequestGuardarEditarPunto implements Serializable{
         this.num_int_urbanizacion = num_int_urbanizacion;
     }
 
+    public int getIdpos() {
+        return idpos;
+    }
+
+    public void setIdpos(int idpos) {
+        this.idpos = idpos;
+    }
+
     public int getTipo_ciudad() {
         return tipo_ciudad;
     }
@@ -386,4 +435,6 @@ public class RequestGuardarEditarPunto implements Serializable{
     public void setTipo_documento(int tipo_documento) {
         this.tipo_documento = tipo_documento;
     }
+
+
 }

@@ -101,7 +101,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
                 onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_marcar_visita));
             }
 
-        }else{
+        } else {
             onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_home));
         }
 
@@ -141,7 +141,9 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
 
         } else if(id == R.id.nav_gestion_pdv) {
             toolbar.setTitle("Gestión PDVS");
-            fragmentClass = FragmentCrearPunto.class;
+
+            startActivity(new Intent(this, ActCrearPdvuno.class));
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         } else if(id == R.id.nav_rutero_vendedor) {
             toolbar.setTitle("Mi Rutero");

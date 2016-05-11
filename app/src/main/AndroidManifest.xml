@@ -104,6 +104,10 @@
         <activity
             android:name=".Activity.ActReporteAprobacionPdv"
             android:label="@string/title_activity_act_reporte_aprobacion_pdv"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ActCrearPdvuno"
+            android:label="@string/title_activity_act_crear_pdvuno"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

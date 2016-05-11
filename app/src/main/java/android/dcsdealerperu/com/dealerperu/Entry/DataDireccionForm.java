@@ -37,6 +37,36 @@ public class DataDireccionForm {
 
     private String dir_concatenada;
 
+    public RequestGuardarEditarPunto requestGuardarEditarPunto;
+
+    private String accion;
+
+    private int editaPunto;
+
+    public int getEditaPunto() {
+        return editaPunto;
+    }
+
+    public void setEditaPunto(int editaPunto) {
+        this.editaPunto = editaPunto;
+    }
+
+    public String getAccion() {
+        return accion;
+    }
+
+    public void setAccion(String accion) {
+        this.accion = accion;
+    }
+
+    public RequestGuardarEditarPunto getRequestGuardarEditarPunto() {
+        return requestGuardarEditarPunto;
+    }
+
+    public void setRequestGuardarEditarPunto(RequestGuardarEditarPunto requestGuardarEditarPunto) {
+        this.requestGuardarEditarPunto = requestGuardarEditarPunto;
+    }
+
     public String getDir_concatenada() {
         return dir_concatenada;
     }
