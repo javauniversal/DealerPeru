@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Adapter.AdapterMisPedidos;
 import android.dcsdealerperu.com.dealerperu.Entry.MisPedidos;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,16 +15,36 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.google.gson.Gson;
 
+import java.nio.charset.Charset;
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
+
+import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
 public class ActReporteMisPedidos extends AppCompatActivity {
 
@@ -31,6 +52,9 @@ public class ActReporteMisPedidos extends AppCompatActivity {
     private Bundle bundle;
     private AdapterMisPedidos adapterMisPedidos;
     private DecimalFormat format;
+    private String comentario;
+    private SpotsDialog alertDialog;
+    private RequestQueue rq;
 
     private SwipeMenuListView mListView;
     @Override
@@ -45,6 +69,7 @@ public class ActReporteMisPedidos extends AppCompatActivity {
         if (bundle != null) {
             mDescribable = (MisPedidos)bundle.getSerializable("value");
         }
+        alertDialog = new SpotsDialog(this, R.style.Custom);
 
         mListView = (SwipeMenuListView) findViewById(R.id.listView);
         //mListView = (SwipeMenuListView) findViewById(R.drawable.i);
@@ -99,6 +124,47 @@ public class ActReporteMisPedidos extends AppCompatActivity {
                         break;
                     case 1:
                         //Cancelar Pedido
+                        LayoutInflater inflater = getLayoutInflater();
+                        View dialoglayout = inflater.inflate(R.layout.dialog_comentario_aproba, null);
+
+                        final EditText editTextComent = (EditText) dialoglayout.findViewById(R.id.EditComment);
+
+                        android.support.v7.app.AlertDialog.Builder builder2 = new android.support.v7.app.AlertDialog.Builder(ActReporteMisPedidos.this);
+                        builder2.setCancelable(false);
+                        builder2.setTitle("Motivo de Cancelación");
+                        builder2.setView(dialoglayout).setPositiveButton("Cancelar Pedido", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                if (isValidNumber(editTextComent.getText().toString().trim())) {
+                                    Toast.makeText(ActReporteMisPedidos.this, "El comentario es un campo requerido", Toast.LENGTH_LONG).show();
+                                } else {
+                                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(ActReporteMisPedidos.this);
+                                    builder.setCancelable(false);
+                                    builder.setTitle("Alerta");
+                                    builder.setMessage("¿ Estas seguro de cancelar el pedido ?");
+                                    builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            comentario = editTextComent.getText().toString();
+                                            cancelarPedido(position);
+                                        }
+
+                                    }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    builder.show();
+
+                                }
+
+                            }
+                        }).setNegativeButton("Salir", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        builder2.show();
                         break;
                 }
                 return false;
@@ -126,6 +192,94 @@ public class ActReporteMisPedidos extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+
+    private void cancelarPedido(int position) {
+        alertDialog.show();
+        final int idpos =  mDescribable.getResponseMisPedidosList().get(position).getIdpos();
+        final int idpedido =  mDescribable.getResponseMisPedidosList().get(position).getNpedido();
+
+        String url = String.format("%1$s%2$s", getString(R.string.url_base),"cancelar_toma_pedido");
+        rq = Volley.newRequestQueue(this);
+        StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        respuestaCancelarPedido(response);
+
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(ActReporteMisPedidos.this, "Error de tiempo de espera", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(ActReporteMisPedidos.this, "Error Servidor", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(ActReporteMisPedidos.this, "Server Error", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NetworkError) {
+                            Toast.makeText(ActReporteMisPedidos.this, "Error de red", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(ActReporteMisPedidos.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
+                        }
+
+                        alertDialog.dismiss();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
+                params.put("iddis", getResponseUserStatic().getId_distri());
+                params.put("db", getResponseUserStatic().getBd());
+                params.put("idpos", String.valueOf(idpos));
+                params.put("idpedido", String.valueOf(idpedido));
+                params.put("motivo", comentario);
+
+                return params;
+            }
+        };
+
+        rq.add(jsonRequest);
+    }
+
+    private void respuestaCancelarPedido(String response) {
+        Gson gson = new Gson();
+        if (!response.equals("[]")) {
+            try {
+
+                Charset.forName("UTF-8").encode(response);
+
+                byte ptext[] = response.getBytes(Charset.forName("ISO-8859-1"));
+
+                String value = new String(ptext, Charset.forName("UTF-8"));
+
+                ResponseMarcarPedido responseMarcarPedido = gson.fromJson(value, ResponseMarcarPedido.class);
+
+                if (responseMarcarPedido.getEstado() == 0) {
+                    //Se guardó bien.!
+                    Toast.makeText(this, responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
+                } else if (responseMarcarPedido.getEstado() == -2) {
+                    //Error al intentar guardar la cancelacion del pedido
+                    Toast.makeText(this, responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
+                }
+
+            } catch (IllegalStateException ex) {
+                ex.printStackTrace();
+                alertDialog.dismiss();
+            } finally {
+                alertDialog.dismiss();
+            }
+        } else {
+            alertDialog.dismiss();
+        }
     }
 
     private void cargarDetalle(int position) {
