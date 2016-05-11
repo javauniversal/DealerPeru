@@ -65,7 +65,7 @@ public class ActLoginUser extends AppCompatActivity {
         editUsuario = (EditText) findViewById(R.id.editUsuario);
         editPassword = (EditText) findViewById(R.id.editPassword);
 
-        editUsuario.setText("vcali");
+        editUsuario.setText("amontoyap");
         editPassword.setText("pro_123");
 
 

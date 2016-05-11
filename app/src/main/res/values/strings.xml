@@ -28,6 +28,7 @@
     <string name="title_activity_act_carrito_pedido">Carrito Pedido</string>
     <string name="title_activity_act_detalle_combo_pedir">Referencia</string>
     <string name="title_activity_act_detalle_apro_punto">Aprobación de puntos</string>
+    <string name="title_activity_act_reporte_aprobacion_pdv">Reporte Aprobacion Pdvs</string>
 
 
 </resources>

@@ -6,6 +6,7 @@ import android.dcsdealerperu.com.dealerperu.Fragment.FragmentCrearPunto;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHome;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisBajas;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisPedidos;
+import android.dcsdealerperu.com.dealerperu.Fragment.FragmentReporteAprobacionPdv;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentRuteroVendedor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmenteAproPdv;
 import android.dcsdealerperu.com.dealerperu.R;
@@ -161,6 +162,10 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             toolbar.setTitle("Aprobación PDVS");
             editaPunto = 0; accion = "Guardar";
             fragmentClass = FragmenteAproPdv.class;
+        }else if(id == R.id.nav_aprobaciones_super) {
+            toolbar.setTitle("Reporte Aprobación PDVS");
+            editaPunto = 0; accion = "Guardar";
+            fragmentClass = FragmentReporteAprobacionPdv.class;
         } else if(id == R.id.nav_cerrar_sesion) {
 
             Intent intent = new Intent(this, ActLoginUser.class);

@@ -26,10 +26,19 @@ public class AprobarPunto implements Serializable {
     private int idpdv;
 
     @SerializedName("nombre_vende")
-    private String   nombre_vende;
+    private String  nombre_vende;
 
     @SerializedName("id_pos")
     private int id_pos;
+
+    @SerializedName("fecha_accion")
+    private String fecha_accion;
+
+    @SerializedName("hora_accion")
+    private String hora_accion;
+
+    @SerializedName("nombre_punto")
+    private String nombre_punto;
 
     @SerializedName("detalle")
     private List<DetalleAprobacion> detalleAprobacionList;
@@ -104,5 +113,27 @@ public class AprobarPunto implements Serializable {
 
     public void setDetalleAprobacionList(List<DetalleAprobacion> detalleAprobacionList) {
         this.detalleAprobacionList = detalleAprobacionList;
+    }
+    public String getFecha_accion() {
+        return fecha_accion;
+    }
+
+    public void setFecha_accion(String fecha_accion) {
+        this.fecha_accion = fecha_accion;
+    }
+
+    public String getHora_accion() {
+        return hora_accion;
+    }
+
+    public void setHora_accion(String hora_accion) {
+        this.hora_accion = hora_accion;
+    }
+    public String getNombre_punto() {
+        return nombre_punto;
+    }
+
+    public void setNombre_punto(String nombre_punto) {
+        this.nombre_punto = nombre_punto;
     }
 }
