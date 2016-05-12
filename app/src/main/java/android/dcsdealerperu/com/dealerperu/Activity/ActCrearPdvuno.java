@@ -9,10 +9,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -30,6 +33,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +57,6 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
     private Button btn_siguiente_per;
     private Button btn_cancelar_per;
     private Spinner spinnerTipoDocumento;
-    private FragmentDireccion fragmentDireccion;
     private Switch switch1;
     private int venta_recarga = 2;
     private int editaPunto = 0;
@@ -62,6 +65,9 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
     private SpotsDialog alertDialog;
     private RequestQueue rq;
     public static final String TAG = "MyTag";
+    private Bundle bundle;
+    private RequestGuardarEditarPunto datos;
+    private List<CategoriasEstandar> ListaTipoDoc = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +93,58 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
 
         btn_siguiente_per.setOnClickListener(this);
         btn_cancelar_per.setOnClickListener(this);
-        loadSpinnerTipo();
+
+
+
+        Intent intent = this.getIntent();
+        bundle = intent.getExtras();
+        if (bundle != null) {
+            accion = bundle.getString("accion");
+            editaPunto = bundle.getInt("idpos");
+        }
+
+        if (accion.equals("Editar")) {
+            CargarDatosPunto();
+        } else {
+            loadSpinnerTipo();
+        }
+
+
+
+        btn_siguiente_per.setOnClickListener(this);
+        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    venta_recarga = 1;
+                }else{
+                    venta_recarga = 2;
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.act_main_buscar_punto, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            buscarPunto();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void buscarPunto() {
+        startActivity(new Intent(this, ActBuscarPunto.class));
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     @Override
@@ -101,6 +158,10 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
 
                     RequestGuardarEditarPunto requestGuardarEditarPunto = new RequestGuardarEditarPunto();
 
+                    if (accion.equals("Editar")) {
+                        requestGuardarEditarPunto = datos;
+                    }
+
                     requestGuardarEditarPunto.setNombre_punto(edit_nombres.getText().toString());
                     requestGuardarEditarPunto.setCedula(edit_cedula.getText().toString());
                     requestGuardarEditarPunto.setNombre_cliente(edit_nom_cli.getText().toString());
@@ -109,6 +170,7 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
                     requestGuardarEditarPunto.setCelular(edit_cel_edit.getText().toString());
                     requestGuardarEditarPunto.setVende_recargas(venta_recarga);
                     requestGuardarEditarPunto.setTipo_documento(tipoDocumento);
+                    requestGuardarEditarPunto.setAccion(accion);
 
                     Bundle bundle = new Bundle();
                     Intent intent = new Intent(this, ActCrearPdvdos.class);
@@ -134,7 +196,7 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onResponse(String response) {
                         // response
-                        //CargarDatos(response);
+                        CargarDatos(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -174,9 +236,54 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
         rq.add(jsonRequest);
     }
 
+    private void CargarDatos(String response) {
+        Gson gson = new Gson();
+        if (!response.equals("[]")) {
+            try {
+
+                datos = gson.fromJson(response, RequestGuardarEditarPunto.class);
+
+                loadSpinnerTipo();
+
+                selectSpinnerValue(ListaTipoDoc, spinnerTipoDocumento, datos.getTipo_documento());
+
+                edit_nombres.setText(datos.getNombre_punto());
+
+                edit_nom_cli.setText(datos.getNombre_cliente());
+                edit_correo_edit.setText(datos.getEmail());
+                edit_tel_edit.setText( String.valueOf((datos.getTelefono())));
+                edit_cel_edit.setText( String.valueOf((datos.getCelular())));
+
+                if(datos.getVende_recargas() == 1) {
+                    switch1.setChecked(true);
+                } else {
+                    switch1.setChecked(false);
+                }
+
+            } catch (IllegalStateException ex) {
+                ex.printStackTrace();
+                alertDialog.dismiss();
+            } finally {
+                alertDialog.dismiss();
+
+            }
+        } else {
+            alertDialog.dismiss();
+        }
+    }
+
+    private void selectSpinnerValue(List<CategoriasEstandar> ListaEstado, Spinner spinner, int id) {
+        for(int i = 0; i < ListaEstado.size(); i++){
+            if(ListaEstado.get(i).getId() == id) {
+                spinner.setSelection(i);
+                break;
+            }
+        }
+    }
+
     public void loadSpinnerTipo() {
 
-        final List<CategoriasEstandar> ListaTipoDoc = new ArrayList<>();
+        ListaTipoDoc = new ArrayList<>();
 
         ListaTipoDoc.add(new CategoriasEstandar(1,"RUC"));
         ListaTipoDoc.add(new CategoriasEstandar(2,"DNI"));
@@ -198,6 +305,11 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
                     edit_cedula.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
                     edit_cedula.setHint("Dni Responsable");
                 }
+
+                if(accion.equals("Editar")) {
+                    edit_cedula.setText(datos.getCedula());
+                }
+
             }
 
             @Override
@@ -308,4 +420,12 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
             rq.cancelAll(TAG);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, ActMainPeru.class));
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        finish();
+    }
+
 }

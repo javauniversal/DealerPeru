@@ -246,8 +246,7 @@ public class FragmentDatosPersonales extends BaseVolleyFragment implements View.
         }
     }
 
-    private void selectSpinnerValue(List<CategoriasEstandar> ListaEstado, Spinner spinner, int id)
-    {
+    private void selectSpinnerValue(List<CategoriasEstandar> ListaEstado, Spinner spinner, int id) {
         for(int i = 0; i < ListaEstado.size(); i++){
             if(ListaEstado.get(i).getId() == id) {
                 spinner.setSelection(i);

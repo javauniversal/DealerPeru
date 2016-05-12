@@ -3,15 +3,12 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.dcsdealerperu.com.dealerperu.Activity.ActMainPeru;
-import android.dcsdealerperu.com.dealerperu.Activity.ActMarcarVisita;
+import android.dcsdealerperu.com.dealerperu.Activity.ActResponAvanBusqueda;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.GuardarEditarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.RequesGuardarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseCreatePunt;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseInsert;
-import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.Subcategorias;
 import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
 import android.dcsdealerperu.com.dealerperu.Entry.Zona;
@@ -48,14 +45,10 @@ import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
 
-import static android.dcsdealerperu.com.dealerperu.Entry.DataDireccionForm.getDataDireccionFormStatic;
 import static android.dcsdealerperu.com.dealerperu.Entry.RequesGuardarPunto.getRequesGuardarPuntoStatic;
 import static android.dcsdealerperu.com.dealerperu.Entry.RequesGuardarPunto.setRequesGuardarPuntoStatic;
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FragmentReferencia extends BaseVolleyFragment implements View.OnClickListener {
 
     private static final String DESCRIBABLE_KEY = "describable_key";
@@ -119,7 +112,7 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
         return view;
     }
 
-    private void dataEditReference() {
+    /*private void dataEditReference() {
 
         setEstadoComercial(responseCreatePunt.getEstadoComunList(), spinner_estado_comercial, getDataDireccionFormStatic().getRequestGuardarEditarPunto().getEstado_com());
         setCircuito(responseCreatePunt.getTerritorioList(), spinner_circuito, getDataDireccionFormStatic().getRequestGuardarEditarPunto().getTerritorio());
@@ -129,7 +122,7 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
 
         edit_referencia.setText(getDataDireccionFormStatic().getRequestGuardarEditarPunto().getRef_direccion());
 
-    }
+    }*/
 
     private void setSubCategoria(List<CategoriasEstandar> categoriasList, Spinner spinner_sub_categoria, int subcategoria) {
         for(int i = 0; i < categoriasList.size(); i++) {
@@ -184,13 +177,13 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        loadComercial(responseCreatePunt.getEstadoComunList());
+        /*loadComercial(responseCreatePunt.getEstadoComunList());
         loadCircuito(responseCreatePunt.getTerritorioList());
         loadCategoria(responseCreatePunt.getCategoriasList());
 
         if (getDataDireccionFormStatic().getAccion().equals("Editar")) {
             dataEditReference();
-        }
+        }*/
 
     }
 
@@ -300,7 +293,7 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
 
                 dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
-                        setupGrid();
+                        //setupGrid();
                     }
 
                 });
@@ -319,7 +312,7 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
         }
     }
 
-    private void setupGrid() {
+    /*private void setupGrid() {
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "guardar_punto");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
@@ -452,16 +445,20 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
                             RequesGuardarPunto requesGuardarPunto = new RequesGuardarPunto();
                             requesGuardarPunto = null;
                             setRequesGuardarPuntoStatic(requesGuardarPunto);
-                            Intent intent = new Intent(getActivity(), ActMainPeru.class);
-                            startActivity(intent);
 
                         }
                     });
                     dialogo1.setNegativeButton("Vender", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogo1, int id) {
                             //Vender ();
-                            buscarIdPunto(Integer.parseInt(responseInsert.getIdpos()));
 
+                            ActResponAvanBusqueda actBusqueda =  new ()ActResponAvanBusqueda();
+
+                            actBusqueda.buscarIdPos(Integer.parseInt(responseInsert.getIdpos()));
+
+                            RequesGuardarPunto requesGuardarPunto = new RequesGuardarPunto();
+                            requesGuardarPunto = null;
+                            setRequesGuardarPuntoStatic(requesGuardarPunto);
                         }
                     });
 
@@ -481,97 +478,5 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
         else {
             alertDialog.dismiss();
         }
-    }
-
-    public void buscarIdPunto(final int idPos) {
-
-        String url = String.format("%1$s%2$s", getString(R.string.url_base),"buscar_punto_visita");
-
-        StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
-                    @Override
-                    public void onResponse(String response) {
-                        // response
-                        parseJSONPunto(response);
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error
-                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                            Toast.makeText(getActivity(), "Error de tiempo de espera", Toast.LENGTH_LONG).show();
-                        } else if (error instanceof AuthFailureError) {
-                            Toast.makeText(getActivity(), "Error Servidor", Toast.LENGTH_LONG).show();
-                        } else if (error instanceof ServerError) {
-                            Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_LONG).show();
-                        } else if (error instanceof NetworkError) {
-                            Toast.makeText(getActivity(), "Error de red", Toast.LENGTH_LONG).show();
-                        } else if (error instanceof ParseError) {
-                            Toast.makeText(getActivity(), "Error al serializar los datos", Toast.LENGTH_LONG).show();
-                        }
-
-                        alertDialog.dismiss();
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-
-                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
-                params.put("iddis", getResponseUserStatic().getId_distri());
-                params.put("db", getResponseUserStatic().getBd());
-                params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
-                params.put("idpos", String.valueOf(idPos));
-
-                return params;
-            }
-        };
-
-        addToQueue(jsonRequest);
-
-    }
-
-    public void parseJSONPunto(String response) {
-
-        Gson gson = new Gson();
-        if (!response.equals("[]")) {
-            try {
-
-                ResponseMarcarPedido responseMarcarPedido = gson.fromJson(response, ResponseMarcarPedido.class);
-
-                if (responseMarcarPedido.getEstado() == -1) {
-                    //No tiene permisos del punto
-                    Toast.makeText(getActivity(), responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
-                } else if (responseMarcarPedido.getEstado() == -2) {
-                    //El punto no existe
-                    Toast.makeText(getActivity(), responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
-                } else {
-
-                    /*RequesGuardarPunto requesGuardarPunto = new RequesGuardarPunto();
-                    requesGuardarPunto = null;
-                    setRequesGuardarPuntoStatic(requesGuardarPunto);*/
-
-                    //Activity Detalle
-                    Bundle bundle = new Bundle();
-                    Intent intent = new Intent(getActivity(), ActMarcarVisita.class);
-                    bundle.putSerializable("value", responseMarcarPedido);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
-
-            } catch (IllegalStateException ex) {
-                ex.printStackTrace();
-                alertDialog.dismiss();
-            } finally {
-                alertDialog.dismiss();
-            }
-        } else {
-            alertDialog.dismiss();
-        }
-
-    }
-
+    }*/
 }

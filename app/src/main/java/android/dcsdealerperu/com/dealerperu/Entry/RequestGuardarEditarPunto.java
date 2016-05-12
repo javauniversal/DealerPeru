@@ -4,6 +4,7 @@ package android.dcsdealerperu.com.dealerperu.Entry;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class RequestGuardarEditarPunto implements Serializable{
 
@@ -65,7 +66,7 @@ public class RequestGuardarEditarPunto implements Serializable{
     public String ref_direccion;
 
     @SerializedName("codigo_cum")
-    public int codigo_cum;
+    public String codigo_cum;
 
     @SerializedName("tipo_via")
     public int tipo_via;
@@ -123,6 +124,47 @@ public class RequestGuardarEditarPunto implements Serializable{
 
     @SerializedName("tipo_ciudad_")
     public CategoriasEstandar ciuEnt;
+
+    @SerializedName("accion")
+    private String accion;
+
+    private List<Territorio> territorioList;
+
+    private List<CategoriasEstandar> estadoComunList;
+
+    private List<CategoriasEstandar> categoriasList;
+
+    public List<Territorio> getTerritorioList() {
+        return territorioList;
+    }
+
+    public void setTerritorioList(List<Territorio> territorioList) {
+        this.territorioList = territorioList;
+    }
+
+    public List<CategoriasEstandar> getEstadoComunList() {
+        return estadoComunList;
+    }
+
+    public void setEstadoComunList(List<CategoriasEstandar> estadoComunList) {
+        this.estadoComunList = estadoComunList;
+    }
+
+    public List<CategoriasEstandar> getCategoriasList() {
+        return categoriasList;
+    }
+
+    public void setCategoriasList(List<CategoriasEstandar> categoriasList) {
+        this.categoriasList = categoriasList;
+    }
+
+    public String getAccion() {
+        return accion;
+    }
+
+    public void setAccion(String accion) {
+        this.accion = accion;
+    }
 
     public CategoriasEstandar getViaEnt() {
         return viaEnt;
@@ -300,11 +342,11 @@ public class RequestGuardarEditarPunto implements Serializable{
         this.vende_recargas = vende_recargas;
     }
 
-    public int getCodigo_cum() {
+    public String getCodigo_cum() {
         return codigo_cum;
     }
 
-    public void setCodigo_cum(int codigo_cum) {
+    public void setCodigo_cum(String codigo_cum) {
         this.codigo_cum = codigo_cum;
     }
 

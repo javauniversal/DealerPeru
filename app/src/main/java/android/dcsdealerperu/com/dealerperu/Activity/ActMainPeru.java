@@ -108,7 +108,6 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
 
     }
 
-
     @Override
     public void onBackPressed() {
         if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
@@ -142,7 +141,12 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         } else if(id == R.id.nav_gestion_pdv) {
             toolbar.setTitle("Gestión PDVS");
 
-            startActivity(new Intent(this, ActCrearPdvuno.class));
+            Bundle bundle = new Bundle();
+            Intent intent = new Intent(this, ActCrearPdvuno.class);
+            bundle.putString("accion", accion);
+            bundle.putInt("idpos", editaPunto);
+            intent.putExtras(bundle);
+            startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         } else if(id == R.id.nav_rutero_vendedor) {
@@ -177,17 +181,9 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
 
         }
 
-
         try {
 
             Fragment fragment = (Fragment) fragmentClass.newInstance();
-
-            if(id == R.id.nav_gestion_pdv) {
-                Bundle args = new Bundle();
-                args.putInt("idpos", editaPunto);
-                args.putString("accion", accion);
-                fragment.setArguments(args);
-            }
 
             fragmentManager.beginTransaction().replace(R.id.contentPanel, fragment).commit();
 

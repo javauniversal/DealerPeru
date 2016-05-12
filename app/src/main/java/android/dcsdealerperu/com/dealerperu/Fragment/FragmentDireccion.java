@@ -727,7 +727,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
 
                     DataDireccionForm objet = new DataDireccionForm();
 
-                    objet.setDepartamento(departamento);
+                    /*objet.setDepartamento(departamento);
                     objet.setProvincia(ciudad_pro);
                     objet.setDistrito(distrito);
                     objet.setTipo_via(estado_cliente);
@@ -782,7 +782,9 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                 }
 
                 fManager.beginTransaction().replace(R.id.contentPanel, fragmentDatosPersonales).commit();
+                */
 
+                }
                 break;
 
         }

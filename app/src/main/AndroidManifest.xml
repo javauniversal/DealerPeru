@@ -113,6 +113,10 @@
             android:name=".Activity.ActCrearPdvdos"
             android:label="@string/title_activity_act_crear_pdvdos"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Activity.ActCrearPdvtres"
+            android:label="@string/title_activity_act_crear_pdvdos"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

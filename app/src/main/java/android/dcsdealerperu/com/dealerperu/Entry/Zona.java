@@ -13,6 +13,9 @@ public class Zona implements Serializable {
     @SerializedName("descripcion")
     public String descripcion;
 
+    @SerializedName("id_territorio")
+    private int id_territorio;
+
     public int getId() {
         return id;
     }
@@ -28,9 +31,6 @@ public class Zona implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
-    @SerializedName("id_territorio")
-    private int id_territorio;
 
     public int getId_territorio() {
         return id_territorio;
