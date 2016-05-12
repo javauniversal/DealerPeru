@@ -9,23 +9,39 @@
             android:title="Inicio" />
 
         <item
-            android:id="@+id/nav_sol_producto"
+            android:id="@+id/nav_entregar_pedido"
             android:icon="@drawable/ic_add_shopping_cart_black_24dp"
-            android:title="Solicitar Producto" />
+            android:title="Entregar Pedido" />
 
         <item
-            android:id="@+id/nav_crear_punto"
-            android:icon="@drawable/ic_create_black_24dp"
-            android:title="Crear Punto" />
+            android:id="@+id/nav_acpetar_pedido"
+            android:icon="@drawable/ic_done_all_black_24dp"
+            android:title="Aceptar Pedido" />
 
         <item
-            android:id="@+id/nav_pdv"
-            android:icon="@drawable/ic_person_pin_black_24dp"
-            android:title="Visita PDV" />
+            android:id="@+id/nav_planificar_punto"
+            android:icon="@drawable/ic_playlist_add_check_black_24dp"
+            android:title="Planificar Visita" />
 
+        <item android:title="Reportes">
+            <menu>
+                <item
+                    android:id="@+id/nav_inventario"
+                    android:icon="@drawable/ic_dns_black_24dp"
+                    android:title="Inventario" />
+                <item
+                    android:id="@+id/nav_pedido_entregado"
+                    android:icon="@drawable/ic_assignment_black_24dp"
+                    android:title="Pedidos Entregados" />
+            </menu>
+        </item>
+
+        <item
+            android:id="@+id/nav_cerrar_sesion"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="Cerrar Sesión" />
 
     </group>
-
 
 </menu>
 

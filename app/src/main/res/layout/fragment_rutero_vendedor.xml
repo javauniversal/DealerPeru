@@ -147,15 +147,6 @@
                             android:layout_alignParentStart="true" />
 
 
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/input_circuito"
-                            android:layout_width="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@+id/image_circuito"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/image_circuito">
 
                             <Spinner
                                 android:layout_width="match_parent"
@@ -167,7 +158,6 @@
                                 android:layout_toRightOf="@+id/image_circuito"
                                 android:layout_marginLeft="8dp" />
 
-                        </android.support.design.widget.TextInputLayout>
 
                     </RelativeLayout>
 
@@ -180,6 +170,7 @@
                         android:textSize="10sp"
                         android:textColor="@color/colorAccent"
                         android:text="Ruta" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -198,15 +189,6 @@
                             android:layout_alignParentStart="true" />
 
 
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/input_ruta"
-                            android:layout_width="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@+id/image_ruta"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/image_ruta">
 
                             <Spinner
                                 android:layout_width="match_parent"
@@ -218,10 +200,8 @@
                                 android:layout_toRightOf="@+id/image_ruta"
                                 android:layout_marginLeft="8dp" />
 
-                        </android.support.design.widget.TextInputLayout>
 
                     </RelativeLayout>
-
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -248,17 +228,6 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true" />
 
-
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/input_distrito"
-                            android:layout_width="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@+id/image_estado_visita"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/image_estado_visita">
-
                             <Spinner
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -269,7 +238,6 @@
                                 android:layout_toRightOf="@+id/image_estado_visita"
                                 android:layout_marginLeft="8dp" />
 
-                        </android.support.design.widget.TextInputLayout>
 
                     </RelativeLayout>
 
@@ -281,6 +249,7 @@
                         android:textSize="10sp"
                         android:textColor="@color/colorAccent"
                         android:text="Tipo de Frecuencia" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

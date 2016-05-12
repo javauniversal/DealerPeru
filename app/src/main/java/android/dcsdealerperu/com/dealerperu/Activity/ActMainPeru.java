@@ -1,11 +1,13 @@
 package android.dcsdealerperu.com.dealerperu.Activity;
 
 import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.Fragment.FragmenEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmenMarcarvisita;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentCrearPunto;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHome;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisBajas;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisPedidos;
+import android.dcsdealerperu.com.dealerperu.Fragment.FragmentPlanificar;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentReporteAprobacionPdv;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentRuteroVendedor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmenteAproPdv;
@@ -130,13 +132,19 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
 
         if (id == R.id.nav_home) {
             toolbar.setTitle("Inicio");
-            editaPunto = 0; accion = "Guardar";
+            editaPunto = 0;
+            accion = "Guardar";
             fragmentClass = FragmentHome.class;
 
         } else if(id == R.id.nav_marcar_visita) {
             toolbar.setTitle("Marcar Visita");
-            editaPunto = 0; accion = "Guardar";
+            editaPunto = 0;
+            accion = "Guardar";
             fragmentClass = FragmenMarcarvisita.class;
+
+        } else if (id == R.id.nav_planificar_punto) {
+            toolbar.setTitle("Planificar Visita");
+            fragmentClass = FragmentPlanificar.class;
 
         } else if(id == R.id.nav_gestion_pdv) {
             toolbar.setTitle("Gestión PDVS");
@@ -179,6 +187,11 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             startActivity(intent);
             finish();
 
+        } else if (id == R.id.nav_entregar_pedido) {
+            toolbar.setTitle("Entregar Pedido");
+            editaPunto = 0;
+            accion = "Guardar";
+            fragmentClass = FragmenEntregarPedido.class;
         }
 
         try {

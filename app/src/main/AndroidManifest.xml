@@ -108,14 +108,18 @@
         <activity
             android:name=".Activity.ActCrearPdvuno"
             android:label="@string/title_activity_act_crear_pdvuno"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.ActCrearPdvdos"
             android:label="@string/title_activity_act_crear_pdvdos"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.ActCrearPdvtres"
             android:label="@string/title_activity_act_crear_pdvdos"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ActPlanificarOrdenar"
+            android:label="@string/title_activity_act_planificar_ordenar"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

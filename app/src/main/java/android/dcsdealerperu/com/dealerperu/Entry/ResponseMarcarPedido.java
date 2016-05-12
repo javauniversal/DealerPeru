@@ -47,6 +47,16 @@ public class ResponseMarcarPedido implements Serializable {
     @SerializedName("motivos")
     private List<Motivos> motivosList;
 
+    private int puntoPlanificacion;
+
+    public int getPuntoPlanificacion() {
+        return puntoPlanificacion;
+    }
+
+    public void setPuntoPlanificacion(int puntoPlanificacion) {
+        this.puntoPlanificacion = puntoPlanificacion;
+    }
+
     public List<Motivos> getMotivosList() {
         return motivosList;
     }
