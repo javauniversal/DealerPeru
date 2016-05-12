@@ -346,11 +346,11 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
                     mDescribable.setDes_tipo_ciudad(edit_descripcion.getText().toString());
                     mDescribable.setTexto_direccion(direccionConcat.getText().toString());
 
-                    Bundle bundle = new Bundle();
+                    /*Bundle bundle = new Bundle();
                     Intent intent = new Intent(this, ActCrearPdvtres.class);
                     bundle.putSerializable("value", mDescribable);
                     intent.putExtras(bundle);
-                    startActivity(intent);
+                    startActivity(intent);*/
 
                 }
 
@@ -437,6 +437,21 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
             edit_descripcion.setText("");
             edit_descripcion.setError("Este campo es obligatorio");
             indicadorValidate = true;
+        } else if(departamento == 0){
+            spinner_departamento.setFocusable(true);
+            spinner_departamento.setFocusableInTouchMode(true);
+            spinner_departamento.requestFocus();
+            Toast.makeText(this, "El campo departamento es obligatorio", Toast.LENGTH_SHORT).show();
+        } else if(ciudad_pro == 0){
+            spinner_departamento.setFocusable(true);
+            spinner_departamento.setFocusableInTouchMode(true);
+            spinner_departamento.requestFocus();
+            Toast.makeText(this, "El campo Provincia es obligatorio", Toast.LENGTH_SHORT).show();
+        }else if(distrito == 0){
+            spinner_departamento.setFocusable(true);
+            spinner_departamento.setFocusableInTouchMode(true);
+            spinner_departamento.requestFocus();
+            Toast.makeText(this, "El campo Distrito es obligatorio", Toast.LENGTH_SHORT).show();
         }
 
         return indicadorValidate;
