@@ -9,12 +9,8 @@ import android.dcsdealerperu.com.dealerperu.Adapter.AppAdapterRutero;
 import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,11 +29,6 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -287,7 +278,7 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
 
     private void parseJSON(String response) {
 
-        Gson gson = new Gson();
+          Gson gson = new Gson();
 
         if (!response.equals("[]")) {
             try {
