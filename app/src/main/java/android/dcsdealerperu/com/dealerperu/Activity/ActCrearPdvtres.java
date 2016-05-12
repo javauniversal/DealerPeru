@@ -275,24 +275,26 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
 
             case R.id.btn_guardar:
 
-                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(this);
-                dialogo1.setTitle("Confirmar");
-                dialogo1.setMessage("¿ Desea guardar los datos del punto ?");
-                dialogo1.setCancelable(false);
+                if (!validarCampos()) {
+                    AlertDialog.Builder dialogo1 = new AlertDialog.Builder(this);
+                    dialogo1.setTitle("Confirmar");
+                    dialogo1.setMessage("¿ Desea guardar los datos del punto ?");
+                    dialogo1.setCancelable(false);
 
-                dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogo1, int id) {
-                        guardarDataPEdido();
-                    }
+                    dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo1, int id) {
+                            guardarDataPEdido();
+                        }
 
-                });
-                dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogo1, int id) {
-                        dialogo1.dismiss();
-                    }
-                });
+                    });
+                    dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo1, int id) {
+                            dialogo1.dismiss();
+                        }
+                    });
 
-                dialogo1.show();
+                    dialogo1.show();
+                }
 
                 break;
 
@@ -499,6 +501,46 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
         } else {
             alertDialog.dismiss();
         }
+
+    }
+
+    public boolean validarCampos() {
+
+        boolean indicadorValidate = false;
+
+      if( estado_territorio == 0){
+            spinner_circuito.setFocusable(true);
+            spinner_circuito.setFocusableInTouchMode(true);
+            spinner_circuito.requestFocus();
+            Toast.makeText(this, "El campo circuito es obligatorio", Toast.LENGTH_SHORT).show();
+           indicadorValidate = true;
+        } else if(estado_ruta == 0){
+            spinner_ruta.setFocusable(true);
+            spinner_ruta.setFocusableInTouchMode(true);
+            spinner_ruta.requestFocus();
+            Toast.makeText(this, "El campo ruta es obligatorio", Toast.LENGTH_SHORT).show();
+            indicadorValidate = true;
+        }else if(estado_comercial == 0){
+            spinner_estado_comercial.setFocusable(true);
+            spinner_estado_comercial.setFocusableInTouchMode(true);
+            spinner_estado_comercial.requestFocus();
+            Toast.makeText(this, "El campo estado comercial es obligatorio", Toast.LENGTH_SHORT).show();
+           indicadorValidate = true;
+        }else if(estado_categoria == 0){
+          spinner_categoria.setFocusable(true);
+          spinner_categoria.setFocusableInTouchMode(true);
+          spinner_categoria.requestFocus();
+          Toast.makeText(this, "El campo categoria es obligatorio", Toast.LENGTH_SHORT).show();
+          indicadorValidate = true;
+        }else if(estado_sub_categoria == 0){
+          spinner_sub_categoria.setFocusable(true);
+          spinner_sub_categoria.setFocusableInTouchMode(true);
+          spinner_sub_categoria.requestFocus();
+          Toast.makeText(this, "El campo sub categoria es obligatorio", Toast.LENGTH_SHORT).show();
+          indicadorValidate = true;
+        }
+
+        return indicadorValidate;
 
     }
 
