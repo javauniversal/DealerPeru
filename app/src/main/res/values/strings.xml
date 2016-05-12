@@ -32,6 +32,7 @@
     <string name="title_activity_act_crear_pdvuno">Crear Punto</string>
     <string name="title_activity_act_crear_pdvdos">Crear Punto</string>
     <string name="title_activity_act_planificar_ordenar">Planificar Visitas</string>
+    <string name="title_activity_act_entregar_pedido">Entregar Pedido</string>
 
 
 </resources>

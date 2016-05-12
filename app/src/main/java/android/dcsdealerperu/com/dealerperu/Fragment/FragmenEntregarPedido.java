@@ -3,6 +3,10 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Activity.ActBusquedaAvan;
+import android.dcsdealerperu.com.dealerperu.Activity.ActDetalleAproPunto;
+import android.dcsdealerperu.com.dealerperu.Activity.ActEntregarPedido;
+import android.dcsdealerperu.com.dealerperu.Entry.ListAprobarPunto;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseEntregarPedido;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +16,7 @@ import android.view.ViewGroup;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -23,6 +28,7 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -143,7 +149,29 @@ public class FragmenEntregarPedido extends BaseVolleyFragment implements View.On
     }
 
     private void parseJSONEntrega(String response) {
+        Gson gson = new Gson();
 
+        if (!response.equals("[]")) {
+            try {
+
+                ResponseEntregarPedido listAprobarPunto = gson.fromJson(response, ResponseEntregarPedido.class);
+
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(getActivity(), ActEntregarPedido.class);
+                bundle.putSerializable("value", listAprobarPunto);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+            } catch (IllegalStateException ex) {
+                ex.printStackTrace();
+                alertDialog.dismiss();
+            } finally {
+                alertDialog.dismiss();
+            }
+        }else{
+            alertDialog.dismiss();
+            Toast.makeText(getContext(),"No se encontraron datos para mostrar",Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

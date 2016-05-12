@@ -120,6 +120,10 @@
         <activity
             android:name=".Activity.ActPlanificarOrdenar"
             android:label="@string/title_activity_act_planificar_ordenar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ActEntregarPedido"
+            android:label="@string/title_activity_act_entregar_pedido"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
