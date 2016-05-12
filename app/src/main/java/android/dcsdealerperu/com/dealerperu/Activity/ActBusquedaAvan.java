@@ -1,22 +1,21 @@
 package android.dcsdealerperu.com.dealerperu.Activity;
 
 import android.content.Intent;
-import android.dcsdealerperu.com.dealerperu.Entry.BuscarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.Ciudad;
 import android.dcsdealerperu.com.dealerperu.Entry.Departamentos;
 import android.dcsdealerperu.com.dealerperu.Entry.Distrito;
+import android.dcsdealerperu.com.dealerperu.Entry.ListEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseCreatePunt;
 import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
 import android.dcsdealerperu.com.dealerperu.Entry.Zona;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -63,10 +62,14 @@ public class ActBusquedaAvan extends AppCompatActivity {
     private int estado_circuito;
     private int estado_ruta;
     private int estado_comercial;
+    private  Bundle bundle;
 
     private EditText edit_nombre_punto;
     private EditText edit_nit_punto;
     private EditText edit_nombre_cliente;
+    private String accion = "";
+
+    private String consulta = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +77,12 @@ public class ActBusquedaAvan extends AppCompatActivity {
         setContentView(R.layout.activity_busqueda_avan);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Intent intent = this.getIntent();
+        bundle = intent.getExtras();
+        if (bundle != null) {
+            accion = bundle.getString("value");
+        }
 
         alertDialog = new SpotsDialog(this, R.style.Custom);
 
@@ -102,7 +111,11 @@ public class ActBusquedaAvan extends AppCompatActivity {
 
     private void buscarPuntoJSO() {
         alertDialog.show();
-        String url = String.format("%1$s%2$s", getString(R.string.url_base),"consultar_puntos_avanzados");
+        consulta = "consultar_puntos_avanzados";
+        if(accion.equals("Repartidor"))
+            consulta = "datos_entrega";
+
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), consulta);
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>(){
@@ -165,16 +178,24 @@ public class ActBusquedaAvan extends AppCompatActivity {
 
         if (!response.equals("[]")) {
             try {
+                if(!accion.equals("Repartidor") ) {
+                    ListHome responseHomeList = gson.fromJson(response, ListHome.class);
+                    setResponseHomeListS(responseHomeList);
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(this, ActResponAvanBusqueda.class);
+                    bundle.putSerializable("value", responseHomeList);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }else if(accion.equals("Repartidor")){
+                    //ResponseEntregarPedido listAprobarPunto = gson.fromJson(response, ResponseEntregarPedido.class);
+                    ListEntregarPedido responseEntregarPedido = gson.fromJson(response, ListEntregarPedido.class);
 
-                ListHome responseHomeList = gson.fromJson(response, ListHome.class);
-
-                setResponseHomeListS(responseHomeList);
-
-                Bundle bundle = new Bundle();
-                Intent intent = new Intent(this, ActResponAvanBusqueda.class);
-                bundle.putSerializable("value", responseHomeList);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(this, ActEntregarPedido.class);
+                    bundle.putSerializable("value", responseEntregarPedido);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
 
             } catch (IllegalStateException ex) {
                 ex.printStackTrace();

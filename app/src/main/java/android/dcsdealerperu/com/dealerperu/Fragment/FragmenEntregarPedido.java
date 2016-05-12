@@ -3,18 +3,14 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Activity.ActBusquedaAvan;
-import android.dcsdealerperu.com.dealerperu.Activity.ActDetalleAproPunto;
 import android.dcsdealerperu.com.dealerperu.Activity.ActEntregarPedido;
-import android.dcsdealerperu.com.dealerperu.Entry.ListAprobarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.ListEntregarPedido;
-import android.dcsdealerperu.com.dealerperu.Entry.ResponseEntregarPedido;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -89,7 +85,11 @@ public class FragmenEntregarPedido extends BaseVolleyFragment implements View.On
 
             case R.id.btnAvBus:
 
-                startActivity(new Intent(getActivity(), ActBusquedaAvan.class));
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(getActivity(), ActBusquedaAvan.class);
+                bundle.putSerializable("value", "Repartidor");
+                intent.putExtras(bundle);
+                startActivity(intent);
                 getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
                 break;

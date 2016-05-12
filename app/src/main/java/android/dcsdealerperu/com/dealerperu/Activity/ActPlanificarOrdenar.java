@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Adapter.ItemAdapter;
 import android.dcsdealerperu.com.dealerperu.Entry.ListResponsePlaniVisita;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,8 +35,6 @@ import com.woxthebox.draglistview.DragListView;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -126,7 +124,7 @@ public class ActPlanificarOrdenar extends AppCompatActivity {
     }
 
     private void loginServices() {
-        //alertDialog.show();
+        alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base),"guardar_planificacion");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
