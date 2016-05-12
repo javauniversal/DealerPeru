@@ -6,6 +6,7 @@ import android.dcsdealerperu.com.dealerperu.Activity.ActBusquedaAvan;
 import android.dcsdealerperu.com.dealerperu.Activity.ActDetalleAproPunto;
 import android.dcsdealerperu.com.dealerperu.Activity.ActEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.ListAprobarPunto;
+import android.dcsdealerperu.com.dealerperu.Entry.ListEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseEntregarPedido;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -140,7 +141,6 @@ public class FragmenEntregarPedido extends BaseVolleyFragment implements View.On
                 params.put("idpos", buscar.getText().toString().trim());
 
                 return params;
-
             }
         };
 
@@ -154,11 +154,11 @@ public class FragmenEntregarPedido extends BaseVolleyFragment implements View.On
         if (!response.equals("[]")) {
             try {
 
-                ResponseEntregarPedido listAprobarPunto = gson.fromJson(response, ResponseEntregarPedido.class);
+                ListEntregarPedido responseEntregarPedido = gson.fromJson(response, ListEntregarPedido.class);
 
                 Bundle bundle = new Bundle();
                 Intent intent = new Intent(getActivity(), ActEntregarPedido.class);
-                bundle.putSerializable("value", listAprobarPunto);
+                bundle.putSerializable("value", responseEntregarPedido);
                 intent.putExtras(bundle);
                 startActivity(intent);
 

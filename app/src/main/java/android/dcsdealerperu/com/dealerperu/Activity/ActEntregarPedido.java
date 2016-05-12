@@ -16,7 +16,7 @@ import java.util.List;
 public class ActEntregarPedido extends AppCompatActivity {
 
     private Bundle bundle;
-    private ResponseEntregarPedido mDescribable;
+    private List<ResponseEntregarPedido> mDescribable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +28,12 @@ public class ActEntregarPedido extends AppCompatActivity {
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         if (bundle != null) {
-            mDescribable = (ResponseEntregarPedido)bundle.getSerializable("value");
+            mDescribable = (List<ResponseEntregarPedido>)bundle.getSerializable("value");
         }
 
     }
+
+
+
 
 }
