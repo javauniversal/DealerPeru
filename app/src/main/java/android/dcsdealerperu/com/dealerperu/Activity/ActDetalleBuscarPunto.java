@@ -138,10 +138,10 @@ public class ActDetalleBuscarPunto extends AppCompatActivity {
     }
 
     FragmentManager fragmentManager;
+
     private void EditarPunto(int position) {
         int idpos = 0;
         idpos = getResponseHomeListS().get(position).getIdpos();
-
         //Activity Principal, Para acceder al fragment
         Bundle bundle = new Bundle();
         Intent intent = new Intent(this, ActMainPeru.class);

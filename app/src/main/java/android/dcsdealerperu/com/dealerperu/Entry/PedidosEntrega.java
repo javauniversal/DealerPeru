@@ -44,6 +44,17 @@ public class PedidosEntrega implements Serializable {
     @SerializedName("total_impueto_igv")
     private double total_impueto_igv;
 
+    @SerializedName("idpos")
+    private int idpos;
+
+    public int getIdpos() {
+        return idpos;
+    }
+
+    public void setIdpos(int idpos) {
+        this.idpos = idpos;
+    }
+
     @SerializedName("deta_pedido")
     private List<DetallePedido> detallePedidoList;
 

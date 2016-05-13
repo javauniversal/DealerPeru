@@ -22,17 +22,18 @@ public class ActSplash extends AwesomeSplash {
         //Choose LOGO OR PATH; if you don't provide String value for path it's logo by default
 
         //Customize Logo
-        configSplash.setLogoSplash(R.mipmap.ic_launcher); //or any other drawable
+        configSplash.setLogoSplash(R.drawable.logowhite); //or any other drawable
         configSplash.setAnimLogoSplashDuration(2000); //int ms
         configSplash.setAnimLogoSplashTechnique(Techniques.DropOut); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
 
 
         //Customize Title
-        configSplash.setTitleSplash("DCS DEALER");
+        configSplash.setTitleSplash("");
         configSplash.setTitleTextColor(R.color.actionBarColorText);
         configSplash.setTitleTextSize(19f); //float value
         configSplash.setAnimTitleDuration(3000);
         configSplash.setAnimTitleTechnique(Techniques.Tada);
+
 
     }
 

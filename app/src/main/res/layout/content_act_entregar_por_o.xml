@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="android.dcsdealerperu.com.dealerperu.Activity.ActEntregarPedido"
-    tools:showIn="@layout/activity_entregar_pedido">
+    tools:context="android.dcsdealerperu.com.dealerperu.Activity.ActEntregarPorPedido"
+    tools:showIn="@layout/activity_act_entregar_por_o">
 
-    <ListView
+    <com.baoyz.swipemenulistview.SwipeMenuListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

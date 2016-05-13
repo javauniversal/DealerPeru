@@ -17,6 +17,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:id="@+id/idpos_relative"
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp">
@@ -48,6 +49,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
+                android:id="@+id/visita_relative"
                 android:layout_marginRight="8dp">
 
                 <TextView
@@ -76,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="8dp"
+                android:id="@+id/direccion_relative"
                 android:layout_marginRight="8dp">
 
                 <TextView
@@ -113,6 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="8dp"
+                android:id="@+id/departamento_relative"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp">
 
@@ -142,6 +146,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="8dp"
+                android:id="@+id/ciudad_relative"
                 android:layout_marginRight="8dp">
 
                 <TextView
@@ -171,6 +176,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
+                android:id="@+id/circuito_relative"
                 android:layout_marginRight="8dp">
 
                 <TextView
@@ -199,6 +205,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="8dp"
+                android:id="@+id/ruta_relative"
                 android:layout_marginRight="8dp">
 
                 <TextView
@@ -228,6 +235,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
+                android:id="@+id/telefono_relative"
                 android:layout_marginRight="8dp">
 
                 <TextView
@@ -256,6 +264,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="8dp"
+                android:id="@+id/dias_relative"
                 android:layout_marginRight="8dp">
 
                 <TextView
@@ -285,6 +294,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
+                android:id="@+id/horas_relative"
                 android:layout_marginRight="8dp">
 
                 <TextView

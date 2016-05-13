@@ -30,4 +30,10 @@
     </style>
 
 
+    <style name="BrandButtonStyle2Red" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/bckg</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
+
 </resources>

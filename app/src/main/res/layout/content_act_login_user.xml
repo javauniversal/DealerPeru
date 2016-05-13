@@ -20,11 +20,10 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="110dp"
+                android:layout_width="match_parent"
                 android:layout_height="110dp"
                 android:id="@+id/imageView"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/logo"
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="@string/app_name" />
 

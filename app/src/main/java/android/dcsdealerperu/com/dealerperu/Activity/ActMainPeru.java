@@ -104,6 +104,10 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
                 onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_marcar_visita));
             }
 
+            if (accionNav == 3) {
+                onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_entregar_pedido));
+            }
+
         } else {
             onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_home));
         }
@@ -182,7 +186,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             toolbar.setTitle("Aprobación PDVS");
             editaPunto = 0; accion = "Guardar";
             fragmentClass = FragmenteAproPdv.class;
-        }else if(id == R.id.nav_aprobaciones_super) {
+        } else if(id == R.id.nav_aprobaciones_super) {
             toolbar.setTitle("Reporte Aprobación PDVS");
             editaPunto = 0; accion = "Guardar";
             fragmentClass = FragmentReporteAprobacionPdv.class;

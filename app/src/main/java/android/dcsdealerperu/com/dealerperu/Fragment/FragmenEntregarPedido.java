@@ -99,7 +99,7 @@ public class FragmenEntregarPedido extends BaseVolleyFragment implements View.On
     private boolean isValidNumber(String number){return number == null || number.length() == 0;}
 
     private void buscarIdPos(final EditText buscar) {
-
+        alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "datos_entrega");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>(){
