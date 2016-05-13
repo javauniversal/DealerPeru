@@ -3,10 +3,10 @@ package android.dcsdealerperu.com.dealerperu.Activity;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmenEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmenMarcarvisita;
-import android.dcsdealerperu.com.dealerperu.Fragment.FragmentCrearPunto;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHome;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisBajas;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisPedidos;
+import android.dcsdealerperu.com.dealerperu.Fragment.FragmentPedidosSupervisor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentPlanificar;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentReporteAprobacionPdv;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentRuteroVendedor;
@@ -166,6 +166,11 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             toolbar.setTitle("Mis Pedidos");
             editaPunto = 0; accion = "Guardar";
             fragmentClass = FragmentMisPedidos.class;
+
+        }else if(id == R.id.nav_pedido_super) {
+            toolbar.setTitle("Reporte de Pedidos");
+            editaPunto = 0; accion = "Guardar";
+            fragmentClass = FragmentPedidosSupervisor.class;
 
         } else if(id == R.id.nav_baja_vendedor) {
             toolbar.setTitle("Mis Bajas");
