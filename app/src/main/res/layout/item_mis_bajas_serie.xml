@@ -11,9 +11,10 @@
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
         android:textColor="#000"
         android:text="Hola"
-        android:textSize="11sp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_marginBottom="8dp"/>
+        android:textSize="@dimen/dimen_letra_app_estandar"
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp"
+        android:layout_marginBottom="8dp"
+        android:elevation="5dp"/>
 
 </LinearLayout>

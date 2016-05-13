@@ -124,6 +124,10 @@
         <activity
             android:name=".Activity.ActEntregarPedido"
             android:label="@string/title_activity_act_entregar_pedido"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ActInventariar"
+            android:label="@string/title_activity_act_inventariar"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

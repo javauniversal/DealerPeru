@@ -29,7 +29,7 @@
             android:textAllCaps="true"
             android:layout_marginLeft="26dp"
             android:text="Hola"
-            android:textSize="@dimen/dimen_letra_app"
+            android:textSize="@dimen/dimen_letra_app_titulo"
             android:layout_centerVertical="true" />
 
 
@@ -39,7 +39,7 @@
             android:id="@+id/sub"
             android:text="Hola"
             android:layout_marginLeft="26dp"
-            android:textSize="@dimen/dimen_letra_app"
+            android:textSize="@dimen/dimen_letra_app_estandar"
             android:layout_centerVertical="true" />
 
     </LinearLayout>

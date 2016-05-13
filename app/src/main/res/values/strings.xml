@@ -23,8 +23,8 @@
 
     <string name="title_activity_act_marcar_visita">Marcar Visita</string>
     <string name="title_activity_act_detalle_buscar_punto">Resultado busqueda</string>
-    <string name="title_activity_act_reporte_mis_bajas">ActReporteMisBajas</string>
-    <string name="title_activity_act_reporte_bajas">ActReporteBajas</string>
+    <string name="title_activity_act_reporte_mis_bajas">Reporte de Bajas</string>
+    <string name="title_activity_act_reporte_bajas">Reporte de Bajas</string>
     <string name="title_activity_act_carrito_pedido">Carrito Pedido</string>
     <string name="title_activity_act_detalle_combo_pedir">Referencia</string>
     <string name="title_activity_act_detalle_apro_punto">Aprobación de puntos</string>
@@ -33,6 +33,7 @@
     <string name="title_activity_act_crear_pdvdos">Crear Punto</string>
     <string name="title_activity_act_planificar_ordenar">Planificar Visitas</string>
     <string name="title_activity_act_entregar_pedido">Entregar Pedido</string>
+    <string name="title_activity_act_inventariar">Inventariar Productos</string>
 
 
 </resources>

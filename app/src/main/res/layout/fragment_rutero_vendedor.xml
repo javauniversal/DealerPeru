@@ -38,6 +38,15 @@
                     android:orientation="vertical"
                     android:layout_marginBottom="25dp">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dimen_letra_app_titulo"
+                        android:text="Parametros de busqueda"
+                        android:textColor="@color/colorAccent"
+                        android:textStyle="bold"
+                        android:id="@+id/textView8" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -72,7 +81,7 @@
                                 android:layout_height="match_parent"
                                 android:id="@+id/edit_idpos"
                                 android:hint="Id Pos"
-                                android:textSize="@dimen/dimen_letra_app"
+                                android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:inputType="number" />
 
                         </android.support.design.widget.TextInputLayout>
@@ -113,7 +122,7 @@
                                 android:layout_height="match_parent"
                                 android:id="@+id/edit_cedula"
                                 android:hint="Cedula"
-                                android:textSize="@dimen/dimen_letra_app"
+                                android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:inputType="text" />
 
                         </android.support.design.widget.TextInputLayout>
@@ -154,7 +163,7 @@
                                 android:id="@+id/spinner_circuito"
                                 android:layout_marginStart="8dp"
                                 android:layout_toEndOf="@+id/image_circuito"
-                                android:textSize="@dimen/dimen_letra_app"
+                                android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:layout_toRightOf="@+id/image_circuito"
                                 android:layout_marginLeft="8dp" />
 
@@ -196,7 +205,7 @@
                                 android:id="@+id/spinner_ruta"
                                 android:layout_marginStart="8dp"
                                 android:layout_toEndOf="@+id/image_ruta"
-                                android:textSize="@dimen/dimen_letra_app"
+                                android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:layout_toRightOf="@+id/image_ruta"
                                 android:layout_marginLeft="8dp" />
 
@@ -234,7 +243,7 @@
                                 android:id="@+id/spinner_estado_visita"
                                 android:layout_marginStart="8dp"
                                 android:layout_toEndOf="@+id/image_estado_visita"
-                                android:textSize="@dimen/dimen_letra_app"
+                                android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:layout_toRightOf="@+id/image_estado_visita"
                                 android:layout_marginLeft="8dp" />
 
@@ -284,7 +293,7 @@
                                 android:id="@+id/spinner_tipo_frecuencia"
                                 android:layout_marginStart="8dp"
                                 android:layout_toEndOf="@+id/image_tipo_frecuencia"
-                                android:textSize="@dimen/dimen_letra_app"
+                                android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:layout_toRightOf="@+id/image_tipo_frecuencia"
                                 android:layout_marginLeft="8dp" />
 
@@ -333,7 +342,7 @@
                                 android:id="@+id/spinner_dia"
                                 android:layout_marginStart="8dp"
                                 android:layout_toEndOf="@+id/image_dia"
-                                android:textSize="@dimen/dimen_letra_app"
+                                android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:layout_toRightOf="@+id/image_dia"
                                 android:layout_marginLeft="8dp" />
 

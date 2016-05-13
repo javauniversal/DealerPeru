@@ -146,6 +146,16 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
                 startActivity(intent2);
 
                 break;
+
+            case R.id.btn_inventariar:
+
+                Bundle bundle3 = new Bundle();
+                Intent intent3 = new Intent(this, ActTomarPedido.class);
+                bundle3.putSerializable("value", mDescribable);
+                intent3.putExtras(bundle3);
+                startActivity(intent3);
+
+                break;
         }
     }
 }

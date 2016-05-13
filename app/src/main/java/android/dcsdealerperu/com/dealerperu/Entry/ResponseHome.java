@@ -58,6 +58,11 @@ public class ResponseHome implements Serializable {
     @SerializedName("tipo_visita")
     private int tipo_visita;
 
+
+
+    @SerializedName("rutero")
+    private int rutero;
+
     public static List<ResponseHome> responseHomeListS;
 
     public static List<ResponseHome> getResponseHomeListS() {
@@ -202,5 +207,13 @@ public class ResponseHome implements Serializable {
 
     public void setTipo_visita(int tipo_visita) {
         this.tipo_visita = tipo_visita;
+    }
+
+    public int getRutero() {
+        return rutero;
+    }
+
+    public void setRutero(int rutero) {
+        this.rutero = rutero;
     }
 }

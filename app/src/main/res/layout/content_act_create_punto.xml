@@ -34,7 +34,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_titulo"
                     android:text="Datos personales"
                     android:textColor="@color/colorAccent"
                     android:textStyle="bold"
@@ -73,7 +73,7 @@
                             android:layout_height="match_parent"
                             android:id="@+id/edit_nombres"
                             android:hint="Nombre"
-                            android:textSize="@dimen/dimen_letra_app"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:digits="abcdefghijklmnñopqrstuvwxyz ABCDEFGHIJKLMNÑOPQRSTUVWXYZ áéíóú ÁÉÍÓÚ 0123456789"
                             android:inputType="text"/>
 
@@ -115,7 +115,7 @@
                             android:layout_height="match_parent"
                             android:id="@+id/edit_cedula"
                             android:hint="Cédula responsable"
-                            android:textSize="@dimen/dimen_letra_app"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:inputType="text" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -157,7 +157,7 @@
                             android:layout_height="match_parent"
                             android:id="@+id/edit_nom_cli"
                             android:hint="Nombre cliente"
-                            android:textSize="@dimen/dimen_letra_app"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:inputType="text" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -198,7 +198,7 @@
                             android:layout_height="match_parent"
                             android:id="@+id/edit_correo_edit"
                             android:hint="Correo"
-                            android:textSize="@dimen/dimen_letra_app"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:inputType="text" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -239,7 +239,7 @@
                             android:layout_height="match_parent"
                             android:id="@+id/edit_tel_edit"
                             android:hint="Teléfono"
-                            android:textSize="@dimen/dimen_letra_app"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:inputType="number" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -280,7 +280,7 @@
                             android:layout_height="match_parent"
                             android:id="@+id/edit_cel_edit"
                             android:hint="Celular"
-                            android:textSize="@dimen/dimen_letra_app"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:inputType="number" />
 
                     </android.support.design.widget.TextInputLayout>

@@ -37,7 +37,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/dimen_letra_app"
+                        android:textSize="@dimen/dimen_letra_app_titulo"
                         android:text="Consulta Punto"
                         android:textColor="@color/colorAccent"
                         android:textStyle="bold" />
@@ -75,7 +75,7 @@
                                 android:layout_height="match_parent"
                                 android:id="@+id/edit_buscar"
                                 android:hint="ID POS"
-                                android:textSize="@dimen/dimen_letra_app"
+                                android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:inputType="number" />
 
                         </android.support.design.widget.TextInputLayout>

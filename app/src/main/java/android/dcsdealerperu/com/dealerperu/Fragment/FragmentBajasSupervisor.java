@@ -2,11 +2,11 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 
 
 import android.content.Intent;
-import android.dcsdealerperu.com.dealerperu.Activity.ActReporteMisPedidos;
+import android.dcsdealerperu.com.dealerperu.Activity.ActReporteBajas;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.ListCategoria;
-import android.dcsdealerperu.com.dealerperu.Entry.MisPedidos;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseCreatePunt;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseMisBajas;
 import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
 import android.dcsdealerperu.com.dealerperu.Entry.Zona;
 import android.dcsdealerperu.com.dealerperu.R;
@@ -46,8 +46,7 @@ import dmax.dialog.SpotsDialog;
 
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
-
-public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  DatePickerDialog.OnDateSetListener{
+public class FragmentBajasSupervisor extends BaseVolleyFragment implements DatePickerDialog.OnDateSetListener {
 
     private boolean fecha_idicador;
     private Date dia_inicial;
@@ -55,7 +54,6 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
     private EditText edit_fecha_inicial;
     private EditText edit_fecha_final;
     private EditText edit_idpos;
-    private EditText edit_nro_pedido;
     private Spinner spinner_vendedor;
     private Spinner spinner_solicitud;
     private Spinner spinner_estado;
@@ -69,7 +67,7 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
     private int ruta;
     private ResponseCreatePunt responseCreatePunto;
 
-    public FragmentPedidosSupervisor() {
+    public FragmentBajasSupervisor() {
         // Required empty public constructor
     }
 
@@ -78,8 +76,7 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_pedidos_supervisor, container, false);
-
+        View view =  inflater.inflate(R.layout.fragment_bajas_supervisor, container, false);
         spinner_vendedor = (Spinner) view.findViewById(R.id.spinner_vendedor);
         spinner_solicitud = (Spinner) view.findViewById(R.id.spinner_solicitud);
         spinner_estado = (Spinner) view.findViewById(R.id.spinner_estado);
@@ -88,7 +85,6 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
         edit_fecha_inicial = (EditText) view.findViewById(R.id.edit_fecha_ini);
         edit_fecha_final = (EditText) view.findViewById(R.id.edit_fecha_fin);
         edit_idpos = (EditText) view.findViewById(R.id.edit_idpos);
-        edit_nro_pedido = (EditText) view.findViewById(R.id.edit_nro_pedido);
 
         alertDialog = new SpotsDialog(getActivity(), R.style.Custom);
 
@@ -117,7 +113,7 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
             public void onClick(View v) {
                 Calendar now = Calendar.getInstance();
                 DatePickerDialog dpd = com.borax12.materialdaterangepicker.date.DatePickerDialog.newInstance(
-                        FragmentPedidosSupervisor.this,
+                        FragmentBajasSupervisor.this,
                         now.get(Calendar.YEAR),
                         now.get(Calendar.MONTH),
                         now.get(Calendar.DAY_OF_MONTH)
@@ -134,7 +130,7 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
             public void onClick(View v) {
                 Calendar now = Calendar.getInstance();
                 DatePickerDialog dpd = com.borax12.materialdaterangepicker.date.DatePickerDialog.newInstance(
-                        FragmentPedidosSupervisor.this,
+                        FragmentBajasSupervisor.this,
                         now.get(Calendar.YEAR),
                         now.get(Calendar.MONTH),
                         now.get(Calendar.DAY_OF_MONTH)
@@ -159,12 +155,13 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
 
     private void ConsultarReporte() {
         alertDialog.show();
-        String url = String.format("%1$s%2$s", getString(R.string.url_base), "consultar_reporte_pedidos");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "reporte_bajas");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>(){
                     @Override
                     public void onResponse(final String response) {
                         mostrarReporte(response);
+
                     }
                 },
                 new Response.ErrorListener(){
@@ -202,7 +199,6 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
                 params.put("fecha_fin", edit_fecha_final.getText().toString().trim());
                 params.put("idpos", edit_idpos.getText().toString().trim());
 
-                params.put("nro_ped", edit_nro_pedido.getText().toString().trim());
                 params.put("circuito", String.valueOf(circuito));
                 params.put("vendedor", String.valueOf(estado_vendedor));
                 params.put("ruta", String.valueOf(ruta));
@@ -220,11 +216,11 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
         if (!response.equals("[]")) {
             try {
 
-                MisPedidos responseMisPedidos = gson.fromJson(response, MisPedidos.class);
+                ResponseMisBajas misBajas = gson.fromJson(response,ResponseMisBajas.class);
 
                 Bundle bundle = new Bundle();
-                Intent intent = new Intent(getActivity(), ActReporteMisPedidos.class);
-                bundle.putSerializable("value", responseMisPedidos);
+                Intent intent = new Intent(getActivity(), ActReporteBajas.class);
+                bundle.putSerializable("value", misBajas);
                 intent.putExtras(bundle);
                 startActivity(intent);
 
@@ -247,11 +243,7 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
         listaEstados.add(new CategoriasEstandar(-1,"Seleccionar"));
         listaEstados.add(new CategoriasEstandar(0,"Pendiente"));
         listaEstados.add(new CategoriasEstandar(1,"Aceptado"));
-        listaEstados.add(new CategoriasEstandar(2,"Picking"));
-        listaEstados.add(new CategoriasEstandar(3,"Cancelado"));
-        listaEstados.add(new CategoriasEstandar(4,"Despachado"));
-        listaEstados.add(new CategoriasEstandar(5,"Entregado"));
-        listaEstados.add(new CategoriasEstandar(6,"Rechazado por punto"));
+        listaEstados.add(new CategoriasEstandar(2,"Rechazado"));
 
         ArrayAdapter<CategoriasEstandar> adapterEstado = new ArrayAdapter<>(getActivity(),R.layout.textview_spinner,listaEstados);
         spinner_estado.setAdapter(adapterEstado);
@@ -486,4 +478,5 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
             return false;
         }
     }
+
 }

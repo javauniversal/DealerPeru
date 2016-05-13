@@ -187,7 +187,6 @@ public class ActBusquedaAvan extends AppCompatActivity {
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }else if(accion.equals("Repartidor")){
-                    //ResponseEntregarPedido listAprobarPunto = gson.fromJson(response, ResponseEntregarPedido.class);
                     ListEntregarPedido responseEntregarPedido = gson.fromJson(response, ListEntregarPedido.class);
 
                     Bundle bundle = new Bundle();

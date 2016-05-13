@@ -37,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/edit_pos"
                 android:hint="ID pos"
-                android:textSize="@dimen/dimen_letra_app"
+                android:textSize="@dimen/dimen_letra_app_estandar"
                 android:inputType="number" />
 
         </android.support.design.widget.TextInputLayout>

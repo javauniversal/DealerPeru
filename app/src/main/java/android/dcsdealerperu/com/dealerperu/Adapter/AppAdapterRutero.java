@@ -1,12 +1,9 @@
 package android.dcsdealerperu.com.dealerperu.Adapter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseHome;
 import android.dcsdealerperu.com.dealerperu.R;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -62,6 +59,9 @@ public class AppAdapterRutero extends BaseAdapter {
         } else {
             holder.img_estado_visita.setImageResource(R.drawable.ic_radio_button_unchecked_black_24dp);
         }
+        if(responseHome.getRutero() == 1){
+            holder.image_departamento.setVisibility(View.INVISIBLE);
+        }
 
         return convertView;
     }
@@ -72,12 +72,14 @@ public class AppAdapterRutero extends BaseAdapter {
         TextView title;
         TextView sub;
         ImageView img_estado_visita;
+        ImageView image_departamento;
 
         public ViewHolder(View view) {
             title = (TextView) view.findViewById(R.id.title);
             sub = (TextView) view.findViewById(R.id.sub);
 
             img_estado_visita = (ImageView) view.findViewById(R.id.image_estado_visita);
+            image_departamento = (ImageView) view.findViewById(R.id.image_departamento);
 
             view.setTag(this);
         }

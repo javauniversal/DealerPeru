@@ -26,7 +26,7 @@
                     android:text="Id Pos:"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"/>
 
@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:id="@+id/txt_idpos"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
@@ -54,7 +54,7 @@
                     android:text="Nombre Punto:"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"/>
 
@@ -62,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:id="@+id/txt_nombre_punto"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
@@ -82,7 +82,7 @@
                     android:text="Tipo Solicitud:"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"/>
 
@@ -90,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:id="@+id/txt_tipo_sol"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
@@ -110,7 +110,7 @@
                     android:text="Nro Solicitud:"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"/>
 
@@ -118,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:id="@+id/txt_nsoli"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
@@ -138,7 +138,7 @@
                     android:text="Estado:"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"/>
 
@@ -146,7 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:id="@+id/txt_estado"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
@@ -166,7 +166,7 @@
                     android:text="Vendedor:"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"/>
 
@@ -174,7 +174,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:id="@+id/txt_vendedor"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
@@ -194,7 +194,7 @@
                     android:text="Fecha Solicitud:"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"/>
 
@@ -202,7 +202,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:id="@+id/txt_fecha_sol"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
@@ -222,7 +222,7 @@
                     android:text="Fecha Accion:"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"/>
 
@@ -230,7 +230,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:id="@+id/txt_fecha_accion"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
@@ -250,7 +250,7 @@
                     android:text="Hora Accion:"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"/>
 
@@ -258,7 +258,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textSize="@dimen/dimen_letra_app"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
                     android:id="@+id/txt_hora_accion"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />

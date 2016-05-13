@@ -40,7 +40,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/dimen_letra_app"
+                        android:textSize="@dimen/dimen_letra_app_titulo"
                         android:text="Parametros de busqueda"
                         android:textColor="@color/colorAccent"
                         android:textStyle="bold"
@@ -81,7 +81,7 @@
                                 android:id="@+id/edit_fecha_ini"
                                 android:hint="Fecha Inicial"
                                 android:focusable="false"
-                                android:textSize="@dimen/dimen_letra_app"
+                                android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:inputType="text" />
 
                         </android.support.design.widget.TextInputLayout>
@@ -123,7 +123,7 @@
                                 android:id="@+id/edit_fecha_fin"
                                 android:hint="Fecha Final"
                                 android:focusable="false"
-                                android:textSize="@dimen/dimen_letra_app"
+                                android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:inputType="text" />
 
                         </android.support.design.widget.TextInputLayout>
@@ -164,7 +164,7 @@
                                 android:layout_height="match_parent"
                                 android:id="@+id/edit_idpos"
                                 android:hint="Id Pos"
-                                android:textSize="@dimen/dimen_letra_app"
+                                android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:inputType="number" />
 
                         </android.support.design.widget.TextInputLayout>
@@ -215,7 +215,7 @@
                                 android:id="@+id/spinner_estado"
                                 android:layout_marginStart="8dp"
                                 android:layout_toEndOf="@+id/image_estado"
-                                android:textSize="@dimen/dimen_letra_app"
+                                android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:layout_toRightOf="@+id/image_estado"
                                 android:layout_marginLeft="8dp" />
 

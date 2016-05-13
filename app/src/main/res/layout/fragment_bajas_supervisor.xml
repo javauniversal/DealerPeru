@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisPedidos">
+    tools:context="android.dcsdealerperu.com.dealerperu.Fragment.FragmentBajasSupervisor">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -172,46 +172,57 @@
 
                     </RelativeLayout>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:textColor="@color/colorAccent"
+                        android:text="Vendedor" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp">
 
                         <ImageView
-                            android:id="@+id/image_nro_pedido"
+                            android:id="@+id/image_vendedor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_assignment_black_24dp"
+                            android:src="@drawable/ic_location_city_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true" />
 
 
                         <android.support.design.widget.TextInputLayout
-                            android:id="@+id/input_nro_pedido"
+                            android:id="@+id/input_vendedor"
                             android:layout_width="match_parent"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@+id/image_nro_pedido"
+                            android:layout_toEndOf="@+id/image_vendedor"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/image_nro_pedido">
+                            android:layout_toRightOf="@+id/image_vendedor">
 
-                            <EditText
+                            <Spinner
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:id="@+id/edit_nro_pedido"
-                                android:hint="Nro Pedido"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/spinner_vendedor"
+                                android:layout_marginStart="8dp"
+                                android:layout_toEndOf="@+id/image_vendedor"
                                 android:textSize="@dimen/dimen_letra_app_estandar"
-                                android:inputType="number" />
+                                android:layout_toRightOf="@+id/image_vendedor"
+                                android:layout_marginLeft="8dp" />
 
                         </android.support.design.widget.TextInputLayout>
 
                     </RelativeLayout>
+
 
                     <TextView
                         android:layout_width="wrap_content"

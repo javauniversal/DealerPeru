@@ -66,7 +66,7 @@
                             android:layout_height="match_parent"
                             android:id="@+id/edit_nombre_punto"
                             android:hint="Nombre del punto"
-                            android:textSize="@dimen/dimen_letra_app"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:inputType="text" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -107,7 +107,7 @@
                             android:layout_height="match_parent"
                             android:id="@+id/edit_nit_punto"
                             android:hint="Nit del punto"
-                            android:textSize="@dimen/dimen_letra_app"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:inputType="text" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -148,7 +148,7 @@
                             android:layout_height="match_parent"
                             android:id="@+id/edit_nombre_cliente"
                             android:hint="Nombre del cliente"
-                            android:textSize="@dimen/dimen_letra_app"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:inputType="text" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -198,7 +198,7 @@
                             android:id="@+id/spinner_depto"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_distrito"
-                            android:textSize="@dimen/dimen_letra_app"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:layout_toRightOf="@+id/image_distrito"
                             android:layout_marginLeft="8dp" />
 
@@ -249,7 +249,7 @@
                             android:id="@+id/spinner_provincia"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_distrito"
-                            android:textSize="@dimen/dimen_letra_app"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:layout_toRightOf="@+id/image_distrito"
                             android:layout_marginLeft="8dp" />
 
@@ -300,7 +300,7 @@
                             android:id="@+id/spinner_distrito"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_distrito"
-                            android:textSize="@dimen/dimen_letra_app"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:layout_toRightOf="@+id/image_distrito"
                             android:layout_marginLeft="8dp" />
 
@@ -350,7 +350,7 @@
                             android:id="@+id/spinner_circuito"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_distrito"
-                            android:textSize="@dimen/dimen_letra_app"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:layout_toRightOf="@+id/image_distrito"
                             android:layout_marginLeft="8dp" />
 
@@ -399,7 +399,7 @@
                             android:id="@+id/spinner_ruta"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_distrito"
-                            android:textSize="@dimen/dimen_letra_app"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:layout_toRightOf="@+id/image_distrito"
                             android:layout_marginLeft="8dp" />
 
@@ -448,7 +448,7 @@
                             android:id="@+id/spinner_est_comercial"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_distrito"
-                            android:textSize="@dimen/dimen_letra_app"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:layout_toRightOf="@+id/image_distrito"
                             android:layout_marginLeft="8dp" />
 

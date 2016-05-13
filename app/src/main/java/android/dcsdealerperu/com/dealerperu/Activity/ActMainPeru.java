@@ -3,6 +3,7 @@ package android.dcsdealerperu.com.dealerperu.Activity;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmenEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmenMarcarvisita;
+import android.dcsdealerperu.com.dealerperu.Fragment.FragmentBajasSupervisor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHome;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisBajas;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisPedidos;
@@ -197,6 +198,11 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             editaPunto = 0;
             accion = "Guardar";
             fragmentClass = FragmenEntregarPedido.class;
+        } else if (id == R.id.nav_bajas_super) {
+            toolbar.setTitle("Reporte de Bajas");
+            editaPunto = 0;
+            accion = "Guardar";
+            fragmentClass = FragmentBajasSupervisor.class;
         }
 
         try {
