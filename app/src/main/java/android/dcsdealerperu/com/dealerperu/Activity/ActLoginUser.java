@@ -1,5 +1,6 @@
 package android.dcsdealerperu.com.dealerperu.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseUser;
 import android.dcsdealerperu.com.dealerperu.R;
@@ -9,6 +10,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +33,8 @@ import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import dmax.dialog.SpotsDialog;
 
@@ -48,6 +52,8 @@ public class ActLoginUser extends AppCompatActivity {
     private RequestQueue rq;
     public static final String TAG = "MyTag";
     private GpsServices gpsServices;
+    private TextView link_pass;
+    private EditText edit_correo_edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +70,41 @@ public class ActLoginUser extends AppCompatActivity {
 
         editUsuario = (EditText) findViewById(R.id.editUsuario);
         editPassword = (EditText) findViewById(R.id.editPassword);
+        link_pass = (TextView) findViewById(R.id.link_pass);
 
         editUsuario.setText("amontoyap");
         editPassword.setText("pro_123");
 
+        link_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater inflater = getLayoutInflater();
+                View dialoglayout = inflater.inflate(R.layout.dialog_recupera_pass, null);
 
+                edit_correo_edit = (EditText) dialoglayout.findViewById(R.id.edit_correo_edit);
+                final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(ActLoginUser.this);
+                builder.setCancelable(false);
+                builder.setTitle("Recuperacion de Contraseña");
+                builder.setView(dialoglayout).setPositiveButton("Recuperar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                         if (isValidNumber(edit_correo_edit.getText().toString().trim()) || !isValidNumberEmail(edit_correo_edit.getText().toString().trim())) {
+                            Toast.makeText(ActLoginUser.this,"Formato inválido del correo",Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                             enviarCorreo();
+                             dialog.dismiss();
+                         }
+
+                    }
+                }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.show();
+            }
+        });
         btnIngresar = (Button) findViewById(R.id.btnIngresar);
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,8 +128,83 @@ public class ActLoginUser extends AppCompatActivity {
 
     }
 
+    private void enviarCorreo() {
+        alertDialog.show();
+        String url = "http://192.168.2.24/web/movistar_peru/distribuidorbt/modulos/login/controlador.php";
+        rq = Volley.newRequestQueue(this);
+        StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response) {
+                        RespuestaCorreo(response.trim());
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(ActLoginUser.this, "Error de tiempo de espera", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(ActLoginUser.this, "Error Servidor", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(ActLoginUser.this, "Server Error", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NetworkError) {
+                            Toast.makeText(ActLoginUser.this, "Error de red", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(ActLoginUser.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
+                        }
+
+                        alertDialog.dismiss();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("accion", "Recover");
+                params.put("correo", edit_correo_edit.getText().toString().trim());
+
+                return params;
+            }
+        };
+
+        rq.add(jsonRequest);
+    }
+
+    private void RespuestaCorreo(String response) {
+        if(response != "")
+        {
+            if(response.equals("1")){
+                Toast.makeText(this,"Se enviaron los datos para recuperar la contraseña al correo indicado",Toast.LENGTH_LONG).show();
+            }else if(response.equals("0")){
+                Toast.makeText(this,"Error al intentar enviar el correo, intente nuevamente",Toast.LENGTH_LONG).show();
+            }else if(response.equals("2")){
+                Toast.makeText(this,"El correo: "+ edit_correo_edit.getText()+" no se encuentra registrado",Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(this,"Error al enviar el correo",Toast.LENGTH_LONG).show();
+            }
+        }
+        else
+        {
+            Toast.makeText(this,"No pudo enviar el correo",Toast.LENGTH_LONG).show();
+        }
+        alertDialog.dismiss();
+    }
+
     private boolean isValidNumber(String number){return number == null || number.length() == 0;}
 
+    private boolean isValidNumberEmail(String number) {
+
+        Pattern Plantilla = null;
+        Matcher Resultado = null;
+        Plantilla = Pattern.compile("^([0-9a-zA-Z]([_.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+([a-zA-Z]{2,9}.)+[a-zA-Z]{2,3})$");
+
+        Resultado = Plantilla.matcher(number);
+
+        return Resultado.find();
+    }
     private void loginServices(){
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base),"login_user");
