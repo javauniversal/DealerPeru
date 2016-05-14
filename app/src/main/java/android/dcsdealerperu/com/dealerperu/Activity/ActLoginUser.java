@@ -54,6 +54,7 @@ public class ActLoginUser extends AppCompatActivity {
     private GpsServices gpsServices;
     private TextView link_pass;
     private EditText edit_correo_edit;
+    protected DialogEmail dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,35 +77,21 @@ public class ActLoginUser extends AppCompatActivity {
         editPassword.setText("pro_123");
 
         link_pass.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                LayoutInflater inflater = getLayoutInflater();
-                View dialoglayout = inflater.inflate(R.layout.dialog_recupera_pass, null);
+                dialog = new DialogEmail(ActLoginUser.this, "Recuperación de Contraseña");
+                dialog.show();
+                Button acceptButton = dialog.getButtonAccept();
+                acceptButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                edit_correo_edit = (EditText) dialoglayout.findViewById(R.id.edit_correo_edit);
-                final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(ActLoginUser.this);
-                builder.setCancelable(false);
-                builder.setTitle("Recuperacion de Contraseña");
-                builder.setView(dialoglayout).setPositiveButton("Recuperar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                         if (isValidNumber(edit_correo_edit.getText().toString().trim()) || !isValidNumberEmail(edit_correo_edit.getText().toString().trim())) {
-                            Toast.makeText(ActLoginUser.this,"Formato inválido del correo",Toast.LENGTH_LONG).show();
-                        }
-                        else {
-                             enviarCorreo();
-                             dialog.dismiss();
-                         }
-
-                    }
-                }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
                     }
                 });
-
-                builder.show();
             }
         });
+
         btnIngresar = (Button) findViewById(R.id.btnIngresar);
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override

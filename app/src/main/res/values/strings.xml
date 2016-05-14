@@ -5,7 +5,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="title_activity_act_login_user">LOGIN</string>
+    <string name="title_activity_act_login_user">Ingresar MovilBox DCS</string>
 
     <string name="url_base">http://190.248.152.140:8023/services.php?solicitud=</string>
 
@@ -35,6 +35,8 @@
     <string name="title_activity_act_entregar_pedido">Entregar Pedido</string>
     <string name="title_activity_act_inventariar">Inventariar Productos</string>
     <string name="title_activity_act_entregar_por_o">Entrega de pedido</string>
+    <string name="olvido_pass"><u>¿Haz olvidado tu contraseña?</u></string>
+    <string name="txtEstimadaEntrega"><u>Detalle Pedido</u></string>
 
 
 </resources>

@@ -156,7 +156,6 @@ public class ActCarritoPedido extends AppCompatActivity {
                 savePedido();
             }
         });
-
     }
 
     private void savePedido() {
@@ -169,7 +168,6 @@ public class ActCarritoPedido extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int id) {
                 loginServices();
             }
-
         }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();

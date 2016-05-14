@@ -64,16 +64,17 @@
                     android:layout_centerHorizontal="true" />
 
             </android.support.design.widget.TextInputLayout>
+
             <TextView
                 android:id="@+id/link_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="¿Haz olvidado tu contraseña?"
+                android:text="@string/olvido_pass"
                 android:autoLink="all"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="9dp"
                 android:layout_marginBottom="30dp"
                 android:textColor="@color/colorPrimary"
-                android:gravity="center" />
+                android:gravity="right" />
             <Button
                 android:layout_width="match_parent"
                 android:layout_marginTop="20dp"

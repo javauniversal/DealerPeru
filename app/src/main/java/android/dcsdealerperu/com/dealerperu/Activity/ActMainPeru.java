@@ -3,6 +3,7 @@ package android.dcsdealerperu.com.dealerperu.Activity;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmenEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmenMarcarvisita;
+import android.dcsdealerperu.com.dealerperu.Fragment.FragmentAceptPedido;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentBajasSupervisor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHome;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisBajas;
@@ -150,6 +151,10 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         } else if (id == R.id.nav_planificar_punto) {
             toolbar.setTitle("Planificar Visita");
             fragmentClass = FragmentPlanificar.class;
+
+        } else if (id == R.id.nav_acpetar_pedido) {
+            toolbar.setTitle("Aceptar Pedido");
+            fragmentClass = FragmentAceptPedido.class;
 
         } else if(id == R.id.nav_gestion_pdv) {
             toolbar.setTitle("Gestión PDVS");
