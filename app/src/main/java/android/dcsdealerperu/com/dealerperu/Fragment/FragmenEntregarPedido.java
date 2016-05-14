@@ -7,7 +7,6 @@ import android.dcsdealerperu.com.dealerperu.Activity.ActEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.ListEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,9 +33,6 @@ import dmax.dialog.SpotsDialog;
 
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FragmenEntregarPedido extends BaseVolleyFragment implements View.OnClickListener {
 
     private Button btnBuscar;

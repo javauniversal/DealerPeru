@@ -70,7 +70,7 @@ public class FragmentAceptPedido extends BaseVolleyFragment {
                 //Guardar Aceptacion de pedidos validaciones
                 for (int i = 0; i < aceptarComprobante.getAceptarPedidoList().size(); i++ ) {
                     if (aceptarComprobante.getAceptarPedidoList().get(i).marcaProducto.equals("")) {
-                        Toast.makeText(getActivity(), "El pedido numero "+aceptarComprobante.getAceptarPedidoList().get(i).getNroPedido(), Toast.LENGTH_LONG ).show();
+                        Toast.makeText(getActivity(), "Es necesario que RECHACE o ACEPTE el pedido #"+aceptarComprobante.getAceptarPedidoList().get(i).getNroPedido(), Toast.LENGTH_LONG ).show();
                         break;
                     }
                 }

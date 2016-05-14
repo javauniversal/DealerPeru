@@ -56,6 +56,20 @@ public class AceptarPedido {
 
     public String marcaProducto = "";
 
+    public Boolean indicadorChekend = false;
+
+    public Boolean indicadorChekendDevolver = false;
+
+    private String comentarioRechazo;
+
+    public String getComentarioRechazo() {
+        return comentarioRechazo;
+    }
+
+    public void setComentarioRechazo(String comentarioRechazo) {
+        this.comentarioRechazo = comentarioRechazo;
+    }
+
     public List<DestallePedido> getDestallePedidoList() {
         return destallePedidoList;
     }

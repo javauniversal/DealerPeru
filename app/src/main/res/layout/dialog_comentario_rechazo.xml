@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#55000000">
+
+    <LinearLayout
+        android:id="@+id/contentDialog"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@color/actionBarColorText"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/dimen_letra_app_titulo"
+            android:layout_marginBottom="24dp" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="9dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp">
+
+            <EditText
+                android:id="@+id/EditComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="3"
+                android:maxLength="150"
+                android:background="@drawable/rounded_corner"
+                android:gravity="top|left"
+                android:digits="abcdefghijklmnñopqrstuvwxyz ABCDEFGHIJKLMNÑOPQRSTUVWXYZ áéíóú ÁÉÍÓÚ 0123456789"
+                android:inputType="textMultiLine"
+                android:scrollHorizontally="false"
+                android:minWidth="10.0dip"
+                android:textSize="@dimen/dimen_letra_app_estandar"
+                android:maxWidth="180dip" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="right">
+
+            <Button
+                android:id="@+id/button_accept"
+                android:layout_width="wrap_content"
+                style="@style/BrandButtonStyle2"
+                android:layout_height="wrap_content"
+                android:text="Aceptar" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
