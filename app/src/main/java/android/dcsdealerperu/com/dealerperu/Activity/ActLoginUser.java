@@ -71,7 +71,7 @@ public class ActLoginUser extends AppCompatActivity {
         editPassword = (EditText) findViewById(R.id.editPassword);
         link_pass = (TextView) findViewById(R.id.link_pass);
 
-        editUsuario.setText("amontoyap");
+        editUsuario.setText("repartidor");
         editPassword.setText("pro_123");
 
         link_pass.setOnClickListener(new View.OnClickListener() {
