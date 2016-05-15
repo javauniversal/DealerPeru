@@ -132,6 +132,10 @@
         <activity
             android:name=".Activity.ActInventariar"
             android:label="@string/title_activity_act_inventariar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ActReporteInventarioRep"
+            android:label="@string/title_activity_act_reporte_inventario_rep"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -19,4 +19,8 @@ public class MisBajasDetalle2 implements Serializable{
     public void setSerie(String serie) {
         this.serie = serie;
     }
+
+    public MisBajasDetalle2(String sku) {
+        this.serie = sku;
+    }
 }

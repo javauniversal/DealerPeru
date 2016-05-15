@@ -6,6 +6,7 @@ import android.dcsdealerperu.com.dealerperu.Fragment.FragmenMarcarvisita;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentAceptPedido;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentBajasSupervisor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHome;
+import android.dcsdealerperu.com.dealerperu.Fragment.FragmentInventarioRepartidor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisBajas;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisPedidos;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentPedidosSupervisor;
@@ -212,6 +213,11 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             editaPunto = 0;
             accion = "Guardar";
             fragmentClass = FragmentBajasSupervisor.class;
+        }else if (id == R.id.nav_inventario) {
+            toolbar.setTitle("Mi Inventario");
+            editaPunto = 0;
+            accion = "Guardar";
+            fragmentClass = FragmentInventarioRepartidor.class;
         }
 
         try {

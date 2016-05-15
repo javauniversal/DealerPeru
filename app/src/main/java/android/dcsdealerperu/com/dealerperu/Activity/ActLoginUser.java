@@ -1,6 +1,5 @@
 package android.dcsdealerperu.com.dealerperu.Activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseUser;
 import android.dcsdealerperu.com.dealerperu.R;
@@ -10,7 +9,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -86,7 +84,8 @@ public class ActLoginUser extends AppCompatActivity {
                 acceptButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        edit_correo_edit = (EditText) dialog.findViewById(R.id.edit_correo_edit);
+                        enviarCorreo();
                     }
                 });
             }
@@ -119,11 +118,12 @@ public class ActLoginUser extends AppCompatActivity {
         alertDialog.show();
         String url = "http://192.168.2.24/web/movistar_peru/distribuidorbt/modulos/login/controlador.php";
         rq = Volley.newRequestQueue(this);
+
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>(){
                     @Override
                     public void onResponse(String response) {
-                        RespuestaCorreo(response.trim());
+                        RespuestaCorreo(response);
                     }
                 },
                 new Response.ErrorListener(){
