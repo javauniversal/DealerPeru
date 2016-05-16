@@ -6,12 +6,14 @@ import android.dcsdealerperu.com.dealerperu.Fragment.FragmenMarcarvisita;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentAceptPedido;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentBajasSupervisor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHome;
+import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHomeRepartidor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentInventarioRepartidor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisBajas;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisPedidos;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentPedidosSupervisor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentPlanificar;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentReporteAprobacionPdv;
+import android.dcsdealerperu.com.dealerperu.Fragment.FragmentReportePedidosRepartidor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentRuteroVendedor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmenteAproPdv;
 import android.dcsdealerperu.com.dealerperu.R;
@@ -111,7 +113,13 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             }
 
         } else {
-            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_home));
+            if(getResponseUserStatic().getPerfil() == 2)
+            {
+                onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_home));
+            }else if(getResponseUserStatic().getPerfil() == 3){
+                onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_home_repartidor));
+            }
+
         }
 
 
@@ -142,6 +150,12 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             editaPunto = 0;
             accion = "Guardar";
             fragmentClass = FragmentHome.class;
+
+        } else if (id == R.id.nav_home_repartidor) {
+            toolbar.setTitle("Marcar Visita");
+            editaPunto = 0;
+            accion = "Guardar";
+            fragmentClass = FragmentHomeRepartidor.class;
 
         } else if (id == R.id.nav_marcar_visita) {
             toolbar.setTitle("Marcar Visita");
@@ -224,6 +238,11 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             editaPunto = 0;
             accion = "Guardar";
             fragmentClass = FragmentInventarioRepartidor.class;
+        }else if (id == R.id.nav_mis_pedidos_rep) {
+            toolbar.setTitle("Mis Pedidos");
+            editaPunto = 0;
+            accion = "Guardar";
+            fragmentClass = FragmentReportePedidosRepartidor.class;
         }
 
         try {

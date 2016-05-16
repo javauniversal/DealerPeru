@@ -233,7 +233,7 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
-                        parseJSON(response);
+                        //parseJSON(response);
                     }
                 },
                 new Response.ErrorListener() {

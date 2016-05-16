@@ -1,7 +1,7 @@
 package android.dcsdealerperu.com.dealerperu.Adapter;
 
 import android.content.Context;
-import android.dcsdealerperu.com.dealerperu.Entry.MisBajasDetalle2;
+import android.dcsdealerperu.com.dealerperu.Entry.MisBajasDetalle1;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -14,18 +14,15 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by Josue on 14/05/16.
- */
-public class ExpandableListAdapterReporteInv extends BaseExpandableListAdapter {
+public class ExpandableListAdapterReporteInvPed extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> expandableListTitle;
-    private HashMap<String, List<MisBajasDetalle2>> expandableListDetail;
+    private HashMap<String, List<MisBajasDetalle1>> expandableListDetail;
     private DecimalFormat format;
     private int tipoinve;
 
-    public ExpandableListAdapterReporteInv(Context context, List<String> expandableListTitle, HashMap<String, List<MisBajasDetalle2>> expandableListDetail, int tipo) {
+    public ExpandableListAdapterReporteInvPed(Context context, List<String> expandableListTitle, HashMap<String, List<MisBajasDetalle1>> expandableListDetail, int tipo) {
         this.context = context;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
@@ -47,19 +44,19 @@ public class ExpandableListAdapterReporteInv extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(final int listPosition, final int expandedListPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-            final MisBajasDetalle2 expandedListText = (MisBajasDetalle2) getChild(listPosition, expandedListPosition);
+        final MisBajasDetalle1 expandedListText = (MisBajasDetalle1) getChild(listPosition, expandedListPosition);
 
-            if (convertView == null) {
-                LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = layoutInflater.inflate(R.layout.list_item_bajas, null);
-            }
+        if (convertView == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = layoutInflater.inflate(R.layout.list_item_bajas, null);
+        }
 
-            TextView txt_referencia = (TextView) convertView.findViewById(R.id.txt_referencia);
-            TextView txt_cantidad = (TextView) convertView.findViewById(R.id.txt_cantidad);
+        TextView txt_referencia = (TextView) convertView.findViewById(R.id.txt_referencia);
+        TextView txt_cantidad = (TextView) convertView.findViewById(R.id.txt_cantidad);
 
 
-            txt_referencia.setText(expandedListText.getSerie());
-            txt_cantidad.setText("");
+        txt_referencia.setText(expandedListText.getSku());
+        txt_cantidad.setText(String.valueOf(expandedListText.getCant_sku()));
 
         return convertView;
     }

@@ -26,6 +26,50 @@ public class ResponseInventario implements Serializable {
     @SerializedName("detalle_series")
     private List<MisBajasDetalle2> detalle_series;
 
+    @SerializedName("n_pedido")
+    private int n_pedido;
+
+    @SerializedName("nombre_punto")
+    private String nombre_punto;
+
+    @SerializedName("estado")
+    private String estado;
+
+    @SerializedName("detalle_referencias")
+    private List<MisBajasDetalle1> detalle_referencias;
+
+    public int getN_pedido() {
+        return n_pedido;
+    }
+
+    public void setN_pedido(int n_pedido) {
+        this.n_pedido = n_pedido;
+    }
+
+    public String getNombre_punto() {
+        return nombre_punto;
+    }
+
+    public void setNombre_punto(String nombre_punto) {
+        this.nombre_punto = nombre_punto;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public List<MisBajasDetalle1> getDetalle_referencias() {
+        return detalle_referencias;
+    }
+
+    public void setDetalle_referencias(List<MisBajasDetalle1> detalle_referencias) {
+        this.detalle_referencias = detalle_referencias;
+    }
+
     public int getTipon() {
         return tipon;
     }

@@ -10,7 +10,7 @@ public class ListResponseInventario implements Serializable {
     @SerializedName("referencias")
     private List<ResponseInventario> referencias;
 
-    public List<ResponseInventario> getReferencias() {
+    public List<ResponseInventario> getReferencias(){
         return referencias;
     }
 

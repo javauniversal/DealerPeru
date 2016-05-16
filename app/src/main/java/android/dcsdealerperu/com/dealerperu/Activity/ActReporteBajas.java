@@ -79,7 +79,6 @@ public class ActReporteBajas extends AppCompatActivity {
                 });
 
                 builder.show();
-                //Toast.makeText(ActReporteBajas.this,mDescribable.getMisBajas().get(groupPosition).getMisBajasDetalle1List().get(childPosition).getMisBajasDetalle2List().get(0).getSerie(),Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
