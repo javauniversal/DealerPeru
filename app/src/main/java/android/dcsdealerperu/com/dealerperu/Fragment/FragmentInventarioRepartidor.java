@@ -149,6 +149,7 @@ public class FragmentInventarioRepartidor extends BaseVolleyFragment {
                 bundle.putInt("tipo",agrupa);
                 intent.putExtras(bundle);
                 startActivity(intent);
+
             } catch (IllegalStateException ex) {
                 ex.printStackTrace();
                 alertDialog.dismiss();

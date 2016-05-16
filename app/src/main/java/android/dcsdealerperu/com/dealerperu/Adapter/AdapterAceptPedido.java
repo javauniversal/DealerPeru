@@ -3,18 +3,17 @@ package android.dcsdealerperu.com.dealerperu.Adapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.dcsdealerperu.com.dealerperu.Activity.SmoothCheckBox;
+import android.dcsdealerperu.com.dealerperu.Activity.DialogRechazar;
 import android.dcsdealerperu.com.dealerperu.Entry.AceptarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.DestallePedido;
-import android.dcsdealerperu.com.dealerperu.Entry.ResponseEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +27,7 @@ public class AdapterAceptPedido extends BaseAdapter {
     private Activity actx;
     private List<AceptarPedido> data;
     private Format format;
+    protected DialogRechazar dialog;
 
     public AdapterAceptPedido(Activity actx, List<AceptarPedido> data){
         this.actx = actx;
@@ -56,12 +56,11 @@ public class AdapterAceptPedido extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = View.inflate(actx, R.layout.item_aceptar_pedido, null);
-            new ViewHolder(convertView);
-        }
 
-        ViewHolder holder = (ViewHolder) convertView.getTag();
+        convertView = View.inflate(actx, R.layout.item_aceptar_pedido, null);
+        new ViewHolder(convertView);
+
+        final ViewHolder holder = (ViewHolder) convertView.getTag();
 
         final AceptarPedido referencias = getItem(position);
 
@@ -79,19 +78,62 @@ public class AdapterAceptPedido extends BaseAdapter {
             }
         });
 
-        holder.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        holder.radioAceptar.setChecked(referencias.indicadorChekend);
+
+        holder.radioDevolver.setChecked(referencias.indicadorChekendDevolver);
+
+        holder.radioDevolver.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.radioAceptar) {
-                    referencias.marcaProducto = "aceptar";
-                } else if (checkedId == R.id.radioDevolver){
-                    referencias.marcaProducto = "devolver";
-                }
+            public void onClick(View v) {
+                dialog = new DialogRechazar(actx, "Observación");
+                dialog.setCancelable(false);
+                dialog.show();
+                Button acceptButton = dialog.getButtonAccept();
+                acceptButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (isValidNumber(dialog.getEmail().getText().toString().trim())) {
+                            dialog.getEmail().setError("Este campo es obligatorio");
+                            dialog.getEmail().requestFocus();
+                        } else {
+                            referencias.setComentarioRechazo(dialog.getEmail().getText().toString());
+                            dialog.dismiss();
+                        }
+                    }
+                });
             }
         });
 
+        holder.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                View radioButton = group.findViewById(checkedId);
+                int radioId = group.indexOfChild(radioButton);
+
+                if (radioId == 0) {
+                    referencias.marcaProducto = "devolver";
+                    referencias.indicadorChekendDevolver = true;
+                    referencias.indicadorChekend = false;
+                } else {
+
+                    if (referencias.marcaProducto.equals("devolver")) {
+                        Toast.makeText(actx, "La observación", Toast.LENGTH_LONG).show();
+                    }
+
+                    referencias.marcaProducto = "aceptar";
+                    referencias.indicadorChekend = true;
+                    referencias.indicadorChekendDevolver = false;
+                }
+
+            }
+        });
+
+
         return convertView;
     }
+
+    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
 
     private void DialogDetalle(final int position, final AceptarPedido referencias) {
 
@@ -146,6 +188,7 @@ public class AdapterAceptPedido extends BaseAdapter {
             }
 
             class ViewHolder {
+
                 TextView txtReferencia;
                 TextView txtTipoProducto;
                 TextView txtCantidadSol;
@@ -175,14 +218,13 @@ public class AdapterAceptPedido extends BaseAdapter {
         TextView txt_idpos;
         TextView txtFechaEstimada;
         TextView txtDetalleLink;
-
         RadioGroup radioGroup;
-
+        RadioButton radioAceptar;
+        RadioButton radioDevolver;
 
         public ViewHolder(View view) {
 
             txtNumeroComprobante = (TextView) view.findViewById(R.id.txtNumeroComprobante);
-            //txtNumero_pedido = (TextView) view.findViewById(R.id.txtNumero_pedido);
             txtCantidadPedida = (TextView) view.findViewById(R.id.txtCantidadPedida);
             txtTotalPedido = (TextView) view.findViewById(R.id.txtTotalPedido);
             txt_idpos = (TextView) view.findViewById(R.id.txt_idpos);
@@ -190,6 +232,9 @@ public class AdapterAceptPedido extends BaseAdapter {
             txtDetalleLink = (TextView) view.findViewById(R.id.txtDetalleLink);
 
             radioGroup = (RadioGroup) view.findViewById(R.id.radio);
+
+            radioAceptar = (RadioButton) view.findViewById(R.id.radioAceptar);
+            radioDevolver = (RadioButton) view.findViewById(R.id.radioDevolver);
 
             view.setTag(this);
         }

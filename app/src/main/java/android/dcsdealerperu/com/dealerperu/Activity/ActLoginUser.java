@@ -40,17 +40,15 @@ import static android.dcsdealerperu.com.dealerperu.Entry.Coordenadas.setLatitud;
 import static android.dcsdealerperu.com.dealerperu.Entry.Coordenadas.setLongitud;
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.setResponseUserStatic;
 
-public class ActLoginUser extends AppCompatActivity {
+public class ActLoginUser extends AppCompatActivity implements View.OnClickListener {
 
     private TextView editUsuario;
     private TextView editPassword;
-    private Button btnIngresar;
     private CoordinatorLayout coordinatorLayout;
     private SpotsDialog alertDialog;
     private RequestQueue rq;
     public static final String TAG = "MyTag";
     private GpsServices gpsServices;
-    private TextView link_pass;
     private EditText edit_correo_edit;
     protected DialogEmail dialog;
 
@@ -69,48 +67,14 @@ public class ActLoginUser extends AppCompatActivity {
 
         editUsuario = (EditText) findViewById(R.id.editUsuario);
         editPassword = (EditText) findViewById(R.id.editPassword);
-        link_pass = (TextView) findViewById(R.id.link_pass);
+        TextView link_pass = (TextView) findViewById(R.id.link_pass);
+        link_pass.setOnClickListener(this);
 
-        editUsuario.setText("repartidor");
+        editUsuario.setText("vcali");
         editPassword.setText("pro_123");
 
-        link_pass.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                dialog = new DialogEmail(ActLoginUser.this, "Recuperación de Contraseña");
-                dialog.show();
-                Button acceptButton = dialog.getButtonAccept();
-                acceptButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        edit_correo_edit = (EditText) dialog.findViewById(R.id.edit_correo_edit);
-                        enviarCorreo();
-                    }
-                });
-            }
-        });
-
-        btnIngresar = (Button) findViewById(R.id.btnIngresar);
-        btnIngresar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (gpsServices.getLatitude() == 0.0) {
-                    gpsServices.showSettingsAlert();
-                } else {
-                    if (isValidNumber(editUsuario.getText().toString().trim())) {
-                        editUsuario.setError("Campo requerido");
-                        editUsuario.requestFocus();
-                    } else if (isValidNumber(editPassword.getText().toString().trim())){
-                        editPassword.setError("Campo requerido");
-                        editPassword.requestFocus();
-                    }else {
-                        loginServices();
-                    }
-                }
-            }
-        });
+        Button btnIngresar = (Button) findViewById(R.id.btnIngresar);
+        btnIngresar.setOnClickListener(this);
 
     }
 
@@ -131,7 +95,9 @@ public class ActLoginUser extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         // error
                         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                            Toast.makeText(ActLoginUser.this, "Error de tiempo de espera", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(ActLoginUser.this, "Error de tiempo de espera", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActLoginUser.this, "Hemos enviado un correo con la recuperación de la contraseña", Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
                         } else if (error instanceof AuthFailureError) {
                             Toast.makeText(ActLoginUser.this, "Error Servidor", Toast.LENGTH_LONG).show();
                         } else if (error instanceof ServerError) {
@@ -161,22 +127,28 @@ public class ActLoginUser extends AppCompatActivity {
     }
 
     private void RespuestaCorreo(String response) {
-        if(response != "")
-        {
-            if(response.equals("1")){
-                Toast.makeText(this,"Se enviaron los datos para recuperar la contraseña al correo indicado",Toast.LENGTH_LONG).show();
-            }else if(response.equals("0")){
-                Toast.makeText(this,"Error al intentar enviar el correo, intente nuevamente",Toast.LENGTH_LONG).show();
-            }else if(response.equals("2")){
-                Toast.makeText(this,"El correo: "+ edit_correo_edit.getText()+" no se encuentra registrado",Toast.LENGTH_LONG).show();
-            }else{
-                Toast.makeText(this,"Error al enviar el correo",Toast.LENGTH_LONG).show();
+
+        if(!response.equals("")) {
+
+            switch (response) {
+                case "1":
+                    Toast.makeText(this, "Se enviaron los datos para recuperar la contraseña al correo indicado", Toast.LENGTH_LONG).show();
+                    break;
+                case "0":
+                    Toast.makeText(this, "Error al intentar enviar el correo, intente nuevamente", Toast.LENGTH_LONG).show();
+                    break;
+                case "2":
+                    Toast.makeText(this, "El correo: " + edit_correo_edit.getText() + " no se encuentra registrado", Toast.LENGTH_LONG).show();
+                    break;
+                default:
+                    Toast.makeText(this, "Error al enviar el correo", Toast.LENGTH_LONG).show();
+                    break;
             }
-        }
-        else
-        {
+
+        } else {
             Toast.makeText(this,"No pudo enviar el correo",Toast.LENGTH_LONG).show();
         }
+
         alertDialog.dismiss();
     }
 
@@ -192,6 +164,7 @@ public class ActLoginUser extends AppCompatActivity {
 
         return Resultado.find();
     }
+
     private void loginServices(){
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base),"login_user");
@@ -296,4 +269,49 @@ public class ActLoginUser extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnIngresar:
+
+                if (gpsServices.getLatitude() == 0.0) {
+                    gpsServices.showSettingsAlert();
+                } else {
+                    if (isValidNumber(editUsuario.getText().toString().trim())) {
+                        editUsuario.setError("Campo requerido");
+                        editUsuario.requestFocus();
+                    } else if (isValidNumber(editPassword.getText().toString().trim())){
+                        editPassword.setError("Campo requerido");
+                        editPassword.requestFocus();
+                    } else {
+                        loginServices();
+                    }
+                }
+
+                break;
+            case R.id.link_pass:
+
+                dialog = new DialogEmail(ActLoginUser.this, "Recuperación de Contraseña");
+                dialog.show();
+                Button acceptButton = dialog.getButtonAccept();
+                acceptButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        edit_correo_edit = (EditText) dialog.findViewById(R.id.edit_correo_edit);
+
+                        if (isValidNumber(edit_correo_edit.getText().toString().trim())) {
+                            edit_correo_edit.setError("Campo requerido");
+                            edit_correo_edit.requestFocus();
+                        } else if (!isValidNumberEmail(edit_correo_edit.getText().toString().trim())) {
+                            edit_correo_edit.setError("El correo ingresado no es valido");
+                            edit_correo_edit.requestFocus();
+                        } else {
+                            enviarCorreo();
+                        }
+                    }
+                });
+
+                break;
+        }
+    }
 }

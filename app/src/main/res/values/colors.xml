@@ -13,6 +13,8 @@
     <color name="color_negro">#000</color>
     <color name="cyan_500">#00bcd4</color>
     <color name="bckg">#FF5722</color>
+    <color name="rojo_progress">#ff3d00</color>
+
     <color name="filn">#607D8B</color>
     <color name="colorSinDatos">#fbc02d</color>
     <color name="colorErrorConexion">#42a5f5</color>
@@ -22,6 +24,7 @@
     <color name="activity_bg">#e4e5e5</color>
 
     <color name="app_color">#8EAE3C</color>
+    <color name="verde_progress">#298A08</color>
     <color name="list_item_background">#AACCCCCC</color>
 
 </resources>
