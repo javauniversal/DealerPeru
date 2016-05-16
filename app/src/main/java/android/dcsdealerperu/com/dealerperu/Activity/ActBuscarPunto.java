@@ -159,7 +159,6 @@ public class ActBuscarPunto extends AppCompatActivity {
                 params.put("db", getResponseUserStatic().getBd());
                 params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
 
-
                 return params;
             }
         };

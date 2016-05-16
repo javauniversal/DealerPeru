@@ -5,13 +5,19 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Activity.ActMarcarVisita;
+import android.dcsdealerperu.com.dealerperu.Activity.ActTomarPedido;
 import android.dcsdealerperu.com.dealerperu.Adapter.AppAdapterRutero;
-import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseRutero;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -32,6 +38,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
@@ -67,12 +74,46 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        // Implementing ActionBar Search inside a fragment
+        MenuItem item = menu.add("Search");
+        item.setIcon(R.drawable.abc_ic_search_api_mtrl_alpha); // sets icon
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+        SearchView sv = new SearchView(((ActTomarPedido) getActivity()).getSupportActionBar().getThemedContext());
+        int id = sv.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+        TextView textView = (TextView) sv.findViewById(id);
+        textView.setHint("Buscar...");
+        textView.setHintTextColor(getResources().getColor(R.color.color_gris));
+        textView.setTextColor(getResources().getColor(R.color.actionBarColorText));
+
+        // implementing the listener
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                //doSearch(s);
+                return s.length() < 4;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                return true;
+            }
+        });
+
+        item.setActionView(sv);
+
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setupGrid();
     }
 
-    private void llenarData(final ListHome listHome) {
+    private void llenarData(final List<ResponseHome> listHome) {
 
         appAdapterRutero = new AppAdapterRutero(getActivity(), listHome);
         mListView.setAdapter(appAdapterRutero);
@@ -283,14 +324,17 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
         if (!response.equals("[]")) {
             try {
 
-                ListHome listHome = gson.fromJson(response, ListHome.class);
-                llenarData(listHome);
+                ResponseRutero listHome = gson.fromJson(response, ResponseRutero.class);
+
+                llenarData(listHome.getResponseHomeList());
 
             } catch (IllegalStateException ex) {
                 ex.printStackTrace();
             } finally {
+
             }
         } else {
+            Toast.makeText(getActivity(), "No se encontraron datos para mostrar", Toast.LENGTH_LONG).show();
         }
 
     }

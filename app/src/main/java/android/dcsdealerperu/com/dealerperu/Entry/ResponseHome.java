@@ -58,9 +58,129 @@ public class ResponseHome implements Serializable {
     @SerializedName("tipo_visita")
     private int tipo_visita;
 
-
     @SerializedName("rutero")
     private int rutero;
+
+    @SerializedName("latitud")
+    private double latitud;
+
+    @SerializedName("longitud")
+    private double longitud;
+
+    @SerializedName("stock_sim")
+    private int stock_sim;
+
+    @SerializedName("stock_seguridad_sim")
+    private int stock_seguridad_sim;
+
+    @SerializedName("stock_combo")
+    private int stock_combo;
+
+    @SerializedName("stock_seguridad_combo")
+    private int stock_seguridad_combo;
+
+    @SerializedName("dias_inve_sim")
+    private int dias_inve_sim;
+
+    @SerializedName("dias_inve_combo")
+    private int dias_inve_combo;
+
+    @SerializedName("fecha_ult")
+    private String fecha_ult;
+
+    @SerializedName("hora_ult")
+    private String hora_ult;
+
+    @SerializedName("persona_ultima")
+    private String persona_ultima;
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public int getStock_sim() {
+        return stock_sim;
+    }
+
+    public void setStock_sim(int stock_sim) {
+        this.stock_sim = stock_sim;
+    }
+
+    public int getStock_seguridad_sim() {
+        return stock_seguridad_sim;
+    }
+
+    public void setStock_seguridad_sim(int stock_seguridad_sim) {
+        this.stock_seguridad_sim = stock_seguridad_sim;
+    }
+
+    public int getStock_combo() {
+        return stock_combo;
+    }
+
+    public void setStock_combo(int stock_combo) {
+        this.stock_combo = stock_combo;
+    }
+
+    public int getStock_seguridad_combo() {
+        return stock_seguridad_combo;
+    }
+
+    public void setStock_seguridad_combo(int stock_seguridad_combo) {
+        this.stock_seguridad_combo = stock_seguridad_combo;
+    }
+
+    public int getDias_inve_sim() {
+        return dias_inve_sim;
+    }
+
+    public void setDias_inve_sim(int dias_inve_sim) {
+        this.dias_inve_sim = dias_inve_sim;
+    }
+
+    public int getDias_inve_combo() {
+        return dias_inve_combo;
+    }
+
+    public void setDias_inve_combo(int dias_inve_combo) {
+        this.dias_inve_combo = dias_inve_combo;
+    }
+
+    public String getFecha_ult() {
+        return fecha_ult;
+    }
+
+    public void setFecha_ult(String fecha_ult) {
+        this.fecha_ult = fecha_ult;
+    }
+
+    public String getHora_ult() {
+        return hora_ult;
+    }
+
+    public void setHora_ult(String hora_ult) {
+        this.hora_ult = hora_ult;
+    }
+
+    public String getPersona_ultima() {
+        return persona_ultima;
+    }
+
+    public void setPersona_ultima(String persona_ultima) {
+        this.persona_ultima = persona_ultima;
+    }
 
     public static List<ResponseHome> responseHomeListS;
 
@@ -215,4 +335,5 @@ public class ResponseHome implements Serializable {
     public void setRutero(int rutero) {
         this.rutero = rutero;
     }
+
 }

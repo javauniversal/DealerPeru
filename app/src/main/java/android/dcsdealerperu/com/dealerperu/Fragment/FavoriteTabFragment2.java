@@ -1,7 +1,7 @@
 package android.dcsdealerperu.com.dealerperu.Fragment;
 
 import android.annotation.SuppressLint;
-import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseRutero;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,12 +35,20 @@ public class FavoriteTabFragment2 extends BaseVolleyFragment {
     private int mPosition;
     private ProgressBar mProgress;
     private ProgressBar progressBar2;
+    private ProgressBar progressBarCumpli;
+    private ProgressBar progressBar2Cumpli;
     private TextView txtFinal;
     private TextView txtPromedio;
     private TextView txtFinalPedido;
     private TextView txtPromediopedido;
     private TextView txtPorCum;
     private TextView txtPorEfec;
+    private TextView txtFinalCumpli;
+    private TextView txtFinalPedidoCumpli;
+    private TextView txtCantidadCumpli;
+    private TextView txtPromediopedidoCumpli;
+    private TextView txtPorCumCumpli;
+    private TextView txtPorCombos;
     private int mProgressStatus = 0;
     private int visitasTotal = 0;
     private int totalConPedido = 0;
@@ -61,12 +69,20 @@ public class FavoriteTabFragment2 extends BaseVolleyFragment {
 
         mProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
         progressBar2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);
+        progressBarCumpli = (ProgressBar) rootView.findViewById(R.id.progressBarCumpli);
+        progressBar2Cumpli = (ProgressBar) rootView.findViewById(R.id.progressBar2Cumpli);
         txtFinal = (TextView) rootView.findViewById(R.id.txtFinal);
         txtPromedio = (TextView) rootView.findViewById(R.id.txtPromedio);
         txtFinalPedido = (TextView) rootView.findViewById(R.id.txtFinalPedido);
         txtPromediopedido = (TextView) rootView.findViewById(R.id.txtPromediopedido);
         txtPorCum = (TextView) rootView.findViewById(R.id.txtPorCum);
         txtPorEfec = (TextView) rootView.findViewById(R.id.txtPorEfec);
+        txtFinalCumpli = (TextView) rootView.findViewById(R.id.txtFinalCumpli);
+        txtFinalPedidoCumpli = (TextView) rootView.findViewById(R.id.txtFinalPedidoCumpli);
+        txtCantidadCumpli = (TextView) rootView.findViewById(R.id.txtCantidadCumpli);
+        txtPromediopedidoCumpli = (TextView) rootView.findViewById(R.id.txtPromediopedidoCumpli);
+        txtPorCumCumpli = (TextView) rootView.findViewById(R.id.txtPorCumCumpli);
+        txtPorCombos = (TextView) rootView.findViewById(R.id.txtPorCombos);
 
         return rootView;
     }
@@ -134,26 +150,33 @@ public class FavoriteTabFragment2 extends BaseVolleyFragment {
         if (!response.equals("[]")) {
             try {
 
-                final ListHome listHome = gson.fromJson(response, ListHome.class);
+                final ResponseRutero listHome = gson.fromJson(response, ResponseRutero.class);
 
-                txtFinal.setText(listHome.size() + "");
+                txtFinal.setText(listHome.getResponseHomeList().size()+"");
+
+                txtFinalCumpli.setText(listHome.getCant_cumplimiento_sim()+"");
+                txtFinalPedidoCumpli.setText(listHome.getCant_cumplimiento_combo()+"");
+
+                txtCantidadCumpli.setText(listHome.getCant_ventas_sim()+"");
+                txtPromediopedidoCumpli.setText(listHome.getCant_ventas_combo()+"");
 
                 new Thread(new Runnable() {
                     public void run() {
 
-                        while (mProgressStatus < listHome.size()) {
+                        while (mProgressStatus < listHome.getResponseHomeList().size()) {
 
-                            if (listHome.get(mProgressStatus).getTipo_visita() == 1 || listHome.get(mProgressStatus).getTipo_visita() == 2)
+                            if (listHome.getResponseHomeList().get(mProgressStatus).getTipo_visita() == 1 || listHome.getResponseHomeList().get(mProgressStatus).getTipo_visita() == 2)
                                 visitasTotal++;
 
-                            if (listHome.get(mProgressStatus).getTipo_visita() == 2)
+                            if (listHome.getResponseHomeList().get(mProgressStatus).getTipo_visita() == 2)
                                 totalConPedido++;
 
                             // Update the progress bar
                             mHandler.post(new Runnable() {
                                 public void run() {
+                                    //Visitas
                                     // Progress 1
-                                    float promedio = (float) visitasTotal / (float) listHome.size();
+                                    float promedio = (float) visitasTotal / (float) listHome.getResponseHomeList().size();
                                     promedio = promedio * 100;
                                     mProgress.setProgress((int) promedio);
                                     txtPromedio.setText(visitasTotal + "");
@@ -169,6 +192,21 @@ public class FavoriteTabFragment2 extends BaseVolleyFragment {
 
                                     txtPorCum.setText((int) promedio + "%");
                                     txtPorEfec.setText((int) promedio2 + "%");
+
+                                    //Cumplimiento
+                                    //Progress 1
+                                    float progress3 = ((float) listHome.getCant_ventas_sim() / (float) listHome.getCant_cumplimiento_sim()) * 100;
+
+                                    progressBarCumpli.setProgress(listHome.getCant_ventas_sim());
+                                    progressBarCumpli.setProgress((int) progress3);
+                                    txtPorCumCumpli.setText((int) progress3 +"%");
+
+                                    //Progress 2
+                                    float progress4 = ((float) listHome.getCant_ventas_combo() / (float) listHome.getCant_cumplimiento_combo()) * 100;
+
+                                    progressBar2Cumpli.setMax(listHome.getCant_cumplimiento_sim());
+                                    progressBar2Cumpli.setProgress((int) progress4);
+                                    txtPorCombos.setText((int) progress4 +"%");
 
                                 }
                             });

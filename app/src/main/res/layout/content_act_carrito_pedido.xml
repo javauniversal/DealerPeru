@@ -8,44 +8,46 @@
     tools:context="android.dcsdealerperu.com.dealerperu.Activity.ActCarritoPedido"
     tools:showIn="@layout/activity_carrito_pedido">
 
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical">
-
-    <RelativeLayout
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="0dp"
-        android:gravity="top"
-        android:layout_alignParentTop="true"
-        android:layout_weight="1">
+        android:layout_above="@+id/linearLayout4" />
 
-        <com.baoyz.swipemenulistview.SwipeMenuListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
-        android:gravity="bottom"
+        android:layout_height="140dp"
+        android:background="@color/colorPrimary"
         android:layout_alignParentBottom="true"
-        android:layout_weight="3.3">
+        android:padding="4dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout4">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="@dimen/dimen_letra_app_titulo"
-            android:text="Esa Cosa"
-            android:textColor="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Large Text"
             android:textStyle="bold"
-            android:id="@+id/textView1"
-            android:gravity="center_horizontal" />
-    </RelativeLayout>
+            android:textColor="@color/actionBarColorText"
+            android:id="@+id/textView1" />
 
-  </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/actionBarColorText"
+            android:text="Large Text"
+            android:id="@+id/textView2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/actionBarColorText"
+            android:text="Large Text"
+            android:id="@+id/textView3" />
+
+    </LinearLayout>
+
 </RelativeLayout>
