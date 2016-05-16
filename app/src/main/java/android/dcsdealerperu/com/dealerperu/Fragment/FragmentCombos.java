@@ -6,9 +6,6 @@ import android.dcsdealerperu.com.dealerperu.Activity.ActCarritoPedido;
 import android.dcsdealerperu.com.dealerperu.Activity.ActTomarPedido;
 import android.dcsdealerperu.com.dealerperu.Activity.SpacesItemDecoration;
 import android.dcsdealerperu.com.dealerperu.Adapter.AdapterRecyclerCombos;
-import android.dcsdealerperu.com.dealerperu.Adapter.AdapterRecyclerSimcard;
-import android.dcsdealerperu.com.dealerperu.Adapter.AppAdapterRutero;
-import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasCombos;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseVenta;
 import android.dcsdealerperu.com.dealerperu.R;
@@ -36,10 +33,8 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.google.gson.Gson;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +43,6 @@ import java.util.Map;
 import dmax.dialog.SpotsDialog;
 
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
-import static android.dcsdealerperu.com.dealerperu.Entry.ResponseVenta.getResponseVentaStatic;
 
 @SuppressLint("ValidFragment")
 public class FragmentCombos extends BaseVolleyFragment {
@@ -168,7 +162,7 @@ public class FragmentCombos extends BaseVolleyFragment {
 
         List<ReferenciasCombos> filteredListCategoria = new ArrayList<>();
 
-        for (int i = 0; i < responseVenta.getReferenciasCombosList().size(); i++ ) {
+        for (int i = 0; i < responseVenta.getReferenciasCombosList().size(); i++) {
             if (responseVenta.getReferenciasCombosList().get(i).getDescripcion().toLowerCase().contains(query)) {
                 filteredListCategoria.add(responseVenta.getReferenciasCombosList().get(i));
             }
@@ -183,13 +177,13 @@ public class FragmentCombos extends BaseVolleyFragment {
 
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_toma_pedido_com");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSONCombo(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -214,7 +208,7 @@ public class FragmentCombos extends BaseVolleyFragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));

@@ -1,21 +1,15 @@
 package android.dcsdealerperu.com.dealerperu.Adapter;
 
-/**
- * Created by germangarcia on 7/05/16.
- */
-
 import android.content.Context;
 import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasCombos;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -54,7 +48,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == ((RelativeLayout) object);
+        return view == object;
     }
 
     @Override
@@ -72,7 +66,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         loadeImagenView(img_producto, referenciasCombos.getEstandarList().get(position).getDescripcion());
 
         // Add viewpager_item.xml to ViewPager
-        ((ViewPager) container).addView(itemView);
+        container.addView(itemView);
 
         return itemView;
 
@@ -81,7 +75,7 @@ public class ViewPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         // Remove viewpager_item.xml from ViewPager
-        ((ViewPager) container).removeView((RelativeLayout) object);
+        container.removeView((RelativeLayout) object);
 
     }
 
@@ -107,6 +101,7 @@ public class ViewPagerAdapter extends PagerAdapter {
                 //Completado
                 //holder.progressBar.setVisibility(View.GONE);
             }
+
             @Override
             public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
                 // TODO Auto-generated method stub

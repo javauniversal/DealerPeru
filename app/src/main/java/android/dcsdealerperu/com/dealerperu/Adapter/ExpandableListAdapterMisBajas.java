@@ -55,7 +55,7 @@ public class ExpandableListAdapterMisBajas extends BaseExpandableListAdapter {
         TextView txt_cantidad = (TextView) convertView.findViewById(R.id.txt_cantidad);
 
         txt_referencia.setText(expandedListText.getSku());
-        txt_cantidad.setText(expandedListText.getCant_sku()+"");
+        txt_cantidad.setText(expandedListText.getCant_sku() + "");
 
 
         return convertView;
@@ -81,7 +81,7 @@ public class ExpandableListAdapterMisBajas extends BaseExpandableListAdapter {
     @Override
     public int getGroupCount() {
 
-        if (this.expandableListTitle == null){
+        if (this.expandableListTitle == null) {
             return 0;
         } else {
             return this.expandableListTitle.size();

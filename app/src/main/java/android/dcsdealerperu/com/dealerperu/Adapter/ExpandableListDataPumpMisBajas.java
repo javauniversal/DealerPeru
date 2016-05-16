@@ -16,7 +16,7 @@ public class ExpandableListDataPumpMisBajas {
         HashMap<String, List<MisBajasDetalle1>> expandableListDetail = new LinkedHashMap<>();
 
 
-        if(data != null) {
+        if (data != null) {
 
             for (int i = 0; i < data.size(); i++) {
 
@@ -30,7 +30,7 @@ public class ExpandableListDataPumpMisBajas {
                         technology.add(new MisBajasDetalle1(data.get(i).getMisBajasDetalle1List().get(a).getSku(), data.get(i).getMisBajasDetalle1List().get(a).getCant_sku()));
                     }
 
-                    expandableListDetail.put(data.get(i).getId_solicitud()+ " - "+data.get(i).getRazon()+" - "+data.get(i).getEstado()+" - "+data.get(i).getFecha(), technology);
+                    expandableListDetail.put(data.get(i).getId_solicitud() + " - " + data.get(i).getRazon() + " - " + data.get(i).getEstado() + " - " + data.get(i).getFecha(), technology);
 
 
                 }

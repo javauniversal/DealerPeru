@@ -62,7 +62,7 @@ public class ActBusquedaAvan extends AppCompatActivity {
     private int estado_circuito;
     private int estado_ruta;
     private int estado_comercial;
-    private  Bundle bundle;
+    private Bundle bundle;
 
     private EditText edit_nombre_punto;
     private EditText edit_nit_punto;
@@ -112,13 +112,13 @@ public class ActBusquedaAvan extends AppCompatActivity {
     private void buscarPuntoJSO() {
         alertDialog.show();
         consulta = "consultar_puntos_avanzados";
-        if(accion.equals("Repartidor"))
+        if (accion.equals("Repartidor"))
             consulta = "datos_entrega";
 
         String url = String.format("%1$s%2$s", getString(R.string.url_base), consulta);
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // response
@@ -178,7 +178,7 @@ public class ActBusquedaAvan extends AppCompatActivity {
 
         if (!response.equals("[]")) {
             try {
-                if(!accion.equals("Repartidor") ) {
+                if (!accion.equals("Repartidor")) {
                     ListHome responseHomeList = gson.fromJson(response, ListHome.class);
                     setResponseHomeListS(responseHomeList);
                     Bundle bundle = new Bundle();
@@ -186,7 +186,7 @@ public class ActBusquedaAvan extends AppCompatActivity {
                     bundle.putSerializable("value", responseHomeList);
                     intent.putExtras(bundle);
                     startActivity(intent);
-                }else if(accion.equals("Repartidor")){
+                } else if (accion.equals("Repartidor")) {
                     ListEntregarPedido responseEntregarPedido = gson.fromJson(response, ListEntregarPedido.class);
 
                     Bundle bundle = new Bundle();
@@ -210,7 +210,7 @@ public class ActBusquedaAvan extends AppCompatActivity {
     }
 
     private void validarFormt() {
-        if (isValidNumber(edit_nombre_punto.getText().toString()) && isValidNumber(edit_nit_punto.getText().toString()) && isValidNumber(edit_nombre_cliente.getText().toString()) && isValiSpinner()){
+        if (isValidNumber(edit_nombre_punto.getText().toString()) && isValidNumber(edit_nit_punto.getText().toString()) && isValidNumber(edit_nombre_cliente.getText().toString()) && isValiSpinner()) {
             Toast.makeText(this, "Ingrese al menos un parámetro", Toast.LENGTH_LONG).show();
         } else {
             buscarPuntoJSO();
@@ -226,14 +226,16 @@ public class ActBusquedaAvan extends AppCompatActivity {
 
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     private void setupGrid() {
         alertDialog.show();
-        String url = String.format("%1$s%2$s", getString(R.string.url_base),"cargar_filtros_puntos");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_filtros_puntos");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // response
@@ -241,7 +243,7 @@ public class ActBusquedaAvan extends AppCompatActivity {
 
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -312,7 +314,8 @@ public class ActBusquedaAvan extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -328,7 +331,8 @@ public class ActBusquedaAvan extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -346,7 +350,8 @@ public class ActBusquedaAvan extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -363,7 +368,8 @@ public class ActBusquedaAvan extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -381,7 +387,8 @@ public class ActBusquedaAvan extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -398,7 +405,8 @@ public class ActBusquedaAvan extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 

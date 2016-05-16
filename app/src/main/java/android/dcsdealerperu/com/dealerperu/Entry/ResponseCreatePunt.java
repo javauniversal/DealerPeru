@@ -15,7 +15,7 @@ public class ResponseCreatePunt implements Serializable {
     private List<Departamentos> departamentosList;
 
     @SerializedName("estados_com")
-    private List<CategoriasEstandar > estadoComunList;
+    private List<CategoriasEstandar> estadoComunList;
 
     @SerializedName("categorias")
     private List<CategoriasEstandar> categoriasList;

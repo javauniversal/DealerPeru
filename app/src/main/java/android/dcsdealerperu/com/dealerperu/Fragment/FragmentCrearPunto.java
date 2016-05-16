@@ -12,6 +12,7 @@ public class FragmentCrearPunto extends BaseVolleyFragment {
     private FragmentDatosPersonales fragmentDatosPersonales;
     private int editaPunto = 0;
     private String accion = "";
+
     public FragmentCrearPunto() {
     }
 
@@ -33,7 +34,7 @@ public class FragmentCrearPunto extends BaseVolleyFragment {
             accion = getArguments().getString("accion");
         }
 
-        FragmentManager  fManager = getFragmentManager();
+        FragmentManager fManager = getFragmentManager();
         fragmentDatosPersonales = new FragmentDatosPersonales();
         Bundle args = new Bundle();
         args.putInt("idpos", editaPunto);

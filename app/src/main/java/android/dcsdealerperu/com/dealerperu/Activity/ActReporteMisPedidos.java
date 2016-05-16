@@ -57,6 +57,7 @@ public class ActReporteMisPedidos extends AppCompatActivity {
     private RequestQueue rq;
 
     private SwipeMenuListView mListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +68,7 @@ public class ActReporteMisPedidos extends AppCompatActivity {
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         if (bundle != null) {
-            mDescribable = (MisPedidos)bundle.getSerializable("value");
+            mDescribable = (MisPedidos) bundle.getSerializable("value");
         }
         alertDialog = new SpotsDialog(this, R.style.Custom);
 
@@ -81,7 +82,7 @@ public class ActReporteMisPedidos extends AppCompatActivity {
                 // create "open" item
                 SwipeMenuItem openItem = new SwipeMenuItem(getApplicationContext());
                 // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(16, 98,138)));
+                openItem.setBackground(new ColorDrawable(Color.rgb(16, 98, 138)));
                 // set item width
                 openItem.setWidth(dp2px(90));
                 // set item title
@@ -124,7 +125,7 @@ public class ActReporteMisPedidos extends AppCompatActivity {
                         break;
                     case 1:
                         //Cancelar Pedido
-                        if(!mDescribable.getResponseMisPedidosList().get(position).getEstado().equals("Cancelado")) {
+                        if (!mDescribable.getResponseMisPedidosList().get(position).getEstado().equals("Cancelado")) {
                             LayoutInflater inflater = getLayoutInflater();
                             View dialoglayout = inflater.inflate(R.layout.dialog_comentario_aproba, null);
 
@@ -166,8 +167,8 @@ public class ActReporteMisPedidos extends AppCompatActivity {
                             });
 
                             builder2.show();
-                        }else{
-                            Toast.makeText(ActReporteMisPedidos.this,"Este pedido ya se encuentra en estado cancelado",Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(ActReporteMisPedidos.this, "Este pedido ya se encuentra en estado cancelado", Toast.LENGTH_LONG).show();
                         }
                         break;
                 }
@@ -198,17 +199,19 @@ public class ActReporteMisPedidos extends AppCompatActivity {
         });
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     private void cancelarPedido(int position) {
         alertDialog.show();
-        final int idpos =  mDescribable.getResponseMisPedidosList().get(position).getIdpos();
-        final int idpedido =  mDescribable.getResponseMisPedidosList().get(position).getNpedido();
+        final int idpos = mDescribable.getResponseMisPedidosList().get(position).getIdpos();
+        final int idpedido = mDescribable.getResponseMisPedidosList().get(position).getNpedido();
 
-        String url = String.format("%1$s%2$s", getString(R.string.url_base),"cancelar_toma_pedido");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "cancelar_toma_pedido");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // response
@@ -216,7 +219,7 @@ public class ActReporteMisPedidos extends AppCompatActivity {
 
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error

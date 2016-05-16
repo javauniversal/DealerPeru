@@ -59,7 +59,6 @@ public class ResponseHome implements Serializable {
     private int tipo_visita;
 
 
-
     @SerializedName("rutero")
     private int rutero;
 

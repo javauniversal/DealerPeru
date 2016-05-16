@@ -92,19 +92,21 @@ public class FragmenEntregarPedido extends BaseVolleyFragment implements View.On
         }
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     private void buscarIdPos(final EditText buscar) {
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "datos_entrega");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSONEntrega(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -127,7 +129,7 @@ public class FragmenEntregarPedido extends BaseVolleyFragment implements View.On
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -164,9 +166,9 @@ public class FragmenEntregarPedido extends BaseVolleyFragment implements View.On
             } finally {
                 alertDialog.dismiss();
             }
-        }else{
+        } else {
             alertDialog.dismiss();
-            Toast.makeText(getContext(),"No se encontraron datos para mostrar",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No se encontraron datos para mostrar", Toast.LENGTH_SHORT).show();
         }
     }
 

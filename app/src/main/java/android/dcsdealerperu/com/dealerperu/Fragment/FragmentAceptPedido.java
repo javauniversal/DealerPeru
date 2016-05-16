@@ -3,6 +3,7 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 import android.dcsdealerperu.com.dealerperu.Adapter.AdapterAceptPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.AceptarComprobante;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,8 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -43,7 +42,8 @@ public class FragmentAceptPedido extends BaseVolleyFragment {
     private AdapterAceptPedido adapterAceptPedido;
     private AceptarComprobante aceptarComprobante;
 
-    public FragmentAceptPedido() { }
+    public FragmentAceptPedido() {
+    }
 
 
     @Override
@@ -70,9 +70,9 @@ public class FragmentAceptPedido extends BaseVolleyFragment {
             public boolean onMenuItemClick(MenuItem item) {
 
                 //Guardar Aceptacion de pedidos validaciones
-                for (int i = 0; i < aceptarComprobante.getAceptarPedidoList().size(); i++ ) {
+                for (int i = 0; i < aceptarComprobante.getAceptarPedidoList().size(); i++) {
                     if (aceptarComprobante.getAceptarPedidoList().get(i).marcaProducto.equals("")) {
-                        Toast.makeText(getActivity(), "Es necesario que RECHACE o ACEPTE el pedido #"+aceptarComprobante.getAceptarPedidoList().get(i).getNroPedido(), Toast.LENGTH_LONG ).show();
+                        Toast.makeText(getActivity(), "Es necesario que RECHACE o ACEPTE el pedido #" + aceptarComprobante.getAceptarPedidoList().get(i).getNroPedido(), Toast.LENGTH_LONG).show();
 
                         return true;
 
@@ -94,13 +94,13 @@ public class FragmentAceptPedido extends BaseVolleyFragment {
 
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "aceptar_pedido");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSONSetPedido(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -125,7 +125,7 @@ public class FragmentAceptPedido extends BaseVolleyFragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
 
@@ -195,13 +195,13 @@ public class FragmentAceptPedido extends BaseVolleyFragment {
 
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "datos_aceptar");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSONPedido(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -226,7 +226,7 @@ public class FragmentAceptPedido extends BaseVolleyFragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -245,7 +245,7 @@ public class FragmentAceptPedido extends BaseVolleyFragment {
 
     private void parseJSONPedido(String response) {
 
-          Gson gson = new Gson();
+        Gson gson = new Gson();
         if (!response.equals("[]")) {
             try {
 

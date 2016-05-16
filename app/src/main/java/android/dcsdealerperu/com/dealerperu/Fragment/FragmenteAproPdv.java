@@ -6,16 +6,12 @@ import android.dcsdealerperu.com.dealerperu.Activity.ActDetalleAproPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.ListAprobarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.ListCategoria;
-import android.dcsdealerperu.com.dealerperu.Entry.ResponseMisBajas;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.test.SingleLaunchActivityTestCase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -139,19 +135,21 @@ public class FragmenteAproPdv extends BaseVolleyFragment implements DatePickerDi
 
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     private void consltarPuntos() {
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_peticiones_aprobacion");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         responseAprobacion(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -174,7 +172,7 @@ public class FragmenteAproPdv extends BaseVolleyFragment implements DatePickerDi
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -215,9 +213,9 @@ public class FragmenteAproPdv extends BaseVolleyFragment implements DatePickerDi
             } finally {
                 alertDialog.dismiss();
             }
-        }else{
+        } else {
             alertDialog.dismiss();
-            Toast.makeText(getContext(),"No se encontraron datos para mostrar",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No se encontraron datos para mostrar", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -235,13 +233,13 @@ public class FragmenteAproPdv extends BaseVolleyFragment implements DatePickerDi
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_vendedores_aprobacion");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         mostrarReporte(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -264,7 +262,7 @@ public class FragmenteAproPdv extends BaseVolleyFragment implements DatePickerDi
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -286,7 +284,7 @@ public class FragmenteAproPdv extends BaseVolleyFragment implements DatePickerDi
             try {
 
                 final ListCategoria listCategoria = gson.fromJson(response, ListCategoria.class);
-                ArrayAdapter<CategoriasEstandar> adapterEstado = new ArrayAdapter<>(getActivity(),R.layout.textview_spinner,listCategoria);
+                ArrayAdapter<CategoriasEstandar> adapterEstado = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, listCategoria);
                 spinner_vendedor.setAdapter(adapterEstado);
                 spinner_vendedor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -295,7 +293,8 @@ public class FragmenteAproPdv extends BaseVolleyFragment implements DatePickerDi
                     }
 
                     @Override
-                    public void onNothingSelected(AdapterView<?> parent) { }
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
 
                 });
 
@@ -305,20 +304,20 @@ public class FragmenteAproPdv extends BaseVolleyFragment implements DatePickerDi
             } finally {
                 alertDialog.dismiss();
             }
-        }else{
+        } else {
             alertDialog.dismiss();
-            Toast.makeText(getContext(),"No se encontraron datos para mostrar",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No se encontraron datos para mostrar", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void loadSolicitud() {
 
         final List<CategoriasEstandar> listaEstados = new ArrayList<>();
-        listaEstados.add(new CategoriasEstandar(0,"Seleccionar"));
-        listaEstados.add(new CategoriasEstandar(1,"Creación"));
-        listaEstados.add(new CategoriasEstandar(2,"Modificación"));
+        listaEstados.add(new CategoriasEstandar(0, "Seleccionar"));
+        listaEstados.add(new CategoriasEstandar(1, "Creación"));
+        listaEstados.add(new CategoriasEstandar(2, "Modificación"));
 
-        ArrayAdapter<CategoriasEstandar> adapterEstado = new ArrayAdapter<>(getActivity(),R.layout.textview_spinner,listaEstados);
+        ArrayAdapter<CategoriasEstandar> adapterEstado = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, listaEstados);
         spinner_solicitud.setAdapter(adapterEstado);
         spinner_solicitud.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -327,7 +326,8 @@ public class FragmenteAproPdv extends BaseVolleyFragment implements DatePickerDi
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 
@@ -336,18 +336,18 @@ public class FragmenteAproPdv extends BaseVolleyFragment implements DatePickerDi
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd) {
 
-        monthOfYear = (monthOfYear+1);
+        monthOfYear = (monthOfYear + 1);
 
         if (fecha_idicador) {
-            edit_fecha_inicial.setText(year+"/"+monthOfYear+"/"+dayOfMonth);
+            edit_fecha_inicial.setText(year + "/" + monthOfYear + "/" + dayOfMonth);
             dia_inicial = converFecha(year, monthOfYear, dayOfMonth);
         } else {
-            edit_fecha_final.setText(year+"/"+monthOfYear+"/"+dayOfMonth);
+            edit_fecha_final.setText(year + "/" + monthOfYear + "/" + dayOfMonth);
             dia_final = converFecha(year, monthOfYear, dayOfMonth);
         }
     }
 
-    public Date converFecha(int year, int mes, int dia){
+    public Date converFecha(int year, int mes, int dia) {
 
         Calendar calendar = new GregorianCalendar(year, mes, dia);
         Date fecha = new Date(calendar.getTimeInMillis());

@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -122,6 +121,7 @@ public class AdapterRecyclerCombos extends RecyclerView.Adapter<RowViewHolderCom
                 //Completado
                 //holder.progressBar.setVisibility(View.GONE);
             }
+
             @Override
             public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
                 // TODO Auto-generated method stub

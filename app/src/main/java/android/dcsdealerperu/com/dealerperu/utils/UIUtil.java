@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 public class UIUtil {
 
-    public static int getRevealDirection(RelativeLayout rl, int flag){
+    public static int getRevealDirection(RelativeLayout rl, int flag) {
         int result = 0;
-        switch (flag){
+        switch (flag) {
             case Flags.REVEAL_BOTTOM:
                 result = rl.getBottom();
                 break;

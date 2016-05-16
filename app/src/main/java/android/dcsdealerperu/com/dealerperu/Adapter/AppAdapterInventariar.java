@@ -18,9 +18,9 @@ public class AppAdapterInventariar extends BaseAdapter {
 
     private Activity actx;
     List<InventariarProducto> data;
-    private  boolean check;
+    private boolean check;
 
-    public AppAdapterInventariar(Activity actx, List<InventariarProducto> data, boolean check){
+    public AppAdapterInventariar(Activity actx, List<InventariarProducto> data, boolean check) {
         this.actx = actx;
         this.data = data;
         this.check = check;
@@ -59,7 +59,7 @@ public class AppAdapterInventariar extends BaseAdapter {
 
         holder.serie.setText("Producto: " + invePro.getProducto());
         holder.fecha.setText("Serie: " + invePro.getSerie());
-        if(check) {
+        if (check) {
             holder.checkBox.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(SmoothCheckBox checkBox, boolean isChecked) {
@@ -67,7 +67,7 @@ public class AppAdapterInventariar extends BaseAdapter {
                 }
             });
             holder.checkBox.setChecked(data.get(position).isCheck);
-        }else{
+        } else {
             holder.checkBox.setVisibility(View.INVISIBLE);
         }
         return convertView;

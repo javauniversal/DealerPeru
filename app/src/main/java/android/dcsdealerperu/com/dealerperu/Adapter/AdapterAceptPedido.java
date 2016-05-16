@@ -29,7 +29,7 @@ public class AdapterAceptPedido extends BaseAdapter {
     private Format format;
     protected DialogRechazar dialog;
 
-    public AdapterAceptPedido(Activity actx, List<AceptarPedido> data){
+    public AdapterAceptPedido(Activity actx, List<AceptarPedido> data) {
         this.actx = actx;
         this.data = data;
         format = new DecimalFormat("#,###.##");
@@ -64,12 +64,12 @@ public class AdapterAceptPedido extends BaseAdapter {
 
         final AceptarPedido referencias = getItem(position);
 
-        holder.txtNumeroComprobante.setText(String.format("Número de Pedido: %1$s",referencias.getNroPedido()));
+        holder.txtNumeroComprobante.setText(String.format("Número de Pedido: %1$s", referencias.getNroPedido()));
         //holder.txtNumero_pedido.setText(String.format("%1$s",referencias.getNroPedido()));
-        holder.txtCantidadPedida.setText(String.format("%1$s",referencias.getCant_pedido_p()));
+        holder.txtCantidadPedida.setText(String.format("%1$s", referencias.getCant_pedido_p()));
         holder.txtTotalPedido.setText(String.format("S/. %1$s", format.format(referencias.getTotal_pedido_p())));
-        holder.txt_idpos.setText(String.format("%1$s",referencias.getIdpos()));
-        holder.txtFechaEstimada.setText(String.format("%1$s",referencias.getFecha_entrega()));
+        holder.txt_idpos.setText(String.format("%1$s", referencias.getIdpos()));
+        holder.txtFechaEstimada.setText(String.format("%1$s", referencias.getFecha_entrega()));
 
         holder.txtDetalleLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,7 +133,9 @@ public class AdapterAceptPedido extends BaseAdapter {
         return convertView;
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     private void DialogDetalle(final int position, final AceptarPedido referencias) {
 

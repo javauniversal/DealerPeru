@@ -3,19 +3,16 @@ package android.dcsdealerperu.com.dealerperu.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Adapter.AdapterCarrito;
-import android.dcsdealerperu.com.dealerperu.Adapter.AppAdapterRutero;
 import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
-import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ListResponsePedido;
-import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasCombos;
 import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasSims;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +20,6 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
@@ -52,7 +48,6 @@ import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
 
-import static android.dcsdealerperu.com.dealerperu.Entry.ResponseHome.getResponseHomeListS;
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
 public class ActCarritoPedido extends AppCompatActivity {
@@ -97,7 +92,7 @@ public class ActCarritoPedido extends AppCompatActivity {
                 // create "open" item
                 SwipeMenuItem openItem = new SwipeMenuItem(getApplicationContext());
                 // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(16, 98,138)));
+                openItem.setBackground(new ColorDrawable(Color.rgb(16, 98, 138)));
                 // set item width
                 openItem.setWidth(dp2px(90));
                 // set item title
@@ -150,7 +145,7 @@ public class ActCarritoPedido extends AppCompatActivity {
 
         llenarDataCarrito(id_punto, id_usuario);
 
-        FloatingActionButton myFab = (FloatingActionButton)  findViewById(R.id.btn_guardar_pedido);
+        FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.btn_guardar_pedido);
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 savePedido();
@@ -241,10 +236,10 @@ public class ActCarritoPedido extends AppCompatActivity {
 
     private void loginServices() {
         alertDialog.show();
-        String url = String.format("%1$s%2$s", getString(R.string.url_base),"guardar_pedido");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "guardar_pedido");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // response
@@ -252,7 +247,7 @@ public class ActCarritoPedido extends AppCompatActivity {
 
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -321,7 +316,7 @@ public class ActCarritoPedido extends AppCompatActivity {
                     //Una de las referencia no cuenta con precio
                     Toast.makeText(this, responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
                 } else if (responseMarcarPedido.getEstado() == -4) {
-                   //Error al intentar guardar el detalle del pedido
+                    //Error al intentar guardar el detalle del pedido
                     Toast.makeText(this, responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
                 } else if (responseMarcarPedido.getEstado() == -5) {
                     //Error al intentar guardar el encabezado

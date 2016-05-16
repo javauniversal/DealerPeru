@@ -15,11 +15,12 @@ public class AdapterMisPedidos extends BaseAdapter {
     private Activity actx;
     List<ResponseMisPedidos> data;
 
-    public AdapterMisPedidos(Activity actx, List<ResponseMisPedidos> data){
+    public AdapterMisPedidos(Activity actx, List<ResponseMisPedidos> data) {
         this.actx = actx;
         this.data = data;
 
     }
+
     @Override
     public int getCount() {
         if (data == null) {
@@ -48,7 +49,7 @@ public class AdapterMisPedidos extends BaseAdapter {
 
         ViewHolder holder = (ViewHolder) convertView.getTag();
 
-        ResponseMisPedidos resMis =  getItem(position);
+        ResponseMisPedidos resMis = getItem(position);
 
         holder.fecha.setText(resMis.getFecha());
         holder.estado.setText(resMis.getEstado());
@@ -67,7 +68,6 @@ public class AdapterMisPedidos extends BaseAdapter {
             fecha = (TextView) view.findViewById(R.id.fecha);
             estado = (TextView) view.findViewById(R.id.estado);
             nombre_punto = (TextView) view.findViewById(R.id.n_punto);
-
 
 
             view.setTag(this);

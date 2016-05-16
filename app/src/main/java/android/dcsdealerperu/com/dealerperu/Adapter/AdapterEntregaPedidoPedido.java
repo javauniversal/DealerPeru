@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.dcsdealerperu.com.dealerperu.Activity.ActEntregarPedido;
-import android.dcsdealerperu.com.dealerperu.Activity.ActLoginUser;
 import android.dcsdealerperu.com.dealerperu.Activity.ActMainPeru;
 import android.dcsdealerperu.com.dealerperu.Entry.PedidosEntrega;
-import android.dcsdealerperu.com.dealerperu.Entry.ResponseEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
@@ -58,7 +55,7 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
     private String comentario;
     private GpsServices gpsServices;
 
-    public AdapterEntregaPedidoPedido(Activity actx, List<PedidosEntrega> data){
+    public AdapterEntregaPedidoPedido(Activity actx, List<PedidosEntrega> data) {
         this.actx = actx;
         this.data = data;
         format = new DecimalFormat("#,###.##");
@@ -98,16 +95,16 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
 
         final PedidosEntrega referencias = getItem(position);
 
-        holder.txt_idpos.setText(String.format("Pedido Número: %1$s",referencias.getNroPedido()));
-        holder.txtVendedor.setText(String.format("%1$s",referencias.getNombre_usu()));
-        holder.txtFeEntrega.setText(String.format("%1$s",referencias.getFecha_entrega()));
-        holder.txtSolFec.setText(String.format("%1$s",referencias.getFecha_pedido()));
-        holder.txtArtDes.setText(String.format("%1$s",referencias.getCant_pedido()));
+        holder.txt_idpos.setText(String.format("Pedido Número: %1$s", referencias.getNroPedido()));
+        holder.txtVendedor.setText(String.format("%1$s", referencias.getNombre_usu()));
+        holder.txtFeEntrega.setText(String.format("%1$s", referencias.getFecha_entrega()));
+        holder.txtSolFec.setText(String.format("%1$s", referencias.getFecha_pedido()));
+        holder.txtArtDes.setText(String.format("%1$s", referencias.getCant_pedido()));
         holder.txtImpuesto.setText(String.format("%1$s", referencias.getIgv()));
         holder.txtSubTotal.setText(String.format("S/. %1$s", format.format(referencias.getSub_total())));
-        holder.txtImpuestoTotal.setText(String.format("S/. %1$s",format.format(referencias.getTotal_impueto_igv())));
+        holder.txtImpuestoTotal.setText(String.format("S/. %1$s", format.format(referencias.getTotal_impueto_igv())));
         holder.txtTotalPedido.setText(String.format("S/. %1$s", format.format(referencias.getTotal_pedido_p())));
-        holder.txtArtSol.setText(String.format("%1$s",referencias.getCant_pedido_p()));
+        holder.txtArtSol.setText(String.format("%1$s", referencias.getCant_pedido_p()));
 
 
         holder.btnDevolver.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +118,7 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
 
                 AlertDialog.Builder builder2 = new AlertDialog.Builder(actx);
                 builder2.setCancelable(false);
-                builder2.setTitle("Notivo de devolución # "+referencias.getNroPedido());
+                builder2.setTitle("Notivo de devolución # " + referencias.getNroPedido());
                 builder2.setView(dialoglayout).setPositiveButton("Devolver", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
@@ -151,7 +148,7 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
                 android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(actx);
                 builder.setCancelable(false);
                 builder.setTitle("Alerta");
-                builder.setMessage("¿ Estas seguro de entregar el pedido # "+referencias.getNroPedido()+" ?");
+                builder.setMessage("¿ Estas seguro de entregar el pedido # " + referencias.getNroPedido() + " ?");
                 builder.setPositiveButton("Entregar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         setEntregarPedido(referencias.getNroPedido(), referencias.getIdpos(), position);
@@ -165,7 +162,6 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
                 builder.show();
 
 
-
             }
         });
 
@@ -174,7 +170,7 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
 
     private void setEntregarPedido(final int nroPedido, final int idpos, final int position) {
         alertDialog.show();
-        String url = String.format("%1$s%2$s", actx.getString(R.string.url_base),"entregar_pedido");
+        String url = String.format("%1$s%2$s", actx.getString(R.string.url_base), "entregar_pedido");
         rq = Volley.newRequestQueue(actx);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -184,7 +180,7 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
                         parseJSONEntregar(response, position);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -247,7 +243,7 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
                     data.remove(position);
                     notifyDataSetChanged();
 
-                    if(data == null || data.size() == 0) {
+                    if (data == null || data.size() == 0) {
                         //Activity Principal, Para acceder al fragment
                         Bundle bundle = new Bundle();
                         Intent intent = new Intent(actx, ActMainPeru.class);
@@ -268,7 +264,9 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
         }
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     class ViewHolder {
 
@@ -304,9 +302,9 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
         }
     }
 
-    private void setDevolver(final int nroPedido, final String comentario, final int idpos, final int idposition){
+    private void setDevolver(final int nroPedido, final String comentario, final int idpos, final int idposition) {
         alertDialog.show();
-        String url = String.format("%1$s%2$s", actx.getString(R.string.url_base),"devolver_pedido");
+        String url = String.format("%1$s%2$s", actx.getString(R.string.url_base), "devolver_pedido");
         rq = Volley.newRequestQueue(actx);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -316,7 +314,7 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
                         parseJSON(response, idposition);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -381,7 +379,7 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
                     data.remove(idposition);
                     notifyDataSetChanged();
 
-                    if(data == null || data.size() == 0) {
+                    if (data == null || data.size() == 0) {
                         //Activity Principal, Para acceder al fragment
                         Bundle bundle = new Bundle();
                         Intent intent = new Intent(actx, ActMainPeru.class);

@@ -55,7 +55,7 @@ abstract public class AwesomeSplash extends AppCompatActivity {
 
         mydb = new DBHelper(this);
 
-        if (mydb.getIntro()){
+        if (mydb.getIntro()) {
             startActivity(new Intent(this, ActLoginUser.class));
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             finish();

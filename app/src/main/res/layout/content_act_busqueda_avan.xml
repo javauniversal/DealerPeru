@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -215,6 +214,7 @@
                     android:textSize="10sp"
                     android:textColor="@color/colorAccent"
                     android:text="Provincia" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -266,6 +266,7 @@
                     android:textSize="10sp"
                     android:textColor="@color/colorAccent"
                     android:text="Distrito" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -316,6 +317,7 @@
                     android:textSize="10sp"
                     android:textColor="@color/colorAccent"
                     android:text="Circuito" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -365,6 +367,7 @@
                     android:textSize="10sp"
                     android:textColor="@color/colorAccent"
                     android:text="Ruta" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -414,6 +417,7 @@
                     android:textSize="10sp"
                     android:textColor="@color/colorAccent"
                     android:text="Estado Comercial" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

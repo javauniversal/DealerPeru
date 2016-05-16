@@ -13,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -69,7 +68,7 @@ public class ActResponAvanBusqueda extends AppCompatActivity {
                 // create "open" item
                 SwipeMenuItem openItem = new SwipeMenuItem(getApplicationContext());
                 // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(16, 98,138)));
+                openItem.setBackground(new ColorDrawable(Color.rgb(16, 98, 138)));
                 // set item width
                 openItem.setWidth(dp2px(90));
                 // set item title
@@ -130,10 +129,10 @@ public class ActResponAvanBusqueda extends AppCompatActivity {
 
     public void buscarIdPos(final int idPos) {
 
-        String url = String.format("%1$s%2$s", getString(R.string.url_base),"buscar_punto_visita");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "buscar_punto_visita");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // response

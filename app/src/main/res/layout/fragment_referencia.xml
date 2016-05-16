@@ -263,7 +263,7 @@
                             android:id="@+id/edit_codigo_cum"
                             android:hint="Código CUM"
                             android:textSize="@dimen/dimen_letra_app_estandar"
-                            android:inputType="number"/>
+                            android:inputType="number" />
 
                     </android.support.design.widget.TextInputLayout>
 

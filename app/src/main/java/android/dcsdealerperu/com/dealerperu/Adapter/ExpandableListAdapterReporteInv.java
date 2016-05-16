@@ -47,7 +47,7 @@ public class ExpandableListAdapterReporteInv extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(final int listPosition, final int expandedListPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        if(tipoinve == 2) // agrupar Primero por referencia.!
+        if (tipoinve == 2) // agrupar Primero por referencia.!
         {
             final MisBajasDetalle2 expandedListText = (MisBajasDetalle2) getChild(listPosition, expandedListPosition);
 
@@ -60,10 +60,9 @@ public class ExpandableListAdapterReporteInv extends BaseExpandableListAdapter {
             TextView txt_cantidad = (TextView) convertView.findViewById(R.id.txt_cantidad);
 
 
-                txt_referencia.setText(expandedListText.getSerie());
-                txt_cantidad.setText("");
+            txt_referencia.setText(expandedListText.getSerie());
+            txt_cantidad.setText("");
         }
-
 
 
         return convertView;
@@ -89,7 +88,7 @@ public class ExpandableListAdapterReporteInv extends BaseExpandableListAdapter {
     @Override
     public int getGroupCount() {
 
-        if (this.expandableListTitle == null){
+        if (this.expandableListTitle == null) {
             return 0;
         } else {
             return this.expandableListTitle.size();

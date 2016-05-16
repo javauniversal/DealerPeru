@@ -5,4 +5,4 @@
     android:textSize="@dimen/dimen_letra_app_estandar"
     android:padding="8dp"
     android:textAllCaps="true"
-    android:layout_height="wrap_content"/>
+    android:layout_height="wrap_content" />

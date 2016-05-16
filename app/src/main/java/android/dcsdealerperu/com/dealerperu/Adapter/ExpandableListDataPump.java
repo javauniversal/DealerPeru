@@ -15,7 +15,7 @@ public class ExpandableListDataPump {
 
         HashMap<String, List<Detalle>> expandableListDetail = new LinkedHashMap<>();
 
-        if(data != null) {
+        if (data != null) {
 
             for (int i = 0; i < data.size(); i++) {
 
@@ -29,7 +29,7 @@ public class ExpandableListDataPump {
                         technology.add(new Detalle(data.get(i).getDetalles().get(a).getNombre_usuario(), data.get(i).getDetalles().get(a).getHora(), data.get(i).getDetalles().get(a).getPn(), data.get(i).getDetalles().get(a).getCantidad(), data.get(i).getDetalles().get(a).getTotal()));
                     }
 
-                    expandableListDetail.put(data.get(i).getId()+" - "+data.get(i).getEstado()+" - "+data.get(i).getFecha(), technology);
+                    expandableListDetail.put(data.get(i).getId() + " - " + data.get(i).getEstado() + " - " + data.get(i).getFecha(), technology);
                 }
             }
         }

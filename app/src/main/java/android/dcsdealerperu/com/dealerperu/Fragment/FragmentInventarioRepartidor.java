@@ -64,15 +64,15 @@ public class FragmentInventarioRepartidor extends BaseVolleyFragment {
                 ConsultaInforme();
             }
         });
-        return  view;
+        return view;
     }
 
     private void loadSpinner() {
         final List<CategoriasEstandar> ListaEstados = new ArrayList<>();
-        ListaEstados.add(new CategoriasEstandar(1,"Pedido"));
-        ListaEstados.add(new CategoriasEstandar(2,"Referencia"));
+        ListaEstados.add(new CategoriasEstandar(1, "Pedido"));
+        ListaEstados.add(new CategoriasEstandar(2, "Referencia"));
 
-        ArrayAdapter<CategoriasEstandar> adapterEstados = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner,ListaEstados);
+        ArrayAdapter<CategoriasEstandar> adapterEstados = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, ListaEstados);
         spinner_agrupa.setAdapter(adapterEstados);
         spinner_agrupa.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -81,7 +81,8 @@ public class FragmentInventarioRepartidor extends BaseVolleyFragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -90,13 +91,13 @@ public class FragmentInventarioRepartidor extends BaseVolleyFragment {
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "informe_inventario_repartidor");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         CargarInform(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -119,7 +120,7 @@ public class FragmentInventarioRepartidor extends BaseVolleyFragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -141,12 +142,12 @@ public class FragmentInventarioRepartidor extends BaseVolleyFragment {
 
         if (!response.equals("[]")) {
             try {
-                ListResponseInventario listResponseInventario = gson.fromJson(response,ListResponseInventario.class);
+                ListResponseInventario listResponseInventario = gson.fromJson(response, ListResponseInventario.class);
 
                 Bundle bundle = new Bundle();
                 Intent intent = new Intent(getActivity(), ActReporteInventarioRep.class);
                 bundle.putSerializable("value", listResponseInventario);
-                bundle.putInt("tipo",agrupa);
+                bundle.putInt("tipo", agrupa);
                 intent.putExtras(bundle);
                 startActivity(intent);
 
@@ -156,9 +157,9 @@ public class FragmentInventarioRepartidor extends BaseVolleyFragment {
             } finally {
                 alertDialog.dismiss();
             }
-        }else{
+        } else {
             alertDialog.dismiss();
-            Toast.makeText(getContext(),"No se encontraron datos para mostrar",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No se encontraron datos para mostrar", Toast.LENGTH_SHORT).show();
         }
     }
 

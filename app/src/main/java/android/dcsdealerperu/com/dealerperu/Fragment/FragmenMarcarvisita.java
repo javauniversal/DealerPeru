@@ -1,28 +1,17 @@
 package android.dcsdealerperu.com.dealerperu.Fragment;
 
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Activity.ActBusquedaAvan;
 import android.dcsdealerperu.com.dealerperu.Activity.ActMarcarVisita;
-import android.dcsdealerperu.com.dealerperu.Activity.ActNoVenta;
-import android.dcsdealerperu.com.dealerperu.Adapter.ExpandableListAdapter;
-import android.dcsdealerperu.com.dealerperu.Adapter.ExpandableListDataPump;
-import android.dcsdealerperu.com.dealerperu.Entry.Detalle;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -37,9 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
@@ -68,7 +55,9 @@ public class FragmenMarcarvisita extends BaseVolleyFragment {
         // Required empty public constructor
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -117,13 +106,13 @@ public class FragmenMarcarvisita extends BaseVolleyFragment {
 
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "buscar_punto_visita");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSONVisita(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -146,7 +135,7 @@ public class FragmenMarcarvisita extends BaseVolleyFragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));

@@ -3,7 +3,7 @@ package android.dcsdealerperu.com.dealerperu.Entry;
 
 import com.google.gson.annotations.SerializedName;
 
-public class GuardarEditarPunto{
+public class GuardarEditarPunto {
 
     @SerializedName("nombre_punto")
     private String nombre_punto;

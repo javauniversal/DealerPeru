@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 
-public class MisBajasDetalle1 implements Serializable{
+public class MisBajasDetalle1 implements Serializable {
 
     @SerializedName("sku")
     private String sku;

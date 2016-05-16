@@ -48,10 +48,10 @@ import dmax.dialog.SpotsDialog;
 
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
-public class ActInventariar extends AppCompatActivity{
+public class ActInventariar extends AppCompatActivity {
 
     private Bundle bundle;
-    private  ResponseMarcarPedido thumbs = new ResponseMarcarPedido();
+    private ResponseMarcarPedido thumbs = new ResponseMarcarPedido();
     private int tipo_busqueda;
     private TextView text_idpos;
     private TextView text_razon;
@@ -83,7 +83,7 @@ public class ActInventariar extends AppCompatActivity{
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         if (bundle != null) {
-            thumbs = (ResponseMarcarPedido)bundle.getSerializable("value");
+            thumbs = (ResponseMarcarPedido) bundle.getSerializable("value");
         }
 
         LayoutInflater inflater = getLayoutInflater();
@@ -153,7 +153,8 @@ public class ActInventariar extends AppCompatActivity{
 
             builder2.show();
             return true;
-        }if(id == R.id.act_guardar) {
+        }
+        if (id == R.id.act_guardar) {
 
             LayoutInflater inflater = getLayoutInflater();
             View dialoglayout = inflater.inflate(R.layout.dialog_bajas_inventariar, null);
@@ -163,14 +164,13 @@ public class ActInventariar extends AppCompatActivity{
             datosN = new ListInventariarProducto();
 
             int cantidad = datosBajas.size();
-            for (int a = 0; a < cantidad;a++){
-                if(!datosBajas.get(a).isCheck){
+            for (int a = 0; a < cantidad; a++) {
+                if (!datosBajas.get(a).isCheck) {
                     datosN.add(datosBajas.get(a));
                 }
             }
 
-            if(datosN.size() > 0)
-            {
+            if (datosN.size() > 0) {
                 mListViewBajas = (ListView) dialoglayout.findViewById(R.id.listView);
                 actDetalleProductos = new AppAdapterInventariar(this, datosN, false);
                 mListViewBajas.setAdapter(actDetalleProductos);
@@ -190,9 +190,8 @@ public class ActInventariar extends AppCompatActivity{
                 });
 
                 builderBajas.show();
-            }
-            else {
-                Toast.makeText(this,"No hay productos para dar de baja",Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "No hay productos para dar de baja", Toast.LENGTH_LONG).show();
             }
 
         }
@@ -201,16 +200,16 @@ public class ActInventariar extends AppCompatActivity{
 
     private void darBajaProductos() {
         alertDialog.show();
-        String url = String.format("%1$s%2$s", getString(R.string.url_base),"baja_manual");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "baja_manual");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         respuestaGuardar(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -260,16 +259,16 @@ public class ActInventariar extends AppCompatActivity{
                 if (responseMarcarPedido.getEstado() == -1) {
                     //Error
                     Toast.makeText(this, responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
-                } else if(responseMarcarPedido.getEstado() == 0){
+                } else if (responseMarcarPedido.getEstado() == 0) {
                     // ok
-                    Toast.makeText(this, responseMarcarPedido.getMsg() , Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
                     //Activity Detalle
                     Bundle bundle = new Bundle();
                     Intent intent = new Intent(this, ActMarcarVisita.class);
                     bundle.putSerializable("value", thumbs);
                     intent.putExtras(bundle);
                     startActivity(intent);
-                }else {
+                } else {
                     Toast.makeText(this, "Error desconocido", Toast.LENGTH_LONG).show();
                 }
 
@@ -286,7 +285,7 @@ public class ActInventariar extends AppCompatActivity{
 
     public static List<InventariarProducto> cloneList(List<InventariarProducto> list) {
         List<InventariarProducto> clone = new ArrayList<InventariarProducto>(list.size());
-        for(InventariarProducto item: list)
+        for (InventariarProducto item : list)
             try {
                 clone.add((InventariarProducto) item.clone());
             } catch (CloneNotSupportedException e) {
@@ -295,12 +294,11 @@ public class ActInventariar extends AppCompatActivity{
         return clone;
     }
 
-    private void  loadTipo()
-    {
+    private void loadTipo() {
         final List<CategoriasEstandar> listTipo = new ArrayList<>();
-        listTipo.add(new CategoriasEstandar(1,"SIMCARDS"));
-        listTipo.add(new CategoriasEstandar(2,"COMBOS"));
-        ArrayAdapter<CategoriasEstandar> adapterTipo = new ArrayAdapter<>(this,R.layout.textview_spinner,listTipo);
+        listTipo.add(new CategoriasEstandar(1, "SIMCARDS"));
+        listTipo.add(new CategoriasEstandar(2, "COMBOS"));
+        ArrayAdapter<CategoriasEstandar> adapterTipo = new ArrayAdapter<>(this, R.layout.textview_spinner, listTipo);
         spinner_tipo.setAdapter(adapterTipo);
         spinner_tipo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -309,7 +307,8 @@ public class ActInventariar extends AppCompatActivity{
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 
@@ -319,10 +318,10 @@ public class ActInventariar extends AppCompatActivity{
 
         alertDialog.show();
 
-        String url = String.format("%1$s%2$s", getString(R.string.url_base),"listar_productos_bajas");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "listar_productos_bajas");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // response
@@ -330,7 +329,7 @@ public class ActInventariar extends AppCompatActivity{
 
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -372,8 +371,8 @@ public class ActInventariar extends AppCompatActivity{
         if (!response.equals("[]")) {
             try {
 
-                 inventariarProductos = gson.fromJson(response, ListInventariarProducto.class);
-                 mostrarProductos();
+                inventariarProductos = gson.fromJson(response, ListInventariarProducto.class);
+                mostrarProductos();
 
             } catch (IllegalStateException ex) {
                 ex.printStackTrace();
@@ -394,9 +393,9 @@ public class ActInventariar extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 InventariarProducto inve = (InventariarProducto) parent.getAdapter().getItem(position);
-                inve.isCheck =! inve.isCheck;
+                inve.isCheck = !inve.isCheck;
                 SmoothCheckBox chk = (SmoothCheckBox) view.findViewById(R.id.checkBox);
-                chk.setChecked(inve.isCheck,true);
+                chk.setChecked(inve.isCheck, true);
 
             }
 
@@ -405,11 +404,12 @@ public class ActInventariar extends AppCompatActivity{
     }
 
     private void GuardarBajas() {
-        for (int i = 0; i < inventariarProductos.size(); i++)
-        {
-            Log.d("ss",String.valueOf(inventariarProductos.get(i).isCheck));
+        for (int i = 0; i < inventariarProductos.size(); i++) {
+            Log.d("ss", String.valueOf(inventariarProductos.get(i).isCheck));
         }
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 }

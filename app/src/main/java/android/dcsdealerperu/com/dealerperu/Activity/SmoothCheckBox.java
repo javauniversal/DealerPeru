@@ -4,10 +4,10 @@ import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-
 import android.graphics.Path;
 import android.graphics.Point;
 import android.os.Build;
@@ -17,8 +17,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Checkable;
-
-import android.dcsdealerperu.com.dealerperu.R;
 /*
  * Copyright 2015, 2016 andy
  *
@@ -38,11 +36,11 @@ import android.dcsdealerperu.com.dealerperu.R;
 
 public class SmoothCheckBox extends View implements Checkable {
     private static final String KEY_INSTANCE_STATE = "InstanceState";
-    private static final int COLOR_TICK      = Color.WHITE;
+    private static final int COLOR_TICK = Color.WHITE;
     private static final int COLOR_UNCHECKED = Color.WHITE;
-    private static final int COLOR_CHECKED   = Color.parseColor("#10628a");
+    private static final int COLOR_CHECKED = Color.parseColor("#10628a");
     private static final int COLOR_FLOOR_UNCHECKED = Color.parseColor("#DFDFDF");
-    private static final int DEF_DRAW_SIZE     = 25;
+    private static final int DEF_DRAW_SIZE = 25;
     private static final int DEF_ANIM_DURATION = 300;
 
     private Paint mPaint, mTickPaint, mFloorPaint;
@@ -166,6 +164,7 @@ public class SmoothCheckBox extends View implements Checkable {
 
     /**
      * <p>checked with animation</p>
+     *
      * @param checked checked
      * @param animate change with animation
      */

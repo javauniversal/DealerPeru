@@ -14,7 +14,6 @@ import android.dcsdealerperu.com.dealerperu.Entry.TipoVia;
 import android.dcsdealerperu.com.dealerperu.Entry.TipoVivienda;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -89,7 +88,8 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
     private RequestGuardarEditarPunto requestGuardarEditarPunto = new RequestGuardarEditarPunto();
     //endregion
 
-    public FragmentDireccion() { }
+    public FragmentDireccion() {
+    }
 
 
     @Override
@@ -98,7 +98,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
 
         View view = inflater.inflate(R.layout.fragment_direccion, container, false);
 
-        if(getArguments() != null) {
+        if (getArguments() != null) {
             editaPunto = getArguments().getInt("edit_punto");
             accion = getArguments().getString("accion");
             requestGuardarEditarPunto = (RequestGuardarEditarPunto) getArguments().getSerializable("datos_punto");
@@ -318,13 +318,13 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_filtros_puntos");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSON(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -347,7 +347,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -379,7 +379,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                 loadTipoVivienda(responseCreatePunt.getNomenclaturaList().getTipoViviendaList());
 
                 // Entra Para ver si va a editar el punto..!
-                if(accion.equals("Editar")) {
+                if (accion.equals("Editar")) {
                     CargarDatosEditaPunto();
                 }
             } catch (IllegalStateException ex) {
@@ -416,8 +416,8 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
     }
 
     private void setSpinerCiuPoblado(List<TipoCiudad> tipoCiudadList, Spinner spinner_ciudad_poblado, CategoriasEstandar ciuEnt) {
-        for(int i = 0; i < tipoCiudadList.size(); i++) {
-            if(tipoCiudadList.get(i).getId() == ciuEnt.getId()) {
+        for (int i = 0; i < tipoCiudadList.size(); i++) {
+            if (tipoCiudadList.get(i).getId() == ciuEnt.getId()) {
                 spinner_ciudad_poblado.setSelection(i);
                 break;
             }
@@ -425,8 +425,8 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
     }
 
     private void setSpinerUrbanizacion(List<TipoUrbanizacion> tipoUrbanizacionList, Spinner spinner_urbanizacion, CategoriasEstandar urbaEnt) {
-        for(int i = 0; i < tipoUrbanizacionList.size(); i++) {
-            if(tipoUrbanizacionList.get(i).getId() == urbaEnt.getId()) {
+        for (int i = 0; i < tipoUrbanizacionList.size(); i++) {
+            if (tipoUrbanizacionList.get(i).getId() == urbaEnt.getId()) {
                 spinner_urbanizacion.setSelection(i);
                 break;
             }
@@ -434,8 +434,8 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
     }
 
     private void setSpinerTipoInterior(List<TipoInterior> tipoInteriorList, Spinner spinner_tipo_interior, CategoriasEstandar interEnt) {
-        for(int i = 0; i < tipoInteriorList.size(); i++) {
-            if(tipoInteriorList.get(i).getId() == interEnt.getId()) {
+        for (int i = 0; i < tipoInteriorList.size(); i++) {
+            if (tipoInteriorList.get(i).getId() == interEnt.getId()) {
                 spinner_tipo_interior.setSelection(i);
                 break;
             }
@@ -443,8 +443,8 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
     }
 
     private void setSpinerTipoViVienda(List<TipoVivienda> tipoViviendaList, Spinner spinner_tipo_vivienda, CategoriasEstandar vivendaEnt) {
-        for(int i = 0; i < tipoViviendaList.size(); i++) {
-            if(tipoViviendaList.get(i).getId() == vivendaEnt.getId()) {
+        for (int i = 0; i < tipoViviendaList.size(); i++) {
+            if (tipoViviendaList.get(i).getId() == vivendaEnt.getId()) {
                 spinner_tipo_vivienda.setSelection(i);
                 break;
             }
@@ -452,8 +452,8 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
     }
 
     private void setSpinerTipoVia(List<TipoVia> tipoViaList, Spinner spinner_tipo, CategoriasEstandar tipo_via) {
-        for(int i = 0; i < tipoViaList.size(); i++) {
-            if(tipoViaList.get(i).getId() == tipo_via.getId()) {
+        for (int i = 0; i < tipoViaList.size(); i++) {
+            if (tipoViaList.get(i).getId() == tipo_via.getId()) {
                 spinner_tipo.setSelection(i);
                 break;
             }
@@ -461,8 +461,8 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
     }
 
     private void setSpinerDepartamento(List<Departamentos> departamentosList, Spinner spinner, int id) {
-        for(int i = 0; i < departamentosList.size(); i++) {
-            if(departamentosList.get(i).getId() == id) {
+        for (int i = 0; i < departamentosList.size(); i++) {
+            if (departamentosList.get(i).getId() == id) {
                 spinner.setSelection(i);
                 break;
             }
@@ -471,9 +471,9 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
 
     private void setSpinerProvincia(List<Departamentos> departamentosList, Spinner spinner, int id_pro) {
 
-        for(int i = 0; i < departamentosList.size(); i++) {
+        for (int i = 0; i < departamentosList.size(); i++) {
             for (int f = 0; f < departamentosList.get(i).getCiudadList().size(); f++) {
-                if(departamentosList.get(i).getCiudadList().get(f).getId() == id_pro) {
+                if (departamentosList.get(i).getCiudadList().get(f).getId() == id_pro) {
                     spinner.setSelection(f);
                     break;
                 }
@@ -484,10 +484,10 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
 
     private void setSpinerDistrito(List<Departamentos> departamentosList, Spinner spinner, int id_depto) {
 
-        for(int i = 0; i < departamentosList.size(); i++) {
-            for(int t = 0; t < departamentosList.get(i).getCiudadList().size(); t++) {
+        for (int i = 0; i < departamentosList.size(); i++) {
+            for (int t = 0; t < departamentosList.get(i).getCiudadList().size(); t++) {
                 for (int f = 0; f < departamentosList.get(i).getCiudadList().get(t).getDistritoList().size(); f++) {
-                    if(departamentosList.get(i).getCiudadList().get(t).getDistritoList().get(f).getId() == id_depto) {
+                    if (departamentosList.get(i).getCiudadList().get(t).getDistritoList().get(f).getId() == id_depto) {
                         spinner.setSelection(i);
                         break;
                     }
@@ -516,7 +516,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                     data6 = tipoViviendaList.get(position).getSiglas();
                     ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
 
-                    if(accion.equals("Editar")) {
+                    if (accion.equals("Editar")) {
                         edit_numero_vivienda.setText(String.format("%1$s", requestGuardarEditarPunto.getVivendaEnt().descripcion));
                     }
                 }
@@ -524,7 +524,8 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -548,7 +549,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                     data12 = tipoCiudadList.get(position).getSiglas();
                     ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
 
-                    if(accion.equals("Editar")) {
+                    if (accion.equals("Editar")) {
                         edit_descripcion.setText(String.format("%1$s", requestGuardarEditarPunto.getUrbaEnt().descripcion));
                     }
                 }
@@ -556,7 +557,8 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 
@@ -581,7 +583,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                     data10 = tipoUrbanizacionList.get(position).getSiglas();
                     ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
 
-                    if(accion.equals("Editar")) {
+                    if (accion.equals("Editar")) {
                         edit_urbanizacion.setText(String.format("%1$s", requestGuardarEditarPunto.getUrbaEnt().descripcion));
                     }
 
@@ -590,7 +592,8 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 
@@ -614,14 +617,15 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                     data8 = tipoInteriorList.get(position).getSiglas();
                     ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
 
-                    if(accion.equals("Editar")) {
+                    if (accion.equals("Editar")) {
                         edit_numero_interior.setText(String.format("%1$s", requestGuardarEditarPunto.getInterEnt().descripcion));
                     }
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -648,7 +652,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
                     data1 = estadoComunList.get(position).getSiglas();
                     ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
 
-                    if(accion.equals("Editar")) {
+                    if (accion.equals("Editar")) {
 
                         edit_nombre_via.setText(String.format("%1$s", requestGuardarEditarPunto.getViaEnt().descripcion));
                         edit_numero_puerta.setText(String.format("%1$s", requestGuardarEditarPunto.getViaEnt().descripcion1));
@@ -661,7 +665,8 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 
@@ -679,7 +684,8 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -696,7 +702,8 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -712,7 +719,8 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 
@@ -790,7 +798,9 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
         }
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     private boolean isValidTipoVia() {
 
@@ -820,7 +830,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
         if (isValidTipoVia()) {
             Toast.makeText(getActivity(), "Ingrese datos en algunas de estas opciones Vivienda, Interior o Urbanización", Toast.LENGTH_LONG).show();
             indicadorValidate = true;
-        } else if(isValidTipoVia2(edit_nombre_via.getText().toString().trim())) {
+        } else if (isValidTipoVia2(edit_nombre_via.getText().toString().trim())) {
             edit_nombre_via.setFocusable(true);
             edit_nombre_via.setFocusableInTouchMode(true);
             edit_nombre_via.requestFocus();
@@ -869,7 +879,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
     }
 
     public void ConcatProducts(String data1, String data2, String data3, String data4, String data5, String data6,
-                                 String data7, String data8, String data9, String data10 ,String data11, String data12, String data13) {
+                               String data7, String data8, String data9, String data10, String data11, String data12, String data13) {
 
         StringBuilder value = new StringBuilder();
 
@@ -925,7 +935,7 @@ public class FragmentDireccion extends BaseVolleyFragment implements View.OnClic
             value.append(data13);
         }
 
-         direccionConcat.setText(value.toString());
+        direccionConcat.setText(value.toString());
 
     }
 }

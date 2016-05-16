@@ -47,7 +47,7 @@ public class ActDetalleBuscarPunto extends AppCompatActivity {
                 // create "open" item
                 SwipeMenuItem openItem = new SwipeMenuItem(getApplicationContext());
                 // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(16, 98,138)));
+                openItem.setBackground(new ColorDrawable(Color.rgb(16, 98, 138)));
                 // set item width
                 openItem.setWidth(dp2px(90));
                 // set item title
@@ -145,7 +145,7 @@ public class ActDetalleBuscarPunto extends AppCompatActivity {
         //Activity Principal, Para acceder al fragment
         Bundle bundle = new Bundle();
         Intent intent = new Intent(this, ActMainPeru.class);
-        bundle.putInt("edit_punto",idpos);
+        bundle.putInt("edit_punto", idpos);
         bundle.putInt("accion", 1);
         intent.putExtras(bundle);
         startActivity(intent);

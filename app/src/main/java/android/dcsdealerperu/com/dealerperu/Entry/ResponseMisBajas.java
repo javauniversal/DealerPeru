@@ -5,10 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by Josue on 7/05/16.
- */
-public class ResponseMisBajas implements Serializable{
+public class ResponseMisBajas implements Serializable {
 
     @SerializedName("mis_bajas")
     private List<MisBajas> misBajas;

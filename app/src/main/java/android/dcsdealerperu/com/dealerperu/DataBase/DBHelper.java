@@ -18,7 +18,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "MydbDealerPeru.db";
 
-    public DBHelper(Context context){
+    public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
@@ -28,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String sqlIntro = "CREATE TABLE intro (id integer primary key AUTOINCREMENT, idintro text )";
 
         String sqlCarrito = "CREATE TABLE carrito_pedido (id_carrito integer primary key AUTOINCREMENT, id_producto INT, pn_pro TEXT, stock INT, producto TEXT, dias_inve REAL, ped_sugerido TEXT, " +
-                            " cantidad_pedida INT, id_usuario TEXT, id_punto INT, latitud TEXT, longitud TEXT, tipo_producto INT, producto_img TEXT)";
+                " cantidad_pedida INT, id_usuario TEXT, id_punto INT, latitud TEXT, longitud TEXT, tipo_producto INT, producto_img TEXT)";
 
         db.execSQL(sqlIntro);
         db.execSQL(sqlCarrito);
@@ -44,13 +44,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean insertIntro(String data){
+    public boolean insertIntro(String data) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         try {
-            values.put("idintro",data);
+            values.put("idintro", data);
             db.insert("intro", null, values);
-        }catch (SQLiteConstraintException e){
+        } catch (SQLiteConstraintException e) {
             Log.d("data", "failure to insert word,", e);
             return false;
         } finally {
@@ -61,7 +61,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public String insertCarritoPedidoCombos(Referencia data){
+    public String insertCarritoPedidoCombos(Referencia data) {
 
         String resultado = "";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -85,20 +85,20 @@ public class DBHelper extends SQLiteOpenHelper {
 
             try {
                 values.put("id_producto", data.getId());
-                values.put("pn_pro",data.getPn());
-                values.put("stock",data.getStock());
-                values.put("producto",data.getProducto());
-                values.put("dias_inve",data.getDias_inve());
-                values.put("ped_sugerido",data.getPed_sugerido());
-                values.put("cantidad_pedida",data.getCantidadPedida());
-                values.put("id_usuario",data.getId_usuario());
-                values.put("id_punto",data.getId_punto());
-                values.put("tipo_producto",data.getTipo_producto());
-                values.put("producto_img",data.getUrl_imagen());
+                values.put("pn_pro", data.getPn());
+                values.put("stock", data.getStock());
+                values.put("producto", data.getProducto());
+                values.put("dias_inve", data.getDias_inve());
+                values.put("ped_sugerido", data.getPed_sugerido());
+                values.put("cantidad_pedida", data.getCantidadPedida());
+                values.put("id_usuario", data.getId_usuario());
+                values.put("id_punto", data.getId_punto());
+                values.put("tipo_producto", data.getTipo_producto());
+                values.put("producto_img", data.getUrl_imagen());
 
                 db.insert("carrito_pedido", null, values);
 
-            } catch (SQLiteConstraintException e){
+            } catch (SQLiteConstraintException e) {
                 Log.d("data", "failure to insert word,", e);
                 return resultado = "no inserto";
             } finally {
@@ -109,7 +109,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return resultado = "inserto";
     }
 
-    public String insertCarritoPedido(ReferenciasSims data){
+    public String insertCarritoPedido(ReferenciasSims data) {
 
         String resultado = "";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -133,19 +133,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
             try {
                 values.put("id_producto", data.getId());
-                values.put("pn_pro",data.getPn());
-                values.put("stock",data.getStock());
-                values.put("producto",data.getProducto());
-                values.put("dias_inve",data.getDias_inve());
-                values.put("ped_sugerido",data.getPed_sugerido());
-                values.put("cantidad_pedida",data.getCantidadPedida());
-                values.put("id_usuario",data.getId_usuario());
-                values.put("id_punto",data.getId_punto());
-                values.put("tipo_producto",data.getTipo_producto());
+                values.put("pn_pro", data.getPn());
+                values.put("stock", data.getStock());
+                values.put("producto", data.getProducto());
+                values.put("dias_inve", data.getDias_inve());
+                values.put("ped_sugerido", data.getPed_sugerido());
+                values.put("cantidad_pedida", data.getCantidadPedida());
+                values.put("id_usuario", data.getId_usuario());
+                values.put("id_punto", data.getId_punto());
+                values.put("tipo_producto", data.getTipo_producto());
 
                 db.insert("carrito_pedido", null, values);
 
-            } catch (SQLiteConstraintException e){
+            } catch (SQLiteConstraintException e) {
                 Log.d("data", "failure to insert word,", e);
                 return resultado = "no inserto";
             } finally {
@@ -160,7 +160,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         Cursor cursor;
         boolean indicador = false;
-        String sql = "SELECT id_producto FROM carrito_pedido WHERE id_producto = "+id_producto+" LIMIT 1";
+        String sql = "SELECT id_producto FROM carrito_pedido WHERE id_producto = " + id_producto + " LIMIT 1";
         SQLiteDatabase db = this.getWritableDatabase();
         cursor = db.rawQuery(sql, null);
         if (cursor.moveToFirst()) {
@@ -173,26 +173,26 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean deleteCarritoProducto(int id, int id_pos, int id_usuario) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-        int a = db.delete("carrito_pedido", "id_carrito = ? AND id_punto = ? AND id_usuario = ?", new String[] {String.valueOf(id), String.valueOf(id_pos), String.valueOf(id_usuario)});
+        int a = db.delete("carrito_pedido", "id_carrito = ? AND id_punto = ? AND id_usuario = ?", new String[]{String.valueOf(id), String.valueOf(id_pos), String.valueOf(id_usuario)});
 
         db.close();
         return a > 0;
 
     }
 
-    public boolean deleteAll (int id_pos, int id_usuario) {
+    public boolean deleteAll(int id_pos, int id_usuario) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int a = db.delete("carrito_pedido", "id_punto = ? AND id_usuario = ?", new String[] {String.valueOf(id_pos), String.valueOf(id_usuario)});
+        int a = db.delete("carrito_pedido", "id_punto = ? AND id_usuario = ?", new String[]{String.valueOf(id_pos), String.valueOf(id_usuario)});
 
         db.close();
         return a > 0;
     }
 
-    public List<ReferenciasSims> getCarrito(int id_pos, int id_usuario){
+    public List<ReferenciasSims> getCarrito(int id_pos, int id_usuario) {
 
         List<ReferenciasSims> referenciasSimsList = new ArrayList<>();
 
-        String sql = "SELECT id_carrito, id_producto, pn_pro, stock, producto, dias_inve, ped_sugerido, cantidad_pedida, id_usuario, id_punto, latitud, longitud, tipo_producto, producto_img FROM carrito_pedido WHERE id_punto = "+id_pos+" AND id_usuario = "+id_usuario+" ";
+        String sql = "SELECT id_carrito, id_producto, pn_pro, stock, producto, dias_inve, ped_sugerido, cantidad_pedida, id_usuario, id_punto, latitud, longitud, tipo_producto, producto_img FROM carrito_pedido WHERE id_punto = " + id_pos + " AND id_usuario = " + id_usuario + " ";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(sql, null);
 
@@ -216,14 +216,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 referenciasSimsList.add(referenciasSims);
 
-            } while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
 
         return referenciasSimsList;
 
     }
 
-    public boolean getIntro(){
+    public boolean getIntro() {
         Cursor cursor;
         boolean indicador = false;
         String sql = "SELECT * FROM intro LIMIT 1";

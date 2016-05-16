@@ -3,13 +3,11 @@ package android.dcsdealerperu.com.dealerperu.Adapter;
 import android.content.Context;
 import android.dcsdealerperu.com.dealerperu.Entry.Detalle;
 import android.dcsdealerperu.com.dealerperu.R;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -58,7 +56,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView txt_total = (TextView) convertView.findViewById(R.id.txt_total);
 
         txt_referencia.setText(expandedListText.getPn());
-        txt_cantidad.setText(expandedListText.getCantidad()+"");
+        txt_cantidad.setText(expandedListText.getCantidad() + "");
         txt_total.setText(String.format("$ %s", format.format(expandedListText.getTotal())));
 
 
@@ -84,7 +82,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public int getGroupCount() {
 
-        if (this.expandableListTitle == null){
+        if (this.expandableListTitle == null) {
             return 0;
         } else {
             return this.expandableListTitle.size();

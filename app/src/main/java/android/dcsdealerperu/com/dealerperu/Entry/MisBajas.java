@@ -5,9 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by Josue on 7/05/16.
- */
 public class MisBajas implements Serializable {
 
     @SerializedName("id_solicitud")
@@ -90,7 +87,7 @@ public class MisBajas implements Serializable {
         this.razon = razon;
     }
 
-   public List<MisBajasDetalle1> getMisBajasDetalle1List() {
+    public List<MisBajasDetalle1> getMisBajasDetalle1List() {
         return misBajasDetalle1List;
     }
 

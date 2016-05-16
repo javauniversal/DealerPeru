@@ -49,7 +49,7 @@ public class ActReporteAprobacionPdv extends AppCompatActivity {
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         if (bundle != null) {
-            mDescribable = (List<AprobarPunto>)bundle.getSerializable("value");
+            mDescribable = (List<AprobarPunto>) bundle.getSerializable("value");
         }
 
         mListView = (SwipeMenuListView) findViewById(R.id.listView);
@@ -63,7 +63,7 @@ public class ActReporteAprobacionPdv extends AppCompatActivity {
                 // create "open" item
                 SwipeMenuItem openItem = new SwipeMenuItem(getApplicationContext());
                 // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(16, 98,138)));
+                openItem.setBackground(new ColorDrawable(Color.rgb(16, 98, 138)));
                 // set item width
                 openItem.setWidth(dp2px(90));
                 // set item title
@@ -119,8 +119,9 @@ public class ActReporteAprobacionPdv extends AppCompatActivity {
             }
         });
     }
+
     private void loadDetallePunto(int position) {
-       mDescribable.get(position).getEstado();
+        mDescribable.get(position).getEstado();
         LayoutInflater inflater = getLayoutInflater();
         View dialoglayout = inflater.inflate(R.layout.dialog_detalle_aprobaciones_pdvs, null);
 

@@ -6,12 +6,11 @@ import android.dcsdealerperu.com.dealerperu.Adapter.AdapterAproPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.AprobarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.DetalleAprobacion;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +18,6 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -76,7 +74,7 @@ public class ActDetalleAproPunto extends AppCompatActivity {
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         if (bundle != null) {
-            mDescribable = (List<AprobarPunto>)bundle.getSerializable("value");
+            mDescribable = (List<AprobarPunto>) bundle.getSerializable("value");
         }
 
         mListView = (SwipeMenuListView) findViewById(R.id.listView);
@@ -90,7 +88,7 @@ public class ActDetalleAproPunto extends AppCompatActivity {
                 // create "open" item
                 SwipeMenuItem openItem = new SwipeMenuItem(getApplicationContext());
                 // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(16, 98,138)));
+                openItem.setBackground(new ColorDrawable(Color.rgb(16, 98, 138)));
                 // set item width
                 openItem.setWidth(dp2px(90));
                 // set item title
@@ -223,23 +221,25 @@ public class ActDetalleAproPunto extends AppCompatActivity {
         });
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     private void aprobarPedido(final int position, final int aprobar) {
 
         alertDialog.show();
 
-        String url = String.format("%1$s%2$s", getString(R.string.url_base),"guardar_rechazar_aprobacion");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "guardar_rechazar_aprobacion");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // response
                         parseJSON(response, position);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -374,7 +374,7 @@ public class ActDetalleAproPunto extends AppCompatActivity {
 
         List<DetalleAprobacion> detallePedidoList = mDescribable.get(position).getDetalleAprobacionList();
 
-        for(int j = 0; j < detallePedidoList.size(); j++) {
+        for (int j = 0; j < detallePedidoList.size(); j++) {
 
             // Create LinearLayout
             LinearLayout ll = new LinearLayout(this);

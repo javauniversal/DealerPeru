@@ -2,22 +2,11 @@ package android.dcsdealerperu.com.dealerperu.Adapter;
 
 import android.app.Activity;
 import android.dcsdealerperu.com.dealerperu.Entry.AprobarPunto;
-import android.dcsdealerperu.com.dealerperu.Entry.ListAprobarPunto;
-import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasSims;
 import android.dcsdealerperu.com.dealerperu.R;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.List;
 
@@ -26,7 +15,7 @@ public class AdapterAproPunto extends BaseAdapter {
     private Activity actx;
     private List<AprobarPunto> data;
 
-    public AdapterAproPunto(Activity actx, List<AprobarPunto> data){
+    public AdapterAproPunto(Activity actx, List<AprobarPunto> data) {
         this.actx = actx;
         this.data = data;
     }
@@ -61,7 +50,7 @@ public class AdapterAproPunto extends BaseAdapter {
 
         AprobarPunto referencias = getItem(position);
 
-        holder.txtFecha.setText(String.format("Fecha: %1$s",referencias.getFecha()));
+        holder.txtFecha.setText(String.format("Fecha: %1$s", referencias.getFecha()));
         holder.txtSolicitud.setText(String.format("Solicitud: %1$s", referencias.getSolicitud()));
         holder.txtEstado.setText(String.format("Estado: %1$s", referencias.getEstado()));
         holder.idPdv.setText(String.format("Id Pdv: %1$s", referencias.getIdpdv()));

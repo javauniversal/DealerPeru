@@ -141,15 +141,15 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
 
     private void buscarIdPos(final int idPos) {
         alertDialog.show();
-        String url = String.format("%1$s%2$s", getString(R.string.url_base),"buscar_punto_visita");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "buscar_punto_visita");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSONVisita(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -174,7 +174,7 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -230,13 +230,13 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
 
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "rutero");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSON(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -259,7 +259,7 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -278,7 +278,7 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
 
     private void parseJSON(String response) {
 
-          Gson gson = new Gson();
+        Gson gson = new Gson();
 
         if (!response.equals("[]")) {
             try {
@@ -286,7 +286,7 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
                 ListHome listHome = gson.fromJson(response, ListHome.class);
                 llenarData(listHome);
 
-            }  catch (IllegalStateException ex) {
+            } catch (IllegalStateException ex) {
                 ex.printStackTrace();
             } finally {
             }

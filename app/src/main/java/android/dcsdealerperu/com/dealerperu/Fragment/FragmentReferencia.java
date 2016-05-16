@@ -3,19 +3,14 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.dcsdealerperu.com.dealerperu.Activity.ActResponAvanBusqueda;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
-import android.dcsdealerperu.com.dealerperu.Entry.GuardarEditarPunto;
-import android.dcsdealerperu.com.dealerperu.Entry.RequesGuardarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseCreatePunt;
-import android.dcsdealerperu.com.dealerperu.Entry.ResponseInsert;
 import android.dcsdealerperu.com.dealerperu.Entry.Subcategorias;
 import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
 import android.dcsdealerperu.com.dealerperu.Entry.Zona;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,30 +19,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.google.gson.Gson;
-
-import java.nio.charset.Charset;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
-
-import static android.dcsdealerperu.com.dealerperu.Entry.RequesGuardarPunto.getRequesGuardarPuntoStatic;
-import static android.dcsdealerperu.com.dealerperu.Entry.RequesGuardarPunto.setRequesGuardarPuntoStatic;
-import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
 public class FragmentReferencia extends BaseVolleyFragment implements View.OnClickListener {
 
@@ -125,9 +100,9 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
     }*/
 
     private void setSubCategoria(List<CategoriasEstandar> categoriasList, Spinner spinner_sub_categoria, int subcategoria) {
-        for(int i = 0; i < categoriasList.size(); i++) {
-            for(int a = 0; a < categoriasList.get(i).getListSubCategoria().size(); a++) {
-                if(categoriasList.get(i).getListSubCategoria().get(a).getId() == subcategoria) {
+        for (int i = 0; i < categoriasList.size(); i++) {
+            for (int a = 0; a < categoriasList.get(i).getListSubCategoria().size(); a++) {
+                if (categoriasList.get(i).getListSubCategoria().get(a).getId() == subcategoria) {
                     spinner_sub_categoria.setSelection(i);
                     break;
                 }
@@ -136,8 +111,8 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
     }
 
     private void setCategoria(List<CategoriasEstandar> categoriasList, Spinner spinner_categoria, int categoria) {
-        for(int i = 0; i < categoriasList.size(); i++) {
-            if(categoriasList.get(i).getId() == categoria) {
+        for (int i = 0; i < categoriasList.size(); i++) {
+            if (categoriasList.get(i).getId() == categoria) {
                 spinner_categoria.setSelection(i);
                 break;
             }
@@ -145,9 +120,9 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
     }
 
     private void setRuta(List<Territorio> territorioList, Spinner spinner_ruta, int zona) {
-        for(int i = 0; i < territorioList.size(); i++) {
-            for(int a = 0; a < territorioList.get(i).getZonaList().size(); a++) {
-                if(territorioList.get(i).getZonaList().get(a).getId() == zona) {
+        for (int i = 0; i < territorioList.size(); i++) {
+            for (int a = 0; a < territorioList.get(i).getZonaList().size(); a++) {
+                if (territorioList.get(i).getZonaList().get(a).getId() == zona) {
                     spinner_ruta.setSelection(i);
                     break;
                 }
@@ -156,8 +131,8 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
     }
 
     private void setCircuito(List<Territorio> territorioList, Spinner spinner_circuito, int territorio) {
-        for(int i = 0; i < territorioList.size(); i++) {
-            if(territorioList.get(i).getId() == territorio) {
+        for (int i = 0; i < territorioList.size(); i++) {
+            if (territorioList.get(i).getId() == territorio) {
                 spinner_circuito.setSelection(i);
                 break;
             }
@@ -165,8 +140,8 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
     }
 
     private void setEstadoComercial(List<CategoriasEstandar> estadoComunList, Spinner spinner_estado_comercial, int estado_com) {
-        for(int i = 0; i < estadoComunList.size(); i++) {
-            if(estadoComunList.get(i).getId() == estado_com) {
+        for (int i = 0; i < estadoComunList.size(); i++) {
+            if (estadoComunList.get(i).getId() == estado_com) {
                 spinner_estado_comercial.setSelection(i);
                 break;
             }
@@ -202,7 +177,8 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -219,7 +195,8 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -239,7 +216,8 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -257,7 +235,8 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -275,7 +254,8 @@ public class FragmentReferencia extends BaseVolleyFragment implements View.OnCli
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }

@@ -156,16 +156,15 @@
                             android:layout_alignParentStart="true" />
 
 
-
-                            <Spinner
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/spinner_circuito"
-                                android:layout_marginStart="8dp"
-                                android:layout_toEndOf="@+id/image_circuito"
-                                android:textSize="@dimen/dimen_letra_app_estandar"
-                                android:layout_toRightOf="@+id/image_circuito"
-                                android:layout_marginLeft="8dp" />
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/spinner_circuito"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_circuito"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
+                            android:layout_toRightOf="@+id/image_circuito"
+                            android:layout_marginLeft="8dp" />
 
 
                     </RelativeLayout>
@@ -198,16 +197,15 @@
                             android:layout_alignParentStart="true" />
 
 
-
-                            <Spinner
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/spinner_ruta"
-                                android:layout_marginStart="8dp"
-                                android:layout_toEndOf="@+id/image_ruta"
-                                android:textSize="@dimen/dimen_letra_app_estandar"
-                                android:layout_toRightOf="@+id/image_ruta"
-                                android:layout_marginLeft="8dp" />
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/spinner_ruta"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_ruta"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
+                            android:layout_toRightOf="@+id/image_ruta"
+                            android:layout_marginLeft="8dp" />
 
 
                     </RelativeLayout>
@@ -220,6 +218,7 @@
                         android:textSize="10sp"
                         android:textColor="@color/colorAccent"
                         android:text="Estado Visita" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -237,15 +236,15 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true" />
 
-                            <Spinner
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/spinner_estado_visita"
-                                android:layout_marginStart="8dp"
-                                android:layout_toEndOf="@+id/image_estado_visita"
-                                android:textSize="@dimen/dimen_letra_app_estandar"
-                                android:layout_toRightOf="@+id/image_estado_visita"
-                                android:layout_marginLeft="8dp" />
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/spinner_estado_visita"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/image_estado_visita"
+                            android:textSize="@dimen/dimen_letra_app_estandar"
+                            android:layout_toRightOf="@+id/image_estado_visita"
+                            android:layout_marginLeft="8dp" />
 
 
                     </RelativeLayout>
@@ -308,6 +307,7 @@
                         android:textSize="10sp"
                         android:textColor="@color/colorAccent"
                         android:text="Dia" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -354,6 +354,7 @@
             </android.support.v7.widget.CardView>
         </LinearLayout>
     </ScrollView>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/cargar_reporte_rutero"
         android:layout_width="wrap_content"

@@ -1,9 +1,7 @@
 package android.dcsdealerperu.com.dealerperu.Adapter;
 
 import android.app.Activity;
-import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasSims;
-import android.dcsdealerperu.com.dealerperu.Entry.ResponseHome;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -28,7 +26,7 @@ public class AdapterCarrito extends BaseAdapter {
     private com.nostra13.universalimageloader.core.ImageLoader imageLoader1;
     private DisplayImageOptions options1;
 
-    public AdapterCarrito(Activity actx, List<ReferenciasSims> data){
+    public AdapterCarrito(Activity actx, List<ReferenciasSims> data) {
         this.actx = actx;
         this.data = data;
 
@@ -112,6 +110,7 @@ public class AdapterCarrito extends BaseAdapter {
                 //Completado
                 //holder.progressBar.setVisibility(View.GONE);
             }
+
             @Override
             public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
                 // TODO Auto-generated method stub

@@ -1,8 +1,5 @@
 package android.dcsdealerperu.com.dealerperu.Activity;
 
-/**
- * Created by Josue on 13/05/16.
- */
 import android.content.Context;
 
 public class CompatUtils {

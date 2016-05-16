@@ -47,7 +47,7 @@ import dmax.dialog.SpotsDialog;
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
 
-public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  DatePickerDialog.OnDateSetListener{
+public class FragmentPedidosSupervisor extends BaseVolleyFragment implements DatePickerDialog.OnDateSetListener {
 
     private boolean fecha_idicador;
     private Date dia_inicial;
@@ -161,13 +161,13 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "consultar_reporte_pedidos");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         mostrarReporte(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -190,7 +190,7 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -235,25 +235,25 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
             } finally {
                 alertDialog.dismiss();
             }
-        }else{
+        } else {
             alertDialog.dismiss();
-            Toast.makeText(getContext(),"No se encontraron datos para mostrar",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No se encontraron datos para mostrar", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void loadEstado() {
 
         final List<CategoriasEstandar> listaEstados = new ArrayList<>();
-        listaEstados.add(new CategoriasEstandar(-1,"Seleccionar"));
-        listaEstados.add(new CategoriasEstandar(0,"Pendiente"));
-        listaEstados.add(new CategoriasEstandar(1,"Aceptado"));
-        listaEstados.add(new CategoriasEstandar(2,"Picking"));
-        listaEstados.add(new CategoriasEstandar(3,"Cancelado"));
-        listaEstados.add(new CategoriasEstandar(4,"Despachado"));
-        listaEstados.add(new CategoriasEstandar(5,"Entregado"));
-        listaEstados.add(new CategoriasEstandar(6,"Rechazado por punto"));
+        listaEstados.add(new CategoriasEstandar(-1, "Seleccionar"));
+        listaEstados.add(new CategoriasEstandar(0, "Pendiente"));
+        listaEstados.add(new CategoriasEstandar(1, "Aceptado"));
+        listaEstados.add(new CategoriasEstandar(2, "Picking"));
+        listaEstados.add(new CategoriasEstandar(3, "Cancelado"));
+        listaEstados.add(new CategoriasEstandar(4, "Despachado"));
+        listaEstados.add(new CategoriasEstandar(5, "Entregado"));
+        listaEstados.add(new CategoriasEstandar(6, "Rechazado por punto"));
 
-        ArrayAdapter<CategoriasEstandar> adapterEstado = new ArrayAdapter<>(getActivity(),R.layout.textview_spinner,listaEstados);
+        ArrayAdapter<CategoriasEstandar> adapterEstado = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, listaEstados);
         spinner_estado.setAdapter(adapterEstado);
         spinner_estado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -262,26 +262,29 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
 
     private void loadVendedor() {
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_vendedores_supervisor");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         CargarVendedores(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -304,7 +307,7 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -326,7 +329,7 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
             try {
 
                 final ListCategoria listCategoria = gson.fromJson(response, ListCategoria.class);
-                ArrayAdapter<CategoriasEstandar> adapterEstado = new ArrayAdapter<>(getActivity(),R.layout.textview_spinner,listCategoria);
+                ArrayAdapter<CategoriasEstandar> adapterEstado = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, listCategoria);
                 spinner_vendedor.setAdapter(adapterEstado);
                 spinner_vendedor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -335,7 +338,8 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
                     }
 
                     @Override
-                    public void onNothingSelected(AdapterView<?> parent) { }
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
 
                 });
 
@@ -345,9 +349,9 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
             } finally {
                 alertDialog.dismiss();
             }
-        }else{
+        } else {
             alertDialog.dismiss();
-            Toast.makeText(getContext(),"No se encontraron datos para mostrar",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No se encontraron datos para mostrar", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -355,13 +359,13 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_filtros_puntos");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSON(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -384,7 +388,7 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -415,9 +419,9 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
             } finally {
                 alertDialog.dismiss();
             }
-        }else{
+        } else {
             alertDialog.dismiss();
-            Toast.makeText(getContext(),"No se encontraron datos para mostrar",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No se encontraron datos para mostrar", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -433,21 +437,25 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
 
     private void loadZona(final List<Zona> zonas) {
         ArrayAdapter<Zona> prec3 = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, zonas);
-        spinner_ruta.setAdapter(prec3);;
+        spinner_ruta.setAdapter(prec3);
+        ;
         spinner_ruta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ruta = zonas.get(position).getId();
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 
@@ -455,18 +463,18 @@ public class FragmentPedidosSupervisor extends BaseVolleyFragment implements  Da
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd) {
-        monthOfYear = (monthOfYear+1);
+        monthOfYear = (monthOfYear + 1);
 
         if (fecha_idicador) {
-            edit_fecha_inicial.setText(year+"/"+monthOfYear+"/"+dayOfMonth);
+            edit_fecha_inicial.setText(year + "/" + monthOfYear + "/" + dayOfMonth);
             dia_inicial = converFecha(year, monthOfYear, dayOfMonth);
         } else {
-            edit_fecha_final.setText(year+"/"+monthOfYear+"/"+dayOfMonth);
+            edit_fecha_final.setText(year + "/" + monthOfYear + "/" + dayOfMonth);
             dia_final = converFecha(year, monthOfYear, dayOfMonth);
         }
     }
 
-    public Date converFecha(int year, int mes, int dia){
+    public Date converFecha(int year, int mes, int dia) {
 
         Calendar calendar = new GregorianCalendar(year, mes, dia);
         Date fecha = new Date(calendar.getTimeInMillis());

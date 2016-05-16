@@ -10,12 +10,12 @@ import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.Subcategorias;
 import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
 import android.dcsdealerperu.com.dealerperu.Entry.Zona;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -49,7 +49,7 @@ import static android.dcsdealerperu.com.dealerperu.Entry.DataDireccionForm.getEs
 import static android.dcsdealerperu.com.dealerperu.Entry.DataDireccionForm.getTerritorioList;
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
-public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickListener{
+public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickListener {
 
     private Spinner spinner_estado_comercial;
     private Spinner spinner_circuito;
@@ -141,7 +141,8 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -158,7 +159,8 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -178,7 +180,8 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -196,7 +199,8 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -214,15 +218,16 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
 
     private void setSubCategoria(List<CategoriasEstandar> categoriasList, Spinner spinner_sub_categoria, int subcategoria) {
-        for(int i = 0; i < categoriasList.size(); i++) {
-            for(int a = 0; a < categoriasList.get(i).getListSubCategoria().size(); a++) {
-                if(categoriasList.get(i).getListSubCategoria().get(a).getId() == subcategoria) {
+        for (int i = 0; i < categoriasList.size(); i++) {
+            for (int a = 0; a < categoriasList.get(i).getListSubCategoria().size(); a++) {
+                if (categoriasList.get(i).getListSubCategoria().get(a).getId() == subcategoria) {
                     spinner_sub_categoria.setSelection(i);
                     break;
                 }
@@ -231,8 +236,8 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
     }
 
     private void setCategoria(List<CategoriasEstandar> categoriasList, Spinner spinner_categoria, int categoria) {
-        for(int i = 0; i < categoriasList.size(); i++) {
-            if(categoriasList.get(i).getId() == categoria) {
+        for (int i = 0; i < categoriasList.size(); i++) {
+            if (categoriasList.get(i).getId() == categoria) {
                 spinner_categoria.setSelection(i);
                 break;
             }
@@ -240,9 +245,9 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
     }
 
     private void setRuta(List<Territorio> territorioList, Spinner spinner_ruta, int zona) {
-        for(int i = 0; i < territorioList.size(); i++) {
-            for(int a = 0; a < territorioList.get(i).getZonaList().size(); a++) {
-                if(territorioList.get(i).getZonaList().get(a).getId() == zona) {
+        for (int i = 0; i < territorioList.size(); i++) {
+            for (int a = 0; a < territorioList.get(i).getZonaList().size(); a++) {
+                if (territorioList.get(i).getZonaList().get(a).getId() == zona) {
                     spinner_ruta.setSelection(i);
                     break;
                 }
@@ -251,8 +256,8 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
     }
 
     private void setCircuito(List<Territorio> territorioList, Spinner spinner_circuito, int territorio) {
-        for(int i = 0; i < territorioList.size(); i++) {
-            if(territorioList.get(i).getId() == territorio) {
+        for (int i = 0; i < territorioList.size(); i++) {
+            if (territorioList.get(i).getId() == territorio) {
                 spinner_circuito.setSelection(i);
                 break;
             }
@@ -260,8 +265,8 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
     }
 
     private void setEstadoComercial(List<CategoriasEstandar> estadoComunList, Spinner spinner_estado_comercial, int estado_com) {
-        for(int i = 0; i < estadoComunList.size(); i++) {
-            if(estadoComunList.get(i).getId() == estado_com) {
+        for (int i = 0; i < estadoComunList.size(); i++) {
+            if (estadoComunList.get(i).getId() == estado_com) {
                 spinner_estado_comercial.setSelection(i);
                 break;
             }
@@ -308,13 +313,13 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "guardar_punto");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSONGuardar(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -335,7 +340,7 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 mDescribable.setCodigo_cum(edit_codigo_cum.getText().toString().trim());
@@ -367,7 +372,9 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
         rq.add(jsonRequest);
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     private void parseJSONGuardar(String response) {
         Gson gson = new Gson();
@@ -384,7 +391,7 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
 
                     AlertDialog.Builder dialogo1 = new AlertDialog.Builder(this);
                     dialogo1.setTitle(responseInsert.getMsg());
-                    dialogo1.setMessage(mDescribable.getNombre_punto() + "\n" + "ID POS: " +responseInsert.getIdpos());
+                    dialogo1.setMessage(mDescribable.getNombre_punto() + "\n" + "ID POS: " + responseInsert.getIdpos());
                     dialogo1.setCancelable(false);
                     dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogo1, int id) {
@@ -411,18 +418,17 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
             } finally {
                 alertDialog.dismiss();
             }
-        }
-        else {
+        } else {
             alertDialog.dismiss();
         }
     }
 
     public void buscarIdPunto(final int idPos) {
 
-        String url = String.format("%1$s%2$s", getString(R.string.url_base),"buscar_punto_visita");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "buscar_punto_visita");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // response
@@ -508,36 +514,36 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
 
         boolean indicadorValidate = false;
 
-      if( estado_territorio == 0){
+        if (estado_territorio == 0) {
             spinner_circuito.setFocusable(true);
             spinner_circuito.setFocusableInTouchMode(true);
             spinner_circuito.requestFocus();
             Toast.makeText(this, "El campo circuito es obligatorio", Toast.LENGTH_SHORT).show();
-           indicadorValidate = true;
-        } else if(estado_ruta == 0){
+            indicadorValidate = true;
+        } else if (estado_ruta == 0) {
             spinner_ruta.setFocusable(true);
             spinner_ruta.setFocusableInTouchMode(true);
             spinner_ruta.requestFocus();
             Toast.makeText(this, "El campo ruta es obligatorio", Toast.LENGTH_SHORT).show();
             indicadorValidate = true;
-        }else if(estado_comercial == 0){
+        } else if (estado_comercial == 0) {
             spinner_estado_comercial.setFocusable(true);
             spinner_estado_comercial.setFocusableInTouchMode(true);
             spinner_estado_comercial.requestFocus();
             Toast.makeText(this, "El campo estado comercial es obligatorio", Toast.LENGTH_SHORT).show();
-           indicadorValidate = true;
-        }else if(estado_categoria == 0){
-          spinner_categoria.setFocusable(true);
-          spinner_categoria.setFocusableInTouchMode(true);
-          spinner_categoria.requestFocus();
-          Toast.makeText(this, "El campo categoria es obligatorio", Toast.LENGTH_SHORT).show();
-          indicadorValidate = true;
-        }else if(estado_sub_categoria == 0){
-          spinner_sub_categoria.setFocusable(true);
-          spinner_sub_categoria.setFocusableInTouchMode(true);
-          spinner_sub_categoria.requestFocus();
-          Toast.makeText(this, "El campo sub categoria es obligatorio", Toast.LENGTH_SHORT).show();
-          indicadorValidate = true;
+            indicadorValidate = true;
+        } else if (estado_categoria == 0) {
+            spinner_categoria.setFocusable(true);
+            spinner_categoria.setFocusableInTouchMode(true);
+            spinner_categoria.requestFocus();
+            Toast.makeText(this, "El campo categoria es obligatorio", Toast.LENGTH_SHORT).show();
+            indicadorValidate = true;
+        } else if (estado_sub_categoria == 0) {
+            spinner_sub_categoria.setFocusable(true);
+            spinner_sub_categoria.setFocusableInTouchMode(true);
+            spinner_sub_categoria.requestFocus();
+            Toast.makeText(this, "El campo sub categoria es obligatorio", Toast.LENGTH_SHORT).show();
+            indicadorValidate = true;
         }
 
         return indicadorValidate;

@@ -25,12 +25,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Id Pos:"
+                    android:text="@string/id_pos"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -55,12 +55,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Visitado:"
+                    android:text="@string/visitado"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -84,12 +84,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Dirección:"
+                    android:text="@string/direcci_n"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <LinearLayout
                     android:layout_width="140dp"
@@ -101,12 +101,11 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="N/A"
+                        android:text="@string/n_a"
                         android:textSize="@dimen/dimen_letra_app_estandar"
                         android:id="@+id/txt_direccion"
                         android:gravity="right" />
                 </LinearLayout>
-
 
 
             </RelativeLayout>
@@ -123,12 +122,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Departamento:"
+                    android:text="@string/departamento"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -152,12 +151,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ciudad:"
+                    android:text="@string/ciudad"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -182,12 +181,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Circuito:"
+                    android:text="@string/circuito"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -211,12 +210,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ruta:"
+                    android:text="@string/ruta"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -241,12 +240,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Teléfono:"
+                    android:text="@string/tel_fono"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -270,12 +269,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Días:"
+                    android:text="@string/d_as"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -300,12 +299,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hora de Visita:"
+                    android:text="@string/hora_de_visita"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"

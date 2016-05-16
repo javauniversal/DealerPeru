@@ -156,7 +156,7 @@ public class FragmentSimcardP extends BaseVolleyFragment {
 
         List<ReferenciasSims> filteredListCategoria = new ArrayList<>();
 
-        for (int i = 0; i < responseVenta.getReferenciasSimsList().size(); i++ ) {
+        for (int i = 0; i < responseVenta.getReferenciasSimsList().size(); i++) {
             if (responseVenta.getReferenciasSimsList().get(i).getProducto().toLowerCase().contains(query)) {
                 filteredListCategoria.add(responseVenta.getReferenciasSimsList().get(i));
             }
@@ -171,13 +171,13 @@ public class FragmentSimcardP extends BaseVolleyFragment {
 
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_toma_pedido_sim");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSONVisita(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -202,7 +202,7 @@ public class FragmentSimcardP extends BaseVolleyFragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));

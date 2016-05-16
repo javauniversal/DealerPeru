@@ -38,7 +38,6 @@ public class ResponseMisPedidos implements Serializable {
     private String nombre_punto;
 
 
-
     public int getNpedido() {
         return npedido;
     }

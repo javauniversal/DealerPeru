@@ -6,7 +6,6 @@ import android.dcsdealerperu.com.dealerperu.Activity.ActReporteMisPedidos;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.MisPedidos;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseCreatePunt;
-import android.dcsdealerperu.com.dealerperu.Entry.ResponseMisPedidos;
 import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
 import android.dcsdealerperu.com.dealerperu.Entry.Zona;
 import android.dcsdealerperu.com.dealerperu.R;
@@ -33,6 +32,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -57,7 +57,7 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
     private boolean fecha_idicador;
     private SpotsDialog alertDialog;
     private ResponseCreatePunt responseCretePunt;
-    private int circuito, ruta,estado;
+    private int circuito, ruta, estado;
     private Date dia_inicial;
     private Date dia_final;
 
@@ -145,20 +145,22 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
         return view;
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     private void ConsultarReporte() {
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "consultar_reporte_pedidos");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         mostrarReporte(response);
                         alertDialog.dismiss();
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -181,7 +183,7 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -225,9 +227,9 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
             } finally {
                 alertDialog.dismiss();
             }
-        }else{
+        } else {
             alertDialog.dismiss();
-            Toast.makeText(getContext(),"No se encontraron datos para mostrar",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No se encontraron datos para mostrar", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -236,16 +238,16 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
         super.onActivityCreated(savedInstanceState);
         //llenar Spinner de Estados
         final List<CategoriasEstandar> ListaEstados = new ArrayList<>();
-        ListaEstados.add(new CategoriasEstandar(-1,"Seleccionar"));
-        ListaEstados.add(new CategoriasEstandar(0,"Pendiente"));
-        ListaEstados.add(new CategoriasEstandar(1,"Aceptado"));
-        ListaEstados.add(new CategoriasEstandar(2,"Picking"));
-        ListaEstados.add(new CategoriasEstandar(3,"Cancelado"));
-        ListaEstados.add(new CategoriasEstandar(4,"Despachado"));
-        ListaEstados.add(new CategoriasEstandar(5,"Entregado"));
-        ListaEstados.add(new CategoriasEstandar(6,"Rechazado por punto"));
+        ListaEstados.add(new CategoriasEstandar(-1, "Seleccionar"));
+        ListaEstados.add(new CategoriasEstandar(0, "Pendiente"));
+        ListaEstados.add(new CategoriasEstandar(1, "Aceptado"));
+        ListaEstados.add(new CategoriasEstandar(2, "Picking"));
+        ListaEstados.add(new CategoriasEstandar(3, "Cancelado"));
+        ListaEstados.add(new CategoriasEstandar(4, "Despachado"));
+        ListaEstados.add(new CategoriasEstandar(5, "Entregado"));
+        ListaEstados.add(new CategoriasEstandar(6, "Rechazado por punto"));
 
-        ArrayAdapter<CategoriasEstandar> adapterEstados = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner,ListaEstados);
+        ArrayAdapter<CategoriasEstandar> adapterEstados = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, ListaEstados);
         spinner_estado.setAdapter(adapterEstados);
         spinner_estado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -254,7 +256,8 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
         setupGrid();
@@ -264,13 +267,13 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_filtros_puntos");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSON(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -293,7 +296,7 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -324,9 +327,9 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
             } finally {
                 alertDialog.dismiss();
             }
-        }else{
+        } else {
             alertDialog.dismiss();
-            Toast.makeText(getContext(),"No se encontraron datos para mostrar",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No se encontraron datos para mostrar", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -342,21 +345,25 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
 
     private void loadZona(final List<Zona> zonas) {
         ArrayAdapter<Zona> prec3 = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, zonas);
-        spinner_ruta.setAdapter(prec3);;
+        spinner_ruta.setAdapter(prec3);
+        ;
         spinner_ruta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ruta = zonas.get(position).getId();
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 
@@ -365,19 +372,19 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd) {
 
-        monthOfYear = (monthOfYear+1);
+        monthOfYear = (monthOfYear + 1);
 
         if (fecha_idicador) {
-            fecha_inicial.setText(year+"/"+monthOfYear+"/"+dayOfMonth);
+            fecha_inicial.setText(year + "/" + monthOfYear + "/" + dayOfMonth);
             dia_inicial = converFecha(year, monthOfYear, dayOfMonth);
         } else {
-            fecha_final.setText(year+"/"+monthOfYear+"/"+dayOfMonth);
+            fecha_final.setText(year + "/" + monthOfYear + "/" + dayOfMonth);
             dia_final = converFecha(year, monthOfYear, dayOfMonth);
         }
     }
 
 
-    public Date converFecha(int year, int mes, int dia){
+    public Date converFecha(int year, int mes, int dia) {
 
         Calendar calendar = new GregorianCalendar(year, mes, dia);
         Date fecha = new Date(calendar.getTimeInMillis());

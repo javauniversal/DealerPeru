@@ -84,13 +84,13 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
         rq = Volley.newRequestQueue(this);
 
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         RespuestaCorreo(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -128,7 +128,7 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
 
     private void RespuestaCorreo(String response) {
 
-        if(!response.equals("")) {
+        if (!response.equals("")) {
 
             switch (response) {
                 case "1":
@@ -146,13 +146,15 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
             }
 
         } else {
-            Toast.makeText(this,"No pudo enviar el correo",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "No pudo enviar el correo", Toast.LENGTH_LONG).show();
         }
 
         alertDialog.dismiss();
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     private boolean isValidNumberEmail(String number) {
 
@@ -165,12 +167,12 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
         return Resultado.find();
     }
 
-    private void loginServices(){
+    private void loginServices() {
         alertDialog.show();
-        String url = String.format("%1$s%2$s", getString(R.string.url_base),"login_user");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "login_user");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // response
@@ -178,7 +180,7 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
 
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -262,7 +264,7 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
 
         gpsServices = new GpsServices(this);
@@ -280,7 +282,7 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
                     if (isValidNumber(editUsuario.getText().toString().trim())) {
                         editUsuario.setError("Campo requerido");
                         editUsuario.requestFocus();
-                    } else if (isValidNumber(editPassword.getText().toString().trim())){
+                    } else if (isValidNumber(editPassword.getText().toString().trim())) {
                         editPassword.setError("Campo requerido");
                         editPassword.requestFocus();
                     } else {

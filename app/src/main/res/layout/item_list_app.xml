@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp" >
+    android:padding="8dp">
 
     <ImageView
         android:id="@+id/image_departamento"
@@ -12,7 +12,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="3dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/app_name" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,19 +29,17 @@
             android:id="@+id/title"
             android:textAllCaps="true"
             android:layout_marginLeft="26dp"
-            android:text="Hola"
-            android:textSize="@dimen/dimen_letra_app_titulo"
-            android:layout_centerVertical="true" />
+            android:text="@string/hota"
+            android:textSize="@dimen/dimen_letra_app_titulo" />
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sub"
-            android:text="Hola"
+            android:text="@string/hota"
             android:layout_marginLeft="26dp"
-            android:textSize="@dimen/dimen_letra_app_estandar"
-            android:layout_centerVertical="true" />
+            android:textSize="@dimen/dimen_letra_app_estandar" />
 
     </LinearLayout>
 
@@ -50,7 +49,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:tint="@color/colorPrimary"
-        android:src="@drawable/ic_radio_button_unchecked_black_24dp"/>
+        android:src="@drawable/ic_radio_button_unchecked_black_24dp"
+        android:contentDescription="@string/app_name" />
 
 
 </RelativeLayout>

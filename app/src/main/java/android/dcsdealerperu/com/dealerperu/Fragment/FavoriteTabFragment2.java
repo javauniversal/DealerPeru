@@ -81,13 +81,13 @@ public class FavoriteTabFragment2 extends BaseVolleyFragment {
 
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "rutero");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSON(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -110,7 +110,7 @@ public class FavoriteTabFragment2 extends BaseVolleyFragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -136,7 +136,7 @@ public class FavoriteTabFragment2 extends BaseVolleyFragment {
 
                 final ListHome listHome = gson.fromJson(response, ListHome.class);
 
-                txtFinal.setText(listHome.size()+"");
+                txtFinal.setText(listHome.size() + "");
 
                 new Thread(new Runnable() {
                     public void run() {
@@ -146,29 +146,29 @@ public class FavoriteTabFragment2 extends BaseVolleyFragment {
                             if (listHome.get(mProgressStatus).getTipo_visita() == 1 || listHome.get(mProgressStatus).getTipo_visita() == 2)
                                 visitasTotal++;
 
-                            if (listHome.get(mProgressStatus).getTipo_visita() == 1)
+                            if (listHome.get(mProgressStatus).getTipo_visita() == 2)
                                 totalConPedido++;
 
                             // Update the progress bar
                             mHandler.post(new Runnable() {
                                 public void run() {
                                     // Progress 1
-                                    float promedio = (float)visitasTotal / (float) listHome.size();
+                                    float promedio = (float) visitasTotal / (float) listHome.size();
                                     promedio = promedio * 100;
                                     mProgress.setProgress((int) promedio);
-                                    txtPromedio.setText(visitasTotal+"");
+                                    txtPromedio.setText(visitasTotal + "");
 
                                     // Progress 2
-                                    txtFinalPedido.setText(visitasTotal+"");
-                                    txtPromediopedido.setText(totalConPedido+"");
-                                    float promedio2 = (float)totalConPedido / (float) visitasTotal;
+                                    txtFinalPedido.setText(visitasTotal + "");
+                                    txtPromediopedido.setText(totalConPedido + "");
+                                    float promedio2 = (float) totalConPedido / (float) visitasTotal;
 
-                                    promedio2 = promedio2*100;
+                                    promedio2 = promedio2 * 100;
 
                                     progressBar2.setProgress((int) promedio2);
 
-                                    txtPorCum.setText((int)promedio+"%");
-                                    txtPorEfec.setText((int)promedio2+"%");
+                                    txtPorCum.setText((int) promedio + "%");
+                                    txtPorEfec.setText((int) promedio2 + "%");
 
                                 }
                             });
@@ -178,7 +178,7 @@ public class FavoriteTabFragment2 extends BaseVolleyFragment {
                     }
                 }).start();
 
-            }  catch (IllegalStateException ex) {
+            } catch (IllegalStateException ex) {
                 ex.printStackTrace();
             } finally {
 

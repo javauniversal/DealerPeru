@@ -90,7 +90,7 @@ public class ActPlanificarOrdenar extends AppCompatActivity {
 
         mItemArray = new ArrayList<>();
         for (int i = 0; i < mDescribable.size(); i++) {
-            mItemArray.add(new Pair<>(Long.valueOf(mDescribable.get(i).getId_pos()), mDescribable.get(i).getId_pos() + " -- " +mDescribable.get(i).getRazon_social()));
+            mItemArray.add(new Pair<>(Long.valueOf(mDescribable.get(i).getId_pos()), mDescribable.get(i).getId_pos() + " -- " + mDescribable.get(i).getRazon_social()));
         }
 
         setupListRecyclerView();
@@ -125,17 +125,17 @@ public class ActPlanificarOrdenar extends AppCompatActivity {
 
     private void loginServices() {
         alertDialog.show();
-        String url = String.format("%1$s%2$s", getString(R.string.url_base),"guardar_planificacion");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "guardar_planificacion");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // response
                         parseJSON(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -166,7 +166,7 @@ public class ActPlanificarOrdenar extends AppCompatActivity {
                 for (int i = 0; i < mDragListView.getAdapter().getItemList().size(); i++) {
                     responseMarcarPedido = new ResponseMarcarPedido();
 
-                    responseMarcarPedido.setId_pos((int)mDragListView.getRecyclerView().getAdapter().getItemId(i));
+                    responseMarcarPedido.setId_pos((int) mDragListView.getRecyclerView().getAdapter().getItemId(i));
                     responseMarcarPedido.setPuntoPlanificacion(i);
 
                     list.add(responseMarcarPedido);

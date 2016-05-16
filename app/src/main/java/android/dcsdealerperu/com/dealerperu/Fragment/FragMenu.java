@@ -109,7 +109,7 @@ public class FragMenu extends BaseVolleyFragmentSoport {
                         // create "delete" item
                         SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity());
                         // set item background
-                        deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,0x3F, 0x25)));
+                        deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9, 0x3F, 0x25)));
                         // set item width
                         deleteItem.setWidth(dp2px(90));
                         // set a icon
@@ -175,13 +175,13 @@ public class FragMenu extends BaseVolleyFragmentSoport {
 
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "rutero");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSON(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -204,7 +204,7 @@ public class FragMenu extends BaseVolleyFragmentSoport {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -231,7 +231,7 @@ public class FragMenu extends BaseVolleyFragmentSoport {
                 ListHome listHome = gson.fromJson(response, ListHome.class);
                 llenarData(listHome);
 
-            }  catch (IllegalStateException ex) {
+            } catch (IllegalStateException ex) {
                 ex.printStackTrace();
                 alertDialog.dismiss();
             } finally {

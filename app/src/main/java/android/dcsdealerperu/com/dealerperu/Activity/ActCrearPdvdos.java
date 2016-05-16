@@ -53,7 +53,7 @@ import static android.dcsdealerperu.com.dealerperu.Entry.DataDireccionForm.setEs
 import static android.dcsdealerperu.com.dealerperu.Entry.DataDireccionForm.setTerritorioList;
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
-public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickListener{
+public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickListener {
 
     private Button btn_siguiente_dir;
     private Button btn_regresar_dir;
@@ -93,6 +93,7 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
 
     private RequestQueue rq;
     public static final String TAG = "MyTag";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -369,7 +370,9 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     private boolean isValidTipoVia() {
 
@@ -399,7 +402,7 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
         if (isValidTipoVia()) {
             Toast.makeText(this, "Ingrese datos en algunas de estas opciones Vivienda, Interior o Urbanización", Toast.LENGTH_LONG).show();
             indicadorValidate = true;
-        } else if(isValidTipoVia2(edit_nombre_via.getText().toString().trim())) {
+        } else if (isValidTipoVia2(edit_nombre_via.getText().toString().trim())) {
             edit_nombre_via.setFocusable(true);
             edit_nombre_via.setFocusableInTouchMode(true);
             edit_nombre_via.requestFocus();
@@ -441,19 +444,19 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
             edit_descripcion.setText("");
             edit_descripcion.setError("Este campo es obligatorio");
             indicadorValidate = true;
-        } else if(departamento == 0){
+        } else if (departamento == 0) {
             spinner_departamento.setFocusable(true);
             spinner_departamento.setFocusableInTouchMode(true);
             spinner_departamento.requestFocus();
             Toast.makeText(this, "El campo departamento es obligatorio", Toast.LENGTH_SHORT).show();
             indicadorValidate = true;
-        } else if(ciudad_pro == 0){
+        } else if (ciudad_pro == 0) {
             spinner_departamento.setFocusable(true);
             spinner_departamento.setFocusableInTouchMode(true);
             spinner_departamento.requestFocus();
             Toast.makeText(this, "El campo Provincia es obligatorio", Toast.LENGTH_SHORT).show();
             indicadorValidate = true;
-        }else if(distrito == 0){
+        } else if (distrito == 0) {
             spinner_departamento.setFocusable(true);
             spinner_departamento.setFocusableInTouchMode(true);
             spinner_departamento.requestFocus();
@@ -466,7 +469,7 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
     }
 
     public void ConcatProducts(String data1, String data2, String data3, String data4, String data5, String data6,
-                               String data7, String data8, String data9, String data10 ,String data11, String data12, String data13) {
+                               String data7, String data8, String data9, String data10, String data11, String data12, String data13) {
 
         StringBuilder value = new StringBuilder();
 
@@ -532,13 +535,13 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_filtros_puntos");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSON(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -561,7 +564,7 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -596,7 +599,7 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
                 loadCiudadTipo(responseCreatePunt.getNomenclaturaList().getTipoCiudadList());
                 loadTipoVivienda(responseCreatePunt.getNomenclaturaList().getTipoViviendaList());
 
-                if(mDescribable.getAccion().equals("Editar")) {
+                if (mDescribable.getAccion().equals("Editar")) {
                     setearSpinners();
                 }
 
@@ -626,8 +629,8 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
     }
 
     private void setSpinerCiuPoblado(List<TipoCiudad> tipoCiudadList, Spinner spinner_ciudad_poblado, CategoriasEstandar ciuEnt) {
-        for(int i = 0; i < tipoCiudadList.size(); i++) {
-            if(tipoCiudadList.get(i).getId() == ciuEnt.getId()) {
+        for (int i = 0; i < tipoCiudadList.size(); i++) {
+            if (tipoCiudadList.get(i).getId() == ciuEnt.getId()) {
                 spinner_ciudad_poblado.setSelection(i);
                 break;
             }
@@ -635,8 +638,8 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
     }
 
     private void setSpinerUrbanizacion(List<TipoUrbanizacion> tipoUrbanizacionList, Spinner spinner_urbanizacion, CategoriasEstandar urbaEnt) {
-        for(int i = 0; i < tipoUrbanizacionList.size(); i++) {
-            if(tipoUrbanizacionList.get(i).getId() == urbaEnt.getId()) {
+        for (int i = 0; i < tipoUrbanizacionList.size(); i++) {
+            if (tipoUrbanizacionList.get(i).getId() == urbaEnt.getId()) {
                 spinner_urbanizacion.setSelection(i);
                 break;
             }
@@ -644,8 +647,8 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
     }
 
     private void setSpinerTipoInterior(List<TipoInterior> tipoInteriorList, Spinner spinner_tipo_interior, CategoriasEstandar interEnt) {
-        for(int i = 0; i < tipoInteriorList.size(); i++) {
-            if(tipoInteriorList.get(i).getId() == interEnt.getId()) {
+        for (int i = 0; i < tipoInteriorList.size(); i++) {
+            if (tipoInteriorList.get(i).getId() == interEnt.getId()) {
                 spinner_tipo_interior.setSelection(i);
                 break;
             }
@@ -653,8 +656,8 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
     }
 
     private void setSpinerTipoViVienda(List<TipoVivienda> tipoViviendaList, Spinner spinner_tipo_vivienda, CategoriasEstandar vivendaEnt) {
-        for(int i = 0; i < tipoViviendaList.size(); i++) {
-            if(tipoViviendaList.get(i).getId() == vivendaEnt.getId()) {
+        for (int i = 0; i < tipoViviendaList.size(); i++) {
+            if (tipoViviendaList.get(i).getId() == vivendaEnt.getId()) {
                 spinner_tipo_vivienda.setSelection(i);
                 break;
             }
@@ -662,8 +665,8 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
     }
 
     private void setSpinerTipoVia(List<TipoVia> tipoViaList, Spinner spinner_tipo, CategoriasEstandar tipo_via) {
-        for(int i = 0; i < tipoViaList.size(); i++) {
-            if(tipoViaList.get(i).getId() == tipo_via.getId()) {
+        for (int i = 0; i < tipoViaList.size(); i++) {
+            if (tipoViaList.get(i).getId() == tipo_via.getId()) {
                 spinner_tipo.setSelection(i);
                 break;
             }
@@ -671,8 +674,8 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
     }
 
     private void setSpinerDepartamento(List<Departamentos> departamentosList, Spinner spinner, int id) {
-        for(int i = 0; i < departamentosList.size(); i++) {
-            if(departamentosList.get(i).getId() == id) {
+        for (int i = 0; i < departamentosList.size(); i++) {
+            if (departamentosList.get(i).getId() == id) {
                 spinner.setSelection(i);
                 break;
             }
@@ -680,7 +683,7 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
     }
 
     private void setSpinerProvincia(List<Ciudad> listCiudad, Spinner spinner, int id_pro) {
-        for(int i = 0; i < listCiudad.size(); i++) {
+        for (int i = 0; i < listCiudad.size(); i++) {
             if (listCiudad.get(i).getId() == id_pro) {
                 spinner.setSelection(i);
                 break;
@@ -690,11 +693,11 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
 
     private void setSpinerDistrito(List<Distrito> lisdistrito, Spinner spinner, int id_distrito) {
 
-        for(int i = 0; i < lisdistrito.size(); i++) {
-           if(lisdistrito.get(i).getId() == id_distrito) {
-               spinner.setSelection(i);
-               break;
-           }
+        for (int i = 0; i < lisdistrito.size(); i++) {
+            if (lisdistrito.get(i).getId() == id_distrito) {
+                spinner.setSelection(i);
+                break;
+            }
         }
     }
 
@@ -719,7 +722,7 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
                     data6 = tipoViviendaList.get(position).getSiglas();
                     ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
 
-                    if(mDescribable.getAccion().equals("Editar")) {
+                    if (mDescribable.getAccion().equals("Editar")) {
                         edit_numero_vivienda.setText(String.format("%1$s", mDescribable.getVivendaEnt().descripcion));
                     }
                 }
@@ -727,7 +730,8 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -750,7 +754,7 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
                     liner_ciudad_poblado.setVisibility(View.VISIBLE);
                     data12 = tipoCiudadList.get(position).getSiglas();
                     ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
-                    if(mDescribable.getAccion().equals("Editar")) {
+                    if (mDescribable.getAccion().equals("Editar")) {
                         edit_descripcion.setText(String.format("%1$s", mDescribable.getCiuEnt().descripcion));
                     }
                 }
@@ -758,7 +762,8 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 
@@ -783,7 +788,7 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
                     data10 = tipoUrbanizacionList.get(position).getSiglas();
                     ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
 
-                    if(mDescribable.getAccion().equals("Editar")) {
+                    if (mDescribable.getAccion().equals("Editar")) {
                         edit_urbanizacion.setText(String.format("%1$s", mDescribable.getUrbaEnt().descripcion));
                     }
 
@@ -792,7 +797,8 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 
@@ -815,14 +821,15 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
                     liner_tipo_interior.setVisibility(View.VISIBLE);
                     data8 = tipoInteriorList.get(position).getSiglas();
                     ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
-                    if(mDescribable.getAccion().equals("Editar")) {
+                    if (mDescribable.getAccion().equals("Editar")) {
                         edit_numero_interior.setText(String.format("%1$s", mDescribable.getInterEnt().descripcion));
                     }
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -848,7 +855,7 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
                     layouttipovia.setVisibility(View.VISIBLE);
                     data1 = estadoComunList.get(position).getSiglas();
                     ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
-                    if(mDescribable.getAccion().equals("Editar")) {
+                    if (mDescribable.getAccion().equals("Editar")) {
 
                         edit_nombre_via.setText(String.format("%1$s", mDescribable.getViaEnt().descripcion));
                         edit_numero_puerta.setText(String.format("%1$s", mDescribable.getViaEnt().descripcion1));
@@ -861,7 +868,8 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 
@@ -880,7 +888,8 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -897,11 +906,12 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 
-        if(mDescribable.getAccion().equals("Editar"))
+        if (mDescribable.getAccion().equals("Editar"))
             setSpinerProvincia(departamentos.getCiudadList(), spinner_provincia, mDescribable.getCiudad());
 
     }
@@ -917,10 +927,11 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
-        if(mDescribable.getAccion().equals("Editar"))
+        if (mDescribable.getAccion().equals("Editar"))
             setSpinerDistrito(distritoList, spinner_distrito, mDescribable.getDistrito());
 
     }

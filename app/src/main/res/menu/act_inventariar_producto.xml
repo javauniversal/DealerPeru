@@ -7,8 +7,7 @@
         android:orderInCategory="100"
         android:icon="@drawable/ic_save_white_24dp"
         android:title="Guardar"
-        app:showAsAction="ifRoom"
-        />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/act_buscar"

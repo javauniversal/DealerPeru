@@ -15,7 +15,7 @@ public class AppAdapterRutero extends BaseAdapter {
     private Activity actx;
     ListHome data;
 
-    public AppAdapterRutero(Activity actx, ListHome data){
+    public AppAdapterRutero(Activity actx, ListHome data) {
         this.actx = actx;
         this.data = data;
 
@@ -54,12 +54,12 @@ public class AppAdapterRutero extends BaseAdapter {
         holder.title.setText(responseHome.getRazon());
         holder.sub.setText(responseHome.getDireccion());
 
-        if(responseHome.getTipo_visita() == 1) {
+        if (responseHome.getTipo_visita() == 1) {
             holder.img_estado_visita.setImageResource(R.drawable.ic_radio_button_checked_black_24dp);
         } else {
             holder.img_estado_visita.setImageResource(R.drawable.ic_radio_button_unchecked_black_24dp);
         }
-        if(responseHome.getRutero() == 1){
+        if (responseHome.getRutero() == 1) {
             holder.image_departamento.setVisibility(View.INVISIBLE);
         }
 

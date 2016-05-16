@@ -15,11 +15,12 @@ public class AdapterDialogMisBajas extends BaseAdapter {
     private Activity actx;
     List<MisBajasDetalle2> data;
 
-    public AdapterDialogMisBajas(Activity actx, List<MisBajasDetalle2> data){
+    public AdapterDialogMisBajas(Activity actx, List<MisBajasDetalle2> data) {
         this.actx = actx;
         this.data = data;
 
     }
+
     @Override
     public int getCount() {
         if (data == null) {
@@ -48,7 +49,7 @@ public class AdapterDialogMisBajas extends BaseAdapter {
 
         ViewHolder holder = (ViewHolder) convertView.getTag();
 
-        MisBajasDetalle2 resMis =  getItem(position);
+        MisBajasDetalle2 resMis = getItem(position);
 
         holder.serie.setText(resMis.getSerie());
 

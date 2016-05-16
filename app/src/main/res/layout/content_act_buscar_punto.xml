@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -32,124 +31,124 @@
                 android:layout_marginBottom="79dp"
                 android:orientation="vertical">
 
-                    <RelativeLayout
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="18dp">
+
+                    <ImageView
+                        android:id="@+id/image_punto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_vpn_key_black_24dp"
+                        android:tint="@color/colorPrimary"
+                        android:contentDescription="@string/app_name" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_idpos"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_toEndOf="@+id/image_punto"
+                        android:layout_toRightOf="@+id/image_punto">
 
-                        <ImageView
-                            android:id="@+id/image_punto"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_location_city_black_24dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
-
-
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/input_idpos"
+                        <EditText
+                            android:id="@+id/edit_idpos"
                             android:layout_width="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@+id/image_punto"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/image_punto">
+                            android:layout_height="match_parent"
+                            android:hint="@string/id_pos"
+                            android:inputType="number"
+                            android:textSize="@dimen/dimen_letra_app_estandar" />
 
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:id="@+id/edit_idpos"
-                                android:hint="Id Pos"
-                                android:textSize="@dimen/dimen_letra_app_estandar"
-                                android:inputType="number" />
+                    </android.support.design.widget.TextInputLayout>
 
-                        </android.support.design.widget.TextInputLayout>
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
-
-                        <ImageView
-                            android:id="@+id/image_cedula"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_assignment_black_24dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
-
-
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/input_cedula"
-                            android:layout_width="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@+id/image_cedula"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/image_cedula">
-
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:id="@+id/edit_cedula"
-                                android:hint="Cédula"
-                                android:textSize="@dimen/dimen_letra_app_estandar"
-                                android:inputType="text" />
-
-                        </android.support.design.widget.TextInputLayout>
-
-                    </RelativeLayout>
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp">
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="18dp">
+
+                    <ImageView
+                        android:id="@+id/image_cedula"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_assignment_black_24dp"
+                        android:contentDescription="@string/app_name"
+                        android:tint="@color/colorPrimary" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_cedula"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_toEndOf="@+id/image_cedula"
+                        android:layout_toRightOf="@+id/image_cedula">
+
+                        <EditText
+                            android:id="@+id/edit_cedula"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="@string/c_dula"
+                            android:inputType="text"
+                            android:textSize="@dimen/dimen_letra_app_estandar" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="18dp">
 
                     <ImageView
                         android:id="@+id/image_nombre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tint="@color/colorPrimary"
-                        android:src="@drawable/ic_person_pin_black_24dp"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true" />
-
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_person_pin_black_24dp"
+                        android:tint="@color/colorPrimary" />
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/input_nombre"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_toEndOf="@+id/image_nombre"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
                         android:layout_toRightOf="@+id/image_nombre">
 
                         <EditText
+                            android:id="@+id/edit_nombre"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/edit_nombre"
-                            android:hint="Nombre"
-                            android:textSize="@dimen/dimen_letra_app_estandar"
-                            android:inputType="text" />
+                            android:hint="@string/nombre"
+                            android:inputType="text"
+                            android:textSize="@dimen/dimen_letra_app_estandar" />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -159,10 +158,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textStyle="bold"
-                    android:textSize="10sp"
+                    android:text="@string/departamento"
                     android:textColor="@color/colorAccent"
-                    android:text="Departamento" />
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -175,46 +174,46 @@
                         android:id="@+id/image_depto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tint="@color/colorPrimary"
-                        android:src="@drawable/ic_location_city_black_24dp"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true" />
-
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_location_city_black_24dp"
+                        android:tint="@color/colorPrimary" />
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/input_depto"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_toEndOf="@+id/image_depto"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
                         android:layout_toRightOf="@+id/image_depto">
 
                         <Spinner
+                            android:id="@+id/spinner_depto"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/spinner_depto"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_distrito"
-                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:layout_toRightOf="@+id/image_distrito"
-                            android:layout_marginLeft="8dp" />
+                            android:textSize="@dimen/dimen_letra_app_estandar" />
 
                     </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textStyle="bold"
-                    android:textSize="10sp"
+                    android:text="@string/provincia"
                     android:textColor="@color/colorAccent"
-                    android:text="Provincia" />
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -226,46 +225,46 @@
                         android:id="@+id/image_provincia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tint="@color/colorPrimary"
-                        android:src="@drawable/ic_location_city_black_24dp"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true" />
-
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_location_city_black_24dp"
+                        android:tint="@color/colorPrimary" />
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/input_provincia"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_toEndOf="@+id/image_provincia"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
                         android:layout_toRightOf="@+id/image_provincia">
 
                         <Spinner
+                            android:id="@+id/spinner_provincia"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/spinner_provincia"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_distrito"
-                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:layout_toRightOf="@+id/image_distrito"
-                            android:layout_marginLeft="8dp" />
+                            android:textSize="@dimen/dimen_letra_app_estandar" />
 
                     </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textStyle="bold"
-                    android:textSize="10sp"
+                    android:text="@string/distrito"
                     android:textColor="@color/colorAccent"
-                    android:text="Distrito" />
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -277,32 +276,33 @@
                         android:id="@+id/image_distrito"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tint="@color/colorPrimary"
-                        android:src="@drawable/ic_location_city_black_24dp"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true" />
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_location_city_black_24dp"
+                        android:tint="@color/colorPrimary" />
 
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/input_distrito"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_toEndOf="@+id/image_distrito"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
                         android:layout_toRightOf="@+id/image_distrito">
 
                         <Spinner
+                            android:id="@+id/spinner_distrito"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/spinner_distrito"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_distrito"
-                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:layout_toRightOf="@+id/image_distrito"
-                            android:layout_marginLeft="8dp" />
+                            android:textSize="@dimen/dimen_letra_app_estandar" />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -312,10 +312,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textStyle="bold"
-                    android:textSize="10sp"
+                    android:text="@string/circuito"
                     android:textColor="@color/colorAccent"
-                    android:text="Circuito" />
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -327,32 +328,33 @@
                         android:id="@+id/image_circuito"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tint="@color/colorPrimary"
-                        android:src="@drawable/ic_location_city_black_24dp"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true" />
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_location_city_black_24dp"
+                        android:tint="@color/colorPrimary" />
 
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/input_circuito"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_toEndOf="@+id/image_circuito"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
                         android:layout_toRightOf="@+id/image_circuito">
 
                         <Spinner
+                            android:id="@+id/spinner_circuito"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/spinner_circuito"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_distrito"
-                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:layout_toRightOf="@+id/image_distrito"
-                            android:layout_marginLeft="8dp" />
+                            android:textSize="@dimen/dimen_letra_app_estandar" />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -361,10 +363,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="10sp"
+                    android:text="@string/ruta"
                     android:textColor="@color/colorAccent"
-                    android:text="Ruta" />
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -376,32 +379,33 @@
                         android:id="@+id/image_ruta"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tint="@color/colorPrimary"
-                        android:src="@drawable/ic_location_city_black_24dp"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true" />
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_location_city_black_24dp"
+                        android:tint="@color/colorPrimary" />
 
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/input_ruta"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_toEndOf="@+id/image_ruta"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
                         android:layout_toRightOf="@+id/image_ruta">
 
                         <Spinner
+                            android:id="@+id/spinner_ruta"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/spinner_ruta"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_distrito"
-                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:layout_toRightOf="@+id/image_distrito"
-                            android:layout_marginLeft="8dp" />
+                            android:textSize="@dimen/dimen_letra_app_estandar" />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -410,10 +414,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="10sp"
+                    android:text="@string/estado_comercial"
                     android:textColor="@color/colorAccent"
-                    android:text="Estado Comercial" />
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -425,35 +430,34 @@
                         android:id="@+id/image_est_comercial"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tint="@color/colorPrimary"
-                        android:src="@drawable/ic_location_city_black_24dp"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true" />
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_location_city_black_24dp"
+                        android:tint="@color/colorPrimary" />
 
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/input_est_comercial"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_toEndOf="@+id/image_est_comercial"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
                         android:layout_toRightOf="@+id/image_est_comercial">
 
                         <Spinner
+                            android:id="@+id/spinner_est_comercial"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/spinner_est_comercial"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_distrito"
-                            android:textSize="@dimen/dimen_letra_app_estandar"
                             android:layout_toRightOf="@+id/image_distrito"
-                            android:layout_marginLeft="8dp" />
-
+                            android:textSize="@dimen/dimen_letra_app_estandar" />
                     </android.support.design.widget.TextInputLayout>
-
                 </RelativeLayout>
 
             </LinearLayout>
@@ -461,4 +465,5 @@
         </android.support.v7.widget.CardView>
 
     </LinearLayout>
+
 </ScrollView>

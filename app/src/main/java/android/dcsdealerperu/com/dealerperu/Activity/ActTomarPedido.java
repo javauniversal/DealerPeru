@@ -5,12 +5,12 @@ import android.dcsdealerperu.com.dealerperu.Adapter.TabsAdapter;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentCombos;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentSimcardP;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.dcsdealerperu.com.dealerperu.R;
 
 public class ActTomarPedido extends AppCompatActivity {
 
@@ -27,7 +27,7 @@ public class ActTomarPedido extends AppCompatActivity {
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         if (bundle != null) {
-            thumbs = (ResponseMarcarPedido)bundle.getSerializable("value");
+            thumbs = (ResponseMarcarPedido) bundle.getSerializable("value");
         }
 
 

@@ -26,7 +26,7 @@ public class AprobarPunto implements Serializable {
     private int idpdv;
 
     @SerializedName("nombre_vende")
-    private String  nombre_vende;
+    private String nombre_vende;
 
     @SerializedName("id_pos")
     private int id_pos;
@@ -114,6 +114,7 @@ public class AprobarPunto implements Serializable {
     public void setDetalleAprobacionList(List<DetalleAprobacion> detalleAprobacionList) {
         this.detalleAprobacionList = detalleAprobacionList;
     }
+
     public String getFecha_accion() {
         return fecha_accion;
     }
@@ -129,6 +130,7 @@ public class AprobarPunto implements Serializable {
     public void setHora_accion(String hora_accion) {
         this.hora_accion = hora_accion;
     }
+
     public String getNombre_punto() {
         return nombre_punto;
     }

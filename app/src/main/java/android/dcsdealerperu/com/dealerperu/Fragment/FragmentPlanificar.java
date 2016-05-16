@@ -1,17 +1,15 @@
 package android.dcsdealerperu.com.dealerperu.Fragment;
 
 import android.content.Intent;
-import android.dcsdealerperu.com.dealerperu.Activity.ActMarcarVisita;
 import android.dcsdealerperu.com.dealerperu.Activity.ActPlanificarOrdenar;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.ListResponsePlaniVisita;
-import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -52,7 +50,8 @@ public class FragmentPlanificar extends BaseVolleyFragment implements View.OnCli
     private LinearLayout liner_tipo;
     private SpotsDialog alertDialog;
 
-    public FragmentPlanificar() { }
+    public FragmentPlanificar() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,10 +85,10 @@ public class FragmentPlanificar extends BaseVolleyFragment implements View.OnCli
 
         dataSpinnerPla = new ArrayList<>();
 
-        dataSpinnerPla.add(new CategoriasEstandar(0,"SELECCIONAR"));
-        dataSpinnerPla.add(new CategoriasEstandar(1,"Planificación Manual"));
-        dataSpinnerPla.add(new CategoriasEstandar(2,"Planificación días de Inventario"));
-        dataSpinnerPla.add(new CategoriasEstandar(3,"Planificación Promedio de Ventas"));
+        dataSpinnerPla.add(new CategoriasEstandar(0, "SELECCIONAR"));
+        dataSpinnerPla.add(new CategoriasEstandar(1, "Planificación Manual"));
+        dataSpinnerPla.add(new CategoriasEstandar(2, "Planificación días de Inventario"));
+        dataSpinnerPla.add(new CategoriasEstandar(3, "Planificación Promedio de Ventas"));
 
         ArrayAdapter<CategoriasEstandar> adapterEstados = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, dataSpinnerPla);
         spinner_planificacion.setAdapter(adapterEstados);
@@ -104,8 +103,10 @@ public class FragmentPlanificar extends BaseVolleyFragment implements View.OnCli
                     spinner_tipo.setSelection(0);
                 }
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
@@ -114,10 +115,10 @@ public class FragmentPlanificar extends BaseVolleyFragment implements View.OnCli
 
         dataSpinnerTip = new ArrayList<>();
 
-        dataSpinnerTip.add(new CategoriasEstandar(0,"SELECCIONAR"));
-        dataSpinnerTip.add(new CategoriasEstandar(1,"Combos"));
-        dataSpinnerTip.add(new CategoriasEstandar(2,"Simcard"));
-        dataSpinnerTip.add(new CategoriasEstandar(3,"Ambos"));
+        dataSpinnerTip.add(new CategoriasEstandar(0, "SELECCIONAR"));
+        dataSpinnerTip.add(new CategoriasEstandar(1, "Combos"));
+        dataSpinnerTip.add(new CategoriasEstandar(2, "Simcard"));
+        dataSpinnerTip.add(new CategoriasEstandar(3, "Ambos"));
 
         ArrayAdapter<CategoriasEstandar> adapterEstados = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, dataSpinnerTip);
         spinner_tipo.setAdapter(adapterEstados);
@@ -129,12 +130,13 @@ public class FragmentPlanificar extends BaseVolleyFragment implements View.OnCli
                     liner_tipo.setVisibility(View.VISIBLE);
                 }
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
-
 
 
     @Override
@@ -145,7 +147,7 @@ public class FragmentPlanificar extends BaseVolleyFragment implements View.OnCli
                 if (idPlanificacion == 0) {
                     Toast.makeText(getActivity(), "Por favor seleccione un parametro", Toast.LENGTH_LONG).show();
                 } else if (liner_tipo.getVisibility() == View.VISIBLE && idtipo == 0) {
-                        Toast.makeText(getActivity(), "Por favor selecciones un tipo", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Por favor selecciones un tipo", Toast.LENGTH_LONG).show();
                 } else {
                     getPlanificar();
                 }
@@ -158,13 +160,13 @@ public class FragmentPlanificar extends BaseVolleyFragment implements View.OnCli
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "planifica_visita");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSON(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -187,7 +189,7 @@ public class FragmentPlanificar extends BaseVolleyFragment implements View.OnCli
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("tipo", String.valueOf(idPlanificacion));
@@ -208,7 +210,6 @@ public class FragmentPlanificar extends BaseVolleyFragment implements View.OnCli
         Gson gson = new Gson();
         if (!response.equals("[]")) {
             try {
-
 
                 ListResponsePlaniVisita responseMarcarPedido = gson.fromJson(response, ListResponsePlaniVisita.class);
 

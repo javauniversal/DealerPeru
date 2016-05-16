@@ -11,6 +11,7 @@ public abstract class DragItemAdapterCostume<T, VH extends DragItemAdapterCostum
 
     interface DragStartCallback {
         boolean startDrag(View itemView, long itemId);
+
         boolean isDragging();
     }
 

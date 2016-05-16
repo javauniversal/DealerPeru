@@ -12,7 +12,7 @@ public class ResponseInventario implements Serializable {
     private int tipon;
 
     @SerializedName("tipo")
-    private  String tipo;
+    private String tipo;
 
     @SerializedName("producto")
     private String producto;

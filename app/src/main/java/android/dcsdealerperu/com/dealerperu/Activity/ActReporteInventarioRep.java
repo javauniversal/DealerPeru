@@ -48,7 +48,7 @@ public class ActReporteInventarioRep extends AppCompatActivity {
         expandableListDetail = ExpandableListInventarioRep.getData(mDescribable.getReferencias());
         expandableListTitle = new ArrayList<>(expandableListDetail.keySet());
 
-        expandableListAdapter = new ExpandableListAdapterReporteInv(this, expandableListTitle, expandableListDetail,tipo);
+        expandableListAdapter = new ExpandableListAdapterReporteInv(this, expandableListTitle, expandableListDetail, tipo);
         expandableListView.setAdapter(expandableListAdapter);
 
     }

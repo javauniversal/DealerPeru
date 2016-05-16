@@ -97,12 +97,12 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             editaPunto = bundle.getInt("edit_punto");
             accionNav = bundle.getInt("accion");
 
-            if(accionNav == 1) {
+            if (accionNav == 1) {
                 accion = "Editar";
                 onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_gestion_pdv));
             }
 
-            if (accionNav == 2 ) {
+            if (accionNav == 2) {
                 onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_marcar_visita));
             }
 
@@ -143,7 +143,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             accion = "Guardar";
             fragmentClass = FragmentHome.class;
 
-        } else if(id == R.id.nav_marcar_visita) {
+        } else if (id == R.id.nav_marcar_visita) {
             toolbar.setTitle("Marcar Visita");
             editaPunto = 0;
             accion = "Guardar";
@@ -157,7 +157,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             toolbar.setTitle("Aceptar Pedido");
             fragmentClass = FragmentAceptPedido.class;
 
-        } else if(id == R.id.nav_gestion_pdv) {
+        } else if (id == R.id.nav_gestion_pdv) {
             toolbar.setTitle("Gestión PDVS");
 
             Bundle bundle = new Bundle();
@@ -168,35 +168,41 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-        } else if(id == R.id.nav_rutero_vendedor) {
+        } else if (id == R.id.nav_rutero_vendedor) {
             toolbar.setTitle("Mi Rutero");
-            editaPunto = 0; accion = "Guardar";
+            editaPunto = 0;
+            accion = "Guardar";
             fragmentClass = FragmentRuteroVendedor.class;
 
-        } else if(id == R.id.nav_pedido_vendedor) {
+        } else if (id == R.id.nav_pedido_vendedor) {
             toolbar.setTitle("Mis Pedidos");
-            editaPunto = 0; accion = "Guardar";
+            editaPunto = 0;
+            accion = "Guardar";
             fragmentClass = FragmentMisPedidos.class;
 
-        }else if(id == R.id.nav_pedido_super) {
+        } else if (id == R.id.nav_pedido_super) {
             toolbar.setTitle("Reporte de Pedidos");
-            editaPunto = 0; accion = "Guardar";
+            editaPunto = 0;
+            accion = "Guardar";
             fragmentClass = FragmentPedidosSupervisor.class;
 
-        } else if(id == R.id.nav_baja_vendedor) {
+        } else if (id == R.id.nav_baja_vendedor) {
             toolbar.setTitle("Mis Bajas");
-            editaPunto = 0; accion = "Guardar";
+            editaPunto = 0;
+            accion = "Guardar";
             fragmentClass = FragmentMisBajas.class;
 
-        } else if(id == R.id.nav_pdv_aprp) {
+        } else if (id == R.id.nav_pdv_aprp) {
             toolbar.setTitle("Aprobación PDVS");
-            editaPunto = 0; accion = "Guardar";
+            editaPunto = 0;
+            accion = "Guardar";
             fragmentClass = FragmenteAproPdv.class;
-        } else if(id == R.id.nav_aprobaciones_super) {
+        } else if (id == R.id.nav_aprobaciones_super) {
             toolbar.setTitle("Reporte Aprobación PDVS");
-            editaPunto = 0; accion = "Guardar";
+            editaPunto = 0;
+            accion = "Guardar";
             fragmentClass = FragmentReporteAprobacionPdv.class;
-        } else if(id == R.id.nav_cerrar_sesion) {
+        } else if (id == R.id.nav_cerrar_sesion) {
 
             Intent intent = new Intent(this, ActLoginUser.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -213,7 +219,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             editaPunto = 0;
             accion = "Guardar";
             fragmentClass = FragmentBajasSupervisor.class;
-        }else if (id == R.id.nav_inventario) {
+        } else if (id == R.id.nav_inventario) {
             toolbar.setTitle("Mi Inventario");
             editaPunto = 0;
             accion = "Guardar";

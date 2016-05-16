@@ -3,14 +3,12 @@ package android.dcsdealerperu.com.dealerperu.Activity;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Entry.Motivos;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,8 +35,6 @@ import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
 
-import static android.dcsdealerperu.com.dealerperu.Entry.Coordenadas.getLatitud;
-import static android.dcsdealerperu.com.dealerperu.Entry.Coordenadas.getLongitud;
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
 public class ActNoVenta extends AppCompatActivity implements View.OnClickListener {
@@ -80,7 +76,7 @@ public class ActNoVenta extends AppCompatActivity implements View.OnClickListene
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         if (bundle != null) {
-            thumbs = (ResponseMarcarPedido)bundle.getSerializable("value");
+            thumbs = (ResponseMarcarPedido) bundle.getSerializable("value");
             loadCausa(thumbs);
         }
 
@@ -103,12 +99,15 @@ public class ActNoVenta extends AppCompatActivity implements View.OnClickListene
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     @Override
     public void onClick(View v) {
@@ -139,10 +138,10 @@ public class ActNoVenta extends AppCompatActivity implements View.OnClickListene
 
         alertDialog.show();
 
-        String url = String.format("%1$s%2$s", getString(R.string.url_base),"guardar_no_venta");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "guardar_no_venta");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // response
@@ -150,7 +149,7 @@ public class ActNoVenta extends AppCompatActivity implements View.OnClickListene
 
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error

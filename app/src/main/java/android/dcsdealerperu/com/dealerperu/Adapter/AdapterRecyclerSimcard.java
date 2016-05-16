@@ -49,7 +49,7 @@ public class AdapterRecyclerSimcard extends RecyclerView.Adapter<RowViewHolderSi
         final ReferenciasSims items = responseHomeList.get(position);
 
         holder.txt_referemcia.setText(items.getProducto());
-        holder.txtStock.setText(String.format("STOCK  %s",items.getStock()));
+        holder.txtStock.setText(String.format("STOCK  %s", items.getStock()));
 
         holder.btnCatalogoSim.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,9 +61,9 @@ public class AdapterRecyclerSimcard extends RecyclerView.Adapter<RowViewHolderSi
                 TextView dias = (TextView) dialoglayout.findViewById(R.id.txtDias);
                 final EditText numeroCan = (EditText) dialoglayout.findViewById(R.id.editCantidad);
 
-                stock.setText(String.format("%s",items.getStock()));
-                dias.setText(String.format("%s",items.getDias_inve()));
-                numeroCan.setText(String.format("%s",items.getPed_sugerido()));
+                stock.setText(String.format("%s", items.getStock()));
+                dias.setText(String.format("%s", items.getDias_inve()));
+                numeroCan.setText(String.format("%s", items.getPed_sugerido()));
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setCancelable(false);
@@ -95,7 +95,7 @@ public class AdapterRecyclerSimcard extends RecyclerView.Adapter<RowViewHolderSi
                                     holder.txtCantidadPedida.setVisibility(View.VISIBLE);
                                     holder.txtCantidadPedida.setText(String.format("Cantidad %s", cantidad_dig));
 
-                                } else if (resultado.equals("no inserto")){
+                                } else if (resultado.equals("no inserto")) {
                                     Toast.makeText(context, "Problemas al guardar el pedido", Toast.LENGTH_SHORT).show();
                                 } else if (resultado.equals("update")) {
                                     Toast.makeText(context, "Pedido actualizado correctamente", Toast.LENGTH_SHORT).show();
@@ -120,7 +120,9 @@ public class AdapterRecyclerSimcard extends RecyclerView.Adapter<RowViewHolderSi
 
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     @Override
     public long getItemId(int position) {

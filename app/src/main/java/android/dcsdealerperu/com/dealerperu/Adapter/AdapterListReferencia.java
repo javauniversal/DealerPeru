@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.Referencia;
-import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasSims;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
@@ -36,7 +35,7 @@ public class AdapterListReferencia extends BaseAdapter {
     private com.nostra13.universalimageloader.core.ImageLoader imageLoader1;
     private DisplayImageOptions options1;
 
-    public AdapterListReferencia(Activity actx, List<Referencia> data){
+    public AdapterListReferencia(Activity actx, List<Referencia> data) {
         this.actx = actx;
         this.data = data;
         mydb = new DBHelper(actx);
@@ -102,9 +101,9 @@ public class AdapterListReferencia extends BaseAdapter {
                 TextView dias = (TextView) dialoglayout.findViewById(R.id.txtDias);
                 final EditText numeroCan = (EditText) dialoglayout.findViewById(R.id.editCantidad);
 
-                stock.setText(String.format("%s",referencias.getStock()));
-                dias.setText(String.format("%s",referencias.getDias_inve()));
-                numeroCan.setText(String.format("%s",referencias.getPed_sugerido()));
+                stock.setText(String.format("%s", referencias.getStock()));
+                dias.setText(String.format("%s", referencias.getDias_inve()));
+                numeroCan.setText(String.format("%s", referencias.getPed_sugerido()));
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(actx);
                 builder.setCancelable(false);
@@ -137,7 +136,7 @@ public class AdapterListReferencia extends BaseAdapter {
                                     //holder.txtCantidadPedida.setVisibility(View.VISIBLE);
                                     //holder.txtCantidadPedida.setText(String.format("Cantidad %s", cantidad_dig));
 
-                                } else if (resultado.equals("no inserto")){
+                                } else if (resultado.equals("no inserto")) {
                                     Toast.makeText(actx, "Problemas al guardar el pedido", Toast.LENGTH_SHORT).show();
                                 } else if (resultado.equals("update")) {
                                     Toast.makeText(actx, "Pedido actualizado correctamente", Toast.LENGTH_SHORT).show();
@@ -163,7 +162,9 @@ public class AdapterListReferencia extends BaseAdapter {
 
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     private void loadeImagenView(ImageView img_producto, String img) {
 
@@ -187,6 +188,7 @@ public class AdapterListReferencia extends BaseAdapter {
                 //Completado
                 //holder.progressBar.setVisibility(View.GONE);
             }
+
             @Override
             public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
                 // TODO Auto-generated method stub

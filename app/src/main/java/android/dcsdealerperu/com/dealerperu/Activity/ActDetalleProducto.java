@@ -3,11 +3,11 @@ package android.dcsdealerperu.com.dealerperu.Activity;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Adapter.ViewPagerAdapter;
 import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasCombos;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.dcsdealerperu.com.dealerperu.R;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -49,7 +49,7 @@ public class ActDetalleProducto extends AppCompatActivity implements ViewPager.O
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         if (bundle != null) {
-            mDescribable = (ReferenciasCombos)bundle.getSerializable("value");
+            mDescribable = (ReferenciasCombos) bundle.getSerializable("value");
         }
 
         format = new DecimalFormat("#,###.##");

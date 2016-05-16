@@ -3,7 +3,6 @@ package android.dcsdealerperu.com.dealerperu.Activity;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.RequestGuardarEditarPunto;
-import android.dcsdealerperu.com.dealerperu.Fragment.FragmentDireccion;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -95,7 +94,6 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
         btn_cancelar_per.setOnClickListener(this);
 
 
-
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         if (bundle != null) {
@@ -110,14 +108,13 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
         }
 
 
-
         btn_siguiente_per.setOnClickListener(this);
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     venta_recarga = 1;
-                }else{
+                } else {
                     venta_recarga = 2;
                 }
             }
@@ -189,10 +186,10 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
 
     private void CargarDatosPunto() {
         alertDialog.show();
-        String url = String.format("%1$s%2$s", getString(R.string.url_base),"consultar_info_puntos");
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "consultar_info_puntos");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // response
@@ -251,10 +248,10 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
 
                 edit_nom_cli.setText(datos.getNombre_cliente());
                 edit_correo_edit.setText(datos.getEmail());
-                edit_tel_edit.setText( String.valueOf((datos.getTelefono())));
-                edit_cel_edit.setText( String.valueOf((datos.getCelular())));
+                edit_tel_edit.setText(String.valueOf((datos.getTelefono())));
+                edit_cel_edit.setText(String.valueOf((datos.getCelular())));
 
-                if(datos.getVende_recargas() == 1) {
+                if (datos.getVende_recargas() == 1) {
                     switch1.setChecked(true);
                 } else {
                     switch1.setChecked(false);
@@ -273,8 +270,8 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
     }
 
     private void selectSpinnerValue(List<CategoriasEstandar> ListaEstado, Spinner spinner, int id) {
-        for(int i = 0; i < ListaEstado.size(); i++){
-            if(ListaEstado.get(i).getId() == id) {
+        for (int i = 0; i < ListaEstado.size(); i++) {
+            if (ListaEstado.get(i).getId() == id) {
                 spinner.setSelection(i);
                 break;
             }
@@ -285,8 +282,8 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
 
         ListaTipoDoc = new ArrayList<>();
 
-        ListaTipoDoc.add(new CategoriasEstandar(1,"RUC"));
-        ListaTipoDoc.add(new CategoriasEstandar(2,"DNI"));
+        ListaTipoDoc.add(new CategoriasEstandar(1, "RUC"));
+        ListaTipoDoc.add(new CategoriasEstandar(2, "DNI"));
 
         ArrayAdapter<CategoriasEstandar> adapterEstados = new ArrayAdapter<>(this, R.layout.textview_spinner, ListaTipoDoc);
         spinnerTipoDocumento.setAdapter(adapterEstados);
@@ -296,29 +293,32 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
                 tipoDocumento = ListaTipoDoc.get(position).getId();
                 edit_cedula.setHint("");
                 edit_cedula.setText("");
-                if(tipoDocumento == 1) {
+                if (tipoDocumento == 1) {
                     int maxLength = 11;
-                    edit_cedula.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
+                    edit_cedula.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
                     edit_cedula.setHint("Ruc Responsable");
                 } else {
                     int maxLength = 8;
-                    edit_cedula.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
+                    edit_cedula.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
                     edit_cedula.setHint("Dni Responsable");
                 }
 
-                if(accion.equals("Editar")) {
+                if (accion.equals("Editar")) {
                     edit_cedula.setText(datos.getCedula());
                 }
 
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
 
-    private boolean isValidNumber(String number){return number == null || number.length() == 0;}
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
+    }
 
     private boolean isValidNumberEmail(String number) {
 
@@ -335,14 +335,14 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
 
         boolean indicadorValidate = false;
 
-        if (isValidNumber(edit_nombres.getText().toString().trim())){
+        if (isValidNumber(edit_nombres.getText().toString().trim())) {
             edit_nombres.setFocusable(true);
             edit_nombres.setFocusableInTouchMode(true);
             edit_nombres.requestFocus();
             edit_nombres.setText("");
             edit_nombres.setError("Este campo es obligatorio");
             indicadorValidate = true;
-        } else if(isValidNumber(edit_cedula.getText().toString().trim())) {
+        } else if (isValidNumber(edit_cedula.getText().toString().trim())) {
             edit_cedula.setFocusable(true);
             edit_cedula.setFocusableInTouchMode(true);
             edit_cedula.requestFocus();
@@ -363,7 +363,7 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
             edit_correo_edit.setText("");
             edit_correo_edit.setError("Este campo es obligatorio");
             indicadorValidate = true;
-        }else if (!isValidNumberEmail(edit_correo_edit.getText().toString().trim())) { // PENDIENTE VALIDAR CORREO FORMATO
+        } else if (!isValidNumberEmail(edit_correo_edit.getText().toString().trim())) { // PENDIENTE VALIDAR CORREO FORMATO
             edit_correo_edit.setFocusable(true);
             edit_correo_edit.setFocusableInTouchMode(true);
             edit_correo_edit.requestFocus();

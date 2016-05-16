@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ScrollView
@@ -23,12 +24,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Id Pos:"
+                    android:text="@string/id_pos"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -51,12 +52,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nombre Punto:"
+                    android:text="@string/nombre_punto"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -79,12 +80,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tipo Solicitud:"
+                    android:text="@string/tipo_solicitud"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -107,12 +108,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nro Solicitud:"
+                    android:text="@string/nro_solicitud"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -135,12 +136,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Estado:"
+                    android:text="@string/estado"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -163,12 +164,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vendedor:"
+                    android:text="@string/vendedor"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -191,12 +192,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fecha Solicitud:"
+                    android:text="@string/fecha_solicitud"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -219,12 +220,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fecha Accion:"
+                    android:text="@string/fecha_acci_n"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -247,12 +248,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hora Accion:"
+                    android:text="@string/hora_acci_n"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"

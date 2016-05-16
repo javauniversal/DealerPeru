@@ -14,6 +14,6 @@
         android:layout_width="match_parent"
         android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
         android:divider="@color/colorAccent"
-        android:dividerHeight="0.5dp"/>
+        android:dividerHeight="0.5dp" />
 
 </RelativeLayout>

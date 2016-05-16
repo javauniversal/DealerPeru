@@ -15,6 +15,6 @@
         android:paddingTop="18dp"
         android:paddingBottom="18dp"
         android:layout_marginBottom="8dp"
-        android:elevation="5dp"/>
+        android:elevation="5dp" />
 
 </LinearLayout>

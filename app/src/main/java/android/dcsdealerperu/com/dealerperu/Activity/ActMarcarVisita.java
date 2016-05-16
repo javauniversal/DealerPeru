@@ -73,7 +73,7 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         if (bundle != null) {
-            mDescribable = (ResponseMarcarPedido)bundle.getSerializable("value");
+            mDescribable = (ResponseMarcarPedido) bundle.getSerializable("value");
         }
 
         setDataPunto();

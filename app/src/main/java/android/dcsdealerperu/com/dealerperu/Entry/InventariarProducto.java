@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 
-public class InventariarProducto implements Serializable,Cloneable{
+public class InventariarProducto implements Serializable, Cloneable {
 
-    public InventariarProducto(){
+    public InventariarProducto() {
     }
 
     @SerializedName("id_pro_sim")
@@ -25,7 +25,7 @@ public class InventariarProducto implements Serializable,Cloneable{
     @SerializedName("fecha_venta")
     private String fecha_venta;
 
-    public  boolean isCheck;
+    public boolean isCheck;
 
     @SerializedName("tipo")
     private int tipo;
@@ -37,6 +37,7 @@ public class InventariarProducto implements Serializable,Cloneable{
     public void setTipo(int tipo) {
         this.tipo = tipo;
     }
+
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

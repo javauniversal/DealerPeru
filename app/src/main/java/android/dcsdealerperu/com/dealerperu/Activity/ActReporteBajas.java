@@ -34,6 +34,7 @@ public class ActReporteBajas extends AppCompatActivity {
     private AdapterDialogMisBajas adapterDialogMisBajas;
 
     private SwipeMenuListView mListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +45,7 @@ public class ActReporteBajas extends AppCompatActivity {
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         if (bundle != null) {
-            mDescribable = (ResponseMisBajas)bundle.getSerializable("value");
+            mDescribable = (ResponseMisBajas) bundle.getSerializable("value");
         }
 
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);

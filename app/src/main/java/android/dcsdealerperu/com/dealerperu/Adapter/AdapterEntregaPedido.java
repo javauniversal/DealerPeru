@@ -1,27 +1,13 @@
 package android.dcsdealerperu.com.dealerperu.Adapter;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.dcsdealerperu.com.dealerperu.Activity.ActEntregarPorPedido;
-import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasSims;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-
-import java.io.Serializable;
 import java.util.List;
 
 public class AdapterEntregaPedido extends BaseAdapter {
@@ -29,7 +15,7 @@ public class AdapterEntregaPedido extends BaseAdapter {
     private Activity actx;
     List<ResponseEntregarPedido> data;
 
-    public AdapterEntregaPedido(Activity actx, List<ResponseEntregarPedido> data){
+    public AdapterEntregaPedido(Activity actx, List<ResponseEntregarPedido> data) {
         this.actx = actx;
         this.data = data;
 
@@ -65,10 +51,10 @@ public class AdapterEntregaPedido extends BaseAdapter {
 
         final ResponseEntregarPedido referencias = getItem(position);
 
-        holder.txt_idpos.setText(String.format("Id Pos: %1$s",referencias.getIdpos()));
-        holder.txtRazo.setText(String.format("Razón Social: %1$s",referencias.getRazon_social()));
-        holder.txt_circuito.setText(String.format("Circuito: %1$s",referencias.getTerritorio()));
-        holder.txt_ruta.setText(String.format("Ruta: %1$s",referencias.getZona()));
+        holder.txt_idpos.setText(String.format("Id Pos: %1$s", referencias.getIdpos()));
+        holder.txtRazo.setText(String.format("Razón Social: %1$s", referencias.getRazon_social()));
+        holder.txt_circuito.setText(String.format("Circuito: %1$s", referencias.getTerritorio()));
+        holder.txt_ruta.setText(String.format("Ruta: %1$s", referencias.getZona()));
 
         holder.txt_direccion.setText(String.format("Dirección: %1$s", referencias.getDireccion()));
 

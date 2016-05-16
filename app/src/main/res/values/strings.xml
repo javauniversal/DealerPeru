@@ -38,6 +38,45 @@
     <string name="olvido_pass"><u>¿Haz olvidado tu contraseña?</u></string>
     <string name="txtEstimadaEntrega"><u>Detalle Pedido</u></string>
     <string name="title_activity_act_reporte_inventario_rep">Reporte de Inventario</string>
+    <string name="estado_comercial">Estado Comercial</string>
+    <string name="departamento">Departamento:</string>
+    <string name="ruta">Ruta:</string>
+    <string name="provincia">Provincia:</string>
+    <string name="distrito">Distrito:</string>
+    <string name="circuito">Circuito:</string>
+    <string name="id_pos">Id Pos:</string>
+    <string name="c_dula">Cédula</string>
+    <string name="nombre">Nombre</string>
+    <string name="hota">hota</string>
+    <string name="fecha">Fecha:</string>
+    <string name="estado">Estado:</string>
+    <string name="nombre_punto">Nombre Punto:</string>
+    <string name="buscar">Buscar</string>
+    <string name="tipo">Tipo</string>
+    <string name="planificaci_n">Planificación</string>
+    <string name="planificaci_n_visitas">Planificación Visitas</string>
+    <string name="nro_pedido">Nro Pedido:</string>
+    <string name="cantidad">Cantidad:</string>
+    <string name="total">Total:</string>
+    <string name="cantidad_picking">Cantidad Picking:</string>
+    <string name="total_picking">Total Picking:</string>
+    <string name="hora">Hora:</string>
+    <string name="tipo_solicitud">Tipo Solicitud:</string>
+    <string name="nro_solicitud">Nro Solicitud:</string>
+    <string name="vendedor">Vendedor:</string>
+    <string name="fecha_solicitud">Fecha Solicitud:</string>
+    <string name="fecha_acci_n">Fecha Acción:</string>
+    <string name="hora_acci_n">Hora Acción:</string>
+    <string name="visitado">Visitado:</string>
+    <string name="direcci_n">Dirección:</string>
+    <string name="ciudad">Ciudad:</string>
+    <string name="hora_de_visita">Hora de Visita:</string>
+    <string name="d_as">Días:</string>
+    <string name="tel_fono">Teléfono:</string>
+    <string name="n_a">N/A</string>
+    <string name="id_pos_sin_punto">Id Pos</string>
+    <string name="pn">PN</string>
+    <string name="referencia">Referencia</string>
 
 
 </resources>

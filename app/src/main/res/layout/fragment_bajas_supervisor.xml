@@ -284,6 +284,7 @@
                         android:textSize="10sp"
                         android:textColor="@color/colorAccent"
                         android:text="Ruta" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -335,6 +336,7 @@
                         android:textSize="10sp"
                         android:textColor="@color/colorAccent"
                         android:text="Estado" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

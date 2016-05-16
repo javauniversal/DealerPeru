@@ -57,7 +57,7 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
 
     private ResponseCreatePunt responseCreatePuntos;
 
-    private int circuito,ruta,frecuencia, visita,sdia;
+    private int circuito, ruta, frecuencia, visita, sdia;
 
     public FragmentRuteroVendedor() {
         // Required empty public constructor
@@ -94,18 +94,17 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
     }
 
 
-    private void ConsultarReporte()
-    {
+    private void ConsultarReporte() {
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "consultar_rutero");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         mostrarReporte(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -128,7 +127,7 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -151,8 +150,7 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
         addToQueue(jsonRequest);
     }
 
-    private void  mostrarReporte(String response)
-    {
+    private void mostrarReporte(String response) {
         Gson gson = new Gson();
 
         if (!response.equals("[]")) {
@@ -175,20 +173,20 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
             } finally {
                 alertDialog.dismiss();
             }
-        }else{
+        } else {
             alertDialog.dismiss();
-            Toast.makeText(getContext(),"No se encontraron datos para mostrar",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No se encontraron datos para mostrar", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void LoadSpinners() {
         // llena Spinner de Estados Visita
         final List<CategoriasEstandar> ListaEstadosVista = new ArrayList<>();
-        ListaEstadosVista.add(new CategoriasEstandar(0,"Seleccionar"));
-        ListaEstadosVista.add(new CategoriasEstandar(1,"Visitado"));
-        ListaEstadosVista.add(new CategoriasEstandar(2,"Sin Visitar"));
+        ListaEstadosVista.add(new CategoriasEstandar(0, "Seleccionar"));
+        ListaEstadosVista.add(new CategoriasEstandar(1, "Visitado"));
+        ListaEstadosVista.add(new CategoriasEstandar(2, "Sin Visitar"));
 
-        ArrayAdapter<CategoriasEstandar> adapterEstadoVisita = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner,ListaEstadosVista);
+        ArrayAdapter<CategoriasEstandar> adapterEstadoVisita = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, ListaEstadosVista);
         estado_visita.setAdapter(adapterEstadoVisita);
         estado_visita.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -197,18 +195,19 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 
         // llena Spinner de Tipo Frecuencia
         final List<CategoriasEstandar> ListaTipoFrecuencia = new ArrayList<>();
-        ListaTipoFrecuencia.add(new CategoriasEstandar(0,"Seleccionar"));
-        ListaTipoFrecuencia.add(new CategoriasEstandar(1,"Semanal"));
-        ListaTipoFrecuencia.add(new CategoriasEstandar(2,"Quincenal"));
-        ListaTipoFrecuencia.add(new CategoriasEstandar(3,"Mensual"));
+        ListaTipoFrecuencia.add(new CategoriasEstandar(0, "Seleccionar"));
+        ListaTipoFrecuencia.add(new CategoriasEstandar(1, "Semanal"));
+        ListaTipoFrecuencia.add(new CategoriasEstandar(2, "Quincenal"));
+        ListaTipoFrecuencia.add(new CategoriasEstandar(3, "Mensual"));
 
-        ArrayAdapter<CategoriasEstandar> adapterTipoFrecuencia = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner,ListaTipoFrecuencia);
+        ArrayAdapter<CategoriasEstandar> adapterTipoFrecuencia = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, ListaTipoFrecuencia);
         tipo_frecuencia.setAdapter(adapterTipoFrecuencia);
         tipo_frecuencia.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -217,22 +216,23 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 
         //llenar Spinner de Dia
         final List<CategoriasEstandar> ListaDia = new ArrayList<>();
-        ListaDia.add(new CategoriasEstandar(0,"Seleccionar"));
-        ListaDia.add(new CategoriasEstandar(1,"Lunes"));
-        ListaDia.add(new CategoriasEstandar(2,"Martes"));
-        ListaDia.add(new CategoriasEstandar(3,"Miercoles"));
-        ListaDia.add(new CategoriasEstandar(4,"Jueves"));
-        ListaDia.add(new CategoriasEstandar(5,"Viernes"));
-        ListaDia.add(new CategoriasEstandar(6,"Sabado"));
-        ListaDia.add(new CategoriasEstandar(7,"Domingo"));
+        ListaDia.add(new CategoriasEstandar(0, "Seleccionar"));
+        ListaDia.add(new CategoriasEstandar(1, "Lunes"));
+        ListaDia.add(new CategoriasEstandar(2, "Martes"));
+        ListaDia.add(new CategoriasEstandar(3, "Miercoles"));
+        ListaDia.add(new CategoriasEstandar(4, "Jueves"));
+        ListaDia.add(new CategoriasEstandar(5, "Viernes"));
+        ListaDia.add(new CategoriasEstandar(6, "Sabado"));
+        ListaDia.add(new CategoriasEstandar(7, "Domingo"));
 
-        ArrayAdapter<CategoriasEstandar> adapterDia = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner,ListaDia);
+        ArrayAdapter<CategoriasEstandar> adapterDia = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, ListaDia);
         dia.setAdapter(adapterDia);
         dia.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -241,11 +241,10 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
-
-
 
 
     }
@@ -261,13 +260,13 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_filtros_puntos");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
                         parseJSON(response);
                     }
                 },
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -290,7 +289,7 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
@@ -312,7 +311,7 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
         if (!response.equals("[]")) {
             try {
 
-               responseCreatePuntos = gson.fromJson(response, ResponseCreatePunt.class);
+                responseCreatePuntos = gson.fromJson(response, ResponseCreatePunt.class);
 
                 loadTerritorio(responseCreatePuntos);
 
@@ -322,9 +321,9 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
             } finally {
                 alertDialog.dismiss();
             }
-        }else{
+        } else {
             alertDialog.dismiss();
-            Toast.makeText(getContext(),"No se encontraron datos para mostrar",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No se encontraron datos para mostrar", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -340,14 +339,16 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
     }
 
     private void loadZona(final List<Zona> zonas) {
         ArrayAdapter<Zona> prec3 = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, zonas);
-        spinner_ruta.setAdapter(prec3);;
+        spinner_ruta.setAdapter(prec3);
+        ;
         spinner_ruta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -356,7 +357,8 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
 
