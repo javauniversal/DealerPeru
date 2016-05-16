@@ -16,6 +16,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -151,6 +152,16 @@ public class ActCarritoPedido extends AppCompatActivity {
                 savePedido();
             }
         });
+
+        //Calcular Datos Total, SubTotal
+
+    }
+
+    private void calculaTotal() {
+       for (int i = 0; i <= simsList.size(); i++)
+       {
+           Log.d("Precio",String.valueOf(simsList.get(i).getPrecio_referencia()));
+       }
     }
 
     private void savePedido() {
@@ -206,7 +217,7 @@ public class ActCarritoPedido extends AppCompatActivity {
     private void llenarDataCarrito(int id_punto, int id_usuario) {
 
         simsList = mydb.getCarrito(id_punto, id_usuario);
-
+        calculaTotal();
         adapterCarrito = new AdapterCarrito(this, simsList);
         mListView.setAdapter(adapterCarrito);
 

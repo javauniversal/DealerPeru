@@ -27,6 +27,12 @@ public class ReferenciasSims {
     @SerializedName("ped_sugerido")
     private String ped_sugerido;
 
+    @SerializedName("precio_referencia")
+    private double precio_referencia;
+
+    @SerializedName("precio_publico")
+    private double precio_publico;
+
     public int cantidadPedida;
 
     public int id_punto;
@@ -36,6 +42,22 @@ public class ReferenciasSims {
     public int tipo_producto;
 
     public String url_imagen;
+
+    public double getPrecio_referencia() {
+        return precio_referencia;
+    }
+
+    public void setPrecio_referencia(double precio_referencia) {
+        this.precio_referencia = precio_referencia;
+    }
+
+    public double getPrecio_publico() {
+        return precio_publico;
+    }
+
+    public void setPrecio_publico(double precio_publico) {
+        this.precio_publico = precio_publico;
+    }
 
     public String getUrl_imagen() {
         return url_imagen;

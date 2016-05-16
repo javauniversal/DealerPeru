@@ -28,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String sqlIntro = "CREATE TABLE intro (id integer primary key AUTOINCREMENT, idintro text )";
 
         String sqlCarrito = "CREATE TABLE carrito_pedido (id_carrito integer primary key AUTOINCREMENT, id_producto INT, pn_pro TEXT, stock INT, producto TEXT, dias_inve REAL, ped_sugerido TEXT, " +
-                " cantidad_pedida INT, id_usuario TEXT, id_punto INT, latitud TEXT, longitud TEXT, tipo_producto INT, producto_img TEXT)";
+                " cantidad_pedida INT, id_usuario TEXT, id_punto INT, latitud TEXT, longitud TEXT, tipo_producto INT, producto_img TEXT, precio_referencia REAL, precio_publico REAL)";
 
         db.execSQL(sqlIntro);
         db.execSQL(sqlCarrito);
@@ -95,6 +95,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put("id_punto", data.getId_punto());
                 values.put("tipo_producto", data.getTipo_producto());
                 values.put("producto_img", data.getUrl_imagen());
+                values.put("precio_referencia", data.getPrecio_referencia());
+                values.put("precio_publico", data.getPrecio_publico());
 
                 db.insert("carrito_pedido", null, values);
 
@@ -142,6 +144,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put("id_usuario", data.getId_usuario());
                 values.put("id_punto", data.getId_punto());
                 values.put("tipo_producto", data.getTipo_producto());
+                values.put("precio_referencia", data.getPrecio_referencia());
+                values.put("precio_publico", data.getPrecio_publico());
 
                 db.insert("carrito_pedido", null, values);
 
@@ -192,7 +196,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         List<ReferenciasSims> referenciasSimsList = new ArrayList<>();
 
-        String sql = "SELECT id_carrito, id_producto, pn_pro, stock, producto, dias_inve, ped_sugerido, cantidad_pedida, id_usuario, id_punto, latitud, longitud, tipo_producto, producto_img FROM carrito_pedido WHERE id_punto = " + id_pos + " AND id_usuario = " + id_usuario + " ";
+        String sql = "SELECT id_carrito, id_producto, pn_pro, stock, producto, dias_inve, ped_sugerido, cantidad_pedida, id_usuario, id_punto, latitud, longitud, tipo_producto, producto_img, precio_referencia, precio_publico FROM carrito_pedido WHERE id_punto = " + id_pos + " AND id_usuario = " + id_usuario + " ";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(sql, null);
 
@@ -213,6 +217,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 referenciasSims.setId_punto(cursor.getInt(9));
                 referenciasSims.setTipo_producto(cursor.getInt(12));
                 referenciasSims.setUrl_imagen(cursor.getString(13));
+                referenciasSims.setPrecio_referencia(cursor.getDouble(14));
+                referenciasSims.setPrecio_publico(cursor.getDouble(15));
 
                 referenciasSimsList.add(referenciasSims);
 

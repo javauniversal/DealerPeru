@@ -17,37 +17,104 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="110dp"
         android:background="@color/colorPrimary"
         android:layout_alignParentBottom="true"
         android:padding="4dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/linearLayout4">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Large Text"
-            android:textStyle="bold"
-            android:textColor="@color/actionBarColorText"
-            android:id="@+id/textView1" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/actionBarColorText"
-            android:text="Large Text"
-            android:id="@+id/textView2" />
+            android:orientation="vertical"
+            android:layout_alignBottom="@+id/image_departamento">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sub Total"
+                android:textStyle="bold"
+                android:textColor="@color/actionBarColorText"
+                android:id="@+id/textView1" />
+
+
+            <TextView
+                android:layout_width="108dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/sub_total"
+                android:text=""
+                android:textStyle="bold"
+                android:textColor="@color/actionBarColorText"
+                android:layout_marginRight="100dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/actionBarColorText"
-            android:text="Large Text"
-            android:id="@+id/textView3" />
+            android:orientation="vertical"
+            android:layout_alignBottom="@+id/image_departamento">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/actionBarColorText"
+                android:text="IGV"
+                android:id="@+id/textView2" />
+
+
+            <TextView
+                android:layout_width="108dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/igv"
+                android:text=""
+                android:textStyle="bold"
+                android:textColor="@color/actionBarColorText"
+                android:layout_marginRight="100dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignBottom="@+id/image_departamento">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/actionBarColorText"
+                android:text="Total"
+                android:id="@+id/textView3" />
+
+
+            <TextView
+                android:layout_width="108dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/total_ped"
+                android:text=""
+                android:textStyle="bold"
+                android:textColor="@color/actionBarColorText"
+                android:layout_marginRight="100dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+
+
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

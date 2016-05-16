@@ -32,6 +32,17 @@ public class ResponseUser {
     @SerializedName("perfil")
     private int perfil;
 
+    @SerializedName("igv")
+    private double igv;
+
+    public double getIgv() {
+        return igv;
+    }
+
+    public void setIgv(double igv) {
+        this.igv = igv;
+    }
+
     public static ResponseUser responseUserStatic;
 
     public int getId() {
