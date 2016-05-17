@@ -28,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String sqlIntro = "CREATE TABLE intro (id integer primary key AUTOINCREMENT, idintro text )";
 
         String sqlCarrito = "CREATE TABLE carrito_pedido (id_carrito integer primary key AUTOINCREMENT, id_producto INT, pn_pro TEXT, stock INT, producto TEXT, dias_inve REAL, ped_sugerido TEXT, " +
-                " cantidad_pedida INT, id_usuario TEXT, id_punto INT, latitud TEXT, longitud TEXT, tipo_producto INT, producto_img TEXT, precio_referencia REAL, precio_publico REAL)";
+                " cantidad_pedida INT, id_usuario TEXT, id_punto INT, latitud TEXT, longitud TEXT, tipo_producto INT, producto_img TEXT, precio_referencia REAL, precio_publico REAL, referencia INT)";
 
         db.execSQL(sqlIntro);
         db.execSQL(sqlCarrito);
@@ -97,6 +97,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put("producto_img", data.getUrl_imagen());
                 values.put("precio_referencia", data.getPrecio_referencia());
                 values.put("precio_publico", data.getPrecio_publico());
+                values.put("referencia", data.getReferencia());
 
                 db.insert("carrito_pedido", null, values);
 
@@ -109,6 +110,36 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         return resultado = "inserto";
+    }
+
+    public int countReferenceProduct(int idUsuario, int idpos, int idreferen) {
+
+        Cursor cursor;
+        int indicador = 0;
+
+        String sql = "SELECT SUM(cantidad_pedida) FROM carrito_pedido WHERE referencia = "+idreferen+" AND  id_usuario = "+idUsuario+ " AND id_punto = "+idpos+" ";
+        SQLiteDatabase db = this.getWritableDatabase();
+        cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()) {
+            indicador = cursor.getInt(0);
+        }
+        return indicador;
+
+    }
+
+    public int countSimcardProduct(int idUsuario, int idpos, int idProduct) {
+
+        Cursor cursor;
+        int indicador = 0;
+
+        String sql = "SELECT SUM(cantidad_pedida) FROM carrito_pedido WHERE id_producto = "+idProduct+" AND  id_usuario = "+idUsuario+ " AND id_punto = "+idpos+" ";
+        SQLiteDatabase db = this.getWritableDatabase();
+        cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()) {
+            indicador = cursor.getInt(0);
+        }
+        return indicador;
+
     }
 
     public String insertCarritoPedido(ReferenciasSims data) {
@@ -241,5 +272,17 @@ public class DBHelper extends SQLiteOpenHelper {
         return indicador;
     }
 
+    public int countReferenciaProducto(int id, int id_punto, int id_usuario) {
+        Cursor cursor;
+        int indicador = 0;
+
+        String sql = "SELECT SUM(cantidad_pedida) FROM carrito_pedido WHERE id_producto = "+id+" AND  id_usuario = "+id_usuario+ " AND id_punto = "+id_punto+" ";
+        SQLiteDatabase db = this.getWritableDatabase();
+        cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()) {
+            indicador = cursor.getInt(0);
+        }
+        return indicador;
+    }
 }
 

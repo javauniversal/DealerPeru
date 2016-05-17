@@ -92,11 +92,6 @@ public class FragmentCombos extends BaseVolleyFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        adapter2 = new AdapterRecyclerCombos(getActivity(), responseVenta.getReferenciasCombosList());
-        recycler2.setAdapter(adapter2);
-
-        adapter2.notifyDataSetChanged();
-
         MenuItem item2 = menu.add("Carrito");
         item2.setIcon(R.drawable.ic_shopping_cart_white_24dp); // sets icon
         item2.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -139,15 +134,8 @@ public class FragmentCombos extends BaseVolleyFragment {
                 newText = newText.toLowerCase();
 
                 filterList = getNewListFromFilter(newText);
-
-                //gridLayoutManagerVertical = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
-
-                adapter2 = new AdapterRecyclerCombos(getActivity(), filterList);
+                adapter2 = new AdapterRecyclerCombos(getActivity(), filterList, mPosition, getResponseUserStatic().getId());
                 recycler2.setAdapter(adapter2);
-
-                //recycler2.setLayoutManager(gridLayoutManagerVertical);
-                //recycler2.addItemDecoration(new SpacesItemDecoration(20));
-
 
                 return true;
             }
@@ -234,7 +222,7 @@ public class FragmentCombos extends BaseVolleyFragment {
 
                 responseVenta = gson.fromJson(response, ResponseVenta.class);
 
-                adapter2 = new AdapterRecyclerCombos(getActivity(), responseVenta.getReferenciasCombosList());
+                adapter2 = new AdapterRecyclerCombos(getActivity(), responseVenta.getReferenciasCombosList(), mPosition, getResponseUserStatic().getId());
                 recycler2.setAdapter(adapter2);
                 recycler2.setLayoutManager(gridLayoutManagerVertical);
                 recycler2.addItemDecoration(new SpacesItemDecoration(20));
@@ -251,5 +239,13 @@ public class FragmentCombos extends BaseVolleyFragment {
 
     }
 
+    @Override
+    public void onResume() {
+
+        if (adapter2 != null)
+            adapter2.notifyDataSetChanged();
+
+        super.onResume();
+    }
 
 }

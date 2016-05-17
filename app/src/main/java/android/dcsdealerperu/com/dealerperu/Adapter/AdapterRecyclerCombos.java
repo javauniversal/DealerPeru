@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Activity.ActDetalleComboPedir;
 import android.dcsdealerperu.com.dealerperu.Activity.ActDetalleProducto;
+import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasCombos;
 import android.dcsdealerperu.com.dealerperu.Entry.RowViewHolderCombo;
 import android.dcsdealerperu.com.dealerperu.R;
@@ -31,14 +32,20 @@ public class AdapterRecyclerCombos extends RecyclerView.Adapter<RowViewHolderCom
     private DecimalFormat format;
     private com.nostra13.universalimageloader.core.ImageLoader imageLoader1;
     private DisplayImageOptions options1;
+    private DBHelper mydb;
+    private int iduser;
+    private int idpos;
 
 
-    public AdapterRecyclerCombos(Activity context, List<ReferenciasCombos> responseHomeList) {
+    public AdapterRecyclerCombos(Activity context, List<ReferenciasCombos> responseHomeList, int idpos, int iduser) {
         super();
         this.context = context;
         this.responseHomeList = responseHomeList;
+        this.iduser = iduser;
+        this.idpos = idpos;
         format = new DecimalFormat("#,###.##");
 
+        mydb = new DBHelper(context);
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).build();
         imageLoader1 = ImageLoader.getInstance();
@@ -68,6 +75,7 @@ public class AdapterRecyclerCombos extends RecyclerView.Adapter<RowViewHolderCom
         holder.txtReferencia.setText(items.getDescripcion());
         holder.txtValorR.setText(String.format("S/. %s", format.format(items.getPrecio_referencia())));
         holder.txtValorR2.setText(String.format("PVP: S/. %s", format.format(items.getPrecio_publico())));
+        holder.txtcantidadGlo.setText(String.format("Cantidad %s", mydb.countReferenceProduct(iduser, idpos, items.getId())));
 
         loadeImagenView(holder.img_producto, items.getImg());
 
@@ -91,6 +99,8 @@ public class AdapterRecyclerCombos extends RecyclerView.Adapter<RowViewHolderCom
                 Bundle bundle = new Bundle();
                 Intent intent = new Intent(context, ActDetalleComboPedir.class);
                 bundle.putSerializable("value", responseHomeList.get(position));
+                bundle.putInt("idPos", idpos);
+                bundle.putInt("idUser", iduser);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }

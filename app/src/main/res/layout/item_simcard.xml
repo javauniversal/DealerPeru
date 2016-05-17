@@ -88,13 +88,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
-                    android:text="Large Text"
+                    android:text="Cantidad 0"
                     android:paddingLeft="4dp"
                     android:textSize="20sp"
                     android:id="@+id/txtCantidadPedida"
                     android:layout_weight="1"
                     android:textColor="@color/rojo_progress"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal" />
 

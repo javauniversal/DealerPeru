@@ -16,6 +16,8 @@ public class ActDetalleComboPedir extends AppCompatActivity {
     private ReferenciasCombos mDescribable = new ReferenciasCombos();
     private SwipeMenuListView mListView;
     private AdapterListReferencia adapterListReferencia;
+    private int idPos;
+    private int idUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +30,12 @@ public class ActDetalleComboPedir extends AppCompatActivity {
         bundle = intent.getExtras();
         if (bundle != null) {
             mDescribable = (ReferenciasCombos) bundle.getSerializable("value");
+            idPos = bundle.getInt("idPos");
+            idUser = bundle.getInt("idUser");
 
             mListView = (SwipeMenuListView) findViewById(R.id.listView);
 
-            adapterListReferencia = new AdapterListReferencia(this, mDescribable.getReferenciaLis());
+            adapterListReferencia = new AdapterListReferencia(this, mDescribable.getReferenciaLis(), idPos, idUser, mDescribable.getId());
             mListView.setAdapter(adapterListReferencia);
 
         }

@@ -94,7 +94,6 @@ public class FragmentSimcardP extends BaseVolleyFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-
         MenuItem item2 = menu.add("Carrito");
         item2.setIcon(R.drawable.ic_shopping_cart_white_24dp); // sets icon
         item2.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -136,7 +135,7 @@ public class FragmentSimcardP extends BaseVolleyFragment {
 
                 newText = newText.toLowerCase();
                 filterList = getNewListFromFilter(newText);
-                adapter = new AdapterRecyclerSimcard(getActivity(), filterList);
+                adapter = new AdapterRecyclerSimcard(getActivity(), filterList, mPosition, getResponseUserStatic().getId());
                 recycler.setAdapter(adapter);
 
                 return true;
@@ -158,14 +157,11 @@ public class FragmentSimcardP extends BaseVolleyFragment {
                 filteredListCategoria.add(responseVenta.getReferenciasSimsList().get(i));
             }
         }
-
         return filteredListCategoria;
     }
 
     private void getSimcard() {
-
         alertDialog.show();
-
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_toma_pedido_sim");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -212,9 +208,7 @@ public class FragmentSimcardP extends BaseVolleyFragment {
 
             }
         };
-
         addToQueue(jsonRequest);
-
     }
 
     private void parseJSONVisita(String response) {
@@ -226,8 +220,7 @@ public class FragmentSimcardP extends BaseVolleyFragment {
                 responseVenta = gson.fromJson(response, ResponseVenta.class);
 
                 setId_posStacti(mPosition);
-
-                adapter = new AdapterRecyclerSimcard(getActivity(), responseVenta.getReferenciasSimsList());
+                adapter = new AdapterRecyclerSimcard(getActivity(), responseVenta.getReferenciasSimsList(), mPosition, getResponseUserStatic().getId());
                 recycler.setAdapter(adapter);
                 recycler.setLayoutManager(gridLayoutManagerVertical);
                 recycler.addItemDecoration(new SpacesItemDecoration(20));
@@ -241,7 +234,15 @@ public class FragmentSimcardP extends BaseVolleyFragment {
         } else {
             alertDialog.dismiss();
         }
+    }
 
+    @Override
+    public void onResume() {
+
+        if (adapter != null)
+            adapter.notifyDataSetChanged();
+
+        super.onResume();
     }
 
 }

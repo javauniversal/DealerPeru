@@ -67,10 +67,11 @@ public class AdapterCarrito extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
+
+        //if (convertView == null) {
             convertView = View.inflate(actx, R.layout.item_list_carrito, null);
             new ViewHolder(convertView);
-        }
+        //}
 
         ViewHolder holder = (ViewHolder) convertView.getTag();
 

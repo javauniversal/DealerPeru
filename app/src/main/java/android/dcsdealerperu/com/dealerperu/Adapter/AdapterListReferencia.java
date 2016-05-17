@@ -1,6 +1,7 @@
 package android.dcsdealerperu.com.dealerperu.Adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.Referencia;
@@ -10,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,10 +36,17 @@ public class AdapterListReferencia extends BaseAdapter {
     private DBHelper mydb;
     private com.nostra13.universalimageloader.core.ImageLoader imageLoader1;
     private DisplayImageOptions options1;
+    private int idPos;
+    private int idUser;
+    private int id_referencia;
 
-    public AdapterListReferencia(Activity actx, List<Referencia> data) {
+    public AdapterListReferencia(Activity actx, List<Referencia> data, int idPos, int idUser, int id_referencia) {
         this.actx = actx;
         this.data = data;
+        this.idPos = idPos;
+        this.idUser = idUser;
+        this.id_referencia = id_referencia;
+
         mydb = new DBHelper(actx);
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(actx).build();
@@ -85,8 +94,10 @@ public class AdapterListReferencia extends BaseAdapter {
         holder.txtReferencia.setText(referencias.getProducto());
         holder.txtPn.setText(String.format("%1$s", referencias.getPn()));
 
+        holder.txtcantidad.setText(String.format("Cantidad %1$s", mydb.countReferenciaProducto(referencias.getId(), idPos, idUser)));
+
         holder.imageView2.setVisibility(View.GONE);
-        holder.txtcantidad.setVisibility(View.GONE);
+        holder.txtprecio.setVisibility(View.GONE);
 
         loadeImagenView(holder.profile_image, referencias.getUrl_imagen());
 
@@ -124,34 +135,39 @@ public class AdapterListReferencia extends BaseAdapter {
                                 referencias.setId_usuario(getResponseUserStatic().getId());
                                 referencias.setTipo_producto(2); // Combo
                                 referencias.setUrl_imagen(referencias.getUrl_imagen());
+                                referencias.setReferencia(id_referencia);
 
                                 String resultado = mydb.insertCarritoPedidoCombos(referencias);
 
                                 if (resultado.equals("inserto")) {
                                     Toast.makeText(actx, "Pedido guardado correctamente", Toast.LENGTH_SHORT).show();
-
-                                    //holder.txtCantidadPedida.setVisibility(View.VISIBLE);
-                                    //holder.txtCantidadPedida.setText(String.format("Cantidad %s", cantidad_dig));
-
                                 } else if (resultado.equals("no inserto")) {
                                     Toast.makeText(actx, "Problemas al guardar el pedido", Toast.LENGTH_SHORT).show();
                                 } else if (resultado.equals("update")) {
                                     Toast.makeText(actx, "Pedido actualizado correctamente", Toast.LENGTH_SHORT).show();
-                                    //holder.txtCantidadPedida.setVisibility(View.VISIBLE);
-                                    //holder.txtCantidadPedida.setText(String.format("Cantidad %s", cantidad_dig));
                                 } else if (resultado.equals("no update")) {
                                     Toast.makeText(actx, "Pedido no se pudo actualizar", Toast.LENGTH_SHORT).show();
                                 }
+
+                                InputMethodManager imm = (InputMethodManager) actx.getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(numeroCan.getWindowToken(), 0);
+
                             }
                         }
                     }
                 }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
+                        InputMethodManager imm = (InputMethodManager) actx.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(numeroCan.getWindowToken(), 0);
                     }
                 });
 
                 builder.show();
+
+                InputMethodManager imm = (InputMethodManager) actx.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
             }
         });
 
@@ -203,6 +219,7 @@ public class AdapterListReferencia extends BaseAdapter {
         TextView txtReferencia;
         TextView txtcantidad;
         TextView txtPn;
+        TextView txtprecio;
         ImageView profile_image;
         ImageView imageView2;
 
@@ -211,6 +228,7 @@ public class AdapterListReferencia extends BaseAdapter {
             txtReferencia = (TextView) view.findViewById(R.id.txtReferencia);
             txtPn = (TextView) view.findViewById(R.id.txtPn);
             txtcantidad = (TextView) view.findViewById(R.id.txtcantidad);
+            txtprecio = (TextView) view.findViewById(R.id.txtprecio);
 
             profile_image = (ImageView) view.findViewById(R.id.profile_image);
             imageView2 = (ImageView) view.findViewById(R.id.imageView2);

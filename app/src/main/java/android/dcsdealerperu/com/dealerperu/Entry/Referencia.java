@@ -47,6 +47,16 @@ public class Referencia implements Serializable {
 
     public int tipo_producto;
 
+    public int referencia;
+
+    public int getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(int referencia) {
+        this.referencia = referencia;
+    }
+
     public double getPrecio_referencia() {
         return precio_referencia;
     }

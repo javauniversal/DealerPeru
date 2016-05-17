@@ -14,6 +14,7 @@ public class RowViewHolderCombo extends RecyclerView.ViewHolder {
     public TextView txtReferencia;
     public TextView txtValorR;
     public TextView txtValorR2;
+    public TextView txtcantidadGlo;
     public ImageView img_producto;
     public Button btnpedido;
 
@@ -23,6 +24,7 @@ public class RowViewHolderCombo extends RecyclerView.ViewHolder {
         this.txtReferencia = (TextView) itemView.findViewById(R.id.txtReferencia);
         this.txtValorR = (TextView) itemView.findViewById(R.id.txtValorR);
         this.txtValorR2 = (TextView) itemView.findViewById(R.id.txtValorR2);
+        this.txtcantidadGlo = (TextView) itemView.findViewById(R.id.txtcantidadGlo);
         this.btnpedido = (Button) itemView.findViewById(R.id.btnpedido);
 
         this.img_producto = (ImageView) itemView.findViewById(R.id.img_producto);

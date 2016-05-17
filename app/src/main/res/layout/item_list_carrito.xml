@@ -46,13 +46,15 @@
             android:layout_height="wrap_content"
             android:text="@string/cantidad"
             android:layout_marginLeft="4dp"
+            android:textColor="@color/rojo_progress"
             android:layout_marginStart="4dp"
             android:textSize="@dimen/dimen_letra_app_estandar" />
+
         <TextView
             android:id="@+id/txtprecio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cantidad"
+            android:text="Precio"
             android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp"
             android:textSize="@dimen/dimen_letra_app_estandar" />

@@ -54,7 +54,6 @@ import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getRespons
 
 public class ActCarritoPedido extends AppCompatActivity {
 
-    private Bundle bundle;
     private int id_punto;
     private int id_usuario;
     private DBHelper mydb;
@@ -86,7 +85,7 @@ public class ActCarritoPedido extends AppCompatActivity {
         alertDialog = new SpotsDialog(this, R.style.Custom);
 
         Intent intent = this.getIntent();
-        bundle = intent.getExtras();
+        Bundle bundle = intent.getExtras();
         if (bundle != null) {
             id_punto = bundle.getInt("id_punto");
             id_usuario = bundle.getInt("id_usuario");
@@ -103,7 +102,7 @@ public class ActCarritoPedido extends AppCompatActivity {
                 // create "open" item
                 SwipeMenuItem openItem = new SwipeMenuItem(getApplicationContext());
                 // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(16, 98, 138)));
+                openItem.setBackground(new ColorDrawable(Color.rgb(255, 61, 0)));
                 // set item width
                 openItem.setWidth(dp2px(90));
                 // set item title
@@ -157,6 +156,7 @@ public class ActCarritoPedido extends AppCompatActivity {
         llenarDataCarrito(id_punto, id_usuario);
 
         FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.btn_guardar_pedido);
+        assert myFab != null;
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 savePedido();
@@ -168,14 +168,13 @@ public class ActCarritoPedido extends AppCompatActivity {
     }
 
     private void calculaTotal() {
-        double subtotal = 0;
+        double subtotal;
         double total = 0;
-        double val_igv = 0;
+        double val_igv;
 
-       for (int i = 0; i < simsList.size(); i++)
-       {
-           total = total + (simsList.get(i).getPrecio_referencia() * simsList.get(i).getCantidadPedida());
-       }
+        for (int i = 0; i < simsList.size(); i++) {
+            total = total + (simsList.get(i).getPrecio_referencia() * simsList.get(i).getCantidadPedida());
+        }
         subtotal = (total / ((getResponseUserStatic().getIgv()/100)+1));
         val_igv = ((getResponseUserStatic().getIgv()/100) * subtotal);
         sub_total.setText(String.format("S/. %s", format.format(subtotal)));

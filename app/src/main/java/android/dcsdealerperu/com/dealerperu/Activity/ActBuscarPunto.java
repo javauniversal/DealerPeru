@@ -1,7 +1,6 @@
 package android.dcsdealerperu.com.dealerperu.Activity;
 
 import android.content.Intent;
-import android.dcsdealerperu.com.dealerperu.Entry.BuscarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.Ciudad;
 import android.dcsdealerperu.com.dealerperu.Entry.Departamentos;
@@ -88,6 +87,7 @@ public class ActBuscarPunto extends AppCompatActivity {
         edit_nombre = (EditText) findViewById(R.id.edit_nombre);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,8 +136,6 @@ public class ActBuscarPunto extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-
-                BuscarPunto buscarPunto = new BuscarPunto();
 
                 int values = 0;
 
