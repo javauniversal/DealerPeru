@@ -16,12 +16,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -43,6 +43,7 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.google.gson.Gson;
 
 import java.nio.charset.Charset;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,13 +66,19 @@ public class ActCarritoPedido extends AppCompatActivity {
     public static final String TAG = "MyTag";
     private GpsServices gpsServices;
 
+    private DecimalFormat format;
+    private TextView sub_total;
+    private TextView igv;
+    private TextView total_ped;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrito_pedido);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        format = new DecimalFormat("#,###.##");
         mydb = new DBHelper(this);
 
         gpsServices = new GpsServices(this);
@@ -84,6 +91,9 @@ public class ActCarritoPedido extends AppCompatActivity {
             id_punto = bundle.getInt("id_punto");
             id_usuario = bundle.getInt("id_usuario");
         }
+        sub_total = (TextView) findViewById(R.id.sub_total);
+        igv = (TextView) findViewById(R.id.igv);
+        total_ped = (TextView) findViewById(R.id.total_ped);
 
         mListView = (SwipeMenuListView) findViewById(R.id.listView);
 
@@ -158,10 +168,20 @@ public class ActCarritoPedido extends AppCompatActivity {
     }
 
     private void calculaTotal() {
-       for (int i = 0; i <= simsList.size(); i++)
+        double subtotal = 0;
+        double total = 0;
+        double val_igv = 0;
+
+       for (int i = 0; i < simsList.size(); i++)
        {
-           Log.d("Precio",String.valueOf(simsList.get(i).getPrecio_referencia()));
+           total = total + (simsList.get(i).getPrecio_referencia() * simsList.get(i).getCantidadPedida());
        }
+        subtotal = (total / ((getResponseUserStatic().getIgv()/100)+1));
+        val_igv = ((getResponseUserStatic().getIgv()/100) * subtotal);
+        sub_total.setText(String.format("S/. %s", format.format(subtotal)));
+        igv.setText(String.format("S/. %s", format.format(val_igv)));
+        total_ped.setText(String.format("S/. %s", format.format(total)));
+
     }
 
     private void savePedido() {
@@ -201,6 +221,7 @@ public class ActCarritoPedido extends AppCompatActivity {
                     adapterCarrito = new AdapterCarrito(ActCarritoPedido.this, simsList);
                     mListView.setAdapter(adapterCarrito);
                     Toast.makeText(getApplicationContext(), "Producto eliminado", Toast.LENGTH_SHORT).show();
+                    calculaTotal();
                 }
             }
 
@@ -241,8 +262,35 @@ public class ActCarritoPedido extends AppCompatActivity {
         if (id == R.id.action_settings) {
             finish();
             return true;
+        } else if(id == R.id.action_borrar){
+            borrarCarrito();
         }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void borrarCarrito() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setTitle("Borrar Carrito");
+        builder.setMessage("¿ Estas seguro de eliminar los datos del pedido ?");
+        builder.setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                mydb.deleteAll(id_punto, id_usuario);
+                simsList.clear();
+                adapterCarrito.notifyDataSetChanged();
+                calculaTotal();
+
+            }
+        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.show();
+
     }
 
     private void loginServices() {

@@ -17,6 +17,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class AdapterCarrito extends BaseAdapter {
@@ -25,6 +26,7 @@ public class AdapterCarrito extends BaseAdapter {
     List<ReferenciasSims> data;
     private com.nostra13.universalimageloader.core.ImageLoader imageLoader1;
     private DisplayImageOptions options1;
+    private DecimalFormat format;
 
     public AdapterCarrito(Activity actx, List<ReferenciasSims> data) {
         this.actx = actx;
@@ -33,6 +35,8 @@ public class AdapterCarrito extends BaseAdapter {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(actx).build();
         imageLoader1 = ImageLoader.getInstance();
         imageLoader1.init(config);
+
+        format = new DecimalFormat("#,###.##");
 
         //Setup options for ImageLoader so it will handle caching for us.
         options1 = new DisplayImageOptions.Builder()
@@ -75,6 +79,7 @@ public class AdapterCarrito extends BaseAdapter {
         holder.txtReferencia.setText(referenciasSims.getProducto());
         holder.txtcantidad.setText(String.format("Cantidad %1$s", referenciasSims.getCantidadPedida()));
         holder.txtPn.setText(String.format("%1$s", referenciasSims.getPn()));
+        holder.precio.setText(String.format("S/. %s", format.format(referenciasSims.getCantidadPedida() * referenciasSims.getPrecio_referencia())));
 
         if (referenciasSims.getTipo_producto() == 1) {
             //Simcar
@@ -128,6 +133,7 @@ public class AdapterCarrito extends BaseAdapter {
         TextView txtReferencia;
         TextView txtcantidad;
         TextView txtPn;
+        TextView precio;
         ImageView profile_image;
 
         public ViewHolder(View view) {
@@ -135,6 +141,7 @@ public class AdapterCarrito extends BaseAdapter {
             txtReferencia = (TextView) view.findViewById(R.id.txtReferencia);
             txtPn = (TextView) view.findViewById(R.id.txtPn);
             txtcantidad = (TextView) view.findViewById(R.id.txtcantidad);
+            precio = (TextView) view.findViewById(R.id.txtprecio);
 
             profile_image = (ImageView) view.findViewById(R.id.profile_image);
 

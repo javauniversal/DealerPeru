@@ -17,7 +17,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="90dp"
         android:background="@color/colorPrimary"
         android:layout_alignParentBottom="true"
         android:padding="4dp"
@@ -41,7 +41,7 @@
 
 
             <TextView
-                android:layout_width="108dp"
+                android:layout_width="158dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/sub_total"
                 android:text=""
@@ -71,7 +71,7 @@
 
 
             <TextView
-                android:layout_width="108dp"
+                android:layout_width="158dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/igv"
                 android:text=""
@@ -101,7 +101,7 @@
 
 
             <TextView
-                android:layout_width="108dp"
+                android:layout_width="158dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/total_ped"
                 android:text=""
