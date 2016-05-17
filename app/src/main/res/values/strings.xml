@@ -44,9 +44,9 @@
     <string name="provincia">Provincia:</string>
     <string name="distrito">Distrito:</string>
     <string name="circuito">Circuito:</string>
-    <string name="id_pos">Id Pos:</string>
-    <string name="c_dula">Cédula</string>
-    <string name="nombre">Nombre</string>
+    <string name="id_pos">Id Pdv:</string>
+    <string name="c_dula">Cédula:</string>
+    <string name="nombre">Nombre:</string>
     <string name="hota">hota</string>
     <string name="fecha">Fecha:</string>
     <string name="estado">Estado:</string>
@@ -71,7 +71,7 @@
     <string name="direcci_n">Dirección:</string>
     <string name="ciudad">Ciudad:</string>
     <string name="hora_de_visita">Hora de Visita:</string>
-    <string name="d_as">Días:</string>
+    <string name="d_as">Días Visita:</string>
     <string name="tel_fono">Teléfono:</string>
     <string name="n_a">N/A</string>
     <string name="id_pos_sin_punto">Id Pos</string>

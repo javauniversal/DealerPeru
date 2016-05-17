@@ -118,7 +118,6 @@ public class FragmentPlanificar extends BaseVolleyFragment implements View.OnCli
         dataSpinnerTip.add(new CategoriasEstandar(0, "SELECCIONAR"));
         dataSpinnerTip.add(new CategoriasEstandar(1, "Combos"));
         dataSpinnerTip.add(new CategoriasEstandar(2, "Simcard"));
-        dataSpinnerTip.add(new CategoriasEstandar(3, "Ambos"));
 
         ArrayAdapter<CategoriasEstandar> adapterEstados = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, dataSpinnerTip);
         spinner_tipo.setAdapter(adapterEstados);

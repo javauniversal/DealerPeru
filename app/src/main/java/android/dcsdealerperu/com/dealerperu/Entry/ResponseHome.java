@@ -37,6 +37,9 @@ public class ResponseHome implements Serializable {
     @SerializedName("munucipio")
     private String munucipio;
 
+    @SerializedName("distrito")
+    private String distrito;
+
     @SerializedName("id_circuito")
     private String id_circuito;
 
@@ -93,6 +96,17 @@ public class ResponseHome implements Serializable {
 
     @SerializedName("persona_ultima")
     private String persona_ultima;
+
+
+
+    public String getDistrito() {
+        return distrito;
+    }
+
+    public void setDistrito(String distrito) {
+        this.distrito = distrito;
+    }
+
 
     public double getLatitud() {
         return latitud;

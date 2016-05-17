@@ -22,8 +22,8 @@ public class FragmentHome extends BaseVolleyFragment {
         TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.tablayout);
 
         TabsAdapter tabsAdapter = new TabsAdapter(getChildFragmentManager());
-        tabsAdapter.addFragment(new FavoriteTabFragment2(1), "Dashboard");
-        tabsAdapter.addFragment(new FavoriteTabFragment(2), "Rutero");
+        tabsAdapter.addFragment(new FavoriteTabFragment2(1,0), "Dashboard");
+        tabsAdapter.addFragment(new FavoriteTabFragment(2,0), "Rutero");
 
         viewPager.setAdapter(tabsAdapter);
         tabLayout.setupWithViewPager(viewPager);

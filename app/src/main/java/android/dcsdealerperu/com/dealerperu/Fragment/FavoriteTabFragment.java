@@ -52,9 +52,11 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
     private AppAdapterRutero appAdapterRutero;
     private ListView mListView;
     private SpotsDialog alertDialog;
+    private int vendedor;
 
-    public FavoriteTabFragment(int position) {
+    public FavoriteTabFragment(int position,int vende) {
         mPosition = position;
+        vendedor = vende;
     }
 
     public FavoriteTabFragment() {
@@ -127,6 +129,9 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
                 TextView txt_id_numero = (TextView) dialoglayout.findViewById(R.id.txt_id_numero);
                 txt_id_numero.setText(String.format("%1$s", listHome.get(position).getIdpos()));
 
+                TextView txt_nombre = (TextView) dialoglayout.findViewById(R.id.nombre_punto);
+                txt_nombre.setText(String.format("%1$s", listHome.get(position).getRazon()));
+
                 TextView txt_visitado = (TextView) dialoglayout.findViewById(R.id.txt_visitado);
                 String visita;
                 if (listHome.get(position).getTipo_visita() == 0)
@@ -139,17 +144,8 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
                 TextView txt_direccion = (TextView) dialoglayout.findViewById(R.id.txt_direccion);
                 txt_direccion.setText(String.format("%1$s", listHome.get(position).getDireccion()));
 
-                TextView txt_departamento = (TextView) dialoglayout.findViewById(R.id.txt_departamento);
-                txt_departamento.setText(String.format("%1$s", listHome.get(position).getDepartamento()));
-
-                TextView txt_ciudad = (TextView) dialoglayout.findViewById(R.id.txt_ciudad);
-                txt_ciudad.setText(String.format("%1$s", listHome.get(position).getDepartamento()));
-
-                TextView txt_circuito = (TextView) dialoglayout.findViewById(R.id.txt_circuito);
-                txt_circuito.setText(String.format("%1$s", listHome.get(position).getCircuito()));
-
-                TextView txt_ruta = (TextView) dialoglayout.findViewById(R.id.txt_ruta);
-                txt_ruta.setText(String.format("%1$s", listHome.get(position).getRuta()));
+                TextView txt_distrito = (TextView) dialoglayout.findViewById(R.id.txt_distrito);
+                txt_distrito.setText(String.format("%1$s", listHome.get(position).getDistrito()));
 
                 TextView txt_telefono = (TextView) dialoglayout.findViewById(R.id.txt_telefono);
                 txt_telefono.setText(String.format("%1$s", listHome.get(position).getTel()));
@@ -157,8 +153,25 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
                 TextView txt_dias = (TextView) dialoglayout.findViewById(R.id.txt_dias);
                 txt_dias.setText(String.format("%1$s", listHome.get(position).getDetalle()));
 
+                String fecha_hora = listHome.get(position).getFecha_ult()+"  "+listHome.get(position).getHora_ult();
+                if(fecha_hora.trim().isEmpty())
+                    fecha_hora = "N/A";
+
                 TextView txt_hora_visita = (TextView) dialoglayout.findViewById(R.id.txt_hora_visita);
-                txt_hora_visita.setText(String.format("%1$s", listHome.get(position).getTipo_visita()));
+                txt_hora_visita.setText(String.format("%1$s",fecha_hora));
+
+                TextView txt_stock_c = (TextView) dialoglayout.findViewById(R.id.txt_stock_c);
+                txt_stock_c.setText(String.format("%1$s", listHome.get(position).getStock_combo()));
+
+                TextView txt_stock_s = (TextView) dialoglayout.findViewById(R.id.txt_stock_s);
+                txt_stock_s.setText(String.format("%1$s", listHome.get(position).getStock_sim()));
+
+                TextView txt_dias_s = (TextView) dialoglayout.findViewById(R.id.txt_dias_s);
+                txt_dias_s.setText(String.format("%1$s", listHome.get(position).getDias_inve_sim()));
+
+                TextView txt_dias_c = (TextView) dialoglayout.findViewById(R.id.txt_dias_c);
+                txt_dias_c.setText(String.format("%1$s", listHome.get(position).getDias_inve_combo()));
+
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(false);
@@ -304,7 +317,14 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
-                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
+                if(vendedor == 0)
+                {
+                    params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
+                }
+                else
+                {
+                    params.put("iduser", String.valueOf(vendedor));
+                }
                 params.put("iddis", getResponseUserStatic().getId_distri());
                 params.put("db", getResponseUserStatic().getBd());
                 params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));

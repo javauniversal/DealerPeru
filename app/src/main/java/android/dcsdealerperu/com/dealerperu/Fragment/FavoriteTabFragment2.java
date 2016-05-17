@@ -52,10 +52,13 @@ public class FavoriteTabFragment2 extends BaseVolleyFragment {
     private int mProgressStatus = 0;
     private int visitasTotal = 0;
     private int totalConPedido = 0;
+    private int vendedor;
+
     private Handler mHandler = new Handler();
 
-    public FavoriteTabFragment2(int position) {
+    public FavoriteTabFragment2(int position, int vende) {
         mPosition = position;
+        vendedor = vende;
     }
 
     public FavoriteTabFragment2() {
@@ -129,7 +132,15 @@ public class FavoriteTabFragment2 extends BaseVolleyFragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
-                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
+                if(vendedor == 0)
+                {
+                    params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
+                }
+                else
+                {
+                    params.put("iduser", String.valueOf(vendedor));
+                }
+
                 params.put("iddis", getResponseUserStatic().getId_distri());
                 params.put("db", getResponseUserStatic().getBd());
                 params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));

@@ -6,7 +6,8 @@ import android.dcsdealerperu.com.dealerperu.Fragment.FragmenMarcarvisita;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentAceptPedido;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentBajasSupervisor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHome;
-import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHomeRepartidor;
+import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHomeRep;
+import android.dcsdealerperu.com.dealerperu.Fragment.FragmentHomeSuperPrin;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentInventarioRepartidor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisBajas;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentMisPedidos;
@@ -118,6 +119,8 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
                 onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_home));
             }else if(getResponseUserStatic().getPerfil() == 3){
                 onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_home_repartidor));
+            }else if(getResponseUserStatic().getPerfil() == 1){
+                onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_home_super));
             }
 
         }
@@ -146,16 +149,22 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         Class fragmentClass = null;
 
         if (id == R.id.nav_home) {
-            toolbar.setTitle("Inicio");
+            toolbar.setTitle("Inicio Vendedor");
             editaPunto = 0;
             accion = "Guardar";
             fragmentClass = FragmentHome.class;
 
         } else if (id == R.id.nav_home_repartidor) {
-            toolbar.setTitle("Marcar Visita");
+            toolbar.setTitle("Inicio Repartidor");
             editaPunto = 0;
             accion = "Guardar";
-            fragmentClass = FragmentHomeRepartidor.class;
+            fragmentClass = FragmentHomeRep.class;
+
+        }else if (id == R.id.nav_home_super) {
+            toolbar.setTitle("Inicio Supervisor");
+            editaPunto = 0;
+            accion = "Guardar";
+            fragmentClass = FragmentHomeSuperPrin.class;
 
         } else if (id == R.id.nav_marcar_visita) {
             toolbar.setTitle("Marcar Visita");

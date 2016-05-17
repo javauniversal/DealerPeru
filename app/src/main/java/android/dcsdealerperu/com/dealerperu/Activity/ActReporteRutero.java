@@ -114,23 +114,23 @@ public class ActReporteRutero extends AppCompatActivity {
         TextView txt_id_numero = (TextView) dialoglayout.findViewById(R.id.txt_id_numero);
         txt_id_numero.setText(String.format("%1$s", getResponseHomeListS().get(position).getIdpos()));
 
+        TextView txt_nombre = (TextView) dialoglayout.findViewById(R.id.nombre_punto);
+        txt_nombre.setText(String.format("%1$s", getResponseHomeListS().get(position).getRazon()));
+
         TextView txt_visitado = (TextView) dialoglayout.findViewById(R.id.txt_visitado);
-        txt_visitado.setText(String.format("%1$s", getResponseHomeListS().get(position).getTipo_visita()));
+        String visita;
+        if (getResponseHomeListS().get(position).getTipo_visita() == 0)
+            visita = "No";
+        else
+            visita = "Si";
+
+        txt_visitado.setText(String.format("%1$s", visita));
 
         TextView txt_direccion = (TextView) dialoglayout.findViewById(R.id.txt_direccion);
         txt_direccion.setText(String.format("%1$s", getResponseHomeListS().get(position).getDireccion()));
 
-        TextView txt_departamento = (TextView) dialoglayout.findViewById(R.id.txt_departamento);
-        txt_departamento.setText(String.format("%1$s", getResponseHomeListS().get(position).getDepartamento()));
-
-        TextView txt_ciudad = (TextView) dialoglayout.findViewById(R.id.txt_ciudad);
-        txt_ciudad.setText(String.format("%1$s", getResponseHomeListS().get(position).getDepartamento()));
-
-        TextView txt_circuito = (TextView) dialoglayout.findViewById(R.id.txt_circuito);
-        txt_circuito.setText(String.format("%1$s", getResponseHomeListS().get(position).getCircuito()));
-
-        TextView txt_ruta = (TextView) dialoglayout.findViewById(R.id.txt_ruta);
-        txt_ruta.setText(String.format("%1$s", getResponseHomeListS().get(position).getRuta()));
+        TextView txt_distrito = (TextView) dialoglayout.findViewById(R.id.txt_distrito);
+        txt_distrito.setText(String.format("%1$s", getResponseHomeListS().get(position).getDistrito()));
 
         TextView txt_telefono = (TextView) dialoglayout.findViewById(R.id.txt_telefono);
         txt_telefono.setText(String.format("%1$s", getResponseHomeListS().get(position).getTel()));
@@ -138,8 +138,24 @@ public class ActReporteRutero extends AppCompatActivity {
         TextView txt_dias = (TextView) dialoglayout.findViewById(R.id.txt_dias);
         txt_dias.setText(String.format("%1$s", getResponseHomeListS().get(position).getDetalle()));
 
+        String fecha_hora = getResponseHomeListS().get(position).getFecha_ult()+"  "+getResponseHomeListS().get(position).getHora_ult();
+        if(fecha_hora.trim().isEmpty())
+            fecha_hora = "N/A";
+
         TextView txt_hora_visita = (TextView) dialoglayout.findViewById(R.id.txt_hora_visita);
-        txt_hora_visita.setText(String.format("%1$s", getResponseHomeListS().get(position).getTipo_visita()));
+        txt_hora_visita.setText(String.format("%1$s",fecha_hora));
+
+        TextView txt_stock_c = (TextView) dialoglayout.findViewById(R.id.txt_stock_c);
+        txt_stock_c.setText(String.format("%1$s", getResponseHomeListS().get(position).getStock_combo()));
+
+        TextView txt_stock_s = (TextView) dialoglayout.findViewById(R.id.txt_stock_s);
+        txt_stock_s.setText(String.format("%1$s", getResponseHomeListS().get(position).getStock_sim()));
+
+        TextView txt_dias_s = (TextView) dialoglayout.findViewById(R.id.txt_dias_s);
+        txt_dias_s.setText(String.format("%1$s", getResponseHomeListS().get(position).getDias_inve_sim()));
+
+        TextView txt_dias_c = (TextView) dialoglayout.findViewById(R.id.txt_dias_c);
+        txt_dias_c.setText(String.format("%1$s", getResponseHomeListS().get(position).getDias_inve_combo()));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
