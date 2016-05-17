@@ -51,19 +51,24 @@ public class AdapterRecyclerSimcard extends RecyclerView.Adapter<RowViewHolderSi
         holder.txt_referemcia.setText(items.getProducto());
         holder.txtStock.setText(String.format("STOCK  %s", items.getStock()));
 
+        holder.txtInven.setText(String.format("D. INV %s", (int) items.getDias_inve()));
+
+        // 1 Esta en quiebre.
+        // 0 No esta en quiebre.
+
+        if (items.getQuiebre() == 1)
+            holder.imgQuiebre.setVisibility(View.VISIBLE);
+
         holder.btnCatalogoSim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LayoutInflater inflater = context.getLayoutInflater();
                 View dialoglayout = inflater.inflate(R.layout.dialog_sim_pedido, null);
 
-                TextView stock = (TextView) dialoglayout.findViewById(R.id.txtStock);
-                TextView dias = (TextView) dialoglayout.findViewById(R.id.txtDias);
-                final EditText numeroCan = (EditText) dialoglayout.findViewById(R.id.editCantidad);
+                TextView txtCanSugerida = (TextView) dialoglayout.findViewById(R.id.txtCanSugerida);
+                final EditText editCantidad = (EditText) dialoglayout.findViewById(R.id.editCantidad);
 
-                stock.setText(String.format("%s", items.getStock()));
-                dias.setText(String.format("%s", items.getDias_inve()));
-                numeroCan.setText(String.format("%s", items.getPed_sugerido()));
+                txtCanSugerida.setText(String.format("%s", items.getPed_sugerido()));
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setCancelable(false);
@@ -73,10 +78,10 @@ public class AdapterRecyclerSimcard extends RecyclerView.Adapter<RowViewHolderSi
                 builder.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        if (isValidNumber(numeroCan.getText().toString())) {
+                        if (isValidNumber(editCantidad.getText().toString())) {
                             Toast.makeText(context, "La cantidad es un campo requerido", Toast.LENGTH_SHORT).show();
                         } else {
-                            int cantidad_dig = Integer.parseInt(numeroCan.getText().toString());
+                            int cantidad_dig = Integer.parseInt(editCantidad.getText().toString());
                             if (cantidad_dig <= 0) {
                                 Toast.makeText(context, "la cantidad digitada tiene que ser mayor a 0", Toast.LENGTH_SHORT).show();
                             } else {

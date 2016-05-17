@@ -97,13 +97,10 @@ public class AdapterListReferencia extends BaseAdapter {
                 LayoutInflater inflater = actx.getLayoutInflater();
                 View dialoglayout = inflater.inflate(R.layout.dialog_sim_pedido, null);
 
-                TextView stock = (TextView) dialoglayout.findViewById(R.id.txtStock);
-                TextView dias = (TextView) dialoglayout.findViewById(R.id.txtDias);
+                TextView txtCanSugerida = (TextView) dialoglayout.findViewById(R.id.txtCanSugerida);
                 final EditText numeroCan = (EditText) dialoglayout.findViewById(R.id.editCantidad);
 
-                stock.setText(String.format("%s", referencias.getStock()));
-                dias.setText(String.format("%s", referencias.getDias_inve()));
-                numeroCan.setText(String.format("%s", referencias.getPed_sugerido()));
+                txtCanSugerida.setText(String.format("%s", referencias.getPed_sugerido()));
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(actx);
                 builder.setCancelable(false);

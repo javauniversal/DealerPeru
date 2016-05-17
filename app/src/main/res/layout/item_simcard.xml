@@ -40,7 +40,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Large Text"
+                    android:text="Referencia"
                     android:paddingLeft="4dp"
                     android:textSize="20sp"
                     android:id="@+id/txt_referemcia"
@@ -54,7 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
-                    android:text="Large Text"
+                    android:text="Stock"
                     android:paddingLeft="4dp"
                     android:textSize="20sp"
                     android:id="@+id/txtStock"
@@ -66,12 +66,34 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
+                    android:text="inven"
+                    android:paddingLeft="4dp"
+                    android:textSize="20sp"
+                    android:id="@+id/txtInven"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:visibility="gone"
+                    android:tint="@color/rojo_progress"
+                    android:src="@drawable/ic_warning_black_24dp"
+                    android:id="@+id/imgQuiebre"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
                     android:text="Large Text"
                     android:paddingLeft="4dp"
                     android:textSize="20sp"
                     android:id="@+id/txtCantidadPedida"
                     android:layout_weight="1"
-                    android:textColor="@color/bckg"
+                    android:textColor="@color/rojo_progress"
                     android:visibility="gone"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal" />

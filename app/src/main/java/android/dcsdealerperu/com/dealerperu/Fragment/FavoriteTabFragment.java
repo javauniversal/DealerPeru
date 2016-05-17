@@ -251,6 +251,7 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
                     Bundle bundle = new Bundle();
                     Intent intent = new Intent(getActivity(), ActMarcarVisita.class);
                     bundle.putSerializable("value", responseMarcarPedido);
+                    bundle.putString("page", "marcar_rutero");
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }

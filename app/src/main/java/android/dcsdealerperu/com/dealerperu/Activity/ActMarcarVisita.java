@@ -146,6 +146,7 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
                 Bundle bundle2 = new Bundle();
                 Intent intent2 = new Intent(this, ActTomarPedido.class);
                 bundle2.putSerializable("value", mDescribable);
+                bundle2.putString("page", "marcar_visita");
                 intent2.putExtras(bundle2);
                 startActivity(intent2);
 

@@ -122,9 +122,6 @@ public class FragmentSimcardP extends BaseVolleyFragment {
         SearchView sv = new SearchView(((ActTomarPedido) getActivity()).getSupportActionBar().getThemedContext());
         int id = sv.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
         TextView textView = (TextView) sv.findViewById(id);
-        /*textView.setHint("Buscar...");
-        textView.setHintTextColor(getResources().getColor(R.color.color_gris));
-        textView.setTextColor(getResources().getColor(R.color.actionBarColorText));*/
 
         // implementing the listener
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

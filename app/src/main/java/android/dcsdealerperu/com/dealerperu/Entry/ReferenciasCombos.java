@@ -91,6 +91,17 @@ public class ReferenciasCombos implements Serializable {
     @SerializedName("referencias")
     private List<Referencia> referenciaLis;
 
+    @SerializedName("quiebre")
+    private int quiebre;
+
+    public int getQuiebre() {
+        return quiebre;
+    }
+
+    public void setQuiebre(int quiebre) {
+        this.quiebre = quiebre;
+    }
+
     public int getId() {
         return id;
     }

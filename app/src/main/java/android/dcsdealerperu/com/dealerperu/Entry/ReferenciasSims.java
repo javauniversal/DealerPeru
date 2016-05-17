@@ -33,6 +33,17 @@ public class ReferenciasSims {
     @SerializedName("precio_publico")
     private double precio_publico;
 
+    @SerializedName("quiebre")
+    private int quiebre;
+
+    public int getQuiebre() {
+        return quiebre;
+    }
+
+    public void setQuiebre(int quiebre) {
+        this.quiebre = quiebre;
+    }
+
     public int cantidadPedida;
 
     public int id_punto;

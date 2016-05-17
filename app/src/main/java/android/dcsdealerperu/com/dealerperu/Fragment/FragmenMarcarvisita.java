@@ -104,6 +104,8 @@ public class FragmenMarcarvisita extends BaseVolleyFragment {
 
     private void buscarIdPos(final EditText buscar) {
 
+        alertDialog.show();
+
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "buscar_punto_visita");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -129,6 +131,8 @@ public class FragmenMarcarvisita extends BaseVolleyFragment {
                         } else if (error instanceof ParseError) {
                             error_string = "Error al serializar los datos";
                         }
+
+                        alertDialog.dismiss();
 
                         onConnectionFailed(error_string);
                     }

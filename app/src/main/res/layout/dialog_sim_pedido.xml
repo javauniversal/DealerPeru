@@ -16,32 +16,26 @@
             android:layout_height="match_parent"
             android:textStyle="bold"
             android:layout_weight="1"
+            android:textSize="16dp"
             android:textColor="@color/actionBarColorText"
-            android:text="Stock" />
+            android:text="Cantidad Sugerida" />
+
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textStyle="bold"
             android:layout_weight="1"
+            android:textSize="16dp"
             android:textColor="@color/actionBarColorText"
-            android:text="Días Inv"
-            android:gravity="center" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textStyle="bold"
-            android:layout_weight="1"
-            android:textColor="@color/actionBarColorText"
-            android:text="Pedido"
+            android:text="Cantidad Solicitada"
             android:gravity="center" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/grid_item_bg_pressed"
         android:orientation="horizontal">
 
@@ -50,28 +44,20 @@
             android:layout_height="match_parent"
             android:textStyle="bold"
             android:layout_weight="1"
-            android:text="Stock"
+            android:text="0"
+            android:textSize="17dp"
             android:padding="6dp"
-            android:id="@+id/txtStock"
-            android:gravity="center_vertical" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textStyle="bold"
-            android:layout_weight="1"
-            android:text="Días"
-            android:id="@+id/txtDias"
-            android:gravity="center" />
+            android:id="@+id/txtCanSugerida"
+            android:gravity="center_vertical|center_horizontal" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Nº"
+            android:textSize="17dp"
             android:id="@+id/editCantidad"
             android:padding="6dp"
-            android:textSize="13sp"
             android:inputType="number"
             android:gravity="center" />
 
