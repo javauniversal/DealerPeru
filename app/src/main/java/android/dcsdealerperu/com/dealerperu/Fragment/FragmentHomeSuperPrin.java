@@ -3,6 +3,7 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.ListCategoria;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -10,8 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -100,7 +99,7 @@ public class FragmentHomeSuperPrin extends BaseVolleyFragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
-                        CargarVendedores(response);
+                       CargarVendedores(response);
                     }
                 },
                 new Response.ErrorListener() {

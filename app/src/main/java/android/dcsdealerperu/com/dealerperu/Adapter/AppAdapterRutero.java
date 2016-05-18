@@ -74,16 +74,16 @@ public class AppAdapterRutero extends BaseAdapter {
         if (responseHome.getDias_inve_combo() < responseHome.getDias_inve_sim()) {
 
             if (responseHome.getDias_inve_combo() == 0)
-                holder.txtDiasInven.setText("N/A");
+                holder.txtDiasInven.setText("D. Inve N/A");
             else
-                holder.txtDiasInven.setText(responseHome.getDias_inve_combo()+"");
+                holder.txtDiasInven.setText("D. Inve "+responseHome.getDias_inve_combo()+"");
 
         } else {
 
             if (responseHome.getDias_inve_sim() == 0)
-                holder.txtDiasInven.setText("N/A");
+                holder.txtDiasInven.setText("D. Inve N/A");
             else
-                holder.txtDiasInven.setText(responseHome.getDias_inve_sim()+"");
+                holder.txtDiasInven.setText("D. Inve "+responseHome.getDias_inve_sim()+"");
 
         }
 

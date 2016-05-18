@@ -39,6 +39,17 @@ public class Referencia implements Serializable {
     @SerializedName("precio_publico")
     private double precio_publico;
 
+    public int getQuiebre() {
+        return quiebre;
+    }
+
+    public void setQuiebre(int quiebre) {
+        this.quiebre = quiebre;
+    }
+
+    @SerializedName("quiebre")
+    private int quiebre;
+
     public int cantidadPedida;
 
     public int id_punto;

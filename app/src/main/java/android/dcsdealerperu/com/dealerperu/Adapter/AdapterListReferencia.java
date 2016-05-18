@@ -91,6 +91,15 @@ public class AdapterListReferencia extends BaseAdapter {
 
         final Referencia referencias = getItem(position);
 
+        holder.imgQuiebre.setVisibility(View.GONE);
+        if (referencias.getQuiebre() == 1) {
+            holder.imgQuiebre.setVisibility(View.VISIBLE);
+        }
+
+        holder.txtStock.setText(String.format("STOCK  %s", referencias.getStock()));
+
+        holder.txtDiasInven.setText(String.format("D. INV %s", (int) referencias.getDias_inve()));
+
         holder.txtReferencia.setText(referencias.getProducto());
         holder.txtPn.setText(String.format("%1$s", referencias.getPn()));
 
@@ -220,8 +229,14 @@ public class AdapterListReferencia extends BaseAdapter {
         TextView txtcantidad;
         TextView txtPn;
         TextView txtprecio;
+        TextView txtStock;
+        TextView txtDiasInven;
         ImageView profile_image;
         ImageView imageView2;
+        ImageView imgQuiebre;
+
+
+
 
         public ViewHolder(View view) {
 
@@ -230,8 +245,12 @@ public class AdapterListReferencia extends BaseAdapter {
             txtcantidad = (TextView) view.findViewById(R.id.txtcantidad);
             txtprecio = (TextView) view.findViewById(R.id.txtprecio);
 
+            txtStock = (TextView) view.findViewById(R.id.txtStock);
+            txtDiasInven = (TextView) view.findViewById(R.id.txtDiasInven);
+
             profile_image = (ImageView) view.findViewById(R.id.profile_image);
             imageView2 = (ImageView) view.findViewById(R.id.imageView2);
+            imgQuiebre = (ImageView) view.findViewById(R.id.imgquiebre);
 
             view.setTag(this);
         }

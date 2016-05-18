@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -77,6 +78,7 @@ public class AdapterCarrito extends BaseAdapter {
 
         ReferenciasSims referenciasSims = getItem(position);
 
+        holder.layout_info.setVisibility(View.GONE);
         holder.txtReferencia.setText(referenciasSims.getProducto());
         holder.txtcantidad.setText(String.format("Cantidad %1$s", referenciasSims.getCantidadPedida()));
         holder.txtPn.setText(String.format("%1$s", referenciasSims.getPn()));
@@ -136,6 +138,7 @@ public class AdapterCarrito extends BaseAdapter {
         TextView txtPn;
         TextView precio;
         ImageView profile_image;
+        LinearLayout layout_info;
 
         public ViewHolder(View view) {
 
@@ -145,6 +148,8 @@ public class AdapterCarrito extends BaseAdapter {
             precio = (TextView) view.findViewById(R.id.txtprecio);
 
             profile_image = (ImageView) view.findViewById(R.id.profile_image);
+
+            layout_info = (LinearLayout) view.findViewById(R.id.layout_info);
 
             view.setTag(this);
         }

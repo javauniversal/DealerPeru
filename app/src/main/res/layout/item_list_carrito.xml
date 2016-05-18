@@ -13,7 +13,7 @@
         android:contentDescription="@string/app_name" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:orientation="vertical"
@@ -59,7 +59,54 @@
             android:layout_marginStart="4dp"
             android:textSize="@dimen/dimen_letra_app_estandar" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:id="@+id/layout_info">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Stock: 23"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
+                    android:id="@+id/txtStock"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="D. Inve: 12"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/dimen_letra_app_estandar"
+                    android:id="@+id/txtDiasInven"
+                    android:gravity="center_vertical|center_horizontal" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:visibility="gone"
+                    android:tint="@color/rojo_progress"
+                    android:src="@drawable/ic_warning_black_24dp"
+                    android:id="@+id/imgquiebre"
+                    android:layout_weight="1" />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
+
+
 
     <ImageView
         android:layout_width="wrap_content"
@@ -71,5 +118,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:contentDescription="@string/app_name" />
+
 
 </RelativeLayout>
