@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -320,12 +321,25 @@ public class ActReporteMisPedidos extends AppCompatActivity {
         TextView txt_nombre_punto = (TextView) dialoglayout.findViewById(R.id.txt_nombre_punto);
         txt_nombre_punto.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getNombre_punto()));
 
+        TextView txt_direccion = (TextView) dialoglayout.findViewById(R.id.txt_direccion);
+        txt_direccion.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getDireccion()));
+
+        TextView text_vendedor = (TextView) dialoglayout.findViewById(R.id.txt_vendedor);
+        text_vendedor.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getVendedor()));
+
         TextView txt_fecha = (TextView) dialoglayout.findViewById(R.id.txt_fecha);
         txt_fecha.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getFecha()));
 
         TextView txt_estado = (TextView) dialoglayout.findViewById(R.id.txt_estado);
         txt_estado.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getEstado()));
 
+        TextView txt_observa = (TextView) dialoglayout.findViewById(R.id.txt_observa);
+        if(mDescribable.getResponseMisPedidosList().get(position).getObservacion().equals("")) {
+            RelativeLayout obser = (RelativeLayout) dialoglayout.findViewById(R.id.rela_observa);
+            obser.setVisibility(View.GONE);
+        }else{
+            txt_observa.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getObservacion()));
+        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);

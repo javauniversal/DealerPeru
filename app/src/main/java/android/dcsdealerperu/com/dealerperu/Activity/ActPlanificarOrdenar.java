@@ -1,12 +1,14 @@
 package android.dcsdealerperu.com.dealerperu.Activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Adapter.ItemAdapter;
 import android.dcsdealerperu.com.dealerperu.Entry.ListResponsePlaniVisita;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -75,24 +77,82 @@ public class ActPlanificarOrdenar extends AppCompatActivity {
             @Override
             public void onItemDragStarted(int position) {
 
-                Toast.makeText(mDragListView.getContext(), "Start - position: " + position, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onItemDragEnded(int fromPosition, int toPosition) {
 
-                if (fromPosition != toPosition) {
-                    //Toast.makeText(mDragListView.getContext(), "End - position: " + toPosition, Toast.LENGTH_SHORT).show();
-                    //mDescribable.get(fromPosition).setPuntoPlanificacion(fromPosition);
-                }
             }
         });
 
         mItemArray = new ArrayList<>();
         for (int i = 0; i < mDescribable.size(); i++) {
-            mItemArray.add(new Pair<>(Long.valueOf(mDescribable.get(i).getId_pos()), mDescribable.get(i).getId_pos() + " -- " + mDescribable.get(i).getRazon_social()));
+            String texto_html = mDescribable.get(i).getId_pos() + " -- "+mDescribable.get(i).getRazon_social()+ "<br>";
+            texto_html += "Direccion: "+mDescribable.get(i).getDireccion()+ "<br>";
+            int stockCombo;
+            int stockSimcard;
+            boolean quiebre = false;
+
+            if (mDescribable.get(i).getStock_combo() < mDescribable.get(i).getStock_seguridad_combo()) {
+                stockCombo = mDescribable.get(i).getStock_seguridad_combo();
+            } else {
+                stockCombo = mDescribable.get(i).getStock_combo();
+                quiebre = true;
+            }
+
+            if (mDescribable.get(i).getStock_sim() < mDescribable.get(i).getStock_seguridad_sim()) {
+                stockSimcard = mDescribable.get(i).getStock_seguridad_sim();
+            } else {
+                stockSimcard = mDescribable.get(i).getStock_sim();
+                quiebre = true;
+            }
+
+            if (stockCombo < stockSimcard) {
+                texto_html += "Stock: " + String.valueOf(stockSimcard);
+            } else {
+                texto_html += "Stock: " + String.valueOf(stockCombo);
+            }
+
+            if (mDescribable.get(i).getDias_inve_combo() < mDescribable.get(i).getDias_inve_sim()) {
+                if (mDescribable.get(i).getDias_inve_combo() == 0)
+                    texto_html += " &nbsp; &nbsp; &nbsp; D. Inve: N/A";
+                else
+                    texto_html += " &nbsp; &nbsp; &nbsp; D. Inve: "+mDescribable.get(i).getDias_inve_combo()+"";
+            } else {
+                if (mDescribable.get(i).getDias_inve_sim() == 0)
+                    texto_html += " &nbsp; &nbsp; &nbsp; D. Inve: N/A";
+                else
+                    texto_html += " &nbsp; &nbsp; &nbsp; D. Inve: "+mDescribable.get(i).getDias_inve_sim()+"";
+            }
+
+            if (quiebre) {
+                texto_html += " &nbsp; &nbsp; &nbsp; Qui: SI";
+            }else{
+                texto_html += " &nbsp; &nbsp; &nbsp; Qui: NO";
+            }
+            mItemArray.add(new Pair<>(Long.valueOf(mDescribable.get(i).getId_pos()), texto_html));
         }
 
+        FloatingActionButton btn_guardar = (FloatingActionButton) findViewById(R.id.guardar_planificacion);
+        btn_guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(ActPlanificarOrdenar.this);
+                builder.setCancelable(false);
+                builder.setTitle("Alerta");
+                builder.setMessage("¿ Estas seguro de guardar la planificacion ?");
+                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        loginServices();
+                    }
+                }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
+            }
+        });
         setupListRecyclerView();
 
     }
@@ -108,7 +168,20 @@ public class ActPlanificarOrdenar extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            loginServices();
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(ActPlanificarOrdenar.this);
+            builder.setCancelable(false);
+            builder.setTitle("Alerta");
+            builder.setMessage("¿ Estas seguro de guardar la planificacion ?");
+            builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    loginServices();
+                }
+            }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
             return true;
         }
         return super.onOptionsItemSelected(item);

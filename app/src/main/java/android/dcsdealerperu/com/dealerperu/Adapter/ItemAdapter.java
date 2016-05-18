@@ -18,11 +18,11 @@ package android.dcsdealerperu.com.dealerperu.Adapter;
 
 import android.dcsdealerperu.com.dealerperu.R;
 import android.support.v4.util.Pair;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.woxthebox.draglistview.DragItemAdapter;
 
@@ -52,8 +52,9 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
         super.onBindViewHolder(holder, position);
         String text = mItemList.get(position).second;
 
-        holder.mText.setText(text);
-        holder.itemView.setTag(text);
+        holder.mText.setText(Html.fromHtml(text));
+        //holder.mText.setText(Html.fromHtml("<h2>Title</h2><br><p>Description here</p>"));
+        //holder.itemView.setTag(text);
 
     }
 
@@ -72,12 +73,10 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
 
         @Override
         public void onItemClicked(View view) {
-            Toast.makeText(view.getContext(), "Item clicked", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public boolean onItemLongClicked(View view) {
-            Toast.makeText(view.getContext(), "Item long clicked", Toast.LENGTH_SHORT).show();
             return true;
         }
     }

@@ -44,6 +44,83 @@ public class ResponseMarcarPedido implements Serializable {
     @SerializedName("msg")
     private String msg;
 
+    @SerializedName("stock_sim")
+    private int stock_sim;
+
+    @SerializedName("stock_seguridad_sim")
+    private int stock_seguridad_sim;
+
+    @SerializedName("stock_combo")
+    private int stock_combo;
+
+    @SerializedName("stock_seguridad_combo")
+    private int stock_seguridad_combo;
+
+    @SerializedName("dias_inve_sim")
+    private int dias_inve_sim;
+
+    @SerializedName("dias_inve_combo")
+    private int dias_inve_combo;
+
+    @SerializedName("quiebre")
+    private int quiebre;
+
+    public int getStock_sim() {
+        return stock_sim;
+    }
+
+    public void setStock_sim(int stock_sim) {
+        this.stock_sim = stock_sim;
+    }
+
+    public int getStock_seguridad_sim() {
+        return stock_seguridad_sim;
+    }
+
+    public void setStock_seguridad_sim(int stock_seguridad_sim) {
+        this.stock_seguridad_sim = stock_seguridad_sim;
+    }
+
+    public int getStock_combo() {
+        return stock_combo;
+    }
+
+    public void setStock_combo(int stock_combo) {
+        this.stock_combo = stock_combo;
+    }
+
+    public int getStock_seguridad_combo() {
+        return stock_seguridad_combo;
+    }
+
+    public void setStock_seguridad_combo(int stock_seguridad_combo) {
+        this.stock_seguridad_combo = stock_seguridad_combo;
+    }
+
+    public int getDias_inve_sim() {
+        return dias_inve_sim;
+    }
+
+    public void setDias_inve_sim(int dias_inve_sim) {
+        this.dias_inve_sim = dias_inve_sim;
+    }
+
+    public int getDias_inve_combo() {
+        return dias_inve_combo;
+    }
+
+    public void setDias_inve_combo(int dias_inve_combo) {
+        this.dias_inve_combo = dias_inve_combo;
+    }
+
+    public int getQuiebre() {
+        return quiebre;
+    }
+
+    public void setQuiebre(int quiebre) {
+        this.quiebre = quiebre;
+    }
+
     @SerializedName("motivos")
     private List<Motivos> motivosList;
 
