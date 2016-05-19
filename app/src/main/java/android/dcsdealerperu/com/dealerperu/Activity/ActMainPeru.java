@@ -18,6 +18,8 @@ import android.dcsdealerperu.com.dealerperu.Fragment.FragmentReportePedidosRepar
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentRuteroVendedor;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmenteAproPdv;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.MonitoringService;
+import android.dcsdealerperu.com.dealerperu.Services.SetTracingServiceWeb;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -32,6 +34,28 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+
+import dmax.dialog.SpotsDialog;
+
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
 public class ActMainPeru extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,7 +69,9 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
     private int accionNav;
     private Bundle bundle;
     private String accion = "Guardar";
-
+    private SpotsDialog alertDialog;
+    private RequestQueue rq;
+    public static final String TAG = "MyTag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +82,13 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         toolbar.setTitle("Inicio");
         setSupportActionBar(toolbar);
 
+        startService(new Intent(this, MonitoringService.class));
+
+        startService(new Intent(this, SetTracingServiceWeb.class));
+
         fragmentManager = getSupportFragmentManager();
+
+        alertDialog = new SpotsDialog(this, R.style.Custom);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -114,17 +146,16 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             }
 
         } else {
-            if(getResponseUserStatic().getPerfil() == 2)
-            {
+            if(getResponseUserStatic().getPerfil() == 2) {
                 onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_home));
-            }else if(getResponseUserStatic().getPerfil() == 3){
+            } else if(getResponseUserStatic().getPerfil() == 3){
                 onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_home_repartidor));
-            }else if(getResponseUserStatic().getPerfil() == 1){
+            } else if(getResponseUserStatic().getPerfil() == 1){
                 onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_home_super));
             }
-
         }
 
+        //offLineData();
 
     }
 
@@ -270,4 +301,82 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
 
     }
 
+    private void offLineData() {
+        alertDialog.show();
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "servicio_offline");
+        rq = Volley.newRequestQueue(this);
+        StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        parseJSON(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(ActMainPeru.this, "Error de tiempo de espera", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(ActMainPeru.this, "Error Servidor", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(ActMainPeru.this, "Server Error", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NetworkError) {
+                            Toast.makeText(ActMainPeru.this, "Error de red", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(ActMainPeru.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
+                        }
+
+                        alertDialog.dismiss();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
+                params.put("iddis", getResponseUserStatic().getId_distri());
+                params.put("fecha", getDatePhone());
+
+                return params;
+            }
+        };
+
+        rq.add(jsonRequest);
+    }
+
+    private void parseJSON(String response) {
+
+    }
+
+    private String getDatePhone() {
+
+        Calendar cal = new GregorianCalendar();
+        Date date = cal.getTime();
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formatteDate = df.format(date);
+
+        return formatteDate;
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (rq != null) {
+            rq.cancelAll(TAG);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (rq != null) {
+            rq.cancelAll(TAG);
+        }
+    }
 }

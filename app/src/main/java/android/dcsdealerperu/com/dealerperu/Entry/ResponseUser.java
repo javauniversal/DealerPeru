@@ -35,6 +35,70 @@ public class ResponseUser {
     @SerializedName("igv")
     private double igv;
 
+    @SerializedName("intervalo")
+    private int intervalo;
+
+    @SerializedName("hora_inicial")
+    private String hora_inicial;
+
+    @SerializedName("hora_final")
+    private String hora_final;
+
+    @SerializedName("cantidad_envios")
+    private int cantidad_envios;
+
+    private String fechaSincro;
+
+    private String password;
+
+    public String getFechaSincro() {
+        return fechaSincro;
+    }
+
+    public void setFechaSincro(String fechaSincro) {
+        this.fechaSincro = fechaSincro;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getIntervalo() {
+        return intervalo;
+    }
+
+    public void setIntervalo(int intervalo) {
+        this.intervalo = intervalo;
+    }
+
+    public String getHora_inicial() {
+        return hora_inicial;
+    }
+
+    public void setHora_inicial(String hora_inicial) {
+        this.hora_inicial = hora_inicial;
+    }
+
+    public String getHora_final() {
+        return hora_final;
+    }
+
+    public void setHora_final(String hora_final) {
+        this.hora_final = hora_final;
+    }
+
+    public int getCantidad_envios() {
+        return cantidad_envios;
+    }
+
+    public void setCantidad_envios(int cantidad_envios) {
+        this.cantidad_envios = cantidad_envios;
+    }
+
     public double getIgv() {
         return igv;
     }

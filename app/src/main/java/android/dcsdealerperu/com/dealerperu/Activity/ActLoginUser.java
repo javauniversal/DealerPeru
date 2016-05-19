@@ -1,7 +1,9 @@
 package android.dcsdealerperu.com.dealerperu.Activity;
 
 import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseUser;
+import android.dcsdealerperu.com.dealerperu.Entry.TimeService;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
 import android.os.Bundle;
@@ -51,6 +53,7 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
     private GpsServices gpsServices;
     private EditText edit_correo_edit;
     protected DialogEmail dialog;
+    private DBHelper mydb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,8 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
 
         gpsServices = new GpsServices(this);
+
+        mydb = new DBHelper(this);
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
 
@@ -220,7 +225,6 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
         if (!response.equals("[]")) {
             try {
                 ResponseUser login = gson.fromJson(response, ResponseUser.class);
-                setResponseUserStatic(login);
 
                 if (login.getPerfil() == 0) {
                     Snackbar.make(coordinatorLayout, "El usuario no tiene permisos", Snackbar.LENGTH_LONG).setAction("Action", null).show();
@@ -229,9 +233,26 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
                     setLatitud(gpsServices.getLatitude());
                     setLongitud(gpsServices.getLongitude());
 
+                    setResponseUserStatic(login);
+
+                    mydb.deleteAllServiTime();
+
+                    TimeService timeService = new TimeService();
+
+                    timeService.setIdUser(login.getId());
+                    timeService.setTraking(login.getIntervalo());
+                    timeService.setTimeservice(login.getCantidad_envios());
+                    timeService.setIdDistri(login.getId_distri());
+                    timeService.setDataBase(login.getBd());
+                    timeService.setFechainicial(login.getHora_inicial());
+                    timeService.setFechaFinal(login.getHora_final());
+
+                    mydb.insertTimeServices(timeService);
+
                     startActivity(new Intent(this, ActMainPeru.class));
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     finish();
+
                 }
 
             } catch (IllegalStateException ex) {
@@ -297,6 +318,7 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
                 dialog.show();
                 Button acceptButton = dialog.getButtonAccept();
                 acceptButton.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View v) {
                         edit_correo_edit = (EditText) dialog.findViewById(R.id.edit_correo_edit);
