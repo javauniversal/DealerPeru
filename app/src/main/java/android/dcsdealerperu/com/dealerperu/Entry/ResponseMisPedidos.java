@@ -37,6 +37,38 @@ public class ResponseMisPedidos implements Serializable {
     @SerializedName("nombre_punto")
     private String nombre_punto;
 
+    @SerializedName("observacion")
+    private String observacion;
+
+    @SerializedName("vendedor")
+    private String vendedor;
+
+    @SerializedName("direccion")
+    private String direccion;
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+
+    public String getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(String vendedor) {
+        this.vendedor = vendedor;
+    }
 
     public int getNpedido() {
         return npedido;

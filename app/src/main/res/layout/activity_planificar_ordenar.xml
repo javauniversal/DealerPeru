@@ -23,4 +23,11 @@
 
     <include layout="@layout/content_act_planificar_ordenar" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/guardar_planificacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_sort_by_alpha_white_24dp" />
 </android.support.design.widget.CoordinatorLayout>

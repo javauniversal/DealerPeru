@@ -135,7 +135,6 @@ public class FragmentHomeSuperPrin extends BaseVolleyFragment {
                 params.put("inicio", String.valueOf(1));
 
                 return params;
-
             }
         };
         addToQueue(jsonRequest);
