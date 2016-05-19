@@ -39,7 +39,15 @@ public class ActReporteRutero extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         //recycler = (RecyclerView) findViewById(R.id.recycler_view);
 
         mListView = (SwipeMenuListView) findViewById(R.id.listView);

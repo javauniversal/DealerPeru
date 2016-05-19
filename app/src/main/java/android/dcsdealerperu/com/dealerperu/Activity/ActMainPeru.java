@@ -102,22 +102,32 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         // 2 vendedor
         // 3 repartidor
 
-        if (getResponseUserStatic().getPerfil() == 2) {
+        if(getResponseUserStatic() != null)
+        {
+            if (getResponseUserStatic().getPerfil() == 2) {
 
-            navigationView.getMenu().clear();
-            navigationView.inflateMenu(R.menu.drawer_vendedor);
+                navigationView.getMenu().clear();
+                navigationView.inflateMenu(R.menu.drawer_vendedor);
 
-        } else if (getResponseUserStatic().getPerfil() == 3) {
+            } else if (getResponseUserStatic().getPerfil() == 3) {
 
-            navigationView.getMenu().clear();
-            navigationView.inflateMenu(R.menu.drawer_repartidor);
+                navigationView.getMenu().clear();
+                navigationView.inflateMenu(R.menu.drawer_repartidor);
 
-        } else if (getResponseUserStatic().getPerfil() == 1) {
+            } else if (getResponseUserStatic().getPerfil() == 1) {
 
-            navigationView.getMenu().clear();
-            navigationView.inflateMenu(R.menu.drawer_supervisor);
+                navigationView.getMenu().clear();
+                navigationView.inflateMenu(R.menu.drawer_supervisor);
 
+            }
         }
+        else
+        {
+            Intent intent = new Intent(this, ActLoginUser.class);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        }
+
 
         View header = navigationView.getHeaderView(0);
 

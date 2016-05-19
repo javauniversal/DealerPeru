@@ -3,16 +3,18 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.Activity.ActEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.Adapter.AppAdapterRutero;
+import android.dcsdealerperu.com.dealerperu.Entry.ListEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseRutero;
+import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.dcsdealerperu.com.dealerperu.R;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -198,18 +200,96 @@ public class FragmentRuteroRepartidor extends BaseVolleyFragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(false);
                 builder.setTitle("Detalle");
-                builder.setView(dialoglayout).setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
+                builder.setView(dialoglayout).setPositiveButton("Entregar Pedido", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //buscarIdPos(listHome.get(position).getIdpos());
-                        dialog.dismiss();
+                        buscarIdPos(listHome.get(position).getIdpos());
                     }
 
+                }).setNegativeButton("Cerrar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
                 });
 
                 builder.show();
 
             }
         });
+    }
+    private void buscarIdPos(final int idpos) {
+        alertDialog.show();
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "datos_entrega");
+        StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        parseJSONEntrega(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        String error_string = "";
+
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            error_string = "Error de tiempo de espera";
+                        } else if (error instanceof AuthFailureError) {
+                            error_string = "Error Servidor";
+                        } else if (error instanceof ServerError) {
+                            error_string = "Server Error";
+                        } else if (error instanceof NetworkError) {
+                            error_string = "Error de red";
+                        } else if (error instanceof ParseError) {
+                            error_string = "Error al serializar los datos";
+                        }
+
+                        onConnectionFailed(error_string);
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
+                params.put("iddis", getResponseUserStatic().getId_distri());
+                params.put("db", getResponseUserStatic().getBd());
+                params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
+                params.put("idpos", String.valueOf(idpos));
+
+                return params;
+            }
+        };
+
+        addToQueue(jsonRequest);
+
+    }
+
+    private void parseJSONEntrega(String response) {
+        Gson gson = new Gson();
+
+        if (!response.equals("[]")) {
+            try {
+
+                ListEntregarPedido responseEntregarPedido = gson.fromJson(response, ListEntregarPedido.class);
+
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(getActivity(), ActEntregarPedido.class);
+                bundle.putSerializable("value", responseEntregarPedido);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+            } catch (IllegalStateException ex) {
+                ex.printStackTrace();
+                alertDialog.dismiss();
+            } finally {
+                alertDialog.dismiss();
+            }
+        } else {
+            alertDialog.dismiss();
+            Toast.makeText(getContext(), "No se encontraron datos para mostrar", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

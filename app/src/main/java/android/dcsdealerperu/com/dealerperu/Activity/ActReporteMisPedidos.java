@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +64,8 @@ public class ActReporteMisPedidos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reporte_mis_pedidos);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         format = new DecimalFormat("#,###.##");
 
@@ -72,6 +75,17 @@ public class ActReporteMisPedidos extends AppCompatActivity {
             mDescribable = (MisPedidos)bundle.getSerializable("value");
             tipo_reporte = bundle.getInt("tipo");
         }
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         alertDialog = new SpotsDialog(this, R.style.Custom);
 
         mListView = (SwipeMenuListView) findViewById(R.id.listView);
@@ -129,7 +143,7 @@ public class ActReporteMisPedidos extends AppCompatActivity {
                         break;
                     case 1:
                         //Cancelar Pedido
-                        if(!mDescribable.getResponseMisPedidosList().get(position).getEstado().equals("Cancelado")) {
+                        if(mDescribable.getResponseMisPedidosList().get(position).getEstado().equals("Solicitado")) {
                             LayoutInflater inflater = getLayoutInflater();
                             View dialoglayout = inflater.inflate(R.layout.dialog_comentario_aproba, null);
 
@@ -172,7 +186,7 @@ public class ActReporteMisPedidos extends AppCompatActivity {
 
                             builder2.show();
                         }else{
-                            Toast.makeText(ActReporteMisPedidos.this,"Este pedido ya se encuentra en estado cancelado",Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActReporteMisPedidos.this,"Este pedido no se puede cancelar",Toast.LENGTH_LONG).show();
                         }
                         break;
                 }

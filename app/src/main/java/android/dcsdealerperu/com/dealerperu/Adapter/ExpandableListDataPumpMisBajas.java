@@ -2,6 +2,7 @@ package android.dcsdealerperu.com.dealerperu.Adapter;
 
 import android.dcsdealerperu.com.dealerperu.Entry.MisBajas;
 import android.dcsdealerperu.com.dealerperu.Entry.MisBajasDetalle1;
+import android.text.Html;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +31,7 @@ public class ExpandableListDataPumpMisBajas {
                         technology.add(new MisBajasDetalle1(data.get(i).getMisBajasDetalle1List().get(a).getSku(), data.get(i).getMisBajasDetalle1List().get(a).getCant_sku()));
                     }
 
-                    expandableListDetail.put(data.get(i).getId_solicitud() + " - " + data.get(i).getRazon() + " - " + data.get(i).getEstado() + " - " + data.get(i).getFecha(), technology);
+                    expandableListDetail.put(String.valueOf(Html.fromHtml("Solicitud: " + data.get(i).getId_solicitud() + " &nbsp; &nbsp; &nbsp; &nbsp; Id Pdv: " +data.get(i).getId_pos()+ "<br> Nombre Punto: "+ data.get(i).getRazon() + " <br> " + data.get(i).getEstado() + " &nbsp; &nbsp;  - &nbsp; &nbsp; " + data.get(i).getFecha())), technology);
 
 
                 }

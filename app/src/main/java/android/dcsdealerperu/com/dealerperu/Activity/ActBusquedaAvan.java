@@ -107,6 +107,16 @@ public class ActBusquedaAvan extends AppCompatActivity {
                 validarFormt();
             }
         });
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void buscarPuntoJSO() {

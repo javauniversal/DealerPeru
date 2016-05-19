@@ -1,8 +1,11 @@
 package android.dcsdealerperu.com.dealerperu.Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.Activity.ActMapsPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseHome;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+
+import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
 public class AppAdapterRutero extends BaseAdapter {
 
@@ -48,9 +53,9 @@ public class AppAdapterRutero extends BaseAdapter {
             new ViewHolder(convertView);
         }
 
-        ViewHolder holder = (ViewHolder) convertView.getTag();
+         final ViewHolder holder = (ViewHolder) convertView.getTag();
 
-        final ResponseHome responseHome = getItem(position);
+         final ResponseHome responseHome = getItem(position);
 
         holder.txtNombrePunto.setText(responseHome.getRazon());
 
@@ -70,6 +75,11 @@ public class AppAdapterRutero extends BaseAdapter {
 
         if (responseHome.getTipo_visita() == 2)
             holder.imgIndicador.setImageResource(R.drawable.ic_offline_pin_black_24dp);
+
+        if(getResponseUserStatic().getPerfil() == 3)
+        {
+            holder.imgIndicador.setImageResource(R.drawable.ic_help_black_24dp);
+        }
 
         if (responseHome.getDias_inve_combo() < responseHome.getDias_inve_sim()) {
 
@@ -111,9 +121,30 @@ public class AppAdapterRutero extends BaseAdapter {
             holder.txtStock.setText(String.format("Stock %1$s", stockCombo));
         }
 
+        holder.imgquiebre.setVisibility(View.INVISIBLE);
         if (quiebre) {
             holder.imgquiebre.setVisibility(View.VISIBLE);
         }
+
+        holder.imgMap.setVisibility(View.VISIBLE);
+        if(responseHome.getLatitud() == 0) {
+            holder.imgMap.setVisibility(View.INVISIBLE);
+        }else{
+            holder.imgMap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(v.getContext(), ActMapsPunto.class);
+                    bundle.putSerializable("values",responseHome);
+                    intent.putExtras(bundle);
+                    v.getContext().startActivity(intent);
+                }
+            });
+        }
+
+
+
+
 
         return convertView;
 
@@ -128,6 +159,7 @@ public class AppAdapterRutero extends BaseAdapter {
         TextView txtStock;
         ImageView imgIndicador;
         ImageView imgquiebre;
+        ImageView imgMap;
 
         public ViewHolder(View view) {
             txtNombrePunto = (TextView) view.findViewById(R.id.txtNombrePunto);
@@ -137,6 +169,7 @@ public class AppAdapterRutero extends BaseAdapter {
 
             imgquiebre = (ImageView) view.findViewById(R.id.imgquiebre);
             imgIndicador = (ImageView) view.findViewById(R.id.imgIndicador);
+            imgMap = (ImageView) view.findViewById(R.id.imgMap);
 
             view.setTag(this);
         }

@@ -78,6 +78,16 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
 
         setDataPunto();
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
     private void setDataPunto() {

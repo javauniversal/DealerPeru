@@ -7,6 +7,7 @@ import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 
@@ -33,6 +34,16 @@ public class ActEntregarPorPedido extends AppCompatActivity {
 
         AdapterEntregaPedidoPedido adapterEntregaPedido = new AdapterEntregaPedidoPedido(this, mDescribable.getPedidosEntregaList());
         mListView.setAdapter(adapterEntregaPedido);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 

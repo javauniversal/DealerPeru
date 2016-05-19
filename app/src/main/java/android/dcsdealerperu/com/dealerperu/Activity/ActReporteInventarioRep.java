@@ -56,6 +56,16 @@ public class ActReporteInventarioRep extends AppCompatActivity {
             tipo = bundle.getInt("tipo");
         }
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
 
         if(tipo == 2) {
