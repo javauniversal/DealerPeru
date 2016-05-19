@@ -82,6 +82,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         toolbar.setTitle("Inicio");
         setSupportActionBar(toolbar);
 
+        //Colocar en una Estacion de radio..
         startService(new Intent(this, MonitoringService.class));
 
         startService(new Intent(this, SetTracingServiceWeb.class));

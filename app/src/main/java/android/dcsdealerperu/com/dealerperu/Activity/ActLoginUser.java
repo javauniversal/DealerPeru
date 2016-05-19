@@ -5,6 +5,7 @@ import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseUser;
 import android.dcsdealerperu.com.dealerperu.Entry.TimeService;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -54,6 +55,7 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
     private EditText edit_correo_edit;
     protected DialogEmail dialog;
     private DBHelper mydb;
+    private ConnectionDetector connectionDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,8 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
         mydb = new DBHelper(this);
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+
+        connectionDetector = new ConnectionDetector(this);
 
         alertDialog = new SpotsDialog(this, R.style.Custom);
 
@@ -307,7 +311,42 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
                         editPassword.setError("Campo requerido");
                         editPassword.requestFocus();
                     } else {
-                        loginServices();
+                        if (connectionDetector.isConnected()){
+                            loginServices();
+                        } else {
+
+                            if (mydb.validateLoginUser(editUsuario.getText().toString(), editPassword.getText().toString())) {
+                                //Existe el usuario
+                                setLatitud(gpsServices.getLatitude());
+                                setLongitud(gpsServices.getLongitude());
+
+                                ResponseUser login = mydb.getUserLogin(editUsuario.getText().toString());
+
+                                setResponseUserStatic(login);
+
+                                mydb.deleteAllServiTime();
+
+                                TimeService timeService = new TimeService();
+
+                                timeService.setIdUser(login.getId());
+                                timeService.setTraking(login.getIntervalo());
+                                timeService.setTimeservice(login.getCantidad_envios());
+                                timeService.setIdDistri(login.getId_distri());
+                                timeService.setDataBase(login.getBd());
+                                timeService.setFechainicial(login.getHora_inicial());
+                                timeService.setFechaFinal(login.getHora_final());
+
+                                mydb.insertTimeServices(timeService);
+
+                                startActivity(new Intent(this, ActMainPeru.class));
+                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                                finish();
+
+                            } else {
+                                Snackbar.make(coordinatorLayout, "Usuario no estan registrados Offline", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                            }
+
+                        }
                     }
                 }
 

@@ -16,7 +16,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "MydbDealerPeru.db";
@@ -110,12 +109,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public ResponseUser getUserLogin(ResponseUser responseUser) {
+    public ResponseUser getUserLogin(String responseUser) {
 
         Cursor cursor;
         ResponseUser indicador = new ResponseUser();
 
-        String sql = "SELECT * FROM login WHERE id = "+responseUser.getId();
+        String sql = "SELECT * FROM login WHERE user = "+responseUser;
         SQLiteDatabase db = this.getWritableDatabase();
         cursor = db.rawQuery(sql, null);
 
@@ -155,10 +154,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean validateLoginUser(int iduser) {
+    public boolean validateLoginUser(int user) {
         Cursor cursor;
         boolean indicador = false;
-        String sql = "SELECT * FROM login WHERE idUsuario ="+ iduser;
+        String sql = "SELECT * FROM login WHERE user ="+ user;
         SQLiteDatabase db = this.getWritableDatabase();
         cursor = db.rawQuery(sql, null);
         if (cursor.moveToFirst()) {
@@ -168,6 +167,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return indicador;
 
     }
+
+
 
 
     public boolean insertIntro(String data) {
