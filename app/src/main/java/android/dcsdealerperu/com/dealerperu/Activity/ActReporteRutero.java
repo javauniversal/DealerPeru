@@ -2,8 +2,10 @@ package android.dcsdealerperu.com.dealerperu.Activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Adapter.AppAdapterRutero;
 import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -15,15 +17,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
 
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseHome.getResponseHomeListS;
+import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
 public class ActReporteRutero extends AppCompatActivity {
     private static final String DESCRIBABLE_KEY = "describable_key";
@@ -31,6 +51,8 @@ public class ActReporteRutero extends AppCompatActivity {
     private SpotsDialog alertDialog;
     private AppAdapterRutero appAdapterRutero;
     private SwipeMenuListView mListView;
+
+    private RequestQueue rq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +71,7 @@ public class ActReporteRutero extends AppCompatActivity {
             }
         });
         //recycler = (RecyclerView) findViewById(R.id.recycler_view);
+        alertDialog = new SpotsDialog(this, R.style.Custom);
 
         mListView = (SwipeMenuListView) findViewById(R.id.listView);
         //mListView = (SwipeMenuListView) findViewById(R.drawable.i);
@@ -71,6 +94,34 @@ public class ActReporteRutero extends AppCompatActivity {
                 openItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(openItem);
+
+                SwipeMenuItem openItem2 = new SwipeMenuItem(getApplicationContext());
+                // set item background
+                openItem2.setBackground(new ColorDrawable(Color.rgb(251, 192, 45)));
+                // set item width
+                openItem2.setWidth(dp2px(90));
+                // set item title
+                openItem2.setTitle("Editar");
+                // set item title fontsize
+                openItem2.setTitleSize(18);
+                // set item title font color
+                openItem2.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(openItem2);
+
+                SwipeMenuItem openItem3 = new SwipeMenuItem(getApplicationContext());
+                // set item background
+                openItem3.setBackground(new ColorDrawable(Color.rgb(216, 216, 216)));
+                // set item width
+                openItem3.setWidth(dp2px(90));
+                // set item title
+                openItem3.setTitle("Visitar");
+                // set item title fontsize
+                openItem3.setTitleSize(18);
+                // set item title font color
+                openItem3.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(openItem3);
             }
         };
 
@@ -85,6 +136,12 @@ public class ActReporteRutero extends AppCompatActivity {
                 switch (index) {
                     case 0:
                         cargarDetalle(position);
+                        break;
+                    case 1:
+                        EditarPunto(position);
+                        break;
+                    case 2:
+                        buscarIdPos(getResponseHomeListS().get(position).getIdpos());
                         break;
                 }
                 return false;
@@ -114,6 +171,18 @@ public class ActReporteRutero extends AppCompatActivity {
         });
     }
 
+    private void EditarPunto(int position) {
+        int idpos = 0;
+        idpos = getResponseHomeListS().get(position).getIdpos();
+        //Activity Principal, Para acceder al fragment
+        Bundle bundle = new Bundle();
+        Intent intent = new Intent(this, ActMainPeru.class);
+        bundle.putInt("edit_punto", idpos);
+        bundle.putInt("accion", 1);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+    }
     private void cargarDetalle(int position) {
 
         LayoutInflater inflater = getLayoutInflater();
@@ -183,5 +252,89 @@ public class ActReporteRutero extends AppCompatActivity {
                 getResources().getDisplayMetrics());
     }
 
+    private void buscarIdPos(final int idPos) {
+        alertDialog.show();
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "buscar_punto_visita");
+        rq = Volley.newRequestQueue(this);
+        StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        parseJSONVisita(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(ActReporteRutero.this, "Error de tiempo de espera", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(ActReporteRutero.this, "Error Servidor", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(ActReporteRutero.this, "Server Error", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NetworkError) {
+                            Toast.makeText(ActReporteRutero.this, "Error de red", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(ActReporteRutero.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
+                        }
+
+                        alertDialog.dismiss();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
+                params.put("iddis", getResponseUserStatic().getId_distri());
+                params.put("db", getResponseUserStatic().getBd());
+                params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
+                params.put("idpos", String.valueOf(idPos));
+
+                return params;
+
+            }
+        };
+
+        rq.add(jsonRequest);
+    }
+
+    private void parseJSONVisita(String response) {
+
+        Gson gson = new Gson();
+        if (!response.equals("[]")) {
+            try {
+
+                ResponseMarcarPedido responseMarcarPedido = gson.fromJson(response, ResponseMarcarPedido.class);
+
+                if (responseMarcarPedido.getEstado() == -1) {
+                    //No tiene permisos del punto
+                    Toast.makeText(this, responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
+                } else if (responseMarcarPedido.getEstado() == -2) {
+                    //El punto no existe
+                    Toast.makeText(this, responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
+                } else {
+                    //Activity Detalle
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(this, ActMarcarVisita.class);
+                    bundle.putSerializable("value", responseMarcarPedido);
+                    bundle.putString("page", "marcar_rutero");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+
+            } catch (IllegalStateException ex) {
+                ex.printStackTrace();
+                alertDialog.dismiss();
+            } finally {
+                alertDialog.dismiss();
+            }
+        } else {
+            alertDialog.dismiss();
+        }
+
+    }
 
 }

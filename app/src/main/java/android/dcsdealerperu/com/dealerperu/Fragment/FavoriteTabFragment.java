@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.Activity.ActMainPeru;
 import android.dcsdealerperu.com.dealerperu.Activity.ActMarcarVisita;
 import android.dcsdealerperu.com.dealerperu.Activity.ActTomarPedido;
 import android.dcsdealerperu.com.dealerperu.Adapter.AppAdapterRutero;
@@ -176,12 +177,16 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(false);
                 builder.setTitle("Detalle");
-                builder.setView(dialoglayout).setPositiveButton("Visitar Punto", new DialogInterface.OnClickListener() {
+                builder.setView(dialoglayout).setPositiveButton("Visitar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         buscarIdPos(listHome.get(position).getIdpos());
                     }
 
-                }).setNegativeButton("Cerrar", new DialogInterface.OnClickListener() {
+                }).setNegativeButton("Editar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        editarPunto(listHome.get(position).getIdpos());
+                    }
+                }).setNeutralButton("Cerrar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
                     }
@@ -358,6 +363,15 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
             Toast.makeText(getActivity(), "No se encontraron datos para mostrar", Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    private void editarPunto(int idpos){
+        Bundle bundle = new Bundle();
+        Intent intent = new Intent(getContext(), ActMainPeru.class);
+        bundle.putInt("edit_punto", idpos);
+        bundle.putInt("accion", 1);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
 }

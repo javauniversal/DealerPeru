@@ -7,6 +7,7 @@ import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 
@@ -25,7 +26,15 @@ public class ActDetalleComboPedir extends AppCompatActivity {
         setContentView(R.layout.activity_detalle_combo_pedir);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         if (bundle != null) {

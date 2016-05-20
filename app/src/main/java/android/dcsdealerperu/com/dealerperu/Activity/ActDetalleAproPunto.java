@@ -77,6 +77,16 @@ public class ActDetalleAproPunto extends AppCompatActivity {
             mDescribable = (List<AprobarPunto>) bundle.getSerializable("value");
         }
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         mListView = (SwipeMenuListView) findViewById(R.id.listView);
         //mListView = (SwipeMenuListView) findViewById(R.drawable.i);
         actDetalleAproPunto = new AdapterAproPunto(this, mDescribable);

@@ -126,7 +126,8 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Intent intent = new Intent(ActCrearPdvuno.this, ActMainPeru.class);
+                startActivity(intent);
             }
         });
 
@@ -250,21 +251,28 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
 
                 datos = gson.fromJson(response, RequestGuardarEditarPunto.class);
 
-                loadSpinnerTipo();
+                if(datos.getIdpos() != -1) {
 
-                selectSpinnerValue(ListaTipoDoc, spinnerTipoDocumento, datos.getTipo_documento());
+                    loadSpinnerTipo();
 
-                edit_nombres.setText(datos.getNombre_punto());
+                    selectSpinnerValue(ListaTipoDoc, spinnerTipoDocumento, datos.getTipo_documento());
 
-                edit_nom_cli.setText(datos.getNombre_cliente());
-                edit_correo_edit.setText(datos.getEmail());
-                edit_tel_edit.setText(String.valueOf((datos.getTelefono())));
-                edit_cel_edit.setText(String.valueOf((datos.getCelular())));
+                    edit_nombres.setText(datos.getNombre_punto());
 
-                if (datos.getVende_recargas() == 1) {
-                    switch1.setChecked(true);
-                } else {
-                    switch1.setChecked(false);
+                    edit_nom_cli.setText(datos.getNombre_cliente());
+                    edit_correo_edit.setText(datos.getEmail());
+                    edit_tel_edit.setText(String.valueOf((datos.getTelefono())));
+                    edit_cel_edit.setText(String.valueOf((datos.getCelular())));
+
+                    if (datos.getVende_recargas() == 1) {
+                        switch1.setChecked(true);
+                    } else {
+                        switch1.setChecked(false);
+                    }
+                }else {
+                    Toast.makeText(this, datos.getNombre_punto() ,Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(this, ActMainPeru.class);
+                    startActivity(intent);
                 }
 
             } catch (IllegalStateException ex) {

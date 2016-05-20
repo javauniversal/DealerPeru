@@ -70,6 +70,7 @@ public class AppAdapterRutero extends BaseAdapter {
             holder.txtDireccion.setText(direccion);
         }
 
+        holder.imgIndicador.setImageResource(R.drawable.ic_help_black_24dp);
         if (responseHome.getTipo_visita() == 1)
             holder.imgIndicador.setImageResource(R.drawable.ic_check_circle_black_24dp);
 

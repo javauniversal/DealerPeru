@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Adapter.AppAdapterRutero;
 import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -17,17 +18,39 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import dmax.dialog.SpotsDialog;
 
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseHome.getResponseHomeListS;
+import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
 public class ActDetalleBuscarPunto extends AppCompatActivity {
 
     private AppAdapterRutero appAdapterRutero;
+    private SpotsDialog alertDialog;
+    private RequestQueue rq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +58,7 @@ public class ActDetalleBuscarPunto extends AppCompatActivity {
         setContentView(R.layout.activity_detalle_buscar_punto);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        alertDialog = new SpotsDialog(this, R.style.Custom);
         SwipeMenuListView mListView = (SwipeMenuListView) findViewById(R.id.listView);
 
         appAdapterRutero = new AppAdapterRutero(this, (ListHome) getResponseHomeListS());
@@ -79,7 +102,7 @@ public class ActDetalleBuscarPunto extends AppCompatActivity {
                 // set item width
                 openItem3.setWidth(dp2px(90));
                 // set item title
-                openItem3.setTitle("Venta");
+                openItem3.setTitle("Visitar");
                 // set item title fontsize
                 openItem3.setTitleSize(18);
                 // set item title font color
@@ -101,6 +124,9 @@ public class ActDetalleBuscarPunto extends AppCompatActivity {
                         break;
                     case 1:
                         EditarPunto(position);
+                        break;
+                    case 2:
+                        buscarIdPos(getResponseHomeListS().get(position).getIdpos());
                         break;
                 }
 
@@ -221,6 +247,91 @@ public class ActDetalleBuscarPunto extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+
+    private void buscarIdPos(final int idPos) {
+        alertDialog.show();
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "buscar_punto_visita");
+        rq = Volley.newRequestQueue(this);
+        StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        parseJSONVisita(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(ActDetalleBuscarPunto.this, "Error de tiempo de espera", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(ActDetalleBuscarPunto.this, "Error Servidor", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(ActDetalleBuscarPunto.this, "Server Error", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NetworkError) {
+                            Toast.makeText(ActDetalleBuscarPunto.this, "Error de red", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(ActDetalleBuscarPunto.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
+                        }
+
+                        alertDialog.dismiss();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
+                params.put("iddis", getResponseUserStatic().getId_distri());
+                params.put("db", getResponseUserStatic().getBd());
+                params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
+                params.put("idpos", String.valueOf(idPos));
+
+                return params;
+
+            }
+        };
+
+        rq.add(jsonRequest);
+    }
+
+    private void parseJSONVisita(String response) {
+
+        Gson gson = new Gson();
+        if (!response.equals("[]")) {
+            try {
+
+                ResponseMarcarPedido responseMarcarPedido = gson.fromJson(response, ResponseMarcarPedido.class);
+
+                if (responseMarcarPedido.getEstado() == -1) {
+                    //No tiene permisos del punto
+                    Toast.makeText(this, responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
+                } else if (responseMarcarPedido.getEstado() == -2) {
+                    //El punto no existe
+                    Toast.makeText(this, responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
+                } else {
+                    //Activity Detalle
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(this, ActMarcarVisita.class);
+                    bundle.putSerializable("value", responseMarcarPedido);
+                    bundle.putString("page", "marcar_rutero");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+
+            } catch (IllegalStateException ex) {
+                ex.printStackTrace();
+                alertDialog.dismiss();
+            } finally {
+                alertDialog.dismiss();
+            }
+        } else {
+            alertDialog.dismiss();
+        }
+
     }
 
 }

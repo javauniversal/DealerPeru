@@ -24,8 +24,8 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="180dp"
-                android:layout_height="170dp"
+                android:layout_width="@dimen/ancho_imagen_sim"
+                android:layout_height="@dimen/alto_imagen_sim"
                 android:id="@+id/img_producto"
                 android:tint="@color/colorPrimary"
                 android:src="@drawable/ic_sim_card_black_24dp"

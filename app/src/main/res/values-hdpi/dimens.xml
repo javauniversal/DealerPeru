@@ -1,0 +1,9 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. 4
+    values-hdpi             4.0” 480x800 hdpi
+    values-hdpi             3.7” 480x854 hdpi
+    -->
+    <dimen name="ancho_imagen_sim">150dp</dimen>
+    <dimen name="alto_imagen_sim">130dp</dimen>
+    <dimen name="padding_cardview_sim">5dp</dimen>
+</resources>

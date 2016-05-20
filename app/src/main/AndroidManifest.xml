@@ -58,13 +58,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.ActReporteRutero"
-            android:label="@string/title_activity_act_detalle_buscar_punto"
+            android:label="Mi Rutero"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.ActReporteMisPedidos"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Mis Pedidos"/>
         <activity
             android:name=".Activity.ActReporteBajas"
             android:label="@string/title_activity_act_reporte_bajas"

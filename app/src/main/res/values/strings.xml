@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DCSDEALER</string>
+    <string name="app_name">DCS DEALER</string>
     <string name="action_settings">Cerrar Sesión</string>
 
 
@@ -8,14 +8,15 @@
     <string name="title_activity_act_login_user">Ingresar MovilBox DCS</string>
 
     <string name="url_base">http://190.248.152.140:8023/services.php?solicitud=</string>
-    <!--<string name="url_base">http://192.168.2.1/movistar_peru/appmovil/servicios/services.php?solicitud=</string> -->
+    <!-- <string name="url_base">https://peru.movilbox.net/app/servicios/services.php?solicitud=</string>
+      <string name="url_base">http://prueba.movilbox.net:88/movistar_peru/appmovil/servicios/services.php?solicitud=</string>-->
 
-    <!-- TODO: Remove or change this placeholder text -->
+<!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="detalle"><u>Detalle</u></string>
     <string name="title_activity_act_no_venta">No Venta</string>
-    <string name="title_activity_act_buscar_punto">Buscar Punto</string>
+    <string name="title_activity_act_buscar_punto">Buscar Pdvs</string>
 
     <string-array name="tabs">
         <item>Dashboard</item>
@@ -23,13 +24,13 @@
     </string-array>
 
     <string name="title_activity_act_marcar_visita">Marcar Visita</string>
-    <string name="title_activity_act_detalle_buscar_punto">Resultado busqueda</string>
+    <string name="title_activity_act_detalle_buscar_punto">Busqueda Pdvs</string>
     <string name="title_activity_act_reporte_mis_bajas">Mis Bajas</string>
     <string name="title_activity_act_reporte_bajas">Reporte Bajas</string>
     <string name="title_activity_act_reporte_mis_pedidos">Reporte Pedidos</string>
     <string name="title_activity_act_carrito_pedido">Carrito Pedido</string>
-    <string name="title_activity_act_detalle_combo_pedir">Referencia</string>
-    <string name="title_activity_act_detalle_apro_punto">Aprobación de puntos</string>
+    <string name="title_activity_act_detalle_combo_pedir">Tomar Pedido</string>
+    <string name="title_activity_act_detalle_apro_punto">Aprobación de Pdv</string>
     <string name="title_activity_act_reporte_aprobacion_pdv">Reporte Aprobacion Pdvs</string>
     <string name="title_activity_act_crear_pdvuno">Crear Punto</string>
     <string name="title_activity_act_crear_pdvdos">Crear Punto</string>
@@ -52,7 +53,7 @@
     <string name="hota">hota</string>
     <string name="fecha">Fecha:</string>
     <string name="estado">Estado:</string>
-    <string name="nombre_punto">Nombre Punto:</string>
+    <string name="nombre_punto">Nombre Pdv:</string>
     <string name="buscar">Buscar</string>
     <string name="tipo">Tipo</string>
     <string name="planificaci_n">Planificación</string>
@@ -76,10 +77,10 @@
     <string name="d_as">Días Visita:</string>
     <string name="tel_fono">Teléfono:</string>
     <string name="n_a">N/A</string>
-    <string name="id_pos_sin_punto">Id Pos</string>
+    <string name="id_pos_sin_punto">Id Pdv</string>
     <string name="pn">PN</string>
     <string name="referencia">Referencia</string>
-    <string name="title_activity_act_maps_punto">Mapa Punto</string>
+    <string name="title_activity_act_maps_punto">Mapa Pdv</string>
 
 
 </resources>

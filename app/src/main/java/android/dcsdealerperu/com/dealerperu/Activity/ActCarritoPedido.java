@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -79,7 +80,15 @@ public class ActCarritoPedido extends AppCompatActivity {
         setSupportActionBar(toolbar);
         format = new DecimalFormat("#,###.##");
         mydb = new DBHelper(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         gpsServices = new GpsServices(this);
 
         alertDialog = new SpotsDialog(this, R.style.Custom);
@@ -296,6 +305,7 @@ public class ActCarritoPedido extends AppCompatActivity {
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "guardar_pedido");
         rq = Volley.newRequestQueue(this);
+
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -346,7 +356,7 @@ public class ActCarritoPedido extends AppCompatActivity {
                 return params;
             }
         };
-
+        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(60000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         rq.add(jsonRequest);
     }
 
@@ -389,9 +399,6 @@ public class ActCarritoPedido extends AppCompatActivity {
                         //Enviar pantalla visitar punto
                         Bundle bundle = new Bundle();
                         Intent intent = new Intent(this, ActMainPeru.class);
-                        bundle.putInt("edit_punto", 0);
-                        bundle.putInt("accion", 2);
-                        intent.putExtras(bundle);
                         startActivity(intent);
 
                     } else {

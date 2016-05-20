@@ -39,8 +39,7 @@ public class BaseVolleyFragment extends Fragment {
             request.setTag(this);
             if (fRequestQueue == null)
                 fRequestQueue = volley.getRequestQueue();
-            request.setRetryPolicy(new DefaultRetryPolicy(
-                    60000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            request.setRetryPolicy(new DefaultRetryPolicy(60000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
             ));
 
             //onPreStartConnection(alertDialog);

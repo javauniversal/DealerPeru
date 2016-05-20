@@ -22,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -170,7 +171,7 @@ public class ActBuscarPunto extends AppCompatActivity {
                 return params;
             }
         };
-
+        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(60000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         rq.add(jsonRequest);
     }
 
@@ -247,7 +248,6 @@ public class ActBuscarPunto extends AppCompatActivity {
                 return params;
             }
         };
-
         rq.add(jsonRequest);
     }
 

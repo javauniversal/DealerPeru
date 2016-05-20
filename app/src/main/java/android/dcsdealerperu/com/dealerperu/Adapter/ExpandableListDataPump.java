@@ -29,7 +29,13 @@ public class ExpandableListDataPump {
                         technology.add(new Detalle(data.get(i).getDetalles().get(a).getNombre_usuario(), data.get(i).getDetalles().get(a).getHora(), data.get(i).getDetalles().get(a).getPn(), data.get(i).getDetalles().get(a).getCantidad(), data.get(i).getDetalles().get(a).getTotal()));
                     }
 
-                    expandableListDetail.put(data.get(i).getId() + " - " + data.get(i).getEstado() + " - " + data.get(i).getFecha(), technology);
+                    if(data.get(i).getId() == 0)
+                    {
+                        expandableListDetail.put(data.get(i).getEstado() + " - " + data.get(i).getFecha(), technology);
+                    }else{
+                        expandableListDetail.put(data.get(i).getId() + " - " + data.get(i).getEstado() + " - " + data.get(i).getFecha(), technology);
+                    }
+
                 }
             }
         }

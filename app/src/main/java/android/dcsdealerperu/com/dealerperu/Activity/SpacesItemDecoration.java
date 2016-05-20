@@ -9,7 +9,7 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
 
     private int halfSpace;
 
-    public SpacesItemDecoration(int space) {
+    public                                                                                                                                                                                                           SpacesItemDecoration(int space) {
         this.halfSpace = space / 2;
     }
 

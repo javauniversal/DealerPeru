@@ -49,7 +49,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Visitas del día"
+                    android:text="Pdv's  Visitados"
                     android:textStyle="bold"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:textColor="@color/colorPrimary"
@@ -136,7 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="17dp"
-                    android:text="Visitas con pedido"
+                    android:text="Pdv's con pedido"
                     android:textStyle="bold"
                     android:textSize="@dimen/dimen_letra_app_estandar"
                     android:textColor="@color/colorPrimary"

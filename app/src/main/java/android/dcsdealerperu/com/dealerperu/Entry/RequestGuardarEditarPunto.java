@@ -78,7 +78,7 @@ public class RequestGuardarEditarPunto implements Serializable {
     public String nombre_via;
 
     @SerializedName("nro_via")
-    public int nro_via;
+    public String nro_via;
 
     @SerializedName("lote")
     public String lote;
@@ -374,11 +374,11 @@ public class RequestGuardarEditarPunto implements Serializable {
         this.nombre_via = nombre_via;
     }
 
-    public int getNro_via() {
+    public String getNro_via() {
         return nro_via;
     }
 
-    public void setNro_via(int nro_via) {
+    public void setNro_via(String nro_via) {
         this.nro_via = nro_via;
     }
 

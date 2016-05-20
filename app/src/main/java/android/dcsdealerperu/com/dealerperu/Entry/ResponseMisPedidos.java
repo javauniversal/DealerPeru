@@ -3,6 +3,7 @@ package android.dcsdealerperu.com.dealerperu.Entry;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class ResponseMisPedidos implements Serializable {
 
@@ -45,6 +46,17 @@ public class ResponseMisPedidos implements Serializable {
 
     @SerializedName("direccion")
     private String direccion;
+
+    @SerializedName("detalle_refes")
+    private List<Pedidos> detalle_refes;
+
+    public List<Pedidos> getDetalle_refes() {
+        return detalle_refes;
+    }
+
+    public void setDetalle_refes(List<Pedidos> detalle_refes) {
+        this.detalle_refes = detalle_refes;
+    }
 
     public String getDireccion() {
         return direccion;

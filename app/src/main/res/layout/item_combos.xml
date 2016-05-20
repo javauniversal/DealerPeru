@@ -96,7 +96,7 @@
                 android:layout_height="match_parent"
                 style="@style/BrandButtonStyle2"
                 android:layout_weight="1"
-                android:text="Pedir Equipo"
+                android:text="Pedir Combo"
                 android:id="@+id/btnpedido"
                 android:gravity="center_vertical|center_horizontal" />
 

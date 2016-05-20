@@ -3,6 +3,7 @@ package android.dcsdealerperu.com.dealerperu.Adapter;
 import android.app.Activity;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMisPedidos;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -51,9 +52,10 @@ public class AdapterMisPedidos extends BaseAdapter {
 
         ResponseMisPedidos resMis = getItem(position);
 
-        holder.fecha.setText(resMis.getFecha());
-        holder.estado.setText(resMis.getEstado());
-        holder.nombre_punto.setText(resMis.getNombre_punto());
+        holder.fecha.setText(Html.fromHtml("<b>Fecha:</b> "+resMis.getFecha()));
+        holder.estado.setText(Html.fromHtml("<b>"+resMis.getEstado()+"</b>"));
+        holder.nombre_punto.setText(Html.fromHtml(String.valueOf("<b>Pdv:</b> "+resMis.getIdpos() +" -- <b>Nombre: </b>"+resMis.getNombre_punto())));
+        holder.direccion.setText(Html.fromHtml(String.valueOf("<b>Direccion:</b> "+resMis.getDireccion())));
 
         return convertView;
     }
@@ -63,11 +65,13 @@ public class AdapterMisPedidos extends BaseAdapter {
         TextView fecha;
         TextView estado;
         TextView nombre_punto;
+        TextView direccion;
 
         public ViewHolder(View view) {
             fecha = (TextView) view.findViewById(R.id.fecha);
             estado = (TextView) view.findViewById(R.id.estado);
-            nombre_punto = (TextView) view.findViewById(R.id.n_punto);
+            nombre_punto = (TextView) view.findViewById(R.id.idpos);
+            direccion = (TextView) view.findViewById(R.id.direccion);
 
 
             view.setTag(this);

@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Adapter.AdapterMisPedidos;
+import android.dcsdealerperu.com.dealerperu.Adapter.ExpandableListAdapter;
+import android.dcsdealerperu.com.dealerperu.Adapter.ExpandableListDataPump;
+import android.dcsdealerperu.com.dealerperu.Entry.Detalle;
 import android.dcsdealerperu.com.dealerperu.Entry.MisPedidos;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
@@ -17,11 +20,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -41,7 +46,9 @@ import com.google.gson.Gson;
 
 import java.nio.charset.Charset;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
@@ -58,6 +65,10 @@ public class ActReporteMisPedidos extends AppCompatActivity {
     private SpotsDialog alertDialog;
     private RequestQueue rq;
     private  int tipo_reporte = 0;
+    private ArrayList<String> expandableListTitle;
+    private HashMap<String, List<Detalle>> expandableListDetail;
+    private ExpandableListAdapter expandableListAdapter;
+    private ExpandableListView expandableListView;
 
     private SwipeMenuListView mListView;
     @Override
@@ -269,7 +280,7 @@ public class ActReporteMisPedidos extends AppCompatActivity {
                 return params;
             }
         };
-
+        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(60000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         rq.add(jsonRequest);
     }
 
@@ -311,9 +322,6 @@ public class ActReporteMisPedidos extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         View dialoglayout = inflater.inflate(R.layout.dialog_detalle_mis_pedidos, null);
 
-        TextView txt_idpos = (TextView) dialoglayout.findViewById(R.id.txt_idpos);
-        txt_idpos.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getIdpos()));
-
         TextView txt_npedido = (TextView) dialoglayout.findViewById(R.id.txt_npedido);
         txt_npedido.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getNpedido()));
 
@@ -329,20 +337,11 @@ public class ActReporteMisPedidos extends AppCompatActivity {
         TextView txt_total_picking = (TextView) dialoglayout.findViewById(R.id.txt_total_picking);
         txt_total_picking.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getTotal_picking()));
 
-        TextView txt_hora = (TextView) dialoglayout.findViewById(R.id.txt_hora);
-        txt_hora.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getHora()));
-
-        TextView txt_nombre_punto = (TextView) dialoglayout.findViewById(R.id.txt_nombre_punto);
-        txt_nombre_punto.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getNombre_punto()));
-
-        TextView txt_direccion = (TextView) dialoglayout.findViewById(R.id.txt_direccion);
-        txt_direccion.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getDireccion()));
-
         TextView text_vendedor = (TextView) dialoglayout.findViewById(R.id.txt_vendedor);
         text_vendedor.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getVendedor()));
 
         TextView txt_fecha = (TextView) dialoglayout.findViewById(R.id.txt_fecha);
-        txt_fecha.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getFecha()));
+        txt_fecha.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getFecha() + " - "+ mDescribable.getResponseMisPedidosList().get(position).getHora()));
 
         TextView txt_estado = (TextView) dialoglayout.findViewById(R.id.txt_estado);
         txt_estado.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getEstado()));
@@ -354,6 +353,14 @@ public class ActReporteMisPedidos extends AppCompatActivity {
         }else{
             txt_observa.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getObservacion()));
         }
+
+        expandableListView = (ExpandableListView) dialoglayout.findViewById(R.id.expandableListView);
+
+        expandableListDetail = ExpandableListDataPump.getData(mDescribable.getResponseMisPedidosList().get(position).getDetalle_refes());
+        expandableListTitle = new ArrayList<>(expandableListDetail.keySet());
+
+        expandableListAdapter = new ExpandableListAdapter(this, expandableListTitle, expandableListDetail);
+        expandableListView.setAdapter(expandableListAdapter);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);

@@ -20,6 +20,28 @@ public class Pedidos implements Serializable {
     @SerializedName("detalle")
     private List<Detalle> detalles;
 
+    @SerializedName("tipo_producto")
+    private String tipo_producto;
+
+    @SerializedName("cant_pro")
+    private int cant_pro;
+
+    public String getTipo_producto() {
+        return tipo_producto;
+    }
+
+    public void setTipo_producto(String tipo_producto) {
+        this.tipo_producto = tipo_producto;
+    }
+
+    public int getCant_pro() {
+        return cant_pro;
+    }
+
+    public void setCant_pro(int cant_pro) {
+        this.cant_pro = cant_pro;
+    }
+
     public int getId() {
         return id;
     }

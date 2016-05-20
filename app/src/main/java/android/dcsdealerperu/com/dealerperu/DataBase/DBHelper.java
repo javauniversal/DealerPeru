@@ -42,7 +42,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 " hora_final TEXT, cantidad_envios INT, fechaSincro, TEXT, password TEXT)";
 
 
-
         db.execSQL(sqlIntro);
         db.execSQL(sqlCarrito);
         db.execSQL(sqlTimeServices);
@@ -80,6 +79,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         try {
+
             values.put("id", data.getId());
             values.put("cedula", data.getCedula());
             values.put("nombre", data.getNombre());

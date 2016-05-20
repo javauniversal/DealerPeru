@@ -109,6 +109,16 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
 
         alertDialog = new SpotsDialog(this, R.style.Custom);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         btn_siguiente_dir = (Button) findViewById(R.id.btn_siguiente_dir);
         btn_regresar_dir = (Button) findViewById(R.id.btn_regresar_dir);
         spinner_departamento = (Spinner) findViewById(R.id.spinner_departamento);
@@ -338,7 +348,7 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
                     else
                         valor = Integer.parseInt(edit_numero_puerta.getText().toString().trim());
 
-                    mDescribable.setNro_via(valor);
+                    mDescribable.setNro_via(String.valueOf(valor));
 
                     mDescribable.setLote(edit_lote.getText().toString());
                     mDescribable.setTipo_vivienda(estado_vivienda);
