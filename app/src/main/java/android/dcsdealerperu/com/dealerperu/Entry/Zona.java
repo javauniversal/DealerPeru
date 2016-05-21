@@ -16,6 +16,17 @@ public class Zona implements Serializable {
     @SerializedName("id_territorio")
     private int id_territorio;
 
+    @SerializedName("estado")
+    private int estado;
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
     public int getId() {
         return id;
     }

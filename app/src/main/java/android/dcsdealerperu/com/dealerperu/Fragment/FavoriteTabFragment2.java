@@ -3,6 +3,7 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 import android.annotation.SuppressLint;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseRutero;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -53,6 +54,7 @@ public class FavoriteTabFragment2 extends BaseVolleyFragment {
     private int visitasTotal = 0;
     private int totalConPedido = 0;
     private int vendedor;
+    private ConnectionDetector connectionDetector;
 
     private Handler mHandler = new Handler();
 
@@ -87,13 +89,19 @@ public class FavoriteTabFragment2 extends BaseVolleyFragment {
         txtPorCumCumpli = (TextView) rootView.findViewById(R.id.txtPorCumCumpli);
         txtPorCombos = (TextView) rootView.findViewById(R.id.txtPorCombos);
 
+        connectionDetector = new ConnectionDetector(getActivity());
+
         return rootView;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setupGrid();
+
+        if (connectionDetector.isConnected()) {
+            setupGrid();
+        }
+
     }
 
     private void setupGrid() {
@@ -132,12 +140,9 @@ public class FavoriteTabFragment2 extends BaseVolleyFragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
-                if(vendedor == 0)
-                {
+                if(vendedor == 0) {
                     params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
-                }
-                else
-                {
+                } else {
                     params.put("iduser", String.valueOf(vendedor));
                 }
 

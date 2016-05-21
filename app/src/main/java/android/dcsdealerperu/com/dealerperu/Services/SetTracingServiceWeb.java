@@ -3,7 +3,7 @@ package android.dcsdealerperu.com.dealerperu.Services;
 import android.app.Service;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
-import android.dcsdealerperu.com.dealerperu.Entry.ListResponsePedido;
+import android.dcsdealerperu.com.dealerperu.Entry.ListTracing;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.Tracing;
 import android.dcsdealerperu.com.dealerperu.R;
@@ -108,7 +108,7 @@ public class SetTracingServiceWeb extends Service {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
 
-                String parJSON = new Gson().toJson(seguimientoList, ListResponsePedido.class);
+                String parJSON = new Gson().toJson(seguimientoList, ListTracing.class);
 
                 params.put("datos", parJSON);
 

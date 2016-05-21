@@ -12,7 +12,15 @@ public class Ciudad extends CategoriasEstandar implements Serializable {
     private int id_muni;
 
     @SerializedName("id_depto")
-    private int id_depto;
+    private int departamento;
+
+    public int getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(int departamento) {
+        this.departamento = departamento;
+    }
 
     @SerializedName("distritos")
     private List<Distrito> distritoList;
@@ -35,14 +43,6 @@ public class Ciudad extends CategoriasEstandar implements Serializable {
 
     public Ciudad(int id, String descripcion) {
         super(id, descripcion);
-    }
-
-    public int getId_depto() {
-        return id_depto;
-    }
-
-    public void setId_depto(int id_depto) {
-        this.id_depto = id_depto;
     }
 
     @Override

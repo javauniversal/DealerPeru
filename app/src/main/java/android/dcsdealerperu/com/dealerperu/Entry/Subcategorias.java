@@ -16,6 +16,17 @@ public class Subcategorias {
     @SerializedName("id_categoria")
     private int id_categoria;
 
+    @SerializedName("estado_accion")
+    private int estado_accion;
+
+    public int getEstado_accion() {
+        return estado_accion;
+    }
+
+    public void setEstado_accion(int estado_accion) {
+        this.estado_accion = estado_accion;
+    }
+
     public int getId() {
         return id;
     }

@@ -3,14 +3,17 @@ package android.dcsdealerperu.com.dealerperu.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.RequestGuardarEditarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseInsert;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
+import android.dcsdealerperu.com.dealerperu.Entry.Sincronizar;
 import android.dcsdealerperu.com.dealerperu.Entry.Subcategorias;
 import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
 import android.dcsdealerperu.com.dealerperu.Entry.Zona;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +42,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,19 +63,18 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
     private Spinner spinner_sub_categoria;
     private EditText edit_codigo_cum;
     private EditText edit_referencia;
-    private Button btn_guardar;
-    private Button btn_regresar_ref;
     private int estado_comercial;
     private int estado_categoria;
     private int estado_sub_categoria;
     private int estado_territorio;
     private int estado_ruta;
     private GpsServices gpsServices;
-    private Bundle bundle;
     private RequestGuardarEditarPunto mDescribable;
     private RequestQueue rq;
     public static final String TAG = "MyTag";
     private SpotsDialog alertDialog;
+    private ConnectionDetector connectionDetector;
+    private DBHelper mydb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +83,12 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        connectionDetector = new ConnectionDetector(this);
+
+        mydb = new DBHelper(this);
+
         Intent intent = this.getIntent();
-        bundle = intent.getExtras();
+        Bundle bundle = intent.getExtras();
         if (bundle != null) {
             mDescribable = (RequestGuardarEditarPunto) bundle.getSerializable("value");
         }
@@ -104,11 +111,10 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
         edit_codigo_cum = (EditText) findViewById(R.id.edit_codigo_cum);
         edit_referencia = (EditText) findViewById(R.id.edit_referencia);
 
-        btn_guardar = (Button) findViewById(R.id.btn_guardar);
+        Button btn_guardar = (Button) findViewById(R.id.btn_guardar);
         btn_guardar.setOnClickListener(this);
-        btn_regresar_ref = (Button) findViewById(R.id.btn_guardar);
+        Button btn_regresar_ref = (Button) findViewById(R.id.btn_guardar);
         btn_regresar_ref.setOnClickListener(this);
-
 
         alertDialog = new SpotsDialog(this, R.style.Custom);
 
@@ -147,8 +153,6 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
                 loadSubCategoria(categoriasList.get(position).getListSubCategoria());
 
                 estado_categoria = categoriasList.get(position).getId();
-
-
             }
 
             @Override
@@ -299,7 +303,14 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
 
                     dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogo1, int id) {
-                            guardarDataPEdido();
+
+                            if (connectionDetector.isConnected()) {
+                                dialogo1.dismiss();
+                                guardarDataPedido();
+                            } else {
+                                dialogo1.dismiss();
+                                guardarLocal();
+                            }
                         }
 
                     });
@@ -319,7 +330,55 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void guardarDataPEdido() {
+    private void guardarLocal() {
+
+        mDescribable.setCodigo_cum(edit_codigo_cum.getText().toString().trim());
+
+        mDescribable.setEstado_com(estado_comercial);
+        mDescribable.setCategoria(estado_categoria);
+        mDescribable.setSubcategoria(estado_sub_categoria);
+        mDescribable.setTerritorio(estado_territorio);
+        mDescribable.setZona(estado_ruta);
+        mDescribable.setRef_direccion(edit_referencia.getText().toString());
+        mDescribable.setLatitud(gpsServices.getLatitude());
+        mDescribable.setLongitud(gpsServices.getLongitude());
+
+        List<RequestGuardarEditarPunto> puntoList = new ArrayList<>();
+        Sincronizar sincronizar = new Sincronizar();
+        mDescribable.setAccion("Sincronizar");
+
+        puntoList.add(mDescribable);
+        sincronizar.setPuntosList(puntoList);
+
+        if(mydb.insertPunto(sincronizar, 1)) {
+
+            AlertDialog.Builder dialogo1 = new AlertDialog.Builder(this);
+            dialogo1.setTitle("Punto Offline");
+            dialogo1.setMessage(mDescribable.getNombre_punto());
+            dialogo1.setCancelable(false);
+            dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogo1, int id) {
+                    startActivity(new Intent(ActCrearPdvtres.this, ActMainPeru.class));
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                    finish();
+                }
+            });
+            dialogo1.setNegativeButton("Vender", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogo1, int id) {
+                    //Vender ();
+                    //buscarIdPunto(Integer.parseInt(responseInsert.getIdpos()));
+                }
+            });
+
+            dialogo1.show();
+        } else {
+            Toast.makeText(this, "El punto no se pudo crear Offline comuniquese con el administrador", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    private void guardarDataPedido() {
+
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "guardar_punto");
         rq = Volley.newRequestQueue(this);
@@ -366,7 +425,7 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
                 String parJSON = new Gson().toJson(mDescribable, RequestGuardarEditarPunto.class);
 
                 params.put("datos", parJSON);
-                params.put("idpos", String.valueOf(mDescribable.getIdpos()));
+                params.put("idpos", String.valueOf(mDescribable.getIdpos())); //Params Editar
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
                 params.put("iddis", getResponseUserStatic().getId_distri());
                 params.put("db", getResponseUserStatic().getBd());

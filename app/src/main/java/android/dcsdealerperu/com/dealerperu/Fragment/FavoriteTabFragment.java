@@ -12,6 +12,7 @@ import android.dcsdealerperu.com.dealerperu.Entry.ResponseHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseRutero;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SearchView;
@@ -54,6 +55,7 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
     private ListView mListView;
     private SpotsDialog alertDialog;
     private int vendedor;
+    private ConnectionDetector connectionDetector;
 
     public FavoriteTabFragment(int position,int vende) {
         mPosition = position;
@@ -71,6 +73,8 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
         mListView = (ListView) rootView.findViewById(R.id.listView);
 
         alertDialog = new SpotsDialog(getActivity(), R.style.Custom);
+
+        connectionDetector = new ConnectionDetector(getActivity());
 
         return rootView;
 
@@ -113,7 +117,11 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setupGrid();
+
+        if (connectionDetector.isConnected()) {
+            setupGrid();
+        }
+
     }
 
     private void llenarData(final List<ResponseHome> listHome) {
@@ -322,14 +330,12 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
-                if(vendedor == 0)
-                {
+                if(vendedor == 0) {
                     params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
-                }
-                else
-                {
+                } else {
                     params.put("iduser", String.valueOf(vendedor));
                 }
+
                 params.put("iddis", getResponseUserStatic().getId_distri());
                 params.put("db", getResponseUserStatic().getBd());
                 params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));

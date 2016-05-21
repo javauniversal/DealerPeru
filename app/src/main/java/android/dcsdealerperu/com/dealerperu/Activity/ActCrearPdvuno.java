@@ -68,6 +68,7 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
     private RequestGuardarEditarPunto datos;
     private List<CategoriasEstandar> ListaTipoDoc = new ArrayList<>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +93,6 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
 
         btn_siguiente_per.setOnClickListener(this);
         btn_cancelar_per.setOnClickListener(this);
-
 
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
@@ -328,8 +328,7 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
 
         });
     }

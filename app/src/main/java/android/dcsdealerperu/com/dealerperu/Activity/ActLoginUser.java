@@ -80,8 +80,8 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
         TextView link_pass = (TextView) findViewById(R.id.link_pass);
         link_pass.setOnClickListener(this);
 
-        //editUsuario.setText("vcali");
-        //editPassword.setText("pro_123");
+        editUsuario.setText("vcali");
+        editPassword.setText("pro_123");
 
         Button btnIngresar = (Button) findViewById(R.id.btnIngresar);
         btnIngresar.setOnClickListener(this);
@@ -229,34 +229,51 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
         Gson gson = new Gson();
         if (!response.equals("[]")) {
             try {
-                ResponseUser login = gson.fromJson(response, ResponseUser.class);
+
+                final ResponseUser login = gson.fromJson(response, ResponseUser.class);
 
                 if (login.getPerfil() == 0) {
                     Snackbar.make(coordinatorLayout, "El usuario no tiene permisos", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 } else {
 
-                    setLatitud(gpsServices.getLatitude());
-                    setLongitud(gpsServices.getLongitude());
+                    new Thread(new Runnable() {
+                        public void run() {
 
-                    setResponseUserStatic(login);
+                            if (!mydb.validateLoginUser(editUsuario.getText().toString(), editPassword.getText().toString())) {
+                                login.setPassword(editPassword.getText().toString());
+                                login.setFechaSincro("1999-01-01 00:00:00");
+                                mydb.insertLoginUser(login);
+                            }
 
-                    mydb.deleteAllServiTime();
+                            setResponseUserStatic(login);
 
-                    TimeService timeService = new TimeService();
+                            mydb.deleteAllServiTime();
 
-                    timeService.setIdUser(login.getId());
-                    timeService.setTraking(login.getIntervalo());
-                    timeService.setTimeservice(login.getCantidad_envios());
-                    timeService.setIdDistri(login.getId_distri());
-                    timeService.setDataBase(login.getBd());
-                    timeService.setFechainicial(login.getHora_inicial());
-                    timeService.setFechaFinal(login.getHora_final());
+                            TimeService timeService = new TimeService();
 
-                    mydb.insertTimeServices(timeService);
+                            timeService.setIdUser(login.getId());
+                            timeService.setTraking(login.getIntervalo());
+                            timeService.setTimeservice(login.getCantidad_envios());
+                            timeService.setIdDistri(login.getId_distri());
+                            timeService.setDataBase(login.getBd());
+                            timeService.setFechainicial(login.getHora_inicial());
+                            timeService.setFechaFinal(login.getHora_final());
 
-                    startActivity(new Intent(this, ActMainPeru.class));
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                    finish();
+                            mydb.insertTimeServices(timeService);
+
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+
+                                    setLatitud(gpsServices.getLatitude());
+                                    setLongitud(gpsServices.getLongitude());
+
+                                    startActivity(new Intent(ActLoginUser.this, ActMainPeru.class));
+                                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                                    finish();
+                                }
+                            });
+                        }
+                    }).start();
 
                 }
 

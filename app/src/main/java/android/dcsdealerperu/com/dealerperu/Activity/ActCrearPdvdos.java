@@ -1,6 +1,7 @@
 package android.dcsdealerperu.com.dealerperu.Activity;
 
 import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.Ciudad;
 import android.dcsdealerperu.com.dealerperu.Entry.Departamentos;
@@ -28,30 +29,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
 
 import static android.dcsdealerperu.com.dealerperu.Entry.DataDireccionForm.setCategoriasList;
 import static android.dcsdealerperu.com.dealerperu.Entry.DataDireccionForm.setEstadoComunList;
 import static android.dcsdealerperu.com.dealerperu.Entry.DataDireccionForm.setTerritorioList;
-import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
 public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickListener {
 
@@ -89,7 +75,8 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
     private int departamento, ciudad_pro, distrito, editaPunto = 0;
     private RequestGuardarEditarPunto mDescribable;
     private Bundle bundle;
-    ResponseCreatePunt responseCreatePunt;
+    //ResponseCreatePunt responseCreatePunt;
+    private DBHelper mydb;
 
     private RequestQueue rq;
     public static final String TAG = "MyTag";
@@ -100,6 +87,8 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_crear_pdvdos);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mydb = new DBHelper(this);
 
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
@@ -324,7 +313,8 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
 
         alertDialog = new SpotsDialog(this, R.style.Custom);
 
-        setupGrid();
+        loadDataLocal();
+
     }
 
     @Override
@@ -539,90 +529,29 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    private void setupGrid() {
+    private void loadDataLocal() {
 
-        alertDialog.show();
-        String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_filtros_puntos");
-        rq = Volley.newRequestQueue(this);
-        StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(final String response) {
-                        parseJSON(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error
-                        String error_string = "";
+        ResponseCreatePunt responseCreatePunt = mydb.getDepartamentos();
 
-                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                            Toast.makeText(ActCrearPdvdos.this, "Error de tiempo de espera", Toast.LENGTH_LONG).show();
-                        } else if (error instanceof AuthFailureError) {
-                            Toast.makeText(ActCrearPdvdos.this, "Error Servidor", Toast.LENGTH_LONG).show();
-                        } else if (error instanceof ServerError) {
-                            Toast.makeText(ActCrearPdvdos.this, "Server Error", Toast.LENGTH_LONG).show();
-                        } else if (error instanceof NetworkError) {
-                            Toast.makeText(ActCrearPdvdos.this, "Error de red", Toast.LENGTH_LONG).show();
-                        } else if (error instanceof ParseError) {
-                            Toast.makeText(ActCrearPdvdos.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
-                        }
+        loadDepartamento(responseCreatePunt);
 
-                        alertDialog.dismiss();
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
+        setEstadoComunList(responseCreatePunt.getEstadoComunList());
+        setTerritorioList(responseCreatePunt.getTerritorioList());
+        setCategoriasList(responseCreatePunt.getCategoriasList());
 
-                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
-                params.put("iddis", getResponseUserStatic().getId_distri());
-                params.put("db", getResponseUserStatic().getBd());
+        loadVia(responseCreatePunt.getNomenclaturaList().getTipoViaList());
+        loadInterior(responseCreatePunt.getNomenclaturaList().getTipoInteriorList());
+        loadUrbanizacion(responseCreatePunt.getNomenclaturaList().getTipoUrbanizacionList());
+        loadCiudadTipo(responseCreatePunt.getNomenclaturaList().getTipoCiudadList());
+        loadTipoVivienda(responseCreatePunt.getNomenclaturaList().getTipoViviendaList());
 
-                return params;
-
-            }
-        };
-
-        rq.add(jsonRequest);
-    }
-
-    private void parseJSON(String response) {
-        Gson gson = new Gson();
-
-        if (!response.equals("[]")) {
-            try {
-
-                responseCreatePunt = gson.fromJson(response, ResponseCreatePunt.class);
-
-                setEstadoComunList(responseCreatePunt.getEstadoComunList());
-                setTerritorioList(responseCreatePunt.getTerritorioList());
-                setCategoriasList(responseCreatePunt.getCategoriasList());
-
-                loadDepartamento(responseCreatePunt);
-
-                loadVia(responseCreatePunt.getNomenclaturaList().getTipoViaList());
-                loadInterior(responseCreatePunt.getNomenclaturaList().getTipoInteriorList());
-                loadUrbanizacion(responseCreatePunt.getNomenclaturaList().getTipoUrbanizacionList());
-                loadCiudadTipo(responseCreatePunt.getNomenclaturaList().getTipoCiudadList());
-                loadTipoVivienda(responseCreatePunt.getNomenclaturaList().getTipoViviendaList());
-
-                if (mDescribable.getAccion().equals("Editar")) {
-                    setearSpinners();
-                }
-
-            } catch (IllegalStateException ex) {
-                ex.printStackTrace();
-                alertDialog.dismiss();
-            } finally {
-                alertDialog.dismiss();
-            }
+        if (mDescribable.getAccion().equals("Editar")) {
+            setearSpinners(responseCreatePunt);
         }
     }
 
-    private void setearSpinners() {
+
+    private void setearSpinners(ResponseCreatePunt responseCreatePunt) {
 
         setSpinerDepartamento(responseCreatePunt.getDepartamentosList(), spinner_departamento, mDescribable.getDepto());
 
@@ -710,7 +639,6 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
             }
         }
     }
-
 
     private void loadTipoVivienda(final List<TipoVivienda> tipoViviendaList) {
 
@@ -945,5 +873,87 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
             setSpinerDistrito(distritoList, spinner_distrito, mDescribable.getDistrito());
 
     }
+
+     /*private void parseJSON(String response) {
+        Gson gson = new Gson();
+
+        if (!response.equals("[]")) {
+            try {
+
+                responseCreatePunt = gson.fromJson(response, ResponseCreatePunt.class);
+
+                setEstadoComunList(responseCreatePunt.getEstadoComunList());
+                setTerritorioList(responseCreatePunt.getTerritorioList());
+                setCategoriasList(responseCreatePunt.getCategoriasList());
+
+                loadDepartamento(responseCreatePunt);
+
+                loadVia(responseCreatePunt.getNomenclaturaList().getTipoViaList());
+                loadInterior(responseCreatePunt.getNomenclaturaList().getTipoInteriorList());
+                loadUrbanizacion(responseCreatePunt.getNomenclaturaList().getTipoUrbanizacionList());
+                loadCiudadTipo(responseCreatePunt.getNomenclaturaList().getTipoCiudadList());
+                loadTipoVivienda(responseCreatePunt.getNomenclaturaList().getTipoViviendaList());
+
+                if (mDescribable.getAccion().equals("Editar")) {
+                    setearSpinners();
+                }
+
+            } catch (IllegalStateException ex) {
+                ex.printStackTrace();
+                alertDialog.dismiss();
+            } finally {
+                alertDialog.dismiss();
+            }
+        }
+    }*/
+
+    /*private void setupGrid() {
+        alertDialog.show();
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_filtros_puntos");
+        rq = Volley.newRequestQueue(this);
+        StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        parseJSON(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        String error_string = "";
+
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(ActCrearPdvdos.this, "Error de tiempo de espera", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(ActCrearPdvdos.this, "Error Servidor", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(ActCrearPdvdos.this, "Server Error", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NetworkError) {
+                            Toast.makeText(ActCrearPdvdos.this, "Error de red", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(ActCrearPdvdos.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
+                        }
+
+                        alertDialog.dismiss();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
+                params.put("iddis", getResponseUserStatic().getId_distri());
+                params.put("db", getResponseUserStatic().getBd());
+
+                return params;
+
+            }
+        };
+
+        rq.add(jsonRequest);
+    }*/
 
 }

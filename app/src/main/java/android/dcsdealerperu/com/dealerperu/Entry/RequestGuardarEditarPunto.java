@@ -8,6 +8,8 @@ import java.util.List;
 
 public class RequestGuardarEditarPunto implements Serializable {
 
+    private String idAuto;
+
     @SerializedName("idpos")
     private int idpos;
 
@@ -127,6 +129,28 @@ public class RequestGuardarEditarPunto implements Serializable {
 
     @SerializedName("accion")
     private String accion;
+
+    @SerializedName("latitud")
+    private double latitud;
+
+    @SerializedName("longitud")
+    private double longitud;
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
 
     private List<Territorio> territorioList;
 
@@ -478,5 +502,12 @@ public class RequestGuardarEditarPunto implements Serializable {
         this.tipo_documento = tipo_documento;
     }
 
+    public String getIdAuto() {
+        return idAuto;
+    }
+
+    public void setIdAuto(String idAuto) {
+        this.idAuto = idAuto;
+    }
 
 }
