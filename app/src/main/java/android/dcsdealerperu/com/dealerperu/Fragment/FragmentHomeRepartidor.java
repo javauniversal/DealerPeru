@@ -39,24 +39,14 @@ public class FragmentHomeRepartidor extends BaseVolleyFragment {
     private TextView txtInicio;
     private TextView txtFinal;
     private DecimalFormat format;
-    private int mPosition;
     private ProgressBar mProgress;
-    private int mProgressStatus = 0;
-
-
-    public FragmentHomeRepartidor(int position) {
-
-        mPosition = position;
-        format = new DecimalFormat("#,###.##");
-    }
 
     public FragmentHomeRepartidor() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_repartidor, container, false);
         saldo = (TextView) view.findViewById(R.id.saldo_liquida);
@@ -67,6 +57,8 @@ public class FragmentHomeRepartidor extends BaseVolleyFragment {
         mProgress = (ProgressBar) view.findViewById(R.id.progressBar);
 
         alertDialog = new SpotsDialog(getActivity(), R.style.Custom);
+
+        format = new DecimalFormat("#,###.##");
 
         consultaLiquidacion();
         return view;

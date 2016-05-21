@@ -34,8 +34,8 @@ public class FragmentHomeRep extends Fragment {
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
 
         TabsAdapter tabsAdapter = new TabsAdapter(getChildFragmentManager());
-        tabsAdapter.addFragment(new FragmentHomeRepartidor(1), "Dashboard");
-        tabsAdapter.addFragment(new FragmentRuteroRepartidor(2), "Rutero");
+        tabsAdapter.addFragment(new FragmentHomeRepartidor(), "Dashboard");
+        tabsAdapter.addFragment(new FragmentRuteroRepartidor(), "Rutero");
 
         viewPager.setAdapter(tabsAdapter);
         tabLayout.setupWithViewPager(viewPager);

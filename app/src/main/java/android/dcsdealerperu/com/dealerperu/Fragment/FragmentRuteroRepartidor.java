@@ -45,14 +45,10 @@ import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getRespons
  */
 public class FragmentRuteroRepartidor extends BaseVolleyFragment {
 
-    private int mPosition;
     private ListView mListView;
     private SpotsDialog alertDialog;
     private AppAdapterRutero appAdapterRutero;
 
-    public FragmentRuteroRepartidor(int position) {
-        mPosition = position;
-    }
     public FragmentRuteroRepartidor() {
         // Required empty public constructor
     }

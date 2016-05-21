@@ -289,7 +289,6 @@
                         android:layout_marginRight="10dp">
 
                         <ImageView
-                            android:id="@+id/image_estado"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:tint="@color/colorPrimary"
@@ -303,10 +302,8 @@
                             android:layout_width="match_parent"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@+id/image_estado"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/image_estado">
+                            android:layout_marginLeft="8dp">
 
                             <Spinner
                                 android:layout_width="match_parent"

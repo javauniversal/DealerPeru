@@ -8,7 +8,7 @@
     <string name="title_activity_act_login_user">Ingresar MovilBox DCS</string>
 
     <!-- URL BASE DESARROLLO -->
-    <string name="url_base">http://190.248.152.140:8023/services.php?solicitud=</string>
+    <!-- <string name="url_base">http://190.248.152.140:8023/services.php?solicitud=</string> -->
     <!-- -->
 
     <!-- URL BASE PRUEBAS -->
@@ -16,7 +16,8 @@
     <!-- -->
 
     <!-- URL BASE PRODUCCION -->
-    <!-- <string name="url_base">https://peru.movilbox.net/app/servicios/services.php?solicitud=</string> -->
+    <string name="url_base">https://peru.movilbox.net/app/servicios/services.php?solicitud=</string>
+    <!-- -->
 
 
 <!-- TODO: Remove or change this placeholder text -->

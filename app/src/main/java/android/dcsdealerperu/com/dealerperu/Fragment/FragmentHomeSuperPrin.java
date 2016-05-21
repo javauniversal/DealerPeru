@@ -51,14 +51,8 @@ public class FragmentHomeSuperPrin extends BaseVolleyFragment {
         // Required empty public constructor
     }
 
-    public FragmentHomeSuperPrin(int i) {
-        mPosition = i;
-    }
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_super_prin, container, false);
         spinner_vendedor = (Spinner) view.findViewById(R.id.spinner_vendedor);
@@ -76,20 +70,16 @@ public class FragmentHomeSuperPrin extends BaseVolleyFragment {
 
     private void dashBoardVendedor() {
 
-        if(vendedor != 0)
-        {
+        if(vendedor != 0) {
             FragmentManager fManager = getFragmentManager();
             fragmentHomeSuper = new FragmentHomeSuper();
             Bundle args = new Bundle();
             args.putInt("id_vendedor", vendedor);
             fragmentHomeSuper.setArguments(args);
             fManager.beginTransaction().replace(R.id.contentPanel, fragmentHomeSuper).commit();
-        }
-        else
-        {
+        } else {
             Toast.makeText(getActivity(),"Por favor selecciona un vendedor",Toast.LENGTH_LONG).show();
         }
-
     }
 
     private void loadVendedor() {
