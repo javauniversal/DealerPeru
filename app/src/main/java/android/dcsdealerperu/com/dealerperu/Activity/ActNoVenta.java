@@ -1,9 +1,12 @@
 package android.dcsdealerperu.com.dealerperu.Activity;
 
 import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.Motivos;
+import android.dcsdealerperu.com.dealerperu.Entry.NoVisita;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +34,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
@@ -51,6 +56,8 @@ public class ActNoVenta extends AppCompatActivity implements View.OnClickListene
     public static final String TAG = "MyTag";
     private SpotsDialog alertDialog;
     private GpsServices gpsServices;
+    private ConnectionDetector connectionDetector;
+    private DBHelper mydb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,10 @@ public class ActNoVenta extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_no_venta);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mydb = new DBHelper(this);
+
+        connectionDetector = new ConnectionDetector(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -78,7 +89,20 @@ public class ActNoVenta extends AppCompatActivity implements View.OnClickListene
         bundle = intent.getExtras();
         if (bundle != null) {
             thumbs = (ResponseMarcarPedido) bundle.getSerializable("value");
-            loadCausa(thumbs);
+            if (connectionDetector.isConnected()) {
+                loadCausa(thumbs.getMotivosList());
+            } else {
+                List<Motivos> motivosList = new ArrayList<>();
+
+                motivosList.add(new Motivos(1, "STOCK SUFICIENTE"));
+                motivosList.add(new Motivos(2, "CERRADO"));
+                motivosList.add(new Motivos(3, "NO SE ENCUENTRA EL DUEÑO"));
+                motivosList.add(new Motivos(4, "FALTA DE CAPITAL"));
+                motivosList.add(new Motivos(5, "NO EXISTE EL PDV"));
+
+                thumbs.setMotivosList(motivosList);
+                loadCausa(thumbs.getMotivosList());
+            }
         }
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -89,19 +113,18 @@ public class ActNoVenta extends AppCompatActivity implements View.OnClickListene
         });
     }
 
-    private void loadCausa(final ResponseMarcarPedido thumbs) {
+    private void loadCausa(final List<Motivos> thumbs) {
 
-        ArrayAdapter<Motivos> prec3 = new ArrayAdapter<>(this, R.layout.textview_spinner, thumbs.getMotivosList());
+        ArrayAdapter<Motivos> prec3 = new ArrayAdapter<>(this, R.layout.textview_spinner, thumbs);
         spinner_motivos.setAdapter(prec3);
         spinner_motivos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                id_estado = thumbs.getMotivosList().get(position).getId();
+                id_estado = thumbs.get(position).getId();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
 
         });
     }
@@ -128,7 +151,33 @@ public class ActNoVenta extends AppCompatActivity implements View.OnClickListene
                     EditComment.setText("");
                     EditComment.setError("Este campo es obligatorio");
                 } else {
-                    guardarVisita();
+
+                    if (connectionDetector.isConnected()) {
+                        guardarVisita();
+                    } else {
+                        //Guardar no visita local...
+                        NoVisita noVisita = new NoVisita();
+                        noVisita.setIdpos(thumbs.getId_pos());
+                        noVisita.setMotivo(id_estado);
+                        noVisita.setObservacion(EditComment.getText().toString());
+                        noVisita.setLatitud(gpsServices.getLatitude());
+                        noVisita.setLongitud(gpsServices.getLongitude());
+                        noVisita.setIduser(getResponseUserStatic().getId());
+                        noVisita.setIdids(Integer.parseInt(getResponseUserStatic().getId_distri()));
+                        noVisita.setDb(getResponseUserStatic().getBd());
+                        noVisita.setPerfil(getResponseUserStatic().getPerfil());
+
+
+                        if (mydb.insertNoVisita(noVisita)) {
+                            Toast.makeText(this, "Se guardo con exito la visita", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(this, ActMainPeru.class));
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                            finish();
+                        } else {
+                            Toast.makeText(this, "Problemas al guardar la visita", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
                 }
 
                 break;

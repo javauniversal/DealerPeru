@@ -39,6 +39,61 @@ public class Referencia implements Serializable {
     @SerializedName("precio_publico")
     private double precio_publico;
 
+    @SerializedName("estado_accion")
+    private int estado_accion;
+
+    @SerializedName("id_padre")
+    private int id_padre;
+
+    @SerializedName("latitud")
+    private double latitud;
+
+    @SerializedName("longitud")
+    private double longitud;
+
+    @SerializedName("estado_line")
+    private int estado_line;
+
+    public int getEstado_line() {
+        return estado_line;
+    }
+
+    public void setEstado_line(int estado_line) {
+        this.estado_line = estado_line;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public int getId_padre() {
+        return id_padre;
+    }
+
+    public void setId_padre(int id_padre) {
+        this.id_padre = id_padre;
+    }
+
+    public int getEstado_accion() {
+        return estado_accion;
+    }
+
+    public void setEstado_accion(int estado_accion) {
+        this.estado_accion = estado_accion;
+    }
+
     public int getQuiebre() {
         return quiebre;
     }

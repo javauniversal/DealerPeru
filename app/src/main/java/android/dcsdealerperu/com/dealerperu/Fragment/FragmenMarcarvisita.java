@@ -4,8 +4,10 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Activity.ActBusquedaAvan;
 import android.dcsdealerperu.com.dealerperu.Activity.ActMarcarVisita;
+import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +43,8 @@ public class FragmenMarcarvisita extends BaseVolleyFragment {
     private Button btnAvBus;
     private SpotsDialog alertDialog;
     private EditText edit_buscar;
+    private ConnectionDetector connectionDetector;
+    private DBHelper mydb;
 
     public static FragmenMarcarvisita newInstance(ResponseMarcarPedido describable) {
         FragmenMarcarvisita fragment = new FragmenMarcarvisita();
@@ -77,6 +81,10 @@ public class FragmenMarcarvisita extends BaseVolleyFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        connectionDetector = new ConnectionDetector(getActivity());
+
+        mydb = new DBHelper(getActivity());
+
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +95,11 @@ public class FragmenMarcarvisita extends BaseVolleyFragment {
                     edit_buscar.setText("");
                     edit_buscar.setError("Este campo es obligatorio");
                 } else {
-                    buscarIdPos(edit_buscar);
+                    if (connectionDetector.isConnected()){
+                        buscarIdPos(edit_buscar);
+                    } else {
+                        buscarPuntoLocal(edit_buscar);
+                    }
                 }
             }
         });
@@ -95,11 +107,29 @@ public class FragmenMarcarvisita extends BaseVolleyFragment {
         btnAvBus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 startActivity(new Intent(getActivity(), ActBusquedaAvan.class));
                 getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
             }
         });
 
+    }
+
+    private void buscarPuntoLocal(EditText edit_buscar) {
+        //Recuperar punto local
+
+        ResponseMarcarPedido responseMarcarPedido = mydb.getPuntoLocal(edit_buscar.getText().toString().trim());
+
+        if (responseMarcarPedido.getRazon_social() == null) {
+            Toast.makeText(getActivity(), "El punto no se encuentra en la base de datos local", Toast.LENGTH_LONG).show();
+        } else {
+            Bundle bundle = new Bundle();
+            Intent intent = new Intent(getActivity(), ActMarcarVisita.class);
+            bundle.putSerializable("value", responseMarcarPedido);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
     }
 
     private void buscarIdPos(final EditText buscar) {

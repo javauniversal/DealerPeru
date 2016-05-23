@@ -77,8 +77,7 @@ public class AppAdapterRutero extends BaseAdapter {
         if (responseHome.getTipo_visita() == 2)
             holder.imgIndicador.setImageResource(R.drawable.ic_offline_pin_black_24dp);
 
-        if(getResponseUserStatic().getPerfil() == 3)
-        {
+        if(getResponseUserStatic().getPerfil() == 3) {
             holder.imgIndicador.setImageResource(R.drawable.ic_help_black_24dp);
         }
 

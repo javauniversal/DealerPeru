@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.Referencia;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
 import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -234,9 +235,6 @@ public class AdapterListReferencia extends BaseAdapter {
         ImageView profile_image;
         ImageView imageView2;
         ImageView imgQuiebre;
-
-
-
 
         public ViewHolder(View view) {
 

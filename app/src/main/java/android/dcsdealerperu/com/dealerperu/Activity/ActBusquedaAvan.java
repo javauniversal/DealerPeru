@@ -1,6 +1,7 @@
 package android.dcsdealerperu.com.dealerperu.Activity;
 
 import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.Ciudad;
 import android.dcsdealerperu.com.dealerperu.Entry.Departamentos;
@@ -8,9 +9,11 @@ import android.dcsdealerperu.com.dealerperu.Entry.Distrito;
 import android.dcsdealerperu.com.dealerperu.Entry.ListEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseCreatePunt;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseHome;
 import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
 import android.dcsdealerperu.com.dealerperu.Entry.Zona;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -68,8 +71,9 @@ public class ActBusquedaAvan extends AppCompatActivity {
     private EditText edit_nit_punto;
     private EditText edit_nombre_cliente;
     private String accion = "";
-
     private String consulta = "";
+    private ConnectionDetector connectionDetector;
+    private DBHelper mydb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +87,6 @@ public class ActBusquedaAvan extends AppCompatActivity {
         if (bundle != null) {
             accion = bundle.getString("value");
         }
-
-        alertDialog = new SpotsDialog(this, R.style.Custom);
-
-        setupGrid();
 
         spinner_depto = (Spinner) findViewById(R.id.spinner_depto);
         spinner_provincia = (Spinner) findViewById(R.id.spinner_provincia);
@@ -117,9 +117,18 @@ public class ActBusquedaAvan extends AppCompatActivity {
                 finish();
             }
         });
+
+        connectionDetector = new ConnectionDetector(this);
+
+        mydb = new DBHelper(this);
+
+        alertDialog = new SpotsDialog(this, R.style.Custom);
+
+        setupGrid();
     }
 
     private void buscarPuntoJSO() {
+
         alertDialog.show();
         consulta = "consultar_puntos_avanzados";
         if (accion.equals("Repartidor"))
@@ -133,7 +142,6 @@ public class ActBusquedaAvan extends AppCompatActivity {
                     public void onResponse(String response) {
                         // response
                         parseJSONBuscar(response);
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -189,14 +197,19 @@ public class ActBusquedaAvan extends AppCompatActivity {
         if (!response.equals("[]")) {
             try {
                 if (!accion.equals("Repartidor")) {
+
                     ListHome responseHomeList = gson.fromJson(response, ListHome.class);
+
                     setResponseHomeListS(responseHomeList);
+
                     Bundle bundle = new Bundle();
                     Intent intent = new Intent(this, ActResponAvanBusqueda.class);
                     bundle.putSerializable("value", responseHomeList);
                     intent.putExtras(bundle);
                     startActivity(intent);
+
                 } else if (accion.equals("Repartidor")) {
+
                     ListEntregarPedido responseEntregarPedido = gson.fromJson(response, ListEntregarPedido.class);
 
                     Bundle bundle = new Bundle();
@@ -223,7 +236,27 @@ public class ActBusquedaAvan extends AppCompatActivity {
         if (isValidNumber(edit_nombre_punto.getText().toString()) && isValidNumber(edit_nit_punto.getText().toString()) && isValidNumber(edit_nombre_cliente.getText().toString()) && isValiSpinner()) {
             Toast.makeText(this, "Ingrese al menos un parámetro", Toast.LENGTH_LONG).show();
         } else {
-            buscarPuntoJSO();
+            if (connectionDetector.isConnected()) {
+                buscarPuntoJSO();
+            } else {
+                // query de consultar...
+                List<ResponseHome> responseHomeList = mydb.getBuscarPuntoLocal(edit_nit_punto.getText().toString(), edit_nombre_punto.getText().toString(), edit_nombre_cliente.getText().toString(), departamento, ciudad_pro, distrito, estado_circuito, estado_ruta, estado_comercial);
+
+                if (responseHomeList.size() > 0) {
+                    setResponseHomeListS(responseHomeList);
+
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(this, ActResponAvanBusqueda.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
+                } else {
+                    Toast.makeText(this, "No se encontraron puntos", Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+
         }
     }
 
@@ -241,7 +274,14 @@ public class ActBusquedaAvan extends AppCompatActivity {
     }
 
     private void setupGrid() {
-        alertDialog.show();
+
+        ResponseCreatePunt responseCreatePunt = mydb.getDepartamentos();
+
+        loadDepartamento(responseCreatePunt);
+        loadComercial(responseCreatePunt.getEstadoComunList());
+        loadCircuito(responseCreatePunt.getTerritorioList());
+
+        /*alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_filtros_puntos");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
@@ -285,10 +325,10 @@ public class ActBusquedaAvan extends AppCompatActivity {
             }
         };
 
-        rq.add(jsonRequest);
+        rq.add(jsonRequest);*/
     }
 
-    private void parseJSON(String response) {
+    /*private void parseJSON(String response) {
         Gson gson = new Gson();
 
         if (!response.equals("[]")) {
@@ -307,7 +347,7 @@ public class ActBusquedaAvan extends AppCompatActivity {
                 alertDialog.dismiss();
             }
         }
-    }
+    }*/
 
     private void loadCircuito(final List<Territorio> territorioList) {
 

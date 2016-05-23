@@ -6,9 +6,11 @@ import android.dcsdealerperu.com.dealerperu.Activity.ActCarritoPedido;
 import android.dcsdealerperu.com.dealerperu.Activity.ActTomarPedido;
 import android.dcsdealerperu.com.dealerperu.Activity.SpacesItemDecoration;
 import android.dcsdealerperu.com.dealerperu.Adapter.AdapterRecyclerCombos;
+import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasCombos;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseVenta;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -54,7 +56,8 @@ public class FragmentCombos extends BaseVolleyFragment {
     private GridLayoutManager gridLayoutManagerVertical;
     private ResponseVenta responseVenta;
     private List<ReferenciasCombos> filterList;
-
+    private ConnectionDetector connectionDetector;
+    private DBHelper mydb;
 
     public FragmentCombos(int position) {
         mPosition = position;
@@ -83,9 +86,28 @@ public class FragmentCombos extends BaseVolleyFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mydb = new DBHelper(getActivity());
+
+        connectionDetector = new ConnectionDetector(getActivity());
+
         setHasOptionsMenu(true);
 
-        getCombo();
+        if (connectionDetector.isConnected()){
+            getCombo();
+        } else {
+            getComboLocal();
+        }
+
+
+    }
+
+    private void getComboLocal() {
+        List<ReferenciasCombos> list = mydb.getProductosCombos(String.valueOf(mPosition));
+
+        adapter2 = new AdapterRecyclerCombos(getActivity(), list, mPosition, getResponseUserStatic().getId());
+        recycler2.setAdapter(adapter2);
+        recycler2.setLayoutManager(gridLayoutManagerVertical);
+        recycler2.addItemDecoration(new SpacesItemDecoration(20));
 
     }
 

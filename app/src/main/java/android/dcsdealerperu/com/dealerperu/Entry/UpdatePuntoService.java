@@ -19,6 +19,17 @@ public class UpdatePuntoService {
     @SerializedName("msg")
     private String msg;
 
+    @SerializedName("idreferencia")
+    private int idreferencia;
+
+    public int getIdreferecia() {
+        return idreferencia;
+    }
+
+    public void setIdreferecia(int idreferencia) {
+        this.idreferencia = idreferencia;
+    }
+
     public String getId_movil() {
         return id_movil;
     }

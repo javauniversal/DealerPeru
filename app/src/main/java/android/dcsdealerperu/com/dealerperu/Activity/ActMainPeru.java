@@ -191,7 +191,16 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         // Handle navigation view item clicks here.
 
         if (connectionDetector.isConnected()) {
-            //offLineData();
+            if (getResponseUserStatic().getPerfil() == 2) {
+                //Vendedor
+                offLineDataVendedor();
+            } else if (getResponseUserStatic().getPerfil() == 3) {
+                //Repartidor
+
+            } else if (getResponseUserStatic().getPerfil() == 1) {
+                //Supervisor
+
+            }
         }
 
         int id = item.getItemId();
@@ -355,7 +364,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
 
     }
 
-    private void offLineData() {
+    private void offLineDataVendedor() {
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "servicio_offline");
         rq = Volley.newRequestQueue(this);
@@ -454,22 +463,21 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
                 mydb.insertNomenclaturas(sincronizar);
                 mydb.insertSubcategoriasPuntos(sincronizar);
 
+                mydb.insertReferenciaSim(sincronizar);
+                mydb.insertReferenciaCombos(sincronizar);
+                mydb.insertLisPrecios(sincronizar);
+
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        alertDialog.dismiss();
+
+                        if (alertDialog != null)
+                            alertDialog.dismiss();
+
                     }
                 });
             }
         }).start();
 
-
-
-            new Thread(new Runnable() {
-                public void run() {
-                    //Aquí ejecutamos nuestras tareas costosas
-
-                }
-            }).start();
     }
 
     @Override

@@ -2,9 +2,11 @@ package android.dcsdealerperu.com.dealerperu.Activity;
 
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Adapter.AppAdapterRutero;
+import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -47,6 +50,8 @@ public class ActResponAvanBusqueda extends AppCompatActivity {
     private AppAdapterRutero appAdapterRutero;
     private RequestQueue rq;
     public static final String TAG = "MyTag";
+    private ConnectionDetector connectionDetector;
+    private DBHelper mydb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +62,13 @@ public class ActResponAvanBusqueda extends AppCompatActivity {
 
         alertDialog = new SpotsDialog(this, R.style.Custom);
 
+        connectionDetector = new ConnectionDetector(this);
+
+        mydb = new DBHelper(this);
+
         SwipeMenuListView mListView = (SwipeMenuListView) findViewById(R.id.listView);
 
-        appAdapterRutero = new AppAdapterRutero(this, (ListHome) getResponseHomeListS());
+        appAdapterRutero = new AppAdapterRutero(this, getResponseHomeListS());
         mListView.setAdapter(appAdapterRutero);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -91,7 +100,13 @@ public class ActResponAvanBusqueda extends AppCompatActivity {
                 //AddProductCar item = mAppList.get(position);
                 switch (index) {
                     case 0:
-                        buscarIdPos(getResponseHomeListS().get(position).getIdpos());
+                        if (connectionDetector.isConnected()) {
+                            buscarIdPos(getResponseHomeListS().get(position).getIdpos());
+                        } else {
+                            // Estado Local..
+                            buscarPuntoLocal(getResponseHomeListS().get(position).getIdpos());
+                        }
+
                         break;
                 }
 
@@ -132,6 +147,21 @@ public class ActResponAvanBusqueda extends AppCompatActivity {
 
     }
 
+    private void buscarPuntoLocal(int edit_buscar) {
+        //Recuperar punto local
+
+        ResponseMarcarPedido responseMarcarPedido = mydb.getPuntoLocal(String.valueOf(edit_buscar));
+
+        if (responseMarcarPedido.getRazon_social() == null) {
+            Toast.makeText(this, "El punto no se encuentra en la base de datos local", Toast.LENGTH_LONG).show();
+        } else {
+            Bundle bundle = new Bundle();
+            Intent intent = new Intent(this, ActMarcarVisita.class);
+            bundle.putSerializable("value", responseMarcarPedido);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+    }
     private int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 getResources().getDisplayMetrics());

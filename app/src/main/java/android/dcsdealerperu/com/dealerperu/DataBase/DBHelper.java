@@ -10,13 +10,18 @@ import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.Ciudad;
 import android.dcsdealerperu.com.dealerperu.Entry.Departamentos;
 import android.dcsdealerperu.com.dealerperu.Entry.Distrito;
+import android.dcsdealerperu.com.dealerperu.Entry.NoVisita;
 import android.dcsdealerperu.com.dealerperu.Entry.Nomenclatura;
 import android.dcsdealerperu.com.dealerperu.Entry.Referencia;
+import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasCombos;
 import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasSims;
 import android.dcsdealerperu.com.dealerperu.Entry.RequestGuardarEditarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseCreatePunt;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseHome;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseUser;
 import android.dcsdealerperu.com.dealerperu.Entry.Sincronizar;
+import android.dcsdealerperu.com.dealerperu.Entry.SincronizarPedidos;
 import android.dcsdealerperu.com.dealerperu.Entry.Subcategorias;
 import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
 import android.dcsdealerperu.com.dealerperu.Entry.TimeService;
@@ -31,7 +36,11 @@ import android.util.Log;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -72,7 +81,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String sqlIPunto = "CREATE TABLE punto (id_tabla TEXT, accion TEXT, categoria INT, cedula TEXT, celular TEXT, ciudad INT, codigo_cum TEXT, depto INT, des_tipo_ciudad TEXT, " +
                 " descripcion_vivienda TEXT, distrito INT, email TEXT, estado_com INT, idpos INT, lote TEXT, nombre_cliente TEXT, nombre_mzn TEXT, nombre_punto TEXT, nombre_via TEXT, " +
                 " nro_interior TEXT, nro_via INT, num_int_urbanizacion TEXT, ref_direccion TEXT, subcategoria INT, telefono INT, territorio_punto INT, texto_direccion TEXT, tipo_ciudad INT, " +
-                " tipo_documento INT, tipo_interior INT, tipo_urbanizacion INT, tipo_via INT, tipo_vivienda INT, vende_recargas INT, zona INT, latitud REAL, longitud REAL) ";
+                " tipo_documento INT, tipo_interior INT, tipo_urbanizacion INT, tipo_via INT, tipo_vivienda INT, vende_recargas INT, zona INT, latitud REAL, longitud REAL, estado_visita INT) ";
 
         String sqlEstadoComercial = "CREATE TABLE estado_comercial (id INT, descripcion TEXT, estado_accion INT)";
 
@@ -83,6 +92,23 @@ public class DBHelper extends SQLiteOpenHelper {
         String sqlSubcategoriasPuntos = "CREATE TABLE subcategorias_puntos (id INT, descripcion TEXT, id_categoria INT, estado_accion INT)";
 
         String sqlDistritos = "CREATE TABLE distritos (id INT, descripcion TEXT, id_muni INT, id_depto INT, estado_accion INT)";
+
+        String sqlRefesSim = "CREATE TABLE referencia_simcard (id INT, pn TEXT, stock INT, producto TEXT, dias_inve REAL, ped_sugerido TEXT, precio_referencia REAL, precio_publico REAL, quiebre INT, estado_accion INT )";
+
+        String sqlRefesCombo = "CREATE TABLE referencia_combo (id INT, descripcion TEXT, precioventa REAL, speech TEXT, pantalla TEXT, cam_frontal TEXT, cam_tras TEXT, flash TEXT, banda TEXT, " +
+                " memoria TEXT, expandible TEXT, bateria TEXT, bluetooth TEXT, tactil TEXT, tec_fisico TEXT, carrito_compras TEXT, correo TEXT, enrutador TEXT, radio TEXT, wifi TEXT, gps TEXT, so TEXT, " +
+                " web TEXT, precio_referencia REAL, precio_publico REAL, img TEXT, estado_accion INT  )";
+
+        String sqlListaPrecio = "CREATE TABLE lista_precios (id_referencia INT, idpos INT, valor_referencia REAl, valor_directo REAL, tipo_pro INT, estado_accion INT )";
+
+        String sqlReferencia = "CREATE TABLE detalle_combo (id INT, pn TEXT, producto TEXT, descripcion TEXT, precio_referencia REAL, precio_publico REAL, dias_inve REAL, stock INT, ped_sugerido REAL, img TEXT, estado_accion INT, id_padre INT )";
+
+        String sqlNoVisita = "CREATE TABLE no_visita (idpos INT, motivo INT, observacion TEXT, latitud REAL, longitud REAL, iduser INT, iddis INT, db TEXT, perfil INT, fecha TEXT, hora TEXT)";
+
+        String sqlCabezaPedido = "CREATE TABLE cabeza_pedido (id integer primary key AUTOINCREMENT,  iduser INT, iddistri TEXT, db TEXT, idpos INT, latitud REAL, longitud REAL, fecha TEXT, hora TEXT)";
+
+        String sqlDetallePedido = "CREATE TABLE detalle_pedido (id integer primary key AUTOINCREMENT, idCabeza INT, id_producto INT, cantidad_pedida INT, tipo_producto INT, referencia INT) ";
+
 
         db.execSQL(sqlIntro);
         db.execSQL(sqlCarrito);
@@ -102,6 +128,14 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(sqlSubcategoriasPuntos);
         db.execSQL(sqlDistritos);
 
+        db.execSQL(sqlRefesSim);
+        db.execSQL(sqlListaPrecio);
+        db.execSQL(sqlRefesCombo);
+        db.execSQL(sqlReferencia);
+        db.execSQL(sqlNoVisita);
+        db.execSQL(sqlCabezaPedido);
+        db.execSQL(sqlDetallePedido);
+
     }
 
     @Override
@@ -117,8 +151,508 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS categoria");
         db.execSQL("DROP TABLE IF EXISTS departamento");
         db.execSQL("DROP TABLE IF EXISTS punto");
+        db.execSQL("DROP TABLE IF EXISTS no_visita");
+        db.execSQL("DROP TABLE IF EXISTS cabeza_pedido");
+        db.execSQL("DROP TABLE IF EXISTS detalle_pedido");
         this.onCreate(db);
 
+    }
+
+    public List<ResponseHome> getBuscarPuntoLocal(String nit_punto, String nombre_punto, String responsable, int depto, int ciudad, int distrito, int circuito, int ruta, int est_comercial) {
+
+        List<ResponseHome> responseHomeList = new ArrayList<>();
+
+        String condicion = "";
+
+        String sql = "SELECT mpt.idpos, mpt.nombre_punto AS razon, mpt.nombre_cliente AS nombre_cli, mpt.texto_direccion direccion FROM punto AS mpt " +
+                "   WHERE mpt.idpos >= 0 %1$s ORDER BY mpt.idpos" ;
+
+        if(!nit_punto.isEmpty()) {
+            condicion += " AND mpt.cedula = '"+nit_punto+"' ";
+        }
+        if(!responsable.isEmpty()) {
+            condicion += " AND mpt.nombre_cliente = '"+responsable+"' ";
+        }
+
+        if(!nombre_punto.isEmpty()) {
+            condicion += " AND mpt.nombre_punto LIKE '%"+nombre_punto+"%' ";
+        }
+
+        if(depto != 0) {
+            condicion += " AND mpt.depto = "+depto;
+        }
+
+        if(ciudad != 0) {
+            condicion += " AND mpt.ciudad = "+ciudad;
+        }
+
+        if(distrito != 0) {
+            condicion += " AND mpt.distrito = "+distrito;
+        }
+
+        if(circuito != 0) {
+            condicion += " AND mpt.territorio_punto = "+circuito;
+        }
+
+        if(ruta != 0) {
+            condicion += " AND mpt.zona = "+ruta;
+        }
+
+        if(est_comercial != 0) {
+            condicion += " AND mpt.estado_com = "+est_comercial;
+        }
+
+        String sqlFinal = String.format(sql, condicion);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sqlFinal, null);
+
+        ResponseHome responseHome;
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                responseHome = new ResponseHome();
+
+                responseHome.setIdpos(cursor.getInt(0));
+                responseHome.setRazon(cursor.getString(1));
+                responseHome.setDireccion(cursor.getString(3));
+
+                responseHomeList.add(responseHome);
+
+            } while (cursor.moveToNext());
+
+        }
+        return responseHomeList;
+    }
+
+    public int ultimoRegistro(String table){
+        int _id = 0;
+        String sql = "SELECT id FROM "+ table +" ORDER BY id DESC LIMIT 1";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()) {
+            do {
+                _id = Integer.parseInt(cursor.getString(0));
+            } while(cursor.moveToNext());
+        }
+        return _id;
+    }
+
+    public boolean insertPedidoOffLine(List<ReferenciasSims> data, int iduser, String iddistri, String bd, int idpos, double latitud, double longitud) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        ContentValues values2 = new ContentValues();
+        try {
+
+            values.put("iduser", iduser);
+            values.put("iddistri", iddistri);
+            values.put("db", bd);
+            values.put("idpos", idpos);
+            values.put("latitud", latitud);
+            values.put("longitud", longitud);
+            values.put("fecha", getDatePhoneFecha());
+            values.put("hora", getDatePhoneHora());
+
+            db.insert("cabeza_pedido", null, values);
+            int id_auto = ultimoRegistro("cabeza_pedido");
+            for (int i = 0; i < data.size(); i++) {
+
+                values2.put("idCabeza", id_auto);
+                values2.put("id_producto", data.get(i).getId());
+                values2.put("cantidad_pedida", data.get(i).getCantidadPedida());
+                values2.put("tipo_producto", data.get(i).getTipo_producto());
+                values2.put("referencia", data.get(i).getId());
+
+                db.insert("detalle_pedido", null, values2);
+            }
+
+        } catch (SQLiteConstraintException e) {
+            Log.d("data", "failure to insert word,", e);
+            return false;
+        } finally {
+            db.close();
+        }
+
+        return true;
+    }
+
+
+
+    private String getDatePhoneFecha() {
+
+        Calendar cal = new GregorianCalendar();
+        Date date = cal.getTime();
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String formatteDate = df.format(date);
+
+        return formatteDate;
+
+    }
+
+    private String getDatePhoneHora() {
+
+        Calendar cal = new GregorianCalendar();
+        Date date = cal.getTime();
+
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        String formatteDate = df.format(date);
+
+        return formatteDate;
+
+    }
+
+    public boolean uptadeCabezaPedidoLocal(int idPosorigen, String idPosFinal){
+
+        ContentValues valores = new ContentValues();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        valores.put("idpos", idPosFinal);
+
+        String[] args = new String[]{String.valueOf(idPosorigen)};
+        int p = db.update("cabeza_pedido", valores, "idpos = ?", args);
+        db.close();
+        return p > 0;
+    }
+
+    public List<SincronizarPedidos> sincronizarPedido() {
+
+        List<SincronizarPedidos> sincronizarPedidosArrayList = new ArrayList<>();
+
+        String sql = "SELECT id, iduser, iddistri, db, idpos, latitud, longitud, fecha, hora FROM cabeza_pedido";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        SincronizarPedidos sincronizarPedidos;
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                sincronizarPedidos = new SincronizarPedidos();
+
+                sincronizarPedidos.setAutoincrement(cursor.getInt(0));
+                sincronizarPedidos.setIduser(cursor.getInt(1));
+                sincronizarPedidos.setIddistri(cursor.getString(2));
+                sincronizarPedidos.setBd(cursor.getString(3));
+                sincronizarPedidos.setIdpos(cursor.getInt(4));
+                sincronizarPedidos.setLatitud(cursor.getDouble(5));
+                sincronizarPedidos.setLongitud(cursor.getDouble(6));
+                sincronizarPedidos.setFecha_visita(cursor.getString(7));
+                sincronizarPedidos.setHora_visita(cursor.getString(8));
+
+                String sql_detalle = "SELECT idCabeza, id_producto, cantidad_pedida, tipo_producto, referencia FROM detalle_pedido WHERE idCabeza = ?";
+
+                Cursor cursor_detall = db.rawQuery(sql_detalle, new String[] {String.valueOf(cursor.getInt(0))});
+                List<ReferenciasSims> referenciasSimsList = new ArrayList<>();
+                ReferenciasSims referenciasSims;
+
+                if (cursor_detall.moveToFirst()) {
+                    do {
+                        referenciasSims = new ReferenciasSims();
+                        referenciasSims.setId_auto_carrito(cursor_detall.getInt(0));
+                        referenciasSims.setId(cursor_detall.getInt(1));
+
+                        referenciasSims.setCantidadPedida(cursor_detall.getInt(2));
+                        referenciasSims.setTipo_producto(cursor_detall.getInt(3));
+
+                        referenciasSimsList.add(referenciasSims);
+                    } while (cursor_detall.moveToNext());
+
+                    sincronizarPedidos.setReferenciasSimsList(referenciasSimsList);
+                }
+
+                sincronizarPedidosArrayList.add(sincronizarPedidos);
+
+            } while (cursor.moveToNext());
+
+        }
+        return sincronizarPedidosArrayList;
+    }
+
+    public List<NoVisita> sincronizarNoVisita() {
+
+        List<NoVisita> noVisitaList = new ArrayList<>();
+        String sql = "SELECT idpos, motivo, observacion, latitud, longitud, iduser, iddis, fecha, hora FROM no_visita ";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        NoVisita noVisita;
+        if (cursor.moveToFirst()) {
+            do {
+                noVisita = new NoVisita();
+                noVisita.setIdpos(cursor.getInt(0));
+                noVisita.setMotivo(cursor.getInt(1));
+                noVisita.setObservacion(cursor.getString(2));
+                noVisita.setLatitud(cursor.getDouble(3));
+                noVisita.setLongitud(cursor.getDouble(4));
+                noVisita.setIduser(cursor.getInt(5));
+                noVisita.setIdids(cursor.getInt(6));
+                noVisita.setFecha_visita(cursor.getString(7));
+                noVisita.setHora_visita(cursor.getString(8));
+                noVisitaList.add(noVisita);
+            } while(cursor.moveToNext());
+        }
+        return noVisitaList;
+    }
+
+    public boolean insertNoVisita(NoVisita data) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        try {
+
+            values.put("idpos", data.getIdpos());
+            values.put("motivo", data.getMotivo());
+            values.put("observacion", data.getObservacion());
+            values.put("latitud", data.getLatitud());
+            values.put("longitud", data.getLongitud());
+            values.put("iduser", data.getIduser());
+            values.put("iddis", data.getIdids());
+            values.put("db", data.getDb());
+            values.put("perfil", data.getPerfil());
+            values.put("fecha", getDatePhoneFecha());
+            values.put("hora", getDatePhoneHora());
+
+            db.insert("no_visita", null, values);
+
+        } catch (SQLiteConstraintException e) {
+            Log.d("data", "failure to insert word,", e);
+            return false;
+        } finally {
+            db.close();
+        }
+
+        return true;
+
+    }
+
+    public boolean insertLisPrecios(Sincronizar data) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        try {
+            for(int i = 0; i < data.getListaPrecios().size(); i++ ) {
+
+                if (data.getListaPrecios().get(i).getEstado_accion() == 1) {
+                    //Insertar.
+                    values.put("id_referencia", data.getListaPrecios().get(i).getId_referencia());
+                    values.put("idpos", data.getListaPrecios().get(i).getIdpos());
+                    values.put("valor_referencia", data.getListaPrecios().get(i).getValor_referencia());
+                    values.put("valor_directo", data.getListaPrecios().get(i).getValor_directo());
+                    values.put("tipo_pro", data.getListaPrecios().get(i).getTipo_pro());
+                    values.put("estado_accion", data.getListaPrecios().get(i).getEstado_accion());
+
+                    db.insert("lista_precios", null, values);
+                } else if (data.getListaPrecios().get(i).getEstado_accion() == 2) {
+                    //Actualizar.
+                    values.put("id_referencia", data.getListaPrecios().get(i).getId_referencia());
+                    values.put("idpos", data.getListaPrecios().get(i).getIdpos());
+                    values.put("valor_referencia", data.getListaPrecios().get(i).getValor_referencia());
+                    values.put("valor_directo", data.getListaPrecios().get(i).getValor_directo());
+                    values.put("tipo_pro", data.getListaPrecios().get(i).getTipo_pro());
+                    values.put("estado_accion", data.getListaPrecios().get(i).getEstado_accion());
+
+
+                    int p = db.update("lista_precios", values, String.format("id = %1$s", data.getListaPrecios().get(i).getId_referencia()), null);
+                } else if (data.getListaPrecios().get(i).getEstado_accion() == 0) {
+                    //Eliminar.
+                    int a = db.delete("lista_precios", "id_referencia = ? ", new String[]{String.valueOf(data.getListaPrecios().get(i).getId_referencia())});
+                }
+            }
+        } catch (SQLiteConstraintException e) {
+            Log.d("data", "failure to insert word,", e);
+            return false;
+        } finally {
+            db.close();
+        }
+        return true;
+    }
+
+    public boolean insertReferenciaCombos(Sincronizar data) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        ContentValues values2 = new ContentValues();
+
+        try {
+            for(int i = 0; i < data.getReferenciasCombosList().size(); i++ ) {
+
+                if (data.getReferenciasCombosList().get(i).getEstado_accion() == 1) {
+                    //Insertar.
+
+                    values.put("id", data.getReferenciasCombosList().get(i).getId());
+                    values.put("descripcion", data.getReferenciasCombosList().get(i).getDescripcion());
+                    values.put("precioventa", data.getReferenciasCombosList().get(i).getPrecioventa());
+                    values.put("speech", data.getReferenciasCombosList().get(i).getSpeech());
+                    values.put("pantalla", data.getReferenciasCombosList().get(i).getPantalla());
+                    values.put("cam_frontal", data.getReferenciasCombosList().get(i).getCam_frontal());
+                    values.put("cam_tras", data.getReferenciasCombosList().get(i).getCam_tras());
+                    values.put("flash", data.getReferenciasCombosList().get(i).getFlash());
+                    values.put("banda", data.getReferenciasCombosList().get(i).getBanda());
+                    values.put("memoria", data.getReferenciasCombosList().get(i).getMemoria());
+                    values.put("expandible", data.getReferenciasCombosList().get(i).getExpandible());
+                    values.put("bateria", data.getReferenciasCombosList().get(i).getBateria());
+                    values.put("bluetooth", data.getReferenciasCombosList().get(i).getBluetooth());
+                    values.put("tactil", data.getReferenciasCombosList().get(i).getTactil());
+                    values.put("tec_fisico", data.getReferenciasCombosList().get(i).getTec_fisico());
+                    values.put("carrito_compras", data.getReferenciasCombosList().get(i).getCarrito_compras());
+                    values.put("correo", data.getReferenciasCombosList().get(i).getCorreo());
+                    values.put("enrutador", data.getReferenciasCombosList().get(i).getEnrutador());
+                    values.put("radio", data.getReferenciasCombosList().get(i).getRadio());
+                    values.put("wifi", data.getReferenciasCombosList().get(i).getWifi());
+                    values.put("gps", data.getReferenciasCombosList().get(i).getGps());
+                    values.put("so", data.getReferenciasCombosList().get(i).getSo());
+                    values.put("web", data.getReferenciasCombosList().get(i).getWeb());
+                    values.put("precio_referencia", data.getReferenciasCombosList().get(i).getPrecio_referencia());
+                    values.put("precio_publico", data.getReferenciasCombosList().get(i).getPrecio_publico());
+                    values.put("img", data.getReferenciasCombosList().get(i).getImg());
+                    values.put("estado_accion", data.getReferenciasCombosList().get(i).getEstado_accion());
+
+                    db.insert("referencia_combo", null, values);
+
+                    for (int l = 0; l < data.getReferenciasCombosList().get(i).getReferenciaLis().size(); l++) {
+
+                        if (data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getEstado_accion() == 1) {
+
+                            values2.put("id", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getId());
+                            values2.put("pn", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getPn());
+                            values2.put("producto", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getProducto());
+                            values2.put("descripcion", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getDescripcion());
+                            values2.put("precio_referencia", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getPrecio_referencia());
+                            values2.put("precio_publico", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getPrecio_publico());
+                            values2.put("dias_inve", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getDias_inve());
+                            values2.put("stock", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getStock());
+                            values2.put("ped_sugerido", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getPed_sugerido());
+                            values2.put("img", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getUrl_imagen());
+                            values2.put("estado_accion", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getEstado_accion());
+                            values2.put("id_padre", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getId_padre());
+
+                            db.insert("detalle_combo", null, values2);
+
+                        }
+                    }
+
+                } else if (data.getReferenciasCombosList().get(i).getEstado_accion() == 2) {
+                    //Actualizar.
+                    values.put("id", data.getReferenciasCombosList().get(i).getId());
+                    values.put("descripcion", data.getReferenciasCombosList().get(i).getDescripcion());
+                    values.put("precioventa", data.getReferenciasCombosList().get(i).getPrecioventa());
+                    values.put("speech", data.getReferenciasCombosList().get(i).getSpeech());
+                    values.put("pantalla", data.getReferenciasCombosList().get(i).getPantalla());
+                    values.put("cam_frontal", data.getReferenciasCombosList().get(i).getCam_frontal());
+                    values.put("cam_tras", data.getReferenciasCombosList().get(i).getCam_tras());
+                    values.put("flash", data.getReferenciasCombosList().get(i).getFlash());
+                    values.put("banda", data.getReferenciasCombosList().get(i).getBanda());
+                    values.put("memoria", data.getReferenciasCombosList().get(i).getMemoria());
+                    values.put("expandible", data.getReferenciasCombosList().get(i).getExpandible());
+                    values.put("bateria", data.getReferenciasCombosList().get(i).getBateria());
+                    values.put("bluetooth", data.getReferenciasCombosList().get(i).getBluetooth());
+                    values.put("tactil", data.getReferenciasCombosList().get(i).getTactil());
+                    values.put("tec_fisico", data.getReferenciasCombosList().get(i).getTec_fisico());
+                    values.put("carrito_compras", data.getReferenciasCombosList().get(i).getCarrito_compras());
+                    values.put("correo", data.getReferenciasCombosList().get(i).getCorreo());
+                    values.put("enrutador", data.getReferenciasCombosList().get(i).getEnrutador());
+                    values.put("radio", data.getReferenciasCombosList().get(i).getRadio());
+                    values.put("wifi", data.getReferenciasCombosList().get(i).getWifi());
+                    values.put("gps", data.getReferenciasCombosList().get(i).getGps());
+                    values.put("so", data.getReferenciasCombosList().get(i).getSo());
+                    values.put("web", data.getReferenciasCombosList().get(i).getWeb());
+                    values.put("precio_referencia", data.getReferenciasCombosList().get(i).getPrecio_referencia());
+                    values.put("precio_publico", data.getReferenciasCombosList().get(i).getPrecio_publico());
+                    values.put("img", data.getReferenciasCombosList().get(i).getImg());
+                    values.put("estado_accion", data.getReferenciasCombosList().get(i).getEstado_accion());
+
+                    int p = db.update("referencia_combo", values, "id = %1$s", new String[]{String.valueOf(data.getReferenciasCombosList().get(i).getId())});
+
+                    for (int l = 0; l < data.getReferenciasCombosList().get(i).getReferenciaLis().size(); l++) {
+                        if (data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getEstado_accion() == 2) {
+
+                            values2.put("id", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getId());
+                            values2.put("pn", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getPn());
+                            values2.put("producto", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getProducto());
+                            values2.put("descripcion", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getDescripcion());
+                            values2.put("precio_referencia", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getPrecio_referencia());
+                            values2.put("precio_publico", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getPrecio_publico());
+                            values2.put("dias_inve", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getDias_inve());
+                            values2.put("stock", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getStock());
+                            values2.put("ped_sugerido", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getPed_sugerido());
+                            values2.put("img", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getUrl_imagen());
+                            values2.put("estado_accion", data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getEstado_accion());
+
+                            int pl = db.update("detalle_combo", values2, "id = ?", new String[]{String.valueOf(data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getId())});
+                        }
+                    }
+
+                } else if (data.getReferenciasCombosList().get(i).getEstado_accion() == 0) {
+                    //Eliminar.
+                    int a = db.delete("referencia_combo", "id = ? ", new String[]{String.valueOf(data.getReferenciasCombosList().get(i).getId())});
+                    for (int l = 0; l < data.getReferenciasCombosList().get(i).getReferenciaLis().size(); l++) {
+                        if (data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getEstado_accion() == 0) {
+                            int al = db.delete("detalle_combo", "id = ? ", new String[]{String.valueOf(data.getReferenciasCombosList().get(i).getReferenciaLis().get(l).getId())});
+                        }
+                    }
+                }
+            }
+        } catch (SQLiteConstraintException e) {
+            Log.d("data", "failure to insert word,", e);
+            return false;
+        } finally {
+            db.close();
+        }
+        return true;
+    }
+
+    public boolean insertReferenciaSim(Sincronizar data) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        try {
+            for(int i = 0; i < data.getReferenciasSimsList().size(); i++ ) {
+
+                if (data.getReferenciasSimsList().get(i).getEstado_accion() == 1) {
+                    //Insertar.
+                    values.put("id", data.getReferenciasSimsList().get(i).getId());
+                    values.put("pn", data.getReferenciasSimsList().get(i).getPn());
+                    values.put("stock", data.getReferenciasSimsList().get(i).getStock());
+                    values.put("producto", data.getReferenciasSimsList().get(i).getProducto());
+                    values.put("dias_inve", data.getReferenciasSimsList().get(i).getDias_inve());
+                    values.put("ped_sugerido", data.getReferenciasSimsList().get(i).getPed_sugerido());
+                    values.put("precio_referencia", data.getReferenciasSimsList().get(i).getPrecio_referencia());
+                    values.put("precio_publico", data.getReferenciasSimsList().get(i).getPrecio_publico());
+                    values.put("quiebre", data.getReferenciasSimsList().get(i).getQuiebre());
+                    values.put("estado_accion", data.getReferenciasSimsList().get(i).getEstado_accion());
+
+                    db.insert("referencia_simcard", null, values);
+                } else if (data.getReferenciasSimsList().get(i).getEstado_accion() == 2) {
+                    //Actualizar.
+                    values.put("id", data.getReferenciasSimsList().get(i).getId());
+                    values.put("pn", data.getReferenciasSimsList().get(i).getPn());
+                    values.put("stock", data.getReferenciasSimsList().get(i).getStock());
+                    values.put("producto", data.getReferenciasSimsList().get(i).getProducto());
+                    values.put("dias_inve", data.getReferenciasSimsList().get(i).getDias_inve());
+                    values.put("ped_sugerido", data.getReferenciasSimsList().get(i).getPed_sugerido());
+                    values.put("precio_referencia", data.getReferenciasSimsList().get(i).getPrecio_referencia());
+                    values.put("precio_publico", data.getReferenciasSimsList().get(i).getPrecio_publico());
+                    values.put("quiebre", data.getReferenciasSimsList().get(i).getQuiebre());
+                    values.put("estado_accion", data.getReferenciasSimsList().get(i).getEstado_accion());
+
+                    int p = db.update("referencia_simcard", values, String.format("id = %1$s", data.getReferenciasSimsList().get(i).getId()), null);
+                } else if (data.getReferenciasSimsList().get(i).getEstado_accion() == 0) {
+                    //Eliminar.
+                    int a = db.delete("referencia_simcard", "id = ? ", new String[]{String.valueOf(data.getReferenciasSimsList().get(i).getId())});
+                }
+            }
+        } catch (SQLiteConstraintException e) {
+            Log.d("data", "failure to insert word,", e);
+            return false;
+        } finally {
+            db.close();
+        }
+        return true;
     }
 
     public boolean insertDistritos(Sincronizar data) {
@@ -341,7 +875,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put("distrito", data.getPuntosList().get(i).getDistrito());
                 values.put("email", data.getPuntosList().get(i).getEmail());
                 values.put("estado_com", data.getPuntosList().get(i).getEstado_com());
-                values.put("idpos", data.getPuntosList().get(i).getIdpos());
+
+                if (indicardor == 1)
+                    values.put("idpos", (int) (Math.random()*100+1));
+                else
+                    values.put("idpos",  data.getPuntosList().get(i).getIdpos());
+
                 values.put("lote", data.getPuntosList().get(i).getLote());
                 values.put("nombre_cliente", data.getPuntosList().get(i).getNombre_cliente());
                 values.put("nombre_mzn", data.getPuntosList().get(i).getNombre_mzn());
@@ -365,6 +904,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put("zona", data.getPuntosList().get(i).getZona());
                 values.put("latitud", data.getPuntosList().get(i).getLatitud());
                 values.put("longitud", data.getPuntosList().get(i).getLongitud());
+                values.put("estado_visita", data.getPuntosList().get(i).getEstadoVisita());
 
                 db.insert("punto", null, values);
 
@@ -386,6 +926,106 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.close();
         return a > 0;
+
+    }
+
+    public List<ReferenciasSims> getSimcardLocal(String indicardor) {
+
+        List<ReferenciasSims> referenciasSimses = new ArrayList<>();
+
+        String sql = "SELECT refe.id, refe.pn, 0 stock, refe.producto, 0 dias_inve, 0 ped_sugerido, lprecio.valor_referencia, lprecio.valor_directo, 0 quiebre " +
+                " FROM " +
+                "  referencia_simcard refe LEFT JOIN lista_precios lprecio ON lprecio.id_referencia = refe.id AND lprecio.idpos = ?";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, new String[] {indicardor});
+        ReferenciasSims referenciasSims;
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                referenciasSims = new ReferenciasSims();
+
+                referenciasSims.setId(cursor.getInt(0));
+                referenciasSims.setPn(cursor.getString(1));
+                referenciasSims.setStock(cursor.getInt(2));
+                referenciasSims.setProducto(cursor.getString(3));
+                referenciasSims.setDias_inve(cursor.getInt(4));
+                referenciasSims.setPed_sugerido(cursor.getString(5));
+                referenciasSims.setPrecio_referencia(cursor.getDouble(6));
+                referenciasSims.setPrecio_publico(cursor.getDouble(7));
+                referenciasSims.setQuiebre(cursor.getInt(8));
+
+                referenciasSimses.add(referenciasSims);
+
+            } while (cursor.moveToNext());
+
+        }
+        return referenciasSimses;
+    }
+
+    public List<ReferenciasCombos> getProductosCombos(String indicardor) {
+
+        List<ReferenciasCombos> referenciasComboses = new ArrayList<>();
+
+        String sql = "SELECT refe.id, refe.descripcion, refe.precioventa, refe.speech, refe.pantalla, refe.cam_frontal, refe.cam_tras, refe.flash, refe.banda, refe.memoria, " +
+                " refe.expandible, refe.bateria, refe.bluetooth, refe.tactil, refe.tec_fisico, refe.carrito_compras, refe.correo, refe.enrutador, refe.radio, refe.wifi, refe.gps, " +
+                " refe.so, refe.web, 0 quiebre, lprecio.valor_referencia, lprecio.valor_directo, refe.img " +
+                " FROM " +
+                "   referencia_combo refe LEFT JOIN lista_precios lprecio ON lprecio.id_referencia = refe.id AND lprecio.idpos = ? AND " +
+                "lprecio.tipo_pro = 2";
+
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, new String[] {indicardor});
+        ReferenciasCombos referenciasCombos;
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                referenciasCombos = new ReferenciasCombos();
+
+                referenciasCombos.setId(cursor.getInt(0));
+                referenciasCombos.setDescripcion(cursor.getString(1));
+                referenciasCombos.setPrecio_referencia(cursor.getDouble(24));
+                referenciasCombos.setPrecio_publico(cursor.getDouble(25));
+                referenciasCombos.setImg(cursor.getString(26));
+
+                String sqlDestall = "SELECT deta.id, deta.pn, 0 stock, deta.producto, 0 dias_inve, 0 ped_sugerido, deta.descripcion, 0 stock_seguridad, lprecio.valor_referencia, " +
+                        " lprecio.valor_directo, deta.img, 0 quiebre " +
+                        "   FROM " +
+                        "     detalle_combo deta INNER JOIN lista_precios lprecio ON lprecio.id_referencia = deta.id " +
+                        "   WHERE " +
+                        "     deta.id_padre = ? AND " +
+                        "     lprecio.tipo_pro = 2 GROUP BY deta.id ";
+
+                Cursor cursor_detalle = db.rawQuery(sqlDestall, new String[] {String.valueOf(cursor.getInt(0))});
+                List<Referencia> referenciaList = new ArrayList<>();
+                Referencia referencia;
+
+                if (cursor_detalle.moveToFirst()) {
+
+                    do {
+                        referencia = new Referencia();
+                        referencia.setId(cursor_detalle.getInt(0));
+                        referencia.setStock(cursor_detalle.getInt(2));
+                        referencia.setDias_inve(cursor_detalle.getDouble(4));
+                        referencia.setProducto(cursor_detalle.getString(3));
+                        referencia.setPn(cursor_detalle.getString(1));
+
+                        referenciaList.add(referencia);
+                    } while (cursor_detalle.moveToNext());
+                }
+
+                referenciasCombos.setReferenciaLis(referenciaList);
+
+                referenciasComboses.add(referenciasCombos);
+
+            } while (cursor.moveToNext());
+
+        }
+
+        return referenciasComboses;
 
     }
 
@@ -413,7 +1053,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 requestGuardarEditarPunto.setCodigo_cum(cursor.getString(6));
                 requestGuardarEditarPunto.setDepto(cursor.getInt(7));
                 requestGuardarEditarPunto.setTipo_ciudad(cursor.getInt(8));
-                requestGuardarEditarPunto.setTipo_vivienda(cursor.getInt(9));
+                requestGuardarEditarPunto.setDescripcion_vivienda(cursor.getString(9));
                 requestGuardarEditarPunto.setDistrito(cursor.getInt(10));
                 requestGuardarEditarPunto.setEmail(cursor.getString(11));
                 requestGuardarEditarPunto.setEstado_com(cursor.getInt(12));
@@ -427,7 +1067,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 requestGuardarEditarPunto.setNro_via(cursor.getString(20));
                 requestGuardarEditarPunto.setNum_int_urbanizacion(cursor.getString(21));
                 requestGuardarEditarPunto.setRef_direccion(cursor.getString(22));
-                requestGuardarEditarPunto.setCategoria(cursor.getInt(23));
+                requestGuardarEditarPunto.setSubcategoria(cursor.getInt(23));
+
                 requestGuardarEditarPunto.setTelefono(cursor.getString(24));
                 requestGuardarEditarPunto.setTerritorio(cursor.getInt(25));
                 requestGuardarEditarPunto.setTexto_direccion(cursor.getString(26));
@@ -492,7 +1133,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public ResponseCreatePunt getDepartamentos () {
 
         SQLiteDatabase db = this.getWritableDatabase();
-        String sqlDepartamento = "SELECT id, descripcion FROM departamento ";
+
+        String sqlDepartamento = "SELECT 0 AS id, 'SELECCIONAR' AS descripcion UNION SELECT id, descripcion FROM departamento ";
 
         Cursor cursor_departamento = db.rawQuery(sqlDepartamento, null);
 
@@ -506,7 +1148,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 departamento = new Departamentos(cursor_departamento.getInt(0), cursor_departamento.getString(1));
 
                 String[] args = new String[] {String.valueOf(cursor_departamento.getInt(0))};
-                String sqlProvicia = "SELECT id_muni, descripcion, departamento FROM municipios WHERE departamento = ?";
+                String sqlProvicia = "SELECT 0 AS id_muni, 'SELECCIONAR' AS descripcion, 0 AS departamento UNION SELECT id_muni, descripcion, departamento FROM municipios WHERE departamento = ?";
                 Cursor cursor_provincia = db.rawQuery(sqlProvicia, args);
                 List<Ciudad> ciudadList = new ArrayList<>();
                 Ciudad provincia;
@@ -516,7 +1158,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         provincia.setDepartamento(cursor_provincia.getInt(2));
 
                         String[] args2 = new String[] {String.valueOf(cursor_provincia.getInt(0)), String.valueOf(cursor_departamento.getInt(0))};
-                        String sqlDistrito = "SELECT id, descripcion, id_muni, id_depto FROM distritos WHERE id_muni = ? AND id_depto = ? ";
+                        String sqlDistrito = "SELECT 0 AS id, 'SELECCIONAR' AS descripcion, 0 AS id_muni, 0 AS id_depto UNION SELECT id, descripcion, id_muni, id_depto FROM distritos WHERE id_muni = ? AND id_depto = ? ";
                         Cursor cursor_distrito = db.rawQuery(sqlDistrito, args2);
                         List<Distrito> distritoList = new ArrayList<>();
                         Distrito distrito;
@@ -546,7 +1188,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         //Recuperamos los territorios
-        String sqlTerritorio = "SELECT id, descripcion FROM territorio ";
+        String sqlTerritorio = "SELECT 0 AS id, 'SELECCIONAR' AS descripcion UNION SELECT id, descripcion FROM territorio ";
         Cursor cursor_Territorio = db.rawQuery(sqlTerritorio, null);
         List<Territorio> territorioList = new ArrayList<>();
         Territorio territorio;
@@ -557,7 +1199,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 territorio.setDescripcion(cursor_Territorio.getString(1));
 
                 String[] args3 = new String[] {String.valueOf(cursor_Territorio.getInt(0))};
-                String sqlZona = "SELECT id, descripcion, id_territorio, estado FROM zona WHERE id_territorio = ? ";
+                String sqlZona = "SELECT 0 AS id, 'SELECCIONAR' AS descripcion, 0 AS id_territorio, 0 AS estado UNION SELECT id, descripcion, id_territorio, estado FROM zona WHERE id_territorio = ? ";
                 Cursor cursor_zona = db.rawQuery(sqlZona, args3);
                 List<Zona> zonaList = new ArrayList<>();
                 Zona zona;
@@ -703,6 +1345,7 @@ public class DBHelper extends SQLiteOpenHelper {
             } while (cursor_estado_com.moveToNext());
         }
 
+        categoriasEstandarList1.add(0, new CategoriasEstandar(0, "SELECCIONAR"));
         responseCreatePunt.setEstadoComunList(categoriasEstandarList1);
 
         return responseCreatePunt;
@@ -807,6 +1450,42 @@ public class DBHelper extends SQLiteOpenHelper {
         int p = db.update("punto", valores, "id_tabla = ?", args);
         db.close();
         return p > 0;
+    }
+
+    public ResponseMarcarPedido getPuntoLocal(String responseUser) {
+
+        Cursor cursor;
+        ResponseMarcarPedido puntoPedido = new ResponseMarcarPedido();
+
+
+        String sql = "SELECT pos.idpos, pos.nombre_punto, terri.descripcion terri_des, zona.descripcion zona_des, pos.texto_direccion, depa.descripcion depa_des, muni.descripcion provi_des, distri.descripcion distri_des, " +
+                "   pos.estado_visita " +
+                " FROM " +
+                "   punto pos INNER JOIN " +
+                "   territorio terri ON terri.id = pos.territorio_punto " +
+                " INNER JOIN zona ON zona.id = pos.zona AND zona.id_territorio = terri.id " +
+                " LEFT JOIN departamento depa ON depa.id = pos.depto " +
+                " LEFT JOIN municipios muni ON muni.id_muni = pos.ciudad AND muni.departamento = depa.id " +
+                " LEFT JOIN distritos distri ON distri.id = pos.distrito AND distri.id_depto = depa.id AND distri.id_muni = muni.id_muni " +
+                "  WHERE " +
+                "    pos.idpos = ? OR pos.id_tabla = ? ";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        cursor = db.rawQuery(sql, new String[] {responseUser, responseUser});
+
+        if (cursor.moveToFirst()) {
+            puntoPedido.setEstado(cursor.getInt(8));
+            puntoPedido.setId_pos(cursor.getInt(0));
+            puntoPedido.setRazon_social(cursor.getString(1));
+            puntoPedido.setDireccion(cursor.getString(4));
+            puntoPedido.setZona(cursor.getString(3));
+            puntoPedido.setTerritorio(cursor.getString(2));
+            puntoPedido.setDepto(cursor.getString(5));
+            puntoPedido.setProvincia(cursor.getString(6));
+            puntoPedido.setDistrito(cursor.getString(7));
+        }
+
+        return puntoPedido;
     }
 
     public boolean updateFechaSincro(String data, int idUsert){
@@ -994,6 +1673,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put("precio_referencia", data.getPrecio_referencia());
                 values.put("precio_publico", data.getPrecio_publico());
                 values.put("referencia", data.getReferencia());
+                values.put("latitud", data.getLatitud());
+                values.put("longitud", data.getLongitud());
 
                 db.insert("carrito_pedido", null, values);
 

@@ -8,6 +8,7 @@ import android.dcsdealerperu.com.dealerperu.Entry.ListResponsePedido;
 import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasSims;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -71,6 +72,8 @@ public class ActCarritoPedido extends AppCompatActivity {
     private TextView igv;
     private TextView total_ped;
 
+    private ConnectionDetector connectionDetector;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +95,8 @@ public class ActCarritoPedido extends AppCompatActivity {
         gpsServices = new GpsServices(this);
 
         alertDialog = new SpotsDialog(this, R.style.Custom);
+
+        connectionDetector = new ConnectionDetector(this);
 
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
@@ -200,7 +205,13 @@ public class ActCarritoPedido extends AppCompatActivity {
         builder.setMessage("¿ Estas seguro de enviar el pedido ?");
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                loginServices();
+
+                if (connectionDetector.isConnected()) {
+                    loginServices();
+                } else {
+                    saveLocalDada();
+                }
+
             }
         }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -209,6 +220,23 @@ public class ActCarritoPedido extends AppCompatActivity {
         });
 
         builder.show();
+
+    }
+
+    private void saveLocalDada() {
+
+        simsList = mydb.getCarrito(id_punto, id_usuario);
+
+        if (mydb.insertPedidoOffLine(simsList, getResponseUserStatic().getId(), getResponseUserStatic().getId_distri(), getResponseUserStatic().getBd(), id_punto, gpsServices.getLatitude(), gpsServices.getLongitude())) {
+            if (mydb.deleteAll(id_punto, id_usuario)) {
+                Toast.makeText(this, "Los pedidos se guardaron localmente", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, ActMainPeru.class);
+                startActivity(intent);
+            }
+
+        } else {
+            Toast.makeText(this, "Problemas al guardar el pedido local", Toast.LENGTH_LONG).show();
+        }
 
     }
 

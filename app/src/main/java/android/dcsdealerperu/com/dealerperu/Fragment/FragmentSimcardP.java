@@ -6,9 +6,11 @@ import android.dcsdealerperu.com.dealerperu.Activity.ActCarritoPedido;
 import android.dcsdealerperu.com.dealerperu.Activity.ActTomarPedido;
 import android.dcsdealerperu.com.dealerperu.Activity.SpacesItemDecoration;
 import android.dcsdealerperu.com.dealerperu.Adapter.AdapterRecyclerSimcard;
+import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasSims;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseVenta;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -55,6 +57,8 @@ public class FragmentSimcardP extends BaseVolleyFragment {
     private List<ReferenciasSims> filterList;
     private ResponseVenta responseVenta;
     private GridLayoutManager gridLayoutManagerVertical;
+    private ConnectionDetector connectionDetector;
+    private DBHelper mydb;
 
     public FragmentSimcardP(int position) {
         mPosition = position;
@@ -85,9 +89,31 @@ public class FragmentSimcardP extends BaseVolleyFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mydb = new DBHelper(getActivity());
+
+        connectionDetector = new ConnectionDetector(getActivity());
+
         setHasOptionsMenu(true);
 
-        getSimcard();
+        if (connectionDetector.isConnected()){
+            getSimcard();
+        } else {
+            getSimcardLocal();
+        }
+
+
+    }
+
+    private void getSimcardLocal() {
+
+        List<ReferenciasSims> referenciasSimsList = mydb.getSimcardLocal(String.valueOf(mPosition));
+
+        setId_posStacti(mPosition);
+        adapter = new AdapterRecyclerSimcard(getActivity(), referenciasSimsList, mPosition, getResponseUserStatic().getId());
+        recycler.setAdapter(adapter);
+        recycler.setLayoutManager(gridLayoutManagerVertical);
+        recycler.addItemDecoration(new SpacesItemDecoration(20));
+
 
     }
 

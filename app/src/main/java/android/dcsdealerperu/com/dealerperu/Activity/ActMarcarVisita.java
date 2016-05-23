@@ -8,6 +8,7 @@ import android.dcsdealerperu.com.dealerperu.Entry.Detalle;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -59,13 +60,7 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
     private TextView text_circuito;
     private Button btn_pedidos_pendientes;
     private Button btn_no_venta;
-    private Button btn_tomar_pedido;
-    private Button btn_inventariar;
-    private ExpandableListAdapter expandableListAdapter;
-    private ExpandableListView expandableListView;
-    private Bundle bundle;
-    private ArrayList<String> expandableListTitle;
-    private HashMap<String, List<Detalle>> expandableListDetail;
+    private ConnectionDetector connectionDetector;
 
     private SpotsDialog alertDialog;
     private RequestQueue rq;
@@ -78,6 +73,8 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_marcar_visita);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        connectionDetector = new ConnectionDetector(this);
 
         text_idpos = (TextView) findViewById(R.id.text_idpos);
         text_razon = (TextView) findViewById(R.id.text_razon);
@@ -97,14 +94,14 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
         btn_no_venta = (Button) findViewById(R.id.btn_no_venta);
         btn_no_venta.setOnClickListener(this);
 
-        btn_tomar_pedido = (Button) findViewById(R.id.btn_tomar_pedido);
+        Button btn_tomar_pedido = (Button) findViewById(R.id.btn_tomar_pedido);
         btn_tomar_pedido.setOnClickListener(this);
 
-        btn_inventariar = (Button) findViewById(R.id.btn_inventariar);
+        Button btn_inventariar = (Button) findViewById(R.id.btn_inventariar);
         btn_inventariar.setOnClickListener(this);
 
         Intent intent = this.getIntent();
-        bundle = intent.getExtras();
+        Bundle bundle = intent.getExtras();
         if (bundle != null) {
             mDescribable = (ResponseMarcarPedido) bundle.getSerializable("value");
         }
@@ -289,7 +286,6 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
 
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -308,12 +304,12 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
                 LayoutInflater inflater = getLayoutInflater();
                 View dialoglayout = inflater.inflate(R.layout.dialog_pedidos_pendientes, null);
 
-                expandableListView = (ExpandableListView) dialoglayout.findViewById(R.id.expandableListView);
+                ExpandableListView expandableListView = (ExpandableListView) dialoglayout.findViewById(R.id.expandableListView);
 
-                expandableListDetail = ExpandableListDataPump.getData(mDescribable.getPedidosList());
-                expandableListTitle = new ArrayList<>(expandableListDetail.keySet());
+                HashMap<String, List<Detalle>> expandableListDetail = ExpandableListDataPump.getData(mDescribable.getPedidosList());
+                ArrayList<String> expandableListTitle = new ArrayList<>(expandableListDetail.keySet());
 
-                expandableListAdapter = new ExpandableListAdapter(this, expandableListTitle, expandableListDetail);
+                ExpandableListAdapter expandableListAdapter = new ExpandableListAdapter(this, expandableListTitle, expandableListDetail);
                 expandableListView.setAdapter(expandableListAdapter);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -342,11 +338,18 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
 
             case R.id.btn_inventariar:
 
-                Bundle bundle3 = new Bundle();
-                Intent intent3 = new Intent(this, ActInventariar.class);
-                bundle3.putSerializable("value", mDescribable);
-                intent3.putExtras(bundle3);
-                startActivity(intent3);
+                if (connectionDetector.isConnected()) {
+
+                    Bundle bundle3 = new Bundle();
+                    Intent intent3 = new Intent(this, ActInventariar.class);
+
+                    bundle3.putSerializable("value", mDescribable);
+                    intent3.putExtras(bundle3);
+                    startActivity(intent3);
+
+                } else {
+                    Toast.makeText(this, "Esta opción no esta habilitada offline", Toast.LENGTH_LONG).show();
+                }
 
                 break;
         }

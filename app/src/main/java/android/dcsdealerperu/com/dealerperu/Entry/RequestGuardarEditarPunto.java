@@ -136,6 +136,17 @@ public class RequestGuardarEditarPunto implements Serializable {
     @SerializedName("longitud")
     private double longitud;
 
+    @SerializedName("estado_visita")
+    private double estadoVisita;
+
+    public double getEstadoVisita() {
+        return estadoVisita;
+    }
+
+    public void setEstadoVisita(double estadoVisita) {
+        this.estadoVisita = estadoVisita;
+    }
+
     public double getLatitud() {
         return latitud;
     }

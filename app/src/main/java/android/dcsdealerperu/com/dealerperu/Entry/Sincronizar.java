@@ -39,6 +39,15 @@ public class Sincronizar {
     @SerializedName("subcategorias_puntos")
     private List<Subcategorias> subcategoriasList;
 
+    @SerializedName("refes_sims")
+    private List<ReferenciasSims> referenciasSimsList;
+
+    @SerializedName("refes_combo")
+    private List<ReferenciasCombos> referenciasCombosList;
+
+    @SerializedName("lista_precios")
+    private List<ListaPrecio> listaPrecios;
+
     @SerializedName("fecha_sincroniza")
     private String fecha_sincroniza;
 
@@ -130,5 +139,28 @@ public class Sincronizar {
         this.subcategoriasList = subcategoriasList;
     }
 
+    public List<ReferenciasSims> getReferenciasSimsList() {
+        return referenciasSimsList;
+    }
+
+    public void setReferenciasSimsList(List<ReferenciasSims> referenciasSimsList) {
+        this.referenciasSimsList = referenciasSimsList;
+    }
+
+    public List<ListaPrecio> getListaPrecios() {
+        return listaPrecios;
+    }
+
+    public void setListaPrecios(List<ListaPrecio> listaPrecios) {
+        this.listaPrecios = listaPrecios;
+    }
+
+    public List<ReferenciasCombos> getReferenciasCombosList() {
+        return referenciasCombosList;
+    }
+
+    public void setReferenciasCombosList(List<ReferenciasCombos> referenciasCombosList) {
+        this.referenciasCombosList = referenciasCombosList;
+    }
 
 }

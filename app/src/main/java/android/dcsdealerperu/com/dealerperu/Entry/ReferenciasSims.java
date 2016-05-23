@@ -36,13 +36,8 @@ public class ReferenciasSims {
     @SerializedName("quiebre")
     private int quiebre;
 
-    public int getQuiebre() {
-        return quiebre;
-    }
-
-    public void setQuiebre(int quiebre) {
-        this.quiebre = quiebre;
-    }
+    @SerializedName("estado_accion")
+    private int estado_accion;
 
     public int cantidadPedida;
 
@@ -165,4 +160,21 @@ public class ReferenciasSims {
     public void setId_auto_carrito(int id_auto_carrito) {
         this.id_auto_carrito = id_auto_carrito;
     }
+
+    public int getEstado_accion() {
+        return estado_accion;
+    }
+
+    public void setEstado_accion(int estado_accion) {
+        this.estado_accion = estado_accion;
+    }
+
+    public int getQuiebre() {
+        return quiebre;
+    }
+
+    public void setQuiebre(int quiebre) {
+        this.quiebre = quiebre;
+    }
+
 }

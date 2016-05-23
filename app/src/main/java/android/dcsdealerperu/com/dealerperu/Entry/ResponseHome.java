@@ -97,8 +97,6 @@ public class ResponseHome implements Serializable {
     @SerializedName("persona_ultima")
     private String persona_ultima;
 
-
-
     public String getDistrito() {
         return distrito;
     }
