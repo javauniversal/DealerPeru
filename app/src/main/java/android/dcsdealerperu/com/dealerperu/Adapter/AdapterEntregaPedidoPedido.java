@@ -5,9 +5,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Activity.ActMainPeru;
+import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.PedidosEntrega;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -54,6 +56,8 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
     public static final String TAG = "MyTag";
     private String comentario;
     private GpsServices gpsServices;
+    private ConnectionDetector connectionDetector;
+    private DBHelper mydb;
 
     public AdapterEntregaPedidoPedido(Activity actx, List<PedidosEntrega> data) {
         this.actx = actx;
@@ -63,6 +67,11 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
         gpsServices = new GpsServices(actx);
 
         alertDialog = new SpotsDialog(actx, R.style.Custom);
+
+        connectionDetector = new ConnectionDetector(actx);
+
+        mydb = new DBHelper(actx);
+
     }
 
     @Override
@@ -126,8 +135,33 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
                             Toast.makeText(actx, "El comentario es un campo requerido", Toast.LENGTH_LONG).show();
                         } else {
                             comentario = editTextComent.getText().toString();
-                            setDevolver(referencias.getNroPedido(), comentario, referencias.getIdpos(), position);
-                            //
+
+                            if (connectionDetector.isConnected()) {
+                                setDevolver(referencias.getNroPedido(), comentario, referencias.getIdpos(), position);
+                            } else {
+                                if (!mydb.validarPedidosDuplicados(referencias.getNroPedido(), referencias.getIdpos())) {
+                                    if (mydb.insetEntregaPedido(gpsServices.getLatitude(), gpsServices.getLongitude(), getResponseUserStatic().getId(), Integer.parseInt(getResponseUserStatic().getId_distri()),
+                                            getResponseUserStatic().getBd(), referencias.getIdpos(), comentario, referencias.getNroPedido(), "devolucion")) {
+
+                                        Toast.makeText(actx, "El pedido fue devuelto corectamente", Toast.LENGTH_LONG).show();
+                                        data.remove(position);
+                                        notifyDataSetChanged();
+
+                                        if (data == null || data.size() == 0) {
+                                            //Activity Principal, Para acceder al fragment
+                                            Bundle bundle = new Bundle();
+                                            Intent intent = new Intent(actx, ActMainPeru.class);
+                                            bundle.putInt("accion", 3);
+                                            intent.putExtras(bundle);
+                                            actx.startActivity(intent);
+                                        }
+                                    }
+                                } else {
+                                    Toast.makeText(actx, "El pedido ya se encuentra en estado devuelto por favor sincronizar", Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+
                         }
 
                     }
@@ -151,7 +185,34 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
                 builder.setMessage("¿ Estas seguro de entregar el pedido # " + referencias.getNroPedido() + " ?");
                 builder.setPositiveButton("Entregar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        setEntregarPedido(referencias.getNroPedido(), referencias.getIdpos(), position);
+
+                        if (connectionDetector.isConnected()) {
+                            setEntregarPedido(referencias.getNroPedido(), referencias.getIdpos(), position);
+                        } else {
+                            if (!mydb.validarPedidosDuplicados(referencias.getNroPedido(), referencias.getIdpos())) {
+                                if (mydb.insetEntregaPedido(gpsServices.getLatitude(), gpsServices.getLongitude(), getResponseUserStatic().getId(), Integer.parseInt(getResponseUserStatic().getId_distri()),
+                                        getResponseUserStatic().getBd(), referencias.getIdpos(), comentario, referencias.getNroPedido(), "entrega")) {
+
+                                    Toast.makeText(actx, "El pedido fue entregado localmente Sincronizar para entregarlo", Toast.LENGTH_LONG).show();
+                                    data.remove(position);
+                                    notifyDataSetChanged();
+
+                                    if (data == null || data.size() == 0) {
+                                        //Activity Principal, Para acceder al fragment
+                                        Bundle bundle = new Bundle();
+                                        Intent intent = new Intent(actx, ActMainPeru.class);
+                                        bundle.putInt("accion", 3);
+                                        intent.putExtras(bundle);
+                                        actx.startActivity(intent);
+                                    }
+
+                                }
+                            } else {
+                                Toast.makeText(actx, "El pedido ya se encuentra en estado devuelto por favor sincronizar", Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+
                     }
                 }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

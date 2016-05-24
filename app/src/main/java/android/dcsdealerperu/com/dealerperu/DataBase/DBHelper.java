@@ -9,14 +9,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.Ciudad;
 import android.dcsdealerperu.com.dealerperu.Entry.Departamentos;
+import android.dcsdealerperu.com.dealerperu.Entry.DetallePedido;
 import android.dcsdealerperu.com.dealerperu.Entry.Distrito;
 import android.dcsdealerperu.com.dealerperu.Entry.NoVisita;
 import android.dcsdealerperu.com.dealerperu.Entry.Nomenclatura;
+import android.dcsdealerperu.com.dealerperu.Entry.PedidosEntrega;
+import android.dcsdealerperu.com.dealerperu.Entry.PedidosEntregaSincronizar;
 import android.dcsdealerperu.com.dealerperu.Entry.Referencia;
 import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasCombos;
 import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasSims;
 import android.dcsdealerperu.com.dealerperu.Entry.RequestGuardarEditarPunto;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseCreatePunt;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseUser;
@@ -33,7 +37,6 @@ import android.dcsdealerperu.com.dealerperu.Entry.TipoVivienda;
 import android.dcsdealerperu.com.dealerperu.Entry.Tracing;
 import android.dcsdealerperu.com.dealerperu.Entry.Zona;
 import android.util.Log;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -68,7 +71,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String sqlLoginUsuario = "CREATE TABLE login (id INT, cedula INT, nombre TEXT, apellido TEXT, user TEXT, estado INT, bd TEXT, id_distri TEXT, perfil INT, igv REAL, intervalo INT, hora_inicial TEXT, " +
                 " hora_final TEXT, cantidad_envios INT, fechaSincro, TEXT, password TEXT)";
-
 
         String sqltTrritorios = "CREATE TABLE territorio (id INT, descripcion TEXT, estado INT )";
 
@@ -109,6 +111,22 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String sqlDetallePedido = "CREATE TABLE detalle_pedido (id integer primary key AUTOINCREMENT, idCabeza INT, id_producto INT, cantidad_pedida INT, tipo_producto INT, referencia INT) ";
 
+        String sqlPedidosEntrega= "CREATE TABLE pedido_entrega (idpos INT, razon TEXT, nombre_cli TEXT, barrio TEXT, cel TEXT, estado_comercial TEXT, email TEXT, direccion TEXT, departamento TEXT, munucipio TEXT, " +
+                " distrito TEXT, id_circuito TEXT, circuito TEXT, idruta TEXT, ruta TEXT, tel TEXT, detalle TEXT, tipo_visita INT, rutero INT, latitud REAL, longitud REAL, fecha_ult TEXT, hora_ult TEXT, persona_ultima TEXT) ";
+
+        String sqlDetallepedidoEntregar = "CREATE TABLE pedido_repartidor (idpos INT, razon_social TEXT, territorio TEXT, zona TEXT, direccion TEXT) ";
+
+        String sqlDetallepedidoEntregarROW = "CREATE TABLE pedidos_grupo (nroPedido INT, cant_pedido INT, cant_pedido_p INT, total_pedido_p INT, fecha_pedido TEXT, " +
+                "  hora_pedido TEXT, estado TEXT, fecha_entrega TEXT, igv REAL, sub_total REAL, nombre_usu TEXT, idpos INT, total_impueto_igv REAL) ";
+
+        String sqlDetallepedidoEntregarNUMERO = "CREATE TABLE deta_pedido (nroPedido INT, nombre_sku TEXT, id_sku INT, cant_pedido INT, total_pedido RELA, cant_pedido_p INT, total_pedido_p REAL, tipo_pro TEXT) ";
+
+        String sqlEntregaPedido = "CREATE TABLE entrega_pedido (id integer primary key AUTOINCREMENT, latitud REAL, longitud REAL, iduser INT, iddis INT, db TEXT, idpos INT, obs TEXT, idpedido INT, indicador INT, fecha_pedido fecha TEXT, hora_pedido TEXT) ";
+
+
+        db.execSQL(sqlDetallepedidoEntregar);
+        db.execSQL(sqlDetallepedidoEntregarROW);
+        db.execSQL(sqlDetallepedidoEntregarNUMERO);
 
         db.execSQL(sqlIntro);
         db.execSQL(sqlCarrito);
@@ -135,6 +153,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(sqlNoVisita);
         db.execSQL(sqlCabezaPedido);
         db.execSQL(sqlDetallePedido);
+        db.execSQL(sqlPedidosEntrega);
+        db.execSQL(sqlEntregaPedido);
 
     }
 
@@ -154,7 +174,302 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS no_visita");
         db.execSQL("DROP TABLE IF EXISTS cabeza_pedido");
         db.execSQL("DROP TABLE IF EXISTS detalle_pedido");
+        db.execSQL("DROP TABLE IF EXISTS pedido_entrega");
+        db.execSQL("DROP TABLE IF EXISTS pedido_repartidor");
+        db.execSQL("DROP TABLE IF EXISTS pedidos_grupo");
+        db.execSQL("DROP TABLE IF EXISTS deta_pedido");
+        db.execSQL("DROP TABLE IF EXISTS entrega_pedido");
         this.onCreate(db);
+
+    }
+
+    public boolean validarPedidosDuplicados(int idPedido, int idPos) {
+        Cursor cursor;
+        boolean indicador = false;
+
+        String[] args = new String[] {String.valueOf(idPedido), String.valueOf(idPos)};
+
+        String sql = "SELECT * FROM entrega_pedido WHERE idpos = ? AND idpedido = ?";
+        SQLiteDatabase db = this.getWritableDatabase();
+        cursor = db.rawQuery(sql, args);
+        if (cursor.moveToFirst()) {
+            indicador = true;
+        }
+
+        return indicador;
+
+    }
+
+    public boolean deleteAllPedidosEntrega(int id_pos, int id_pedidos) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int a = db.delete("entrega_pedido", "idpos = ? AND idpedido = ?", new String[]{String.valueOf(id_pos), String.valueOf(id_pedidos)});
+
+        db.close();
+        return a > 0;
+    }
+
+    public boolean insetEntregaPedido(double latitud, double longitud, int iduser, int iddis, String db_web, int idpos, String obs,  int idpedido, String indicador) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        try {
+
+            values.put("latitud", latitud);
+            values.put("longitud", longitud);
+            values.put("iduser", iduser);
+            values.put("iddis", iddis);
+            values.put("db", db_web);
+            values.put("idpos", idpos);
+            values.put("obs", obs);
+            values.put("idpedido", idpedido);
+            values.put("indicador", indicador);
+            values.put("fecha_pedido", getDatePhoneFecha());
+            values.put("hora_pedido", getDatePhoneHora());
+
+            db.insert("entrega_pedido", null, values);
+
+        } catch (SQLiteConstraintException e) {
+            Log.d("data", "failure to insert word,", e);
+            return false;
+        } finally {
+            db.close();
+        }
+        return true;
+    }
+
+    public List<PedidosEntregaSincronizar> sincronizarsEntregaPedido() {
+
+        List<PedidosEntregaSincronizar> pedidosEntregaSincronizars = new ArrayList<>();
+        String sql = "SELECT * FROM entrega_pedido ";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        PedidosEntregaSincronizar pedidosEntregaSincronizar;
+        if (cursor.moveToFirst()) {
+            do {
+
+                pedidosEntregaSincronizar = new PedidosEntregaSincronizar();
+                pedidosEntregaSincronizar.setLatitud(cursor.getDouble(1));
+                pedidosEntregaSincronizar.setLongitud(cursor.getDouble(2));
+                pedidosEntregaSincronizar.setIduser(cursor.getInt(3));
+                pedidosEntregaSincronizar.setIddis(cursor.getInt(4));
+                pedidosEntregaSincronizar.setDb(cursor.getString(5));
+                pedidosEntregaSincronizar.setIdpos(cursor.getInt(6));
+                pedidosEntregaSincronizar.setObs(cursor.getString(7));
+                pedidosEntregaSincronizar.setIdpedido(cursor.getInt(8));
+                pedidosEntregaSincronizar.setIndicador(cursor.getString(9));
+                pedidosEntregaSincronizar.setFecha_pedido(cursor.getString(10));
+                pedidosEntregaSincronizar.setHora_pedido(cursor.getString(11));
+
+                pedidosEntregaSincronizars.add(pedidosEntregaSincronizar);
+            } while(cursor.moveToNext());
+        }
+        return pedidosEntregaSincronizars;
+    }
+
+    public boolean insertEntregaPedidos(List<ResponseHome> data) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        ContentValues values1 = new ContentValues();
+        ContentValues values2 = new ContentValues();
+        ContentValues values3 = new ContentValues();
+
+        try {
+
+            for (int i = 0; i < data.size(); i++) {
+
+                values.put("idpos", data.get(i).getIdpos());
+                values.put("razon", data.get(i).getRazon());
+                values.put("nombre_cli", data.get(i).getNombre_cli());
+                values.put("barrio", data.get(i).getBarrio());
+                values.put("cel", data.get(i).getCel());
+                values.put("estado_comercial", data.get(i).getEstado_comercial());
+                values.put("email", data.get(i).getEmail());
+                values.put("direccion", data.get(i).getDireccion());
+                values.put("departamento", data.get(i).getDepartamento());
+                values.put("munucipio", data.get(i).getMunucipio());
+                values.put("distrito", data.get(i).getDistrito());
+                values.put("id_circuito", data.get(i).getId_circuito());
+                values.put("circuito", data.get(i).getCircuito());
+                values.put("idruta", data.get(i).getIdruta());
+                values.put("ruta", data.get(i).getRuta());
+                values.put("tel", data.get(i).getTel());
+                values.put("detalle", data.get(i).getDetalle());
+                values.put("tipo_visita", data.get(i).getTipo_visita());
+                values.put("rutero", data.get(i).getRutero());
+                values.put("latitud", data.get(i).getLatitud());
+                values.put("longitud", data.get(i).getLongitud());
+                values.put("hora_ult", data.get(i).getHora_ult());
+                values.put("persona_ultima", data.get(i).getPersona_ultima());
+
+                db.insert("pedido_entrega", null, values);
+
+                values1.put("idpos", data.get(i).getList().getIdpos());
+                values1.put("razon_social", data.get(i).getList().getRazon_social());
+                values1.put("territorio",  data.get(i).getList().getTerritorio());
+                values1.put("zona", data.get(i).getList().getZona());
+                values1.put("direccion", data.get(i).getList().getDireccion());
+
+                db.insert("pedido_repartidor", null, values1);
+
+                for (int g = 0; g < data.get(i).getList().getPedidosEntregaList().size(); g++) {
+
+                    values2.put("nroPedido", data.get(i).getList().getPedidosEntregaList().get(g).getNroPedido());
+                    values2.put("cant_pedido", data.get(i).getList().getPedidosEntregaList().get(g).getCant_pedido());
+                    values2.put("cant_pedido_p", data.get(i).getList().getPedidosEntregaList().get(g).getCant_pedido_p());
+                    values2.put("total_pedido_p", data.get(i).getList().getPedidosEntregaList().get(g).getTotal_pedido_p());
+                    values2.put("fecha_pedido", data.get(i).getList().getPedidosEntregaList().get(g).getFecha_pedido());
+                    values2.put("hora_pedido", data.get(i).getList().getPedidosEntregaList().get(g).getHora_pedido());
+                    values2.put("estado", data.get(i).getList().getPedidosEntregaList().get(g).getEstado());
+                    values2.put("fecha_entrega", data.get(i).getList().getPedidosEntregaList().get(g).getFecha_entrega());
+                    values2.put("igv", data.get(i).getList().getPedidosEntregaList().get(g).getIgv());
+                    values2.put("sub_total", data.get(i).getList().getPedidosEntregaList().get(g).getSub_total());
+                    values2.put("nombre_usu", data.get(i).getList().getPedidosEntregaList().get(g).getNombre_usu());
+                    values2.put("idpos", data.get(i).getList().getPedidosEntregaList().get(g).getIdpos());
+                    values2.put("total_impueto_igv", data.get(i).getList().getPedidosEntregaList().get(g).getTotal_impueto_igv());
+
+                    db.insert("pedidos_grupo", null, values2);
+
+                    for (int a = 0; a < data.get(i).getList().getPedidosEntregaList().get(g).getDetallePedidoList().size(); a++) {
+
+                        values3.put("nroPedido", data.get(i).getList().getPedidosEntregaList().get(g).getDetallePedidoList().get(a).getNroPedido());
+                        values3.put("nombre_sku", data.get(i).getList().getPedidosEntregaList().get(g).getDetallePedidoList().get(a).getNombre_sku());
+                        values3.put("id_sku", data.get(i).getList().getPedidosEntregaList().get(g).getDetallePedidoList().get(a).getId_sku());
+                        values3.put("cant_pedido", data.get(i).getList().getPedidosEntregaList().get(g).getDetallePedidoList().get(a).getCant_pedido());
+                        values3.put("total_pedido", data.get(i).getList().getPedidosEntregaList().get(g).getDetallePedidoList().get(a).getTotal_pedido());
+                        values3.put("cant_pedido_p", data.get(i).getList().getPedidosEntregaList().get(g).getDetallePedidoList().get(a).getCant_pedido_p());
+                        values3.put("total_pedido_p", data.get(i).getList().getPedidosEntregaList().get(g).getDetallePedidoList().get(a).getTotal_pedido_p());
+                        values3.put("tipo_pro", data.get(i).getList().getPedidosEntregaList().get(g).getDetallePedidoList().get(a).getTipo_pro());
+
+                        db.insert("deta_pedido", null, values3);
+                    }
+                }
+            }
+
+        } catch (SQLiteConstraintException e) {
+            Log.d("data", "failure to insert word,", e);
+            return false;
+        } finally {
+            db.close();
+        }
+
+        return true;
+    }
+
+    public List<ResponseHome> getVisitasRutero() {
+
+        List<ResponseHome> responseHomeList = new ArrayList<>();
+
+        String sql = "SELECT * FROM pedido_entrega ";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        ResponseHome responseHome;
+
+        if (cursor.moveToFirst()) {
+            do {
+                responseHome = new ResponseHome();
+                responseHome.setIdpos(cursor.getInt(0));
+                responseHome.setRazon(cursor.getString(1));
+                responseHome.setNombre_cli(cursor.getString(2));
+                responseHome.setBarrio(cursor.getString(3));
+                responseHome.setCel(cursor.getString(4));
+                responseHome.setEstado_comercial(cursor.getString(5));
+                responseHome.setEmail(cursor.getString(6));
+                responseHome.setDireccion(cursor.getString(7));
+                responseHome.setDepartamento(cursor.getString(8));
+                responseHome.setMunucipio(cursor.getString(9));
+                responseHome.setDistrito(cursor.getString(10));
+                responseHome.setId_circuito(cursor.getString(11));
+                responseHome.setCircuito(cursor.getString(12));
+                responseHome.setIdruta(cursor.getString(13));
+                responseHome.setRuta(cursor.getString(14));
+                responseHome.setTel(cursor.getString(15));
+                responseHome.setDetalle(cursor.getString(16));
+                responseHome.setTipo_visita(cursor.getInt(17));
+                responseHome.setRutero(cursor.getInt(18));
+                responseHome.setLatitud(cursor.getDouble(19));
+                responseHome.setLongitud(cursor.getDouble(20));
+                responseHome.setFecha_ult(cursor.getString(21));
+                responseHome.setHora_ult(cursor.getString(22));
+                responseHome.setPersona_ultima(cursor.getString(23));
+
+                String sqlpedido_repartidor = "SELECT idpos, razon_social, territorio, zona, direccion  FROM pedido_repartidor WHERE idpos = ? ";
+                Cursor cursor_repartidor = db.rawQuery(sqlpedido_repartidor, new String[]{String.valueOf(cursor.getInt(0))});
+
+                ResponseEntregarPedido responseEntregarPedido;
+                if (cursor_repartidor.moveToFirst()) {
+                    do {
+                        responseEntregarPedido = new ResponseEntregarPedido();
+                        responseEntregarPedido.setIdpos(cursor_repartidor.getInt(0));
+                        responseEntregarPedido.setRazon_social(cursor_repartidor.getString(1));
+                        responseEntregarPedido.setTerritorio(cursor_repartidor.getString(2));
+                        responseEntregarPedido.setZona(cursor_repartidor.getString(3));
+                        responseEntregarPedido.setDireccion(cursor_repartidor.getString(4));
+
+                    } while(cursor_repartidor.moveToNext());
+
+                    String sqlpedido_grupo = "SELECT nroPedido, cant_pedido, cant_pedido_p, total_pedido_p, fecha_pedido, hora_pedido, estado, fecha_entrega, igv, sub_total, nombre_usu, idpos, total_impueto_igv FROM pedidos_grupo WHERE idpos = ? ";
+                    Cursor cursor_grupo = db.rawQuery(sqlpedido_grupo, new String[]{String.valueOf(cursor.getInt(0))});
+                    List<PedidosEntrega> pedidosEntregaList = new ArrayList<>();
+                    PedidosEntrega pedidosEntrega;
+                    if (cursor_grupo.moveToFirst()) {
+                        do {
+                            pedidosEntrega = new PedidosEntrega();
+                            pedidosEntrega.setNroPedido(cursor_grupo.getInt(0));
+                            pedidosEntrega.setCant_pedido(cursor_grupo.getInt(1));
+                            pedidosEntrega.setCant_pedido_p(cursor_grupo.getInt(2));
+                            pedidosEntrega.setTotal_pedido_p(cursor_grupo.getDouble(3));
+                            pedidosEntrega.setFecha_pedido(cursor_grupo.getString(4));
+                            pedidosEntrega.setHora_pedido(cursor_grupo.getString(5));
+                            pedidosEntrega.setEstado(cursor_grupo.getString(6));
+                            pedidosEntrega.setFecha_entrega(cursor_grupo.getString(7));
+                            pedidosEntrega.setIgv(cursor_grupo.getDouble(8));
+                            pedidosEntrega.setSub_total(cursor_grupo.getDouble(9));
+                            pedidosEntrega.setNombre_usu(cursor_grupo.getString(10));
+                            pedidosEntrega.setIdpos(cursor_grupo.getInt(11));
+                            pedidosEntrega.setTotal_impueto_igv(cursor_grupo.getDouble(12));
+
+                            String sqldeta_pedido = "SELECT nroPedido, nombre_sku, id_sku, cant_pedido, total_pedido, cant_pedido_p, total_pedido_p, tipo_pro FROM deta_pedido WHERE nroPedido = ? ";
+                            Cursor cursor_deta_pedido = db.rawQuery(sqldeta_pedido, new String[]{String.valueOf(cursor_grupo.getInt(0))});
+                            List<DetallePedido> detallePedidoList = new ArrayList<>();
+                            DetallePedido detallePedido;
+                            if (cursor_deta_pedido.moveToFirst()) {
+                                do {
+                                    detallePedido = new DetallePedido();
+
+                                    detallePedido.setNroPedido(cursor_deta_pedido.getInt(0));
+                                    detallePedido.setNombre_sku(cursor_deta_pedido.getString(1));
+                                    detallePedido.setCant_pedido(cursor_deta_pedido.getInt(2));
+                                    detallePedido.setTotal_pedido(cursor_deta_pedido.getDouble(3));
+                                    detallePedido.setCant_pedido_p(cursor_deta_pedido.getInt(4));
+                                    detallePedido.setTotal_pedido_p(cursor_deta_pedido.getDouble(5));
+                                    detallePedido.setTipo_pro(cursor_deta_pedido.getString(6));
+
+                                    detallePedidoList.add(detallePedido);
+
+                                } while(cursor_deta_pedido.moveToNext());
+
+                                pedidosEntrega.setDetallePedidoList(detallePedidoList);
+                            }
+
+                            pedidosEntregaList.add(pedidosEntrega);
+                        } while(cursor_grupo.moveToNext());
+                    }
+
+                    responseEntregarPedido.setPedidosEntregaList(pedidosEntregaList);
+
+                    responseHome.setList(responseEntregarPedido);
+                }
+
+                responseHomeList.add(responseHome);
+
+            } while(cursor.moveToNext());
+
+        }
+
+        return responseHomeList;
 
     }
 
@@ -277,8 +592,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return true;
     }
-
-
 
     private String getDatePhoneFecha() {
 
@@ -423,9 +736,7 @@ public class DBHelper extends SQLiteOpenHelper {
         } finally {
             db.close();
         }
-
         return true;
-
     }
 
     public boolean insertLisPrecios(Sincronizar data) {

@@ -28,6 +28,17 @@ public class DetallePedido implements Serializable {
     @SerializedName("tipo_pro")
     private String tipo_pro;
 
+    @SerializedName("nroPedido")
+    private int nroPedido;
+
+    public int getNroPedido() {
+        return nroPedido;
+    }
+
+    public void setNroPedido(int nroPedido) {
+        this.nroPedido = nroPedido;
+    }
+
     public String getNombre_sku() {
         return nombre_sku;
     }

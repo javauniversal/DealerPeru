@@ -3,6 +3,8 @@ package android.dcsdealerperu.com.dealerperu.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
+import android.dcsdealerperu.com.dealerperu.Entry.ListSincronizarRepartidor;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseHome;
 import android.dcsdealerperu.com.dealerperu.Entry.Sincronizar;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmenEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmenMarcarvisita;
@@ -55,6 +57,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
@@ -196,10 +199,9 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
                 offLineDataVendedor();
             } else if (getResponseUserStatic().getPerfil() == 3) {
                 //Repartidor
-
+                offLineDataRepartidor();
             } else if (getResponseUserStatic().getPerfil() == 1) {
                 //Supervisor
-
             }
         }
 
@@ -241,7 +243,11 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
 
         } else if (id == R.id.nav_acpetar_pedido) {
             toolbar.setTitle("Aceptar Pedido");
-            fragmentClass = FragmentAceptPedido.class;
+            if (connectionDetector.isConnected()) {
+                fragmentClass = FragmentAceptPedido.class;
+            } else {
+                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+            }
 
         } else if (id == R.id.nav_gestion_pdv) {
             toolbar.setTitle("Gestión PDVS");
@@ -315,16 +321,22 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             fragmentClass = FragmentReporteAprobacionPdv.class;
         } else if (id == R.id.nav_cerrar_sesion) {
 
-            Intent intent = new Intent(this, ActLoginUser.class);
+            /*Intent intent = new Intent(this, ActLoginUser.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-            finish();
+            finish();*/
 
         } else if (id == R.id.nav_entregar_pedido) {
             toolbar.setTitle("Entregar Pedido");
-            editaPunto = 0;
-            accion = "Guardar";
-            fragmentClass = FragmenEntregarPedido.class;
+
+            if (connectionDetector.isConnected()) {
+                editaPunto = 0;
+                accion = "Guardar";
+                fragmentClass = FragmenEntregarPedido.class;
+            } else {
+                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+            }
+
         } else if (id == R.id.nav_bajas_super) {
             toolbar.setTitle("Reporte de Bajas");
             editaPunto = 0;
@@ -332,9 +344,14 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             fragmentClass = FragmentBajasSupervisor.class;
         } else if (id == R.id.nav_inventario) {
             toolbar.setTitle("Mi Inventario");
-            editaPunto = 0;
-            accion = "Guardar";
-            fragmentClass = FragmentInventarioRepartidor.class;
+            if (connectionDetector.isConnected()) {
+                editaPunto = 0;
+                accion = "Guardar";
+                fragmentClass = FragmentInventarioRepartidor.class;
+            } else {
+                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+            }
+
         }else if (id == R.id.nav_mis_pedidos_rep) {
 
             if (connectionDetector.isConnected()) {
@@ -345,9 +362,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             } else {
                 Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
             }
-
         }
-
         try {
 
             Fragment fragment = (Fragment) fragmentClass.newInstance();
@@ -362,6 +377,89 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         drawer.closeDrawer(GravityCompat.START);
         return true;
 
+    }
+
+    private void offLineDataRepartidor() {
+        alertDialog.show();
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "servicio_offline");
+        rq = Volley.newRequestQueue(this);
+        StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        parseJSONRepartidor(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(ActMainPeru.this, "Error de tiempo de espera", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(ActMainPeru.this, "Error Servidor", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(ActMainPeru.this, "Server Error", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NetworkError) {
+                            Toast.makeText(ActMainPeru.this, "Error de red", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(ActMainPeru.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
+                        }
+
+                        alertDialog.dismiss();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
+                params.put("iddis", getResponseUserStatic().getId_distri());
+                params.put("fecha", String.valueOf(mydb.getUserLogin(getResponseUserStatic().getUser()).getFechaSincro()));
+                params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
+                params.put("db", getResponseUserStatic().getBd());
+
+                return params;
+            }
+        };
+
+        rq.add(jsonRequest);
+    }
+
+    private void parseJSONRepartidor(final String response) {
+        new Thread(new Runnable() {
+            public void run() {
+
+                responseGlobal = response;
+                Gson gson = new Gson();
+                byte[] gzipBuff = new byte[0];
+                try {
+                    gzipBuff = android.dcsdealerperu.com.dealerperu.Adapter.Base64.decode(responseGlobal);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                responseGlobal = ZipUtils.unzipString(new String(gzipBuff));
+
+                ListSincronizarRepartidor sincronizar = gson.fromJson(responseGlobal, ListSincronizarRepartidor.class);
+
+                mydb.deleteObject("pedido_entrega");
+                mydb.deleteObject("pedido_repartidor");
+                mydb.deleteObject("pedidos_grupo");
+                mydb.deleteObject("deta_pedido");
+                mydb.insertEntregaPedidos(sincronizar);
+
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        if (alertDialog != null)
+                            alertDialog.dismiss();
+
+                    }
+                });
+            }
+        }).start();
     }
 
     private void offLineDataVendedor() {
@@ -403,6 +501,8 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
                 params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
                 params.put("iddis", getResponseUserStatic().getId_distri());
                 params.put("fecha", String.valueOf(mydb.getUserLogin(getResponseUserStatic().getUser()).getFechaSincro()));
+                params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
+                params.put("db", getResponseUserStatic().getBd());
 
                 return params;
             }

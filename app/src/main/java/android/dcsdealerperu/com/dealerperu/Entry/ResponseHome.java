@@ -97,6 +97,17 @@ public class ResponseHome implements Serializable {
     @SerializedName("persona_ultima")
     private String persona_ultima;
 
+    @SerializedName("pedidos")
+    private ResponseEntregarPedido list;
+
+    public ResponseEntregarPedido getList() {
+        return list;
+    }
+
+    public void setList(ResponseEntregarPedido list) {
+        this.list = list;
+    }
+
     public String getDistrito() {
         return distrito;
     }

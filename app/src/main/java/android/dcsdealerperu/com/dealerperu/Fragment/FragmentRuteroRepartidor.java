@@ -6,12 +6,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Activity.ActEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.Adapter.AppAdapterRutero;
+import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.ListEntregarPedido;
+import android.dcsdealerperu.com.dealerperu.Entry.ResponseEntregarPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseRutero;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,14 +44,12 @@ import dmax.dialog.SpotsDialog;
 
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FragmentRuteroRepartidor extends BaseVolleyFragment {
 
     private ListView mListView;
     private SpotsDialog alertDialog;
-    private AppAdapterRutero appAdapterRutero;
+    private DBHelper mydb;
+    ConnectionDetector connectionDetector;
 
     public FragmentRuteroRepartidor() {
         // Required empty public constructor
@@ -62,12 +64,27 @@ public class FragmentRuteroRepartidor extends BaseVolleyFragment {
         mListView = (ListView) view.findViewById(R.id.listView);
         alertDialog = new SpotsDialog(getActivity(), R.style.Custom);
 
-        consultarRutero();
         return view;
     }
 
-    private void consultarRutero()
-    {
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mydb = new DBHelper(getActivity());
+        connectionDetector = new ConnectionDetector(getActivity());
+
+        if (connectionDetector.isConnected()) {
+            consultarRutero();
+        } else {
+            consultarRuteroLocal();
+        }
+    }
+
+    private void consultarRuteroLocal() {
+        llenarData(mydb.getVisitasRutero());
+    }
+
+    private void consultarRutero() {
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "rutero_repartidor");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -137,7 +154,7 @@ public class FragmentRuteroRepartidor extends BaseVolleyFragment {
     }
 
     private void llenarData(final List<ResponseHome> listHome) {
-        appAdapterRutero = new AppAdapterRutero(getActivity(), listHome);
+        AppAdapterRutero appAdapterRutero = new AppAdapterRutero(getActivity(), listHome);
         mListView.setAdapter(appAdapterRutero);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -198,7 +215,24 @@ public class FragmentRuteroRepartidor extends BaseVolleyFragment {
                 builder.setTitle("Detalle");
                 builder.setView(dialoglayout).setPositiveButton("Entregar Pedido", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        buscarIdPos(listHome.get(position).getIdpos());
+
+                        if (connectionDetector.isConnected()) {
+                            buscarIdPos(listHome.get(position).getIdpos());
+                        } else {
+
+                            ResponseEntregarPedido pedidosEntregaList = mydb.getVisitasRutero().get(position).getList();
+
+                            List<ResponseEntregarPedido> pedidoList = new ArrayList<ResponseEntregarPedido>();
+
+                            pedidoList.add(0, pedidosEntregaList);
+
+                            Bundle bundle = new Bundle();
+                            Intent intent = new Intent(getActivity(), ActEntregarPedido.class);
+                            bundle.putSerializable("value", (Serializable) pedidoList);
+                            bundle.putString("offline", "no_lista");
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
                     }
 
                 }).setNegativeButton("Cerrar", new DialogInterface.OnClickListener() {

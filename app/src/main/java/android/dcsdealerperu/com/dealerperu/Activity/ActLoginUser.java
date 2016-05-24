@@ -80,7 +80,7 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
         TextView link_pass = (TextView) findViewById(R.id.link_pass);
         link_pass.setOnClickListener(this);
 
-        editUsuario.setText("vcali");
+        editUsuario.setText("repartidor");
         editPassword.setText("pro_123");
 
         Button btnIngresar = (Button) findViewById(R.id.btnIngresar);

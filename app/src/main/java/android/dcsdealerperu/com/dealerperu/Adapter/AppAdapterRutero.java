@@ -130,6 +130,7 @@ public class AppAdapterRutero extends BaseAdapter {
         if(responseHome.getLatitud() == 0) {
             holder.imgMap.setVisibility(View.INVISIBLE);
         }else{
+
             holder.imgMap.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

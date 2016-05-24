@@ -28,7 +28,7 @@ public class ActEntregarPedido extends AppCompatActivity {
 
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
-        if (bundle != null) {
+         if (bundle != null) {
             mDescribable = (List<ResponseEntregarPedido>) bundle.getSerializable("value");
         }
 

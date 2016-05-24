@@ -3,6 +3,7 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 
 import android.dcsdealerperu.com.dealerperu.Entry.LiquidacionRepartidor;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,12 +61,21 @@ public class FragmentHomeRepartidor extends BaseVolleyFragment {
 
         format = new DecimalFormat("#,###.##");
 
-        consultaLiquidacion();
         return view;
     }
 
-    private void  consultaLiquidacion()
-    {
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ConnectionDetector connectionDetector = new ConnectionDetector(getActivity());
+
+        if (connectionDetector.isConnected()) {
+            consultaLiquidacion();
+        }
+
+    }
+
+    private void  consultaLiquidacion() {
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "liquidacion");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,

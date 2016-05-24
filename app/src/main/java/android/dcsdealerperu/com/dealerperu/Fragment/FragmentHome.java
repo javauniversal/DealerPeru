@@ -110,7 +110,6 @@ public class FragmentHome extends BaseVolleyFragment {
             }
 
         });
-
     }
 
     private void setSincroinizarNoVisita() {
