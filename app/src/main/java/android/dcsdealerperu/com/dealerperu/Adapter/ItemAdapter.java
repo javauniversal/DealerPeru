@@ -50,6 +50,7 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
+
         String text = mItemList.get(position).second;
 
         holder.mText.setText(Html.fromHtml(text));

@@ -26,7 +26,6 @@ public class ActDetalleProducto extends AppCompatActivity implements ViewPager.O
     private ReferenciasCombos mDescribable = new ReferenciasCombos();
     private ImageView[] dots;
     private int dotsCount;
-    //private ImageButton btnNext, btnFinish;
 
     public TextView txtReferencia;
     public TextView txtValorR;
@@ -34,7 +33,19 @@ public class ActDetalleProducto extends AppCompatActivity implements ViewPager.O
     public TextView txtCamara;
     public TextView txtCamaraFron;
     public TextView txtMemoria;
-    private DecimalFormat format;
+    public TextView txtSpech;
+    public TextView txtFlash;
+    public TextView txtBanda;
+    public TextView txtExpandible;
+    public TextView txtBateria;
+    public TextView txtBluetooth;
+    public TextView txtTactil;
+    public TextView txtTecFisico;
+    public TextView txtCorreo;
+    public TextView txtWifi;
+    public TextView txtGps;
+    public TextView txtSo;
+    public TextView txtWeb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +63,7 @@ public class ActDetalleProducto extends AppCompatActivity implements ViewPager.O
             mDescribable = (ReferenciasCombos) bundle.getSerializable("value");
         }
 
-        format = new DecimalFormat("#,###.##");
+        DecimalFormat format = new DecimalFormat("#,###.##");
 
         txtReferencia = (TextView) findViewById(R.id.txtNombre);
         txtValorR = (TextView) findViewById(R.id.txtPecioP);
@@ -61,6 +72,27 @@ public class ActDetalleProducto extends AppCompatActivity implements ViewPager.O
         txtCamaraFron = (TextView) findViewById(R.id.txtCamaraFrontal);
         txtMemoria = (TextView) findViewById(R.id.txtMemoria);
 
+        txtReferencia = (TextView) findViewById(R.id.txtNombre);
+        txtValorR = (TextView) findViewById(R.id.txtPecioP);
+        txtTaPantalla = (TextView) findViewById(R.id.txtPantalla);
+        txtCamara = (TextView) findViewById(R.id.txtCamara);
+        txtCamaraFron = (TextView) findViewById(R.id.txtCamaraFrontal);
+        txtMemoria = (TextView) findViewById(R.id.txtMemoria);
+
+        txtSpech = (TextView) findViewById(R.id.txtspech);
+
+        txtFlash = (TextView) findViewById(R.id.txtFlash);
+        txtBanda = (TextView) findViewById(R.id.txtbanda);
+        txtExpandible = (TextView) findViewById(R.id.txtExpandible);
+        txtBateria = (TextView) findViewById(R.id.txtBateria);
+        txtBluetooth = (TextView) findViewById(R.id.txtBluetooth);
+        txtTactil = (TextView) findViewById(R.id.txtTactil);
+        txtTecFisico = (TextView) findViewById(R.id.txtTecFisico);
+        txtCorreo = (TextView) findViewById(R.id.txtCorreo);
+        txtWifi = (TextView) findViewById(R.id.txtWifi);
+        txtGps = (TextView) findViewById(R.id.txtGps);
+        txtSo = (TextView) findViewById(R.id.txtSo);
+        txtWeb = (TextView) findViewById(R.id.txtWeb);
 
         pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
 
@@ -83,15 +115,39 @@ public class ActDetalleProducto extends AppCompatActivity implements ViewPager.O
 
         setUiPageViewController();
 
-
         txtReferencia.setText(mDescribable.getDescripcion());
-        txtValorR.setText(String.format("Precio S/. %s", format.format(mDescribable.getPrecio_referencia())));
-        txtTaPantalla.setText(String.format("Pantalla %s", mDescribable.getPantalla()));
-        txtCamara.setText(String.format("Camara %s", mDescribable.getCam_tras()));
-        //txtFlash.setText(String.format("Flash %s", mDescribable.getFlash()));
-        txtCamaraFron.setText(String.format("Camara Fro %s", mDescribable.getCam_frontal()));
-        txtMemoria.setText(String.format("Memoria %s", mDescribable.getMemoria()));
-        //txtBateria.setText(String.format("Bateria %s", mDescribable.getBateria()));
+        txtValorR.setText(String.format("Precio: S/. %s", format.format(mDescribable.getPrecio_referencia())));
+        txtTaPantalla.setText(String.format("Pantalla: %s", mDescribable.getPantalla()));
+        txtCamara.setText(String.format("Camara: %s", mDescribable.getCam_tras()));
+        txtSpech.setText(String.format("%s", mDescribable.getSpeech()));
+        txtCamaraFron.setText(String.format("Camara Fro: %s", mDescribable.getCam_frontal()));
+        txtMemoria.setText(String.format("Memoria: %s", mDescribable.getMemoria()));
+        txtFlash.setText(String.format("Flash: %s", mDescribable.getFlash()));
+        txtBanda.setText(String.format("Banda: %s", mDescribable.getBanda()));
+        txtExpandible.setText(String.format("Expandible: %s", mDescribable.getExpandible()));
+        txtBateria.setText(String.format("Bateria: %s", mDescribable.getBateria()));
+        txtBluetooth.setText(String.format("Bluetooth: %s", mDescribable.getBluetooth()));
+        txtTactil.setText(String.format("Tactil: %s", mDescribable.getTactil()));
+        txtTecFisico.setText(String.format("Tec Fisico: %s", mDescribable.getTec_fisico()));
+        txtCorreo.setText(String.format("Correo: %s", mDescribable.getCorreo()));
+        txtWifi.setText(String.format("Wifi: %s", mDescribable.getWifi()));
+        txtGps.setText(String.format("Gps: %s", mDescribable.getGps()));
+        txtSo.setText(String.format("So: %s", mDescribable.getSo()));
+        txtWeb.setText(String.format("Web: %s", mDescribable.getWeb()));
+
+        if(mDescribable.getCam_tras().equals("NO")){ txtCamara.setTextColor(getResources().getColor(R.color.rojo_progress));}
+        if(mDescribable.getCam_frontal().equals("NO")){ txtCamaraFron.setTextColor(getResources().getColor(R.color.rojo_progress));}
+        if(mDescribable.getMemoria().equals("NO")){ txtMemoria.setTextColor(getResources().getColor(R.color.rojo_progress));}
+        if(mDescribable.getFlash().equals("NO")){ txtFlash.setTextColor(getResources().getColor(R.color.rojo_progress));}
+        if(mDescribable.getExpandible().equals("NO")){ txtExpandible.setTextColor(getResources().getColor(R.color.rojo_progress));}
+        if(mDescribable.getBateria().equals("NO")){ txtBateria.setTextColor(getResources().getColor(R.color.rojo_progress));}
+        if(mDescribable.getBluetooth().equals("NO")){ txtBluetooth.setTextColor(getResources().getColor(R.color.rojo_progress));}
+        if(mDescribable.getTactil().equals("NO")){ txtTactil.setTextColor(getResources().getColor(R.color.rojo_progress));}
+        if(mDescribable.getTec_fisico().equals("NO")){ txtTecFisico.setTextColor(getResources().getColor(R.color.rojo_progress));}
+        if(mDescribable.getCorreo().equals("NO")){ txtCorreo.setTextColor(getResources().getColor(R.color.rojo_progress));}
+        if(mDescribable.getWifi().equals("NO")){ txtWifi.setTextColor(getResources().getColor(R.color.rojo_progress));}
+        if(mDescribable.getGps().equals("NO")){ txtGps.setTextColor(getResources().getColor(R.color.rojo_progress));}
+        if(mDescribable.getWeb().equals("NO")){ txtWeb.setTextColor(getResources().getColor(R.color.rojo_progress));}
 
     }
 

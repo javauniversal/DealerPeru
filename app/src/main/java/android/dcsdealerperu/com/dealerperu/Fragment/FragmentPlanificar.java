@@ -7,6 +7,7 @@ import android.dcsdealerperu.com.dealerperu.Entry.ListResponsePlaniVisita;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getRespons
 
 public class FragmentPlanificar extends BaseVolleyFragment implements View.OnClickListener {
 
-    private Button btnBuscar;
+    private FloatingActionButton btnBuscar;
     private Spinner spinner_planificacion;
     private Spinner spinner_tipo;
     private List<CategoriasEstandar> dataSpinnerPla = new ArrayList<>();
@@ -61,7 +62,7 @@ public class FragmentPlanificar extends BaseVolleyFragment implements View.OnCli
 
         alertDialog = new SpotsDialog(getActivity(), R.style.Custom);
 
-        btnBuscar = (Button) view.findViewById(R.id.btnBuscar);
+        btnBuscar = (FloatingActionButton) view.findViewById(R.id.btnBuscar);
         btnBuscar.setOnClickListener(this);
 
         spinner_planificacion = (Spinner) view.findViewById(R.id.spinner_planificacion);
@@ -136,7 +137,6 @@ public class FragmentPlanificar extends BaseVolleyFragment implements View.OnCli
 
         });
     }
-
 
     @Override
     public void onClick(View v) {

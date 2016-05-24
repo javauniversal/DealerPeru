@@ -102,7 +102,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         mydb = new DBHelper(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,     R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         assert drawer != null;
         drawer.setDrawerListener(toggle);
         toggle.syncState();

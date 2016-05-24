@@ -132,7 +132,6 @@ public class FragmentHomeRep extends BaseVolleyFragment {
                         } else if (error instanceof ParseError) {
                             error_string = "Error al serializar los datos";
                         }
-
                         onConnectionFailed(error_string);
                     }
                 }
@@ -167,15 +166,12 @@ public class FragmentHomeRep extends BaseVolleyFragment {
             try {
 
                 Charset.forName("UTF-8").encode(response);
-
                 byte ptext[] = response.getBytes(Charset.forName("ISO-8859-1"));
-
                 String value = new String(ptext, Charset.forName("UTF-8"));
 
                 ListResponseEntregaPedido entregaPedido = gson.fromJson(value, ListResponseEntregaPedido.class);
 
                 for (int e = 0; e < entregaPedido.size(); e++) {
-
                     if (entregaPedido.get(e).getEstado().equals("-1")) {
                         Toast.makeText(getActivity(), entregaPedido.get(e).getMsg(), Toast.LENGTH_LONG).show();
                     } else if (entregaPedido.get(e).getEstado().equals("0")) {

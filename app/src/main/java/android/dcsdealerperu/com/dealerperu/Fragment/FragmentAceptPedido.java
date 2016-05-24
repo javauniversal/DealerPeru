@@ -1,5 +1,7 @@
 package android.dcsdealerperu.com.dealerperu.Fragment;
 
+import android.content.Intent;
+import android.dcsdealerperu.com.dealerperu.Activity.ActMainPeru;
 import android.dcsdealerperu.com.dealerperu.Adapter.AdapterAceptPedido;
 import android.dcsdealerperu.com.dealerperu.Entry.AceptarComprobante;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
@@ -68,14 +70,12 @@ public class FragmentAceptPedido extends BaseVolleyFragment {
         item2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
                 //Guardar Aceptacion de pedidos validaciones
                 for (int i = 0; i < aceptarComprobante.getAceptarPedidoList().size(); i++) {
                     if (aceptarComprobante.getAceptarPedidoList().get(i).marcaProducto.equals("")) {
                         Toast.makeText(getActivity(), "Es necesario que RECHACE o ACEPTE el pedido #" + aceptarComprobante.getAceptarPedidoList().get(i).getNroPedido(), Toast.LENGTH_LONG).show();
 
                         return true;
-
                     }
                 }
 
@@ -86,98 +86,6 @@ public class FragmentAceptPedido extends BaseVolleyFragment {
 
         });
 
-    }
-
-    private void setAceptacionPedido(final AceptarComprobante aceptarComprobante) {
-
-        alertDialog.show();
-
-        String url = String.format("%1$s%2$s", getString(R.string.url_base), "aceptar_pedido");
-        StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(final String response) {
-                        parseJSONSetPedido(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error
-                        String error_string = "";
-
-                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                            error_string = "Error de tiempo de espera";
-                        } else if (error instanceof AuthFailureError) {
-                            error_string = "Error Servidor";
-                        } else if (error instanceof ServerError) {
-                            error_string = "Server Error";
-                        } else if (error instanceof NetworkError) {
-                            error_string = "Error de red";
-                        } else if (error instanceof ParseError) {
-                            error_string = "Error al serializar los datos";
-                        }
-
-                        alertDialog.dismiss();
-
-                        onConnectionFailed(error_string);
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-
-
-                String parJSON = new Gson().toJson(aceptarComprobante, AceptarComprobante.class);
-
-                params.put("datos", parJSON);
-
-                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
-                params.put("iddis", getResponseUserStatic().getId_distri());
-                params.put("db", getResponseUserStatic().getBd());
-                params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
-
-                return params;
-
-            }
-        };
-
-        addToQueue(jsonRequest);
-
-    }
-
-    private void parseJSONSetPedido(String response) {
-
-        Gson gson = new Gson();
-        if (!response.equals("[]")) {
-            try {
-                Charset.forName("UTF-8").encode(response);
-
-                byte ptext[] = response.getBytes(Charset.forName("ISO-8859-1"));
-
-                String value = new String(ptext, Charset.forName("UTF-8"));
-
-                ResponseMarcarPedido responseMarcarPedido = gson.fromJson(value, ResponseMarcarPedido.class);
-
-                if (responseMarcarPedido.getEstado() == -1) {
-                    //El punto no tiene regional
-                    Toast.makeText(getActivity(), responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
-                } else if (responseMarcarPedido.getEstado() == 0) {
-                    //Error al intentar el pedido no tiene zona o territorio
-                    Toast.makeText(getActivity(), responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
-                    getAceptarPedido();
-                }
-
-            } catch (IllegalStateException ex) {
-                ex.printStackTrace();
-                alertDialog.dismiss();
-            } finally {
-                alertDialog.dismiss();
-            }
-        } else {
-            alertDialog.dismiss();
-        }
     }
 
     @Override
@@ -264,6 +172,99 @@ public class FragmentAceptPedido extends BaseVolleyFragment {
             alertDialog.dismiss();
             Toast.makeText(getActivity(), "No se encontraron pedidos para Aceptar", Toast.LENGTH_LONG).show();
         }
+    }
 
+    private void setAceptacionPedido(final AceptarComprobante aceptarComprobante) {
+
+        alertDialog.show();
+
+        String url = String.format("%1$s%2$s", getString(R.string.url_base), "aceptar_pedido");
+        StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        parseJSONSetPedido(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        String error_string = "";
+
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            error_string = "Error de tiempo de espera";
+                        } else if (error instanceof AuthFailureError) {
+                            error_string = "Error Servidor";
+                        } else if (error instanceof ServerError) {
+                            error_string = "Server Error";
+                        } else if (error instanceof NetworkError) {
+                            error_string = "Error de red";
+                        } else if (error instanceof ParseError) {
+                            error_string = "Error al serializar los datos";
+                        }
+
+                        alertDialog.dismiss();
+
+                        onConnectionFailed(error_string);
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+
+
+                String parJSON = new Gson().toJson(aceptarComprobante, AceptarComprobante.class);
+
+                params.put("datos", parJSON);
+
+                params.put("iduser", String.valueOf(getResponseUserStatic().getId()));
+                params.put("iddis", getResponseUserStatic().getId_distri());
+                params.put("db", getResponseUserStatic().getBd());
+                params.put("perfil", String.valueOf(getResponseUserStatic().getPerfil()));
+
+                return params;
+
+            }
+        };
+
+        addToQueue(jsonRequest);
+
+    }
+
+    private void parseJSONSetPedido(String response) {
+
+        Gson gson = new Gson();
+        if (!response.equals("[]")) {
+            try {
+                Charset.forName("UTF-8").encode(response);
+
+                byte ptext[] = response.getBytes(Charset.forName("ISO-8859-1"));
+
+                String value = new String(ptext, Charset.forName("UTF-8"));
+
+                ResponseMarcarPedido responseMarcarPedido = gson.fromJson(value, ResponseMarcarPedido.class);
+
+                if (responseMarcarPedido.getEstado() == -1) {
+
+                    Toast.makeText(getActivity(), responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
+                } else if (responseMarcarPedido.getEstado() == 0) {
+
+                    Toast.makeText(getActivity(), responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
+                    //getAceptarPedido();
+                    Intent intent = new Intent(getActivity(), ActMainPeru.class);
+                    startActivity(intent);
+                }
+
+            } catch (IllegalStateException ex) {
+                ex.printStackTrace();
+                alertDialog.dismiss();
+            } finally {
+                alertDialog.dismiss();
+            }
+        } else {
+            alertDialog.dismiss();
+        }
     }
 }

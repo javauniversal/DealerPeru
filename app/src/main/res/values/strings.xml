@@ -90,6 +90,19 @@
     <string name="pn">PN</string>
     <string name="referencia">Referencia</string>
     <string name="title_activity_act_maps_punto">Mapa Pdv</string>
+    <string name="speech">Speech</string>
+    <string name="precio">Precio</string>
+    <string name="pantalla">Pantalla</string>
+    <string name="camara">Camara</string>
+    <string name="cam_frontal">Cam Frontal</string>
+    <string name="memoria">Memoria</string>
+    <string name="bluetooh">Bluetooh</string>
+    <string name="parametros_de_busqueda">Parametros de busqueda</string>
+    <string name="id_pdv">Id Pdv</string>
+    <string name="dni_ruc">DNI/RUC</string>
+    <string name="estado_visita">Estado Visita</string>
+    <string name="tipo_de_frecuencia">Tipo de Frecuencia</string>
+    <string name="dia">Dia</string>
 
 
 </resources>

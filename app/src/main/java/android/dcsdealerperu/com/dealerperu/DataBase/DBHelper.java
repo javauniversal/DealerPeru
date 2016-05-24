@@ -160,6 +160,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+
         // TODO Auto-generated method stub
         db.execSQL("DROP TABLE IF EXISTS intro");
         db.execSQL("DROP TABLE IF EXISTS carrito_pedido");
@@ -187,7 +188,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor;
         boolean indicador = false;
 
-        String[] args = new String[] {String.valueOf(idPedido), String.valueOf(idPos)};
+        String[] args = new String[] {String.valueOf(idPos), String.valueOf(idPedido)};
 
         String sql = "SELECT * FROM entrega_pedido WHERE idpos = ? AND idpedido = ?";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -206,6 +207,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.close();
         return a > 0;
+
     }
 
     public boolean insetEntregaPedido(double latitud, double longitud, int iduser, int iddis, String db_web, int idpos, String obs,  int idpedido, String indicador) {
