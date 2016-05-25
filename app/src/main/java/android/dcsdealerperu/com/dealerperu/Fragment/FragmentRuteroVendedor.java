@@ -3,6 +3,7 @@ package android.dcsdealerperu.com.dealerperu.Fragment;
 
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Activity.ActReporteRutero;
+import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseCreatePunt;
@@ -52,9 +53,8 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
     private Spinner spinner_ruta;
     private EditText idpos;
     private EditText cedula;
-
     private SpotsDialog alertDialog;
-
+    private DBHelper mydb;
     private ResponseCreatePunt responseCreatePuntos;
 
     private int circuito, ruta, frecuencia, visita, sdia;
@@ -81,6 +81,7 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
 
         alertDialog = new SpotsDialog(getActivity(), R.style.Custom);
         LoadSpinners();
+
         // Accion del boton buscar
         FloatingActionButton btn_buscar = (FloatingActionButton) view.findViewById(R.id.cargar_reporte_rutero);
         btn_buscar.setOnClickListener(new View.OnClickListener() {
@@ -245,17 +246,24 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
 
         });
 
-
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setupGrid();
+        //setupGrid();
+        mydb = new DBHelper(getActivity());
+
+        setLoadParameter();
     }
 
-    private void setupGrid() {
+    private void setLoadParameter() {
+        ResponseCreatePunt responseCreatePunt = mydb.getDepartamentos();
+        loadTerritorio(responseCreatePunt);
+    }
+
+    /*private void setupGrid() {
         alertDialog.show();
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "cargar_filtros_puntos");
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
@@ -311,7 +319,6 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
             try {
 
                 responseCreatePuntos = gson.fromJson(response, ResponseCreatePunt.class);
-
                 loadTerritorio(responseCreatePuntos);
 
             } catch (IllegalStateException ex) {
@@ -324,7 +331,7 @@ public class FragmentRuteroVendedor extends BaseVolleyFragment {
             alertDialog.dismiss();
             Toast.makeText(getContext(), "No se encontraron datos para mostrar", Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 
     private void loadTerritorio(final ResponseCreatePunt territorioRes) {
 

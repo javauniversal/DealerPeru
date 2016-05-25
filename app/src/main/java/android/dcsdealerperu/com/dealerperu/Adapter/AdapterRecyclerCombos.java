@@ -8,6 +8,7 @@ import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
 import android.dcsdealerperu.com.dealerperu.Entry.ReferenciasCombos;
 import android.dcsdealerperu.com.dealerperu.Entry.RowViewHolderCombo;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -35,7 +37,7 @@ public class AdapterRecyclerCombos extends RecyclerView.Adapter<RowViewHolderCom
     private DBHelper mydb;
     private int iduser;
     private int idpos;
-
+    private ConnectionDetector connectionDetector;
 
     public AdapterRecyclerCombos(Activity context, List<ReferenciasCombos> responseHomeList, int idpos, int iduser) {
         super();
@@ -44,6 +46,8 @@ public class AdapterRecyclerCombos extends RecyclerView.Adapter<RowViewHolderCom
         this.iduser = iduser;
         this.idpos = idpos;
         format = new DecimalFormat("#,###.##");
+
+        connectionDetector = new ConnectionDetector(context);
 
         mydb = new DBHelper(context);
 
@@ -83,11 +87,16 @@ public class AdapterRecyclerCombos extends RecyclerView.Adapter<RowViewHolderCom
             @Override
             public void onClick(View v) {
 
-                Bundle bundle = new Bundle();
-                Intent intent = new Intent(context, ActDetalleProducto.class);
-                bundle.putSerializable("value", responseHomeList.get(position));
-                intent.putExtras(bundle);
-                context.startActivity(intent);
+                if (connectionDetector.isConnected()) {
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(context, ActDetalleProducto.class);
+                    bundle.putSerializable("value", responseHomeList.get(position));
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                } else {
+                    Toast.makeText(context, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+                }
+
 
             }
         });

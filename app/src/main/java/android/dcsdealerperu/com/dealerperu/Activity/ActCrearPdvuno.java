@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Entry.CategoriasEstandar;
 import android.dcsdealerperu.com.dealerperu.Entry.RequestGuardarEditarPunto;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -67,13 +69,24 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
     private Bundle bundle;
     private RequestGuardarEditarPunto datos;
     private List<CategoriasEstandar> ListaTipoDoc = new ArrayList<>();
+    private ConnectionDetector connectionDetector;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_pdvuno);
+        connectionDetector = new ConnectionDetector(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (connectionDetector.isConnected()) {
+            toolbar.setTitle("Crear Punto");
+            toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        } else {
+            toolbar.setBackgroundColor(Color.RED);
+            toolbar.setTitle("Crear Punto Offline");
+        }
+
         setSupportActionBar(toolbar);
 
         edit_nombres = (EditText) findViewById(R.id.edit_nombres);
@@ -144,7 +157,12 @@ public class ActCrearPdvuno extends AppCompatActivity implements View.OnClickLis
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            buscarPunto();
+            if (connectionDetector.isConnected()) {
+                buscarPunto();
+            } else {
+                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+            }
+
             return true;
         }
         return super.onOptionsItemSelected(item);

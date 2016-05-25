@@ -3,7 +3,7 @@
     values-hdpi             4.0” 480x800 hdpi
     values-hdpi             3.7” 480x854 hdpi
     -->
-    <dimen name="ancho_imagen_sim">150dp</dimen>
-    <dimen name="alto_imagen_sim">130dp</dimen>
+    <dimen name="ancho_imagen_sim">110dp</dimen>
+    <dimen name="alto_imagen_sim">120dp</dimen>
     <dimen name="padding_cardview_sim">5dp</dimen>
 </resources>

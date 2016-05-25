@@ -57,7 +57,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         txt_referencia.setText(expandedListText.getPn());
         txt_cantidad.setText(expandedListText.getCantidad() + "");
-        txt_total.setText(String.format("$ %s", format.format(expandedListText.getTotal())));
+        txt_total.setText(String.format("S/. %s", format.format(expandedListText.getTotal())));
 
 
         return convertView;

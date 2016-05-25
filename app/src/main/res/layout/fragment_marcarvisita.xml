@@ -73,7 +73,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/edit_buscar"
-                                android:hint="ID POS"
+                                android:hint="@string/id_pdv"
                                 android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:inputType="number" />
 

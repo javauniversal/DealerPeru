@@ -26,6 +26,7 @@ import android.dcsdealerperu.com.dealerperu.R;
 import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.dcsdealerperu.com.dealerperu.Services.MonitoringService;
 import android.dcsdealerperu.com.dealerperu.Services.SetTracingServiceWeb;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -83,9 +84,12 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        connectionDetector = new ConnectionDetector(this);
+
         setContentView(R.layout.activity_main_peru);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Inicio");
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         setSupportActionBar(toolbar);
 
         //Colocar en una Estacion de radio..
@@ -95,7 +99,7 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
 
         fragmentManager = getSupportFragmentManager();
 
-        connectionDetector = new ConnectionDetector(this);
+
 
         alertDialog = new SpotsDialog(this, R.style.Custom);
 
@@ -184,7 +188,6 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
         } else {
             Toast.makeText(getBaseContext(), "Pulse otra vez para salir", Toast.LENGTH_SHORT).show();
         }
-
         mBackPressed = System.currentTimeMillis();
     }
 
@@ -192,6 +195,8 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        String title_toolbar = "";
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
         if (connectionDetector.isConnected()) {
             if (getResponseUserStatic().getPerfil() == 2) {
@@ -202,38 +207,46 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
                 offLineDataRepartidor();
             } else if (getResponseUserStatic().getPerfil() == 1) {
                 //Supervisor
+                offLineDataVendedor();
             }
+        } else {
+            title_toolbar = "Offline";
+            toolbar.setBackgroundColor(Color.RED);
         }
 
         int id = item.getItemId();
-
         Class fragmentClass = null;
 
         if (id == R.id.nav_home) {
-            toolbar.setTitle("Inicio Vendedor");
+
+            toolbar.setTitle("Inicio Vendedor "+title_toolbar);
             editaPunto = 0;
             accion = "Guardar";
             fragmentClass = FragmentHome.class;
 
         } else if (id == R.id.nav_home_repartidor) {
-            toolbar.setTitle("Inicio Repartidor");
+
+            toolbar.setTitle("Inicio Repartidor "+title_toolbar);
             editaPunto = 0;
             accion = "Guardar";
             fragmentClass = FragmentHomeRep.class;
 
         }else if (id == R.id.nav_home_super) {
-            toolbar.setTitle("Inicio Supervisor");
+
+            toolbar.setTitle("Inicio Supervisor "+title_toolbar);
             editaPunto = 0;
             accion = "Guardar";
             fragmentClass = FragmentHomeSuperPrin.class;
 
         } else if (id == R.id.nav_marcar_visita) {
-            toolbar.setTitle("Marcar Visita");
+
+            toolbar.setTitle("Marcar Visita "+title_toolbar);
             editaPunto = 0;
             accion = "Guardar";
             fragmentClass = FragmenMarcarvisita.class;
 
         } else if (id == R.id.nav_planificar_punto) {
+
             if (connectionDetector.isConnected()) {
                 toolbar.setTitle("Planificar Visita");
                 fragmentClass = FragmentPlanificar.class;
@@ -242,23 +255,24 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             }
 
         } else if (id == R.id.nav_acpetar_pedido) {
-            toolbar.setTitle("Aceptar Pedido");
+
             if (connectionDetector.isConnected()) {
+                toolbar.setTitle("Aceptar Pedido");
                 fragmentClass = FragmentAceptPedido.class;
             } else {
                 Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
             }
 
         } else if (id == R.id.nav_gestion_pdv) {
-            toolbar.setTitle("Gestión PDVS");
 
+            toolbar.setTitle("Gestión PDVS "+title_toolbar);
             if (connectionDetector.isConnected()) {
                 cargarVistaPunto();
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setCancelable(false);
                 builder.setTitle("Offline");
-                builder.setMessage("¿ Estas seguro crear un punto Offline ?");
+                builder.setMessage("¿ Estás seguro crear un punto Offline ?");
                 builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         cargarVistaPunto();
@@ -294,10 +308,14 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             }
 
         } else if (id == R.id.nav_pedido_super) {
-            toolbar.setTitle("Reporte de Pedidos");
-            editaPunto = 0;
-            accion = "Guardar";
-            fragmentClass = FragmentPedidosSupervisor.class;
+            if (connectionDetector.isConnected()) {
+                toolbar.setTitle("Reporte de Pedidos");
+                editaPunto = 0;
+                accion = "Guardar";
+                fragmentClass = FragmentPedidosSupervisor.class;
+            } else {
+                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+            }
 
         } else if (id == R.id.nav_baja_vendedor) {
             if (connectionDetector.isConnected()) {
@@ -310,15 +328,26 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             }
 
         } else if (id == R.id.nav_pdv_aprp) {
-            toolbar.setTitle("Aprobación PDVS");
-            editaPunto = 0;
-            accion = "Guardar";
-            fragmentClass = FragmenteAproPdv.class;
+
+            if (connectionDetector.isConnected()) {
+                toolbar.setTitle("Aprobación PDVS");
+                editaPunto = 0;
+                accion = "Guardar";
+                fragmentClass = FragmenteAproPdv.class;
+            } else {
+                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+            }
+
         } else if (id == R.id.nav_aprobaciones_super) {
-            toolbar.setTitle("Reporte Aprobación PDVS");
-            editaPunto = 0;
-            accion = "Guardar";
-            fragmentClass = FragmentReporteAprobacionPdv.class;
+            if (connectionDetector.isConnected()) {
+                toolbar.setTitle("Reporte Aprobación PDVS");
+                editaPunto = 0;
+                accion = "Guardar";
+                fragmentClass = FragmentReporteAprobacionPdv.class;
+            } else {
+                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+            }
+
         } else if (id == R.id.nav_cerrar_sesion) {
 
             /*Intent intent = new Intent(this, ActLoginUser.class);
@@ -327,9 +356,9 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             finish();*/
 
         } else if (id == R.id.nav_entregar_pedido) {
-            toolbar.setTitle("Entregar Pedido");
 
             if (connectionDetector.isConnected()) {
+                toolbar.setTitle("Entregar Pedido");
                 editaPunto = 0;
                 accion = "Guardar";
                 fragmentClass = FragmenEntregarPedido.class;
@@ -338,13 +367,20 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
             }
 
         } else if (id == R.id.nav_bajas_super) {
-            toolbar.setTitle("Reporte de Bajas");
-            editaPunto = 0;
-            accion = "Guardar";
-            fragmentClass = FragmentBajasSupervisor.class;
-        } else if (id == R.id.nav_inventario) {
-            toolbar.setTitle("Mi Inventario");
+
             if (connectionDetector.isConnected()) {
+                toolbar.setTitle("Reporte de Bajas");
+                editaPunto = 0;
+                accion = "Guardar";
+                fragmentClass = FragmentBajasSupervisor.class;
+            } else {
+                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+            }
+
+        } else if (id == R.id.nav_inventario) {
+
+            if (connectionDetector.isConnected()) {
+                toolbar.setTitle("Mi Inventario");
                 editaPunto = 0;
                 accion = "Guardar";
                 fragmentClass = FragmentInventarioRepartidor.class;
@@ -375,8 +411,8 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
 
+        return true;
     }
 
     private void offLineDataRepartidor() {

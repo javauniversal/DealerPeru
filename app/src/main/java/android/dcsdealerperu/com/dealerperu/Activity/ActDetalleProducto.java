@@ -75,7 +75,6 @@ public class ActDetalleProducto extends AppCompatActivity implements ViewPager.O
         txtReferencia = (TextView) findViewById(R.id.txtNombre);
         txtValorR = (TextView) findViewById(R.id.txtPecioP);
         txtTaPantalla = (TextView) findViewById(R.id.txtPantalla);
-        txtCamara = (TextView) findViewById(R.id.txtCamara);
         txtCamaraFron = (TextView) findViewById(R.id.txtCamaraFrontal);
         txtMemoria = (TextView) findViewById(R.id.txtMemoria);
 
@@ -95,12 +94,6 @@ public class ActDetalleProducto extends AppCompatActivity implements ViewPager.O
         txtWeb = (TextView) findViewById(R.id.txtWeb);
 
         pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
-
-        /*btnNext = (ImageButton) findViewById(R.id.btn_next);
-        btnFinish = (ImageButton) findViewById(R.id.btn_finish);
-
-        btnNext.setOnClickListener(this);
-        btnFinish.setOnClickListener(this);*/
 
         pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
 
@@ -135,19 +128,44 @@ public class ActDetalleProducto extends AppCompatActivity implements ViewPager.O
         txtSo.setText(String.format("So: %s", mDescribable.getSo()));
         txtWeb.setText(String.format("Web: %s", mDescribable.getWeb()));
 
-        if(mDescribable.getCam_tras().equals("NO")){ txtCamara.setTextColor(getResources().getColor(R.color.rojo_progress));}
-        if(mDescribable.getCam_frontal().equals("NO")){ txtCamaraFron.setTextColor(getResources().getColor(R.color.rojo_progress));}
-        if(mDescribable.getMemoria().equals("NO")){ txtMemoria.setTextColor(getResources().getColor(R.color.rojo_progress));}
-        if(mDescribable.getFlash().equals("NO")){ txtFlash.setTextColor(getResources().getColor(R.color.rojo_progress));}
-        if(mDescribable.getExpandible().equals("NO")){ txtExpandible.setTextColor(getResources().getColor(R.color.rojo_progress));}
-        if(mDescribable.getBateria().equals("NO")){ txtBateria.setTextColor(getResources().getColor(R.color.rojo_progress));}
-        if(mDescribable.getBluetooth().equals("NO")){ txtBluetooth.setTextColor(getResources().getColor(R.color.rojo_progress));}
-        if(mDescribable.getTactil().equals("NO")){ txtTactil.setTextColor(getResources().getColor(R.color.rojo_progress));}
-        if(mDescribable.getTec_fisico().equals("NO")){ txtTecFisico.setTextColor(getResources().getColor(R.color.rojo_progress));}
-        if(mDescribable.getCorreo().equals("NO")){ txtCorreo.setTextColor(getResources().getColor(R.color.rojo_progress));}
-        if(mDescribable.getWifi().equals("NO")){ txtWifi.setTextColor(getResources().getColor(R.color.rojo_progress));}
-        if(mDescribable.getGps().equals("NO")){ txtGps.setTextColor(getResources().getColor(R.color.rojo_progress));}
-        if(mDescribable.getWeb().equals("NO")){ txtWeb.setTextColor(getResources().getColor(R.color.rojo_progress));}
+        if(mDescribable.getCam_tras().equals("NO"))
+            txtCamara.setTextColor(getResources().getColor(R.color.rojo_progress));
+
+        if(mDescribable.getCam_frontal().equals("NO"))
+            txtCamaraFron.setTextColor(getResources().getColor(R.color.rojo_progress));
+
+        if(mDescribable.getMemoria().equals("NO"))
+            txtMemoria.setTextColor(getResources().getColor(R.color.rojo_progress));
+
+        if(mDescribable.getFlash().equals("NO"))
+            txtFlash.setTextColor(getResources().getColor(R.color.rojo_progress));
+
+        if(mDescribable.getExpandible().equals("NO"))
+            txtExpandible.setTextColor(getResources().getColor(R.color.rojo_progress));
+
+        if(mDescribable.getBateria().equals("NO"))
+            txtBateria.setTextColor(getResources().getColor(R.color.rojo_progress));
+
+        if(mDescribable.getBluetooth().equals("NO"))
+            txtBluetooth.setTextColor(getResources().getColor(R.color.rojo_progress));
+
+        if(mDescribable.getTactil().equals("NO"))
+            txtTactil.setTextColor(getResources().getColor(R.color.rojo_progress));
+
+        if(mDescribable.getTec_fisico().equals("NO"))
+            txtTecFisico.setTextColor(getResources().getColor(R.color.rojo_progress));
+
+        if(mDescribable.getCorreo().equals("NO"))
+            txtCorreo.setTextColor(getResources().getColor(R.color.rojo_progress));
+
+        if(mDescribable.getWifi().equals("NO"))
+            txtWifi.setTextColor(getResources().getColor(R.color.rojo_progress));
+
+        if(mDescribable.getGps().equals("NO"))
+            txtGps.setTextColor(getResources().getColor(R.color.rojo_progress));
+
+        if(mDescribable.getWeb().equals("NO"))
+            txtWeb.setTextColor(getResources().getColor(R.color.rojo_progress));
 
     }
 

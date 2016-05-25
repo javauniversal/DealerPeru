@@ -10,6 +10,7 @@ import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -71,10 +72,18 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marcar_visita);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         connectionDetector = new ConnectionDetector(this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (connectionDetector.isConnected()) {
+            toolbar.setTitle("Marcar Visita");
+            toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        } else {
+            toolbar.setBackgroundColor(Color.RED);
+            toolbar.setTitle("Marcar Visita Offline");
+        }
+
+        setSupportActionBar(toolbar);
 
         text_idpos = (TextView) findViewById(R.id.text_idpos);
         text_razon = (TextView) findViewById(R.id.text_razon);
@@ -89,16 +98,24 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
         gpsServices = new GpsServices(this);
 
         btn_pedidos_pendientes = (Button) findViewById(R.id.btn_pedidos_pendientes);
-        btn_pedidos_pendientes.setOnClickListener(this);
+        if (btn_pedidos_pendientes != null) {
+            btn_pedidos_pendientes.setOnClickListener(this);
+        }
 
         btn_no_venta = (Button) findViewById(R.id.btn_no_venta);
-        btn_no_venta.setOnClickListener(this);
+        if (btn_no_venta != null) {
+            btn_no_venta.setOnClickListener(this);
+        }
 
         Button btn_tomar_pedido = (Button) findViewById(R.id.btn_tomar_pedido);
-        btn_tomar_pedido.setOnClickListener(this);
+        if (btn_tomar_pedido != null) {
+            btn_tomar_pedido.setOnClickListener(this);
+        }
 
         Button btn_inventariar = (Button) findViewById(R.id.btn_inventariar);
-        btn_inventariar.setOnClickListener(this);
+        if (btn_inventariar != null) {
+            btn_inventariar.setOnClickListener(this);
+        }
 
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
@@ -353,7 +370,23 @@ public class ActMarcarVisita extends AppCompatActivity implements View.OnClickLi
 
                 break;
         }
+
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (rq != null) {
+            rq.cancelAll(TAG);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (rq != null) {
+            rq.cancelAll(TAG);
+        }
+    }
 
 }

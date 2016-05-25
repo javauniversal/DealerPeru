@@ -16,12 +16,14 @@ public class RowViewHolderSimcard extends RecyclerView.ViewHolder {
     public Button btnCatalogoSim;
     public TextView txtCantidadPedida;
     public TextView txtInven;
+    public TextView txtprecio;
     public ImageView imgQuiebre;
 
     public RowViewHolderSimcard(View itemView, Context context) {
         super(itemView);
 
         this.txt_referemcia = (TextView) itemView.findViewById(R.id.txt_referemcia);
+        this.txtprecio = (TextView) itemView.findViewById(R.id.txtprecio);
         this.txtStock = (TextView) itemView.findViewById(R.id.txtStock);
         this.txtCantidadPedida = (TextView) itemView.findViewById(R.id.txtCantidadPedida);
         this.txtInven = (TextView) itemView.findViewById(R.id.txtInven);

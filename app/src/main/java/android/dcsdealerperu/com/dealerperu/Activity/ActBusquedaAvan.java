@@ -14,6 +14,7 @@ import android.dcsdealerperu.com.dealerperu.Entry.Territorio;
 import android.dcsdealerperu.com.dealerperu.Entry.Zona;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -79,7 +80,17 @@ public class ActBusquedaAvan extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busqueda_avan);
+        connectionDetector = new ConnectionDetector(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (connectionDetector.isConnected()) {
+            toolbar.setTitle("Buscar PDVS");
+            toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        } else {
+            toolbar.setBackgroundColor(Color.RED);
+            toolbar.setTitle("Buscar PDVS Offline");
+        }
+
         setSupportActionBar(toolbar);
 
         Intent intent = this.getIntent();

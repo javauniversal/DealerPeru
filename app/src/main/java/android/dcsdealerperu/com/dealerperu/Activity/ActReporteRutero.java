@@ -75,7 +75,7 @@ public class ActReporteRutero extends AppCompatActivity {
 
         mListView = (SwipeMenuListView) findViewById(R.id.listView);
         //mListView = (SwipeMenuListView) findViewById(R.drawable.i);
-        appAdapterRutero = new AppAdapterRutero(this, (ListHome) getResponseHomeListS());
+        appAdapterRutero = new AppAdapterRutero(this, (ListHome) getResponseHomeListS(), "busqueda");
         mListView.setAdapter(appAdapterRutero);
         SwipeMenuCreator creator = new SwipeMenuCreator() {
             @Override

@@ -8,6 +8,7 @@ import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -62,13 +63,21 @@ public class ActNoVenta extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        connectionDetector = new ConnectionDetector(this);
         setContentView(R.layout.activity_no_venta);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (connectionDetector.isConnected()) {
+            toolbar.setTitle("No venta");
+            toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        } else {
+            toolbar.setBackgroundColor(Color.RED);
+            toolbar.setTitle("No venta Offline");
+        }
+
         setSupportActionBar(toolbar);
 
         mydb = new DBHelper(this);
-
-        connectionDetector = new ConnectionDetector(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

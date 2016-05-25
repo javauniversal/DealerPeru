@@ -13,7 +13,8 @@
         android:layout_height="50dp"
         android:orientation="vertical"
         android:elevation="20dp"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:id="@+id/linearLayout5">
 
         <TextView
             android:layout_width="match_parent"
@@ -29,11 +30,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearLayout5">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="vertical">
 
@@ -60,7 +62,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/dimen_letra_app_estandar"
-                        android:text="Dirección"
+                        android:text="@string/direcci_n"
                         android:textColor="@color/colorAccent"
                         android:textStyle="bold" />
 
@@ -72,7 +74,7 @@
                         android:textStyle="bold"
                         android:textSize="10sp"
                         android:textColor="@color/colorAccent"
-                        android:text="Departamento" />
+                        android:text="@string/departamento" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -88,10 +90,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_pin_drop_black_24dp"
+                            android:src="@drawable/ic_list_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/accept" />
 
                         <Spinner
                             android:layout_width="match_parent"
@@ -113,7 +116,7 @@
                         android:textStyle="bold"
                         android:textSize="10sp"
                         android:textColor="@color/colorAccent"
-                        android:text="Provincia" />
+                        android:text="@string/provincia" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -127,10 +130,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_location_city_black_24dp"
+                            android:src="@drawable/ic_list_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/accept" />
 
                         <Spinner
                             android:layout_width="match_parent"
@@ -152,7 +156,7 @@
                         android:textStyle="bold"
                         android:textSize="10sp"
                         android:textColor="@color/colorAccent"
-                        android:text="Distrito" />
+                        android:text="@string/distrito" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -166,10 +170,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_map_black_24dp"
+                            android:src="@drawable/ic_list_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/accept" />
 
                         <Spinner
                             android:layout_width="match_parent"
@@ -190,7 +195,7 @@
                         android:textStyle="bold"
                         android:textSize="10sp"
                         android:textColor="@color/colorAccent"
-                        android:text="Tipo de vía" />
+                        android:text="@string/tipo_de_v_a" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -204,10 +209,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_map_black_24dp"
+                            android:src="@drawable/ic_list_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/accept" />
 
                         <Spinner
                             android:layout_width="match_parent"
@@ -230,18 +236,15 @@
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_centerVertical="true"
                             android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@+id/image_correo"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/image_correo">
+                            android:layout_marginLeft="8dp">
 
                             <EditText
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/edit_nombre_via"
-                                android:hint="Nombre vía"
+                                android:hint="@string/nombre_v_a"
                                 android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:inputType="text" />
 
@@ -249,18 +252,15 @@
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_centerVertical="true"
                             android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@+id/image_correo"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/image_correo">
+                            android:layout_marginLeft="8dp">
 
                             <EditText
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/edit_numero_puerta"
-                                android:hint="Número puerta"
+                                android:hint="@string/n_mero_puerta"
                                 android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:inputType="number" />
 
@@ -268,18 +268,15 @@
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_centerVertical="true"
                             android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@+id/image_correo"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/image_correo">
+                            android:layout_marginLeft="8dp">
 
                             <EditText
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/edit_manzana"
-                                android:hint="Nombre manzana"
+                                android:hint="@string/nombre_manzana"
                                 android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:inputType="text" />
 
@@ -287,18 +284,15 @@
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_centerVertical="true"
                             android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@+id/image_correo"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/image_correo">
+                            android:layout_marginLeft="8dp">
 
                             <EditText
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/edit_lote"
-                                android:hint="Lote"
+                                android:hint="@string/lote"
                                 android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:inputType="text" />
 
@@ -313,7 +307,7 @@
                         android:textStyle="bold"
                         android:textSize="10sp"
                         android:textColor="@color/colorAccent"
-                        android:text="Tipo Vivienda" />
+                        android:text="@string/tipo_vivienda" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -326,7 +320,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_map_black_24dp"
+                            android:src="@drawable/ic_list_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true" />
@@ -351,18 +345,15 @@
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_centerVertical="true"
                             android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@+id/image_correo"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/image_correo">
+                            android:layout_marginLeft="8dp">
 
                             <EditText
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/edit_numero_vivienda"
-                                android:hint="Descripción de vivienda"
+                                android:hint="@string/descripci_n_de_vivienda"
                                 android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:inputType="text" />
 
@@ -378,7 +369,7 @@
                         android:textStyle="bold"
                         android:textSize="10sp"
                         android:textColor="@color/colorAccent"
-                        android:text="Tipo de interior" />
+                        android:text="@string/tipo_de_interior" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -391,10 +382,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_map_black_24dp"
+                            android:src="@drawable/ic_list_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/accept" />
 
                         <Spinner
                             android:layout_width="match_parent"
@@ -416,18 +408,15 @@
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_centerVertical="true"
                             android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@+id/image_correo"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/image_correo">
+                            android:layout_marginLeft="8dp">
 
                             <EditText
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/edit_numero_interior"
-                                android:hint="Número de interior"
+                                android:hint="@string/n_mero_de_interior"
                                 android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:inputType="text" />
 
@@ -442,7 +431,7 @@
                         android:textStyle="bold"
                         android:textSize="10sp"
                         android:textColor="@color/colorAccent"
-                        android:text="Tipo de urbanización" />
+                        android:text="@string/tipo_de_urbanizaci_n" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -455,10 +444,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_map_black_24dp"
+                            android:src="@drawable/ic_list_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/accept" />
 
                         <Spinner
                             android:layout_width="match_parent"
@@ -480,18 +470,15 @@
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_centerVertical="true"
                             android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@+id/image_correo"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/image_correo">
+                            android:layout_marginLeft="8dp">
 
                             <EditText
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/edit_urbanizacion"
-                                android:hint="Número de urbanización"
+                                android:hint="@string/n_mero_de_urbanizaci_n"
                                 android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:inputType="text" />
 
@@ -506,7 +493,7 @@
                         android:textStyle="bold"
                         android:textSize="10sp"
                         android:textColor="@color/colorAccent"
-                        android:text="Tipo de ciudad/Centro poblado" />
+                        android:text="@string/tipo_de_ciudad_centro_poblado" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -519,10 +506,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_map_black_24dp"
+                            android:src="@drawable/ic_list_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/accept" />
 
                         <Spinner
                             android:layout_width="match_parent"
@@ -544,18 +532,15 @@
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_centerVertical="true"
                             android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@+id/image_correo"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_toRightOf="@+id/image_correo">
+                            android:layout_marginLeft="8dp">
 
                             <EditText
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/edit_descripcion"
-                                android:hint="Descripción"
+                                android:hint="@string/descripci_n"
                                 android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:inputType="text" />
 
@@ -577,7 +562,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     style="@style/BrandButtonStyle2"
-                    android:text="Regresar"
+                    android:text="@string/regresar"
                     android:layout_weight="1"
                     android:id="@+id/btn_regresar_dir"
                     android:gravity="center_vertical|center_horizontal" />
@@ -588,7 +573,7 @@
                     android:layout_height="match_parent"
                     style="@style/BrandButtonStyle2"
                     android:layout_weight="1"
-                    android:text="Siguiente"
+                    android:text="@string/siguiente"
                     android:id="@+id/btn_siguiente_dir"
                     android:gravity="center_vertical|center_horizontal" />
 

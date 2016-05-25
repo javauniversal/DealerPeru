@@ -19,12 +19,13 @@ import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getRespons
 public class AppAdapterRutero extends BaseAdapter {
 
     private Activity actx;
-    List<ResponseHome> data;
+    private List<ResponseHome> data;
+    private String rutero;
 
-    public AppAdapterRutero(Activity actx, List<ResponseHome> data) {
+    public AppAdapterRutero(Activity actx, List<ResponseHome> data, String rutero) {
         this.actx = actx;
         this.data = data;
-
+        this.rutero = rutero;
     }
 
     @Override
@@ -58,6 +59,10 @@ public class AppAdapterRutero extends BaseAdapter {
          final ResponseHome responseHome = getItem(position);
 
         holder.txtNombrePunto.setText(responseHome.getRazon());
+
+        holder.imgIndicadorvisita.setVisibility(View.VISIBLE);
+        if (rutero.equals("rutero"))
+            holder.imgIndicadorvisita.setVisibility(View.GONE);
 
         String direccion;
 
@@ -143,10 +148,6 @@ public class AppAdapterRutero extends BaseAdapter {
             });
         }
 
-
-
-
-
         return convertView;
 
     }
@@ -161,6 +162,7 @@ public class AppAdapterRutero extends BaseAdapter {
         ImageView imgIndicador;
         ImageView imgquiebre;
         ImageView imgMap;
+        ImageView imgIndicadorvisita;
 
         public ViewHolder(View view) {
             txtNombrePunto = (TextView) view.findViewById(R.id.txtNombrePunto);
@@ -171,6 +173,7 @@ public class AppAdapterRutero extends BaseAdapter {
             imgquiebre = (ImageView) view.findViewById(R.id.imgquiebre);
             imgIndicador = (ImageView) view.findViewById(R.id.imgIndicador);
             imgMap = (ImageView) view.findViewById(R.id.imgMap);
+            imgIndicadorvisita = (ImageView) view.findViewById(R.id.imgIndicadorvisita);
 
             view.setTag(this);
         }

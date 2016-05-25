@@ -361,6 +361,7 @@ public class FragmentHome extends BaseVolleyFragment {
 
         Gson gson = new Gson();
         if (!response.equals("[]")) {
+
             final ListUpdateservice sincronizar = gson.fromJson(response, ListUpdateservice.class);
 
             for (int i = 0; i < sincronizar.size(); i++) {

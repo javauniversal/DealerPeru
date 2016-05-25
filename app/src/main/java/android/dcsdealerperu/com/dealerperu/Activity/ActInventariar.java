@@ -51,7 +51,6 @@ import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getRespons
 
 public class ActInventariar extends AppCompatActivity {
 
-    private Bundle bundle;
     private ResponseMarcarPedido thumbs = new ResponseMarcarPedido();
     private int tipo_busqueda;
     private TextView text_idpos;
@@ -64,10 +63,7 @@ public class ActInventariar extends AppCompatActivity {
     private SpotsDialog alertDialog;
     private GpsServices gpsServices;
     private List<InventariarProducto> inventariarProductos;
-    private ListView mListView;
-    private ListView mListViewBajas;
     private AppAdapterInventariar actDetalleProductos;
-    private List<InventariarProducto> datosBajas;
     private ListInventariarProducto datosN;
 
     @Override
@@ -82,7 +78,7 @@ public class ActInventariar extends AppCompatActivity {
         alertDialog = new SpotsDialog(this, R.style.Custom);
 
         Intent intent = this.getIntent();
-        bundle = intent.getExtras();
+        Bundle bundle = intent.getExtras();
         if (bundle != null) {
             thumbs = (ResponseMarcarPedido) bundle.getSerializable("value");
         }
@@ -169,7 +165,7 @@ public class ActInventariar extends AppCompatActivity {
             LayoutInflater inflater = getLayoutInflater();
             View dialoglayout = inflater.inflate(R.layout.dialog_bajas_inventariar, null);
 
-            datosBajas = cloneList(inventariarProductos);
+            List<InventariarProducto> datosBajas = cloneList(inventariarProductos);
 
             datosN = new ListInventariarProducto();
 
@@ -181,7 +177,7 @@ public class ActInventariar extends AppCompatActivity {
             }
 
             if (datosN.size() > 0) {
-                mListViewBajas = (ListView) dialoglayout.findViewById(R.id.listView);
+                ListView mListViewBajas = (ListView) dialoglayout.findViewById(R.id.listView);
                 actDetalleProductos = new AppAdapterInventariar(this, datosN, false);
                 mListViewBajas.setAdapter(actDetalleProductos);
 
@@ -382,7 +378,7 @@ public class ActInventariar extends AppCompatActivity {
             try {
 
                 inventariarProductos = gson.fromJson(response, ListInventariarProducto.class);
-                mostrarProductos();
+                mostrarProductos(inventariarProductos);
 
             } catch (IllegalStateException ex) {
                 ex.printStackTrace();
@@ -392,11 +388,13 @@ public class ActInventariar extends AppCompatActivity {
             }
         } else {
             alertDialog.dismiss();
+            Toast.makeText(this, "No se encontraron datos para esta consulta", Toast.LENGTH_LONG).show();
+            finish();
         }
     }
 
-    private void mostrarProductos() {
-        mListView = (ListView) findViewById(R.id.listView);
+    private void mostrarProductos(List<InventariarProducto> inventariarProductos) {
+        ListView mListView = (ListView) findViewById(R.id.listView);
         actDetalleProductos = new AppAdapterInventariar(this, inventariarProductos, true);
         mListView.setAdapter(actDetalleProductos);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -413,13 +411,4 @@ public class ActInventariar extends AppCompatActivity {
 
     }
 
-    private void GuardarBajas() {
-        for (int i = 0; i < inventariarProductos.size(); i++) {
-            Log.d("ss", String.valueOf(inventariarProductos.get(i).isCheck));
-        }
-    }
-
-    private boolean isValidNumber(String number) {
-        return number == null || number.length() == 0;
-    }
 }

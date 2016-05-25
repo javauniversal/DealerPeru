@@ -43,7 +43,13 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return referenciasCombos.getEstandarList().size();
+
+        if (referenciasCombos.getEstandarList() == null) {
+            return 0;
+        } else {
+            return referenciasCombos.getEstandarList().size();
+        }
+
     }
 
     @Override

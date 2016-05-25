@@ -15,6 +15,7 @@ import android.dcsdealerperu.com.dealerperu.Entry.Zona;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
 import android.dcsdealerperu.com.dealerperu.Services.GpsServices;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -80,7 +81,16 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_pdvtres);
+        connectionDetector = new ConnectionDetector(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (connectionDetector.isConnected()) {
+            toolbar.setTitle("Crear Punto");
+            toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        } else {
+            toolbar.setBackgroundColor(Color.RED);
+            toolbar.setTitle("Crear Punto Offline");
+        }
+
         setSupportActionBar(toolbar);
 
         connectionDetector = new ConnectionDetector(this);
@@ -325,6 +335,7 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.btn_regresar_ref:
+                finish();
                 break;
         }
     }

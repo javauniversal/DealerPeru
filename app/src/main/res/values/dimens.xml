@@ -10,9 +10,10 @@
     <dimen name="nav_header_height">180dp</dimen>
     <dimen name="size_menu_text">4sp</dimen>
 
-    <dimen name="ancho_imagen_sim">180dp</dimen>
-    <dimen name="alto_imagen_sim">170dp</dimen>
+    <dimen name="ancho_imagen_sim">110dp</dimen>
+    <dimen name="alto_imagen_sim">120dp</dimen>
 
     <dimen name="padding_cardview_sim">40sp</dimen>
+    <dimen name="ancho_car">160dp</dimen>
 
 </resources>

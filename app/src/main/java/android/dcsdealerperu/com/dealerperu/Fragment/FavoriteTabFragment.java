@@ -126,7 +126,7 @@ public class FavoriteTabFragment extends BaseVolleyFragment {
 
     private void llenarData(final List<ResponseHome> listHome) {
 
-        appAdapterRutero = new AppAdapterRutero(getActivity(), listHome);
+        appAdapterRutero = new AppAdapterRutero(getActivity(), listHome, "rutero");
         mListView.setAdapter(appAdapterRutero);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

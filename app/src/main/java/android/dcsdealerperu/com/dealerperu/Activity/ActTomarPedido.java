@@ -6,6 +6,8 @@ import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentCombos;
 import android.dcsdealerperu.com.dealerperu.Fragment.FragmentSimcardP;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -18,12 +20,23 @@ public class ActTomarPedido extends AppCompatActivity {
     private Bundle bundle;
     private ResponseMarcarPedido thumbs = new ResponseMarcarPedido();
     private String indicadorPage;
+    private ConnectionDetector connectionDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tomar_pedido);
+        connectionDetector = new ConnectionDetector(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (connectionDetector.isConnected()) {
+            toolbar.setTitle("Tomar Pedido");
+            toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        } else {
+            toolbar.setBackgroundColor(Color.RED);
+            toolbar.setTitle("Tomar Pedido Offline");
+        }
+
         setSupportActionBar(toolbar);
 
         Intent intent = this.getIntent();

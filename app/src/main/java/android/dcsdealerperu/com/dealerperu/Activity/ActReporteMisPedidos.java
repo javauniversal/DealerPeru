@@ -329,13 +329,13 @@ public class ActReporteMisPedidos extends AppCompatActivity {
         txt_cantidad.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getCantidad()));
 
         TextView txt_total = (TextView) dialoglayout.findViewById(R.id.txt_total);
-        txt_total.setText(String.format("$ %1$s", format.format(mDescribable.getResponseMisPedidosList().get(position).getTotal())));
+        txt_total.setText(String.format("S/. %1$s", format.format(mDescribable.getResponseMisPedidosList().get(position).getTotal())));
 
         TextView txt_cant_picking = (TextView) dialoglayout.findViewById(R.id.txt_cant_picking);
         txt_cant_picking.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getCantidad_picking()));
 
         TextView txt_total_picking = (TextView) dialoglayout.findViewById(R.id.txt_total_picking);
-        txt_total_picking.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getTotal_picking()));
+        txt_total_picking.setText(String.format("S/. %1$s", format.format(mDescribable.getResponseMisPedidosList().get(position).getTotal_picking())));
 
         TextView text_vendedor = (TextView) dialoglayout.findViewById(R.id.txt_vendedor);
         text_vendedor.setText(String.format("%1$s", mDescribable.getResponseMisPedidosList().get(position).getVendedor()));

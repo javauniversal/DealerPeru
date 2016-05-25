@@ -37,7 +37,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/dimen_letra_app_titulo"
-                        android:text="Información del Punto"
+                        android:text="@string/informaci_n_del_punto"
                         android:textColor="@color/colorAccent"
                         android:textStyle="bold" />
 
@@ -55,15 +55,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_domain_black_24dp"
+                            android:src="@drawable/ic_vpn_key_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/accept" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Id Pos"
+                            android:text="@string/id_pdv"
                             android:textStyle="bold"
                             android:layout_marginLeft="13dp"
                             android:textSize="@dimen/dimen_letra_app_estandar"
@@ -95,15 +96,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_domain_black_24dp"
+                            android:src="@drawable/ic_perm_identity_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/accept" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Razón Social"
+                            android:text="@string/raz_n_social"
                             android:layout_marginLeft="13dp"
                             android:textSize="@dimen/dimen_letra_app_estandar"
                             android:textStyle="bold"
@@ -138,12 +140,13 @@
                             android:src="@drawable/ic_domain_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/accept" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Circuito"
+                            android:text="@string/circuito"
                             android:textStyle="bold"
                             android:layout_marginLeft="13dp"
                             android:textSize="@dimen/dimen_letra_app_estandar"
@@ -178,12 +181,13 @@
                             android:src="@drawable/ic_domain_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/accept" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Ruta"
+                            android:text="@string/ruta"
                             android:textStyle="bold"
                             android:layout_marginLeft="13dp"
                             android:textSize="@dimen/dimen_letra_app_estandar"
@@ -218,12 +222,13 @@
                             android:src="@drawable/ic_domain_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/accept" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Dirección"
+                            android:text="@string/direcci_n"
                             android:textStyle="bold"
                             android:layout_marginLeft="13dp"
                             android:textSize="@dimen/dimen_letra_app_estandar"
@@ -235,7 +240,6 @@
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:id="@+id/text_direccion"
-                            android:text="fsfsddfsfdfgdfgfdgdfgfdgfdgfdgdfgdfgfdgdfsfsdfsd"
                             android:textSize="@dimen/dimen_letra_app_estandar"
                             android:layout_centerVertical="true"
                             android:layout_alignParentRight="true"
@@ -260,12 +264,13 @@
                             android:src="@drawable/ic_domain_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/accept" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Departamento"
+                            android:text="@string/departamento"
                             android:textStyle="bold"
                             android:layout_marginLeft="13dp"
                             android:textSize="@dimen/dimen_letra_app_estandar"
@@ -277,7 +282,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/text_departamento"
-                            android:text="fsfsdfsdfsfsdfsd"
                             android:textSize="@dimen/dimen_letra_app_estandar"
                             android:layout_centerVertical="true"
                             android:layout_alignParentRight="true"
@@ -301,12 +305,13 @@
                             android:src="@drawable/ic_domain_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/accept" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Provincia"
+                            android:text="@string/provincia"
                             android:textStyle="bold"
                             android:layout_marginLeft="13dp"
                             android:textSize="@dimen/dimen_letra_app_estandar"
@@ -341,12 +346,13 @@
                             android:src="@drawable/ic_domain_black_24dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/accept" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Distrito"
+                            android:text="@string/distrito"
                             android:textStyle="bold"
                             android:layout_marginLeft="13dp"
                             android:textSize="@dimen/dimen_letra_app_estandar"
@@ -379,26 +385,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/BrandButtonStyle2"
-                    android:text="Pedidos pendientes"
+                    android:text="@string/pedidos_pendientes"
                     android:id="@+id/btn_pedidos_pendientes"
                     android:visibility="gone"
                     android:gravity="center_vertical|center_horizontal" />
 
-
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/BrandButtonStyle2"
-                    android:text="Tomar pedido"
+                    android:text="@string/tomar_pedido"
                     android:id="@+id/btn_tomar_pedido"
                     android:gravity="center_vertical|center_horizontal" />
 
-
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/BrandButtonStyle2"
-                    android:text="No venta"
+                    android:text="@string/no_venta"
                     android:id="@+id/btn_no_venta"
                     android:visibility="gone"
                     android:gravity="center_vertical|center_horizontal" />
@@ -407,7 +411,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/BrandButtonStyle2"
-                    android:text="Inventariar Productos"
+                    android:text="@string/inventariar_productos"
                     android:id="@+id/btn_inventariar"
                     android:gravity="center_vertical|center_horizontal" />
 

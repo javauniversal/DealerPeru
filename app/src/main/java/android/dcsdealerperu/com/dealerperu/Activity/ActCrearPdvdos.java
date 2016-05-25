@@ -14,6 +14,8 @@ import android.dcsdealerperu.com.dealerperu.Entry.TipoUrbanizacion;
 import android.dcsdealerperu.com.dealerperu.Entry.TipoVia;
 import android.dcsdealerperu.com.dealerperu.Entry.TipoVivienda;
 import android.dcsdealerperu.com.dealerperu.R;
+import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -41,8 +43,6 @@ import static android.dcsdealerperu.com.dealerperu.Entry.DataDireccionForm.setTe
 
 public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btn_siguiente_dir;
-    private Button btn_regresar_dir;
     private Spinner spinner_departamento;
     private Spinner spinner_provincia;
     private Spinner spinner_distrito;
@@ -51,7 +51,6 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
     private Spinner spinner_urbanizacion;
     private Spinner spinner_ciudad_poblado;
     private Spinner spinner_tipo_vivienda;
-    private SpotsDialog alertDialog;
     private LinearLayout layouttipovia;
     private LinearLayout liner_tipo_vivienda;
     private LinearLayout liner_tipo_interior;
@@ -74,8 +73,6 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
     private int estado_ciudad_poblado;
     private int departamento, ciudad_pro, distrito, editaPunto = 0;
     private RequestGuardarEditarPunto mDescribable;
-    private Bundle bundle;
-    //ResponseCreatePunt responseCreatePunt;
     private DBHelper mydb;
 
     private RequestQueue rq;
@@ -85,18 +82,26 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_pdvdos);
+        ConnectionDetector connectionDetector = new ConnectionDetector(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (connectionDetector.isConnected()) {
+            toolbar.setTitle("Crear Punto");
+            toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        } else {
+            toolbar.setBackgroundColor(Color.RED);
+            toolbar.setTitle("Crear Punto Offline");
+        }
+
         setSupportActionBar(toolbar);
 
         mydb = new DBHelper(this);
 
         Intent intent = this.getIntent();
-        bundle = intent.getExtras();
+        Bundle bundle = intent.getExtras();
         if (bundle != null) {
             mDescribable = (RequestGuardarEditarPunto) bundle.getSerializable("value");
         }
-
-        alertDialog = new SpotsDialog(this, R.style.Custom);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -108,8 +113,8 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-        btn_siguiente_dir = (Button) findViewById(R.id.btn_siguiente_dir);
-        btn_regresar_dir = (Button) findViewById(R.id.btn_regresar_dir);
+        Button btn_siguiente_dir = (Button) findViewById(R.id.btn_siguiente_dir);
+        Button btn_regresar_dir = (Button) findViewById(R.id.btn_regresar_dir);
         spinner_departamento = (Spinner) findViewById(R.id.spinner_departamento);
         spinner_provincia = (Spinner) findViewById(R.id.spinner_provincia);
         spinner_distrito = (Spinner) findViewById(R.id.spinner_distrito);
@@ -137,107 +142,78 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
         btn_regresar_dir.setOnClickListener(this);
 
         edit_nombre_via.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-
             }
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // TODO Auto-generated method stub
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 data2 = s.toString();
                 ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
             }
-
         });
 
         edit_numero_puerta.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-
             }
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // TODO Auto-generated method stub
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 data3 = s.toString();
                 ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
             }
-
         });
 
         edit_manzana.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-
             }
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // TODO Auto-generated method stub
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 data4 = s.toString();
                 ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
             }
-
         });
 
         edit_lote.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-
             }
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // TODO Auto-generated method stub
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 data5 = s.toString();
                 ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
             }
-
         });
 
         edit_numero_vivienda.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-
             }
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // TODO Auto-generated method stub
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 data7 = s.toString();
@@ -246,72 +222,52 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
         });
 
         edit_numero_interior.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-
             }
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // TODO Auto-generated method stub
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 data9 = s.toString();
                 ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
             }
-
         });
 
         edit_urbanizacion.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-
             }
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // TODO Auto-generated method stub
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 data11 = s.toString();
                 ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
             }
-
         });
 
         edit_descripcion.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-
             }
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // TODO Auto-generated method stub
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 data13 = s.toString();
                 ConcatProducts(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13);
             }
-
         });
-
-        alertDialog = new SpotsDialog(this, R.style.Custom);
 
         loadDataLocal();
 
@@ -363,6 +319,7 @@ public class ActCrearPdvdos extends AppCompatActivity implements View.OnClickLis
 
             case R.id.btn_regresar_dir:
 
+                finish();
                 // Regresar
 
                 break;

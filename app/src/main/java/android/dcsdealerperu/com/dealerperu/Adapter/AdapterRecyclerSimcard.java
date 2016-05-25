@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import static android.dcsdealerperu.com.dealerperu.Entry.ResponseUser.getResponseUserStatic;
@@ -29,6 +30,7 @@ public class AdapterRecyclerSimcard extends RecyclerView.Adapter<RowViewHolderSi
     private DBHelper mydb;
     private int idPos;
     private int idUsuario;
+    private DecimalFormat format;
 
     public AdapterRecyclerSimcard(Activity context, List<ReferenciasSims> responseHomeList, int idPos, int idUsuario) {
         super();
@@ -38,6 +40,8 @@ public class AdapterRecyclerSimcard extends RecyclerView.Adapter<RowViewHolderSi
         this.idUsuario = idUsuario;
 
         mydb = new DBHelper(context);
+
+        format = new DecimalFormat("#,###.##");
 
     }
 
@@ -65,8 +69,9 @@ public class AdapterRecyclerSimcard extends RecyclerView.Adapter<RowViewHolderSi
 
         holder.txtInven.setText(String.format("D. INV %s", (int) responseHomeList.get(position).getDias_inve()));
 
-        holder.txtCantidadPedida.setText(String.format("Cantidad %s", mydb.countSimcardProduct(idUsuario, idPos,
-                responseHomeList.get(position).getId())));
+        holder.txtCantidadPedida.setText(String.format("Cantidad %s", mydb.countSimcardProduct(idUsuario, idPos, responseHomeList.get(position).getId())));
+
+        holder.txtprecio.setText(String.format("S/. %s", format.format(responseHomeList.get(position).getPrecio_publico())));
 
         holder.btnCatalogoSim.setOnClickListener(new View.OnClickListener() {
             @Override

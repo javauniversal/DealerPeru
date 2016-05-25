@@ -165,7 +165,7 @@ public class FragMenu extends BaseVolleyFragmentSoport {
     }
 
     private void llenarData(ListHome listHome) {
-        appAdapterRutero = new AppAdapterRutero(getActivity(), listHome);
+        appAdapterRutero = new AppAdapterRutero(getActivity(), listHome, "rutero");
         mListView.setAdapter(appAdapterRutero);
     }
 

@@ -132,7 +132,7 @@ public class FragmentSolPedido extends BaseVolleyFragment {
     }
 
     private void llenarData(ListHome listHome) {
-        appAdapterRutero = new AppAdapterRutero(getActivity(), listHome);
+        appAdapterRutero = new AppAdapterRutero(getActivity(), listHome, "rutero");
         mListView.setAdapter(appAdapterRutero);
     }
 

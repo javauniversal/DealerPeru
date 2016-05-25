@@ -17,6 +17,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -57,7 +58,6 @@ public class FragmentSimcardP extends BaseVolleyFragment {
     private List<ReferenciasSims> filterList;
     private ResponseVenta responseVenta;
     private GridLayoutManager gridLayoutManagerVertical;
-    private ConnectionDetector connectionDetector;
     private DBHelper mydb;
 
     public FragmentSimcardP(int position) {
@@ -91,7 +91,7 @@ public class FragmentSimcardP extends BaseVolleyFragment {
 
         mydb = new DBHelper(getActivity());
 
-        connectionDetector = new ConnectionDetector(getActivity());
+        ConnectionDetector connectionDetector = new ConnectionDetector(getActivity());
 
         setHasOptionsMenu(true);
 
@@ -112,8 +112,28 @@ public class FragmentSimcardP extends BaseVolleyFragment {
         adapter = new AdapterRecyclerSimcard(getActivity(), referenciasSimsList, mPosition, getResponseUserStatic().getId());
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(gridLayoutManagerVertical);
-        recycler.addItemDecoration(new SpacesItemDecoration(20));
+        int dips = 0;
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
+        switch(metrics.densityDpi) {
+            case DisplayMetrics.DENSITY_XHIGH:
+                break;
+            case DisplayMetrics.DENSITY_XXHIGH:
+                dips = 20;
+                break;
+            case DisplayMetrics.DENSITY_XXXHIGH:
+                break;
+            case DisplayMetrics.DENSITY_HIGH: //HDPI
+                dips = 6;
+                break;
+            case DisplayMetrics.DENSITY_MEDIUM: //MDPI
+                break;
+            case DisplayMetrics.DENSITY_LOW:  //LDPI
+                break;
+        }
+
+        recycler.addItemDecoration(new SpacesItemDecoration(dips));
 
     }
 
@@ -249,7 +269,29 @@ public class FragmentSimcardP extends BaseVolleyFragment {
                 adapter = new AdapterRecyclerSimcard(getActivity(), responseVenta.getReferenciasSimsList(), mPosition, getResponseUserStatic().getId());
                 recycler.setAdapter(adapter);
                 recycler.setLayoutManager(gridLayoutManagerVertical);
-                recycler.addItemDecoration(new SpacesItemDecoration(20));
+
+                int dips = 0;
+                DisplayMetrics metrics = new DisplayMetrics();
+                getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+                switch(metrics.densityDpi) {
+                    case DisplayMetrics.DENSITY_XHIGH:
+                        break;
+                    case DisplayMetrics.DENSITY_XXHIGH:
+                        dips = 20;
+                        break;
+                    case DisplayMetrics.DENSITY_XXXHIGH:
+                        break;
+                    case DisplayMetrics.DENSITY_HIGH: //HDPI
+                        dips = 6;
+                        break;
+                    case DisplayMetrics.DENSITY_MEDIUM: //MDPI
+                        break;
+                    case DisplayMetrics.DENSITY_LOW:  //LDPI
+                        break;
+                }
+
+                recycler.addItemDecoration(new SpacesItemDecoration(dips));
 
             } catch (IllegalStateException ex) {
                 ex.printStackTrace();

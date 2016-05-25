@@ -3,7 +3,6 @@ package android.dcsdealerperu.com.dealerperu.Activity;
 import android.content.Intent;
 import android.dcsdealerperu.com.dealerperu.Adapter.AppAdapterRutero;
 import android.dcsdealerperu.com.dealerperu.DataBase.DBHelper;
-import android.dcsdealerperu.com.dealerperu.Entry.ListHome;
 import android.dcsdealerperu.com.dealerperu.Entry.ResponseMarcarPedido;
 import android.dcsdealerperu.com.dealerperu.R;
 import android.dcsdealerperu.com.dealerperu.Services.ConnectionDetector;
@@ -15,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -56,19 +54,27 @@ public class ActResponAvanBusqueda extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        connectionDetector = new ConnectionDetector(this);
         setContentView(R.layout.activity_detalle_buscar_punto);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (connectionDetector.isConnected()) {
+            toolbar.setTitle("Resultado");
+            toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        } else {
+            toolbar.setBackgroundColor(Color.RED);
+            toolbar.setTitle("Resultado Offline");
+        }
+
         setSupportActionBar(toolbar);
 
         alertDialog = new SpotsDialog(this, R.style.Custom);
-
-        connectionDetector = new ConnectionDetector(this);
 
         mydb = new DBHelper(this);
 
         SwipeMenuListView mListView = (SwipeMenuListView) findViewById(R.id.listView);
 
-        appAdapterRutero = new AppAdapterRutero(this, getResponseHomeListS());
+        appAdapterRutero = new AppAdapterRutero(this, getResponseHomeListS(), "busqueda");
         mListView.setAdapter(appAdapterRutero);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {

@@ -61,7 +61,7 @@ public class ActDetalleBuscarPunto extends AppCompatActivity {
         alertDialog = new SpotsDialog(this, R.style.Custom);
         SwipeMenuListView mListView = (SwipeMenuListView) findViewById(R.id.listView);
 
-        appAdapterRutero = new AppAdapterRutero(this, (ListHome) getResponseHomeListS());
+        appAdapterRutero = new AppAdapterRutero(this, (ListHome) getResponseHomeListS(), "rutero");
         mListView.setAdapter(appAdapterRutero);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {

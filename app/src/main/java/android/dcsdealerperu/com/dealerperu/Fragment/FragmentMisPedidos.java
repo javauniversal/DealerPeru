@@ -65,10 +65,8 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mis_pedidos, container, false);
 
@@ -354,7 +352,7 @@ public class FragmentMisPedidos extends BaseVolleyFragment implements DatePicker
     private void loadZona(final List<Zona> zonas) {
         ArrayAdapter<Zona> prec3 = new ArrayAdapter<>(getActivity(), R.layout.textview_spinner, zonas);
         spinner_ruta.setAdapter(prec3);
-        ;
+
         spinner_ruta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
