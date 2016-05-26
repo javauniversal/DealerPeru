@@ -159,7 +159,7 @@ public class ActDetalleAproPunto extends AppCompatActivity {
 
                         AlertDialog.Builder builder2 = new AlertDialog.Builder(ActDetalleAproPunto.this);
                         builder2.setCancelable(false);
-                        builder2.setTitle("Notivo de rechazo");
+                        builder2.setTitle("Motivo de rechazo");
                         builder2.setView(dialoglayout).setPositiveButton("Rechazar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 

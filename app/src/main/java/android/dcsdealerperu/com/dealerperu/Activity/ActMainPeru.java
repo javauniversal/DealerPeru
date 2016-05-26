@@ -99,8 +99,6 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
 
         fragmentManager = getSupportFragmentManager();
 
-
-
         alertDialog = new SpotsDialog(this, R.style.Custom);
 
         mydb = new DBHelper(this);
@@ -195,228 +193,236 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        String title_toolbar = "";
-        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-
-        if (connectionDetector.isConnected()) {
-            if (getResponseUserStatic().getPerfil() == 2) {
-                //Vendedor
-                offLineDataVendedor();
-            } else if (getResponseUserStatic().getPerfil() == 3) {
-                //Repartidor
-                offLineDataRepartidor();
-            } else if (getResponseUserStatic().getPerfil() == 1) {
-                //Supervisor
-                offLineDataVendedor();
-            }
-        } else {
-            title_toolbar = "Offline";
-            toolbar.setBackgroundColor(Color.RED);
-        }
 
         int id = item.getItemId();
-        Class fragmentClass = null;
 
-        if (id == R.id.nav_home) {
-
-            toolbar.setTitle("Inicio Vendedor "+title_toolbar);
-            editaPunto = 0;
-            accion = "Guardar";
-            fragmentClass = FragmentHome.class;
-
-        } else if (id == R.id.nav_home_repartidor) {
-
-            toolbar.setTitle("Inicio Repartidor "+title_toolbar);
-            editaPunto = 0;
-            accion = "Guardar";
-            fragmentClass = FragmentHomeRep.class;
-
-        }else if (id == R.id.nav_home_super) {
-
-            toolbar.setTitle("Inicio Supervisor "+title_toolbar);
-            editaPunto = 0;
-            accion = "Guardar";
-            fragmentClass = FragmentHomeSuperPrin.class;
-
-        } else if (id == R.id.nav_marcar_visita) {
-
-            toolbar.setTitle("Marcar Visita "+title_toolbar);
-            editaPunto = 0;
-            accion = "Guardar";
-            fragmentClass = FragmenMarcarvisita.class;
-
-        } else if (id == R.id.nav_planificar_punto) {
-
-            if (connectionDetector.isConnected()) {
-                toolbar.setTitle("Planificar Visita");
-                fragmentClass = FragmentPlanificar.class;
-            } else {
-                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
-            }
-
-        } else if (id == R.id.nav_acpetar_pedido) {
-
-            if (connectionDetector.isConnected()) {
-                toolbar.setTitle("Aceptar Pedido");
-                fragmentClass = FragmentAceptPedido.class;
-            } else {
-                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
-            }
-
-        } else if (id == R.id.nav_gestion_pdv) {
-
-            toolbar.setTitle("Gestión PDVS "+title_toolbar);
-            if (connectionDetector.isConnected()) {
-                cargarVistaPunto();
-            } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setCancelable(false);
-                builder.setTitle("Offline");
-                builder.setMessage("¿ Estás seguro crear un punto Offline ?");
-                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        cargarVistaPunto();
-                    }
-                }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-
-                builder.show();
-            }
-
-        } else if (id == R.id.nav_rutero_vendedor) {
-            if (connectionDetector.isConnected()) {
-                toolbar.setTitle("Mi Rutero");
-                editaPunto = 0;
-                accion = "Guardar";
-                fragmentClass = FragmentRuteroVendedor.class;
-            } else {
-                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
-            }
-
-        } else if (id == R.id.nav_pedido_vendedor) {
-
-            if (connectionDetector.isConnected()) {
-                toolbar.setTitle("Mis Pedidos");
-                editaPunto = 0;
-                accion = "Guardar";
-                fragmentClass = FragmentMisPedidos.class;
-            } else {
-                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
-            }
-
-        } else if (id == R.id.nav_pedido_super) {
-            if (connectionDetector.isConnected()) {
-                toolbar.setTitle("Reporte de Pedidos");
-                editaPunto = 0;
-                accion = "Guardar";
-                fragmentClass = FragmentPedidosSupervisor.class;
-            } else {
-                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
-            }
-
-        } else if (id == R.id.nav_baja_vendedor) {
-            if (connectionDetector.isConnected()) {
-                toolbar.setTitle("Mis Bajas");
-                editaPunto = 0;
-                accion = "Guardar";
-                fragmentClass = FragmentMisBajas.class;
-            } else {
-                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
-            }
-
-        } else if (id == R.id.nav_pdv_aprp) {
-
-            if (connectionDetector.isConnected()) {
-                toolbar.setTitle("Aprobación PDVS");
-                editaPunto = 0;
-                accion = "Guardar";
-                fragmentClass = FragmenteAproPdv.class;
-            } else {
-                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
-            }
-
-        } else if (id == R.id.nav_aprobaciones_super) {
-            if (connectionDetector.isConnected()) {
-                toolbar.setTitle("Reporte Aprobación PDVS");
-                editaPunto = 0;
-                accion = "Guardar";
-                fragmentClass = FragmentReporteAprobacionPdv.class;
-            } else {
-                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
-            }
-
-        } else if (id == R.id.nav_cerrar_sesion) {
-
-            /*Intent intent = new Intent(this, ActLoginUser.class);
+        if (id == R.id.nav_cerrar_sesion) {
+            Intent intent = new Intent(this, ActLoginUser.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-            finish();*/
+            finish();
 
-        } else if (id == R.id.nav_entregar_pedido) {
+        } else {
 
-            if (connectionDetector.isConnected()) {
-                toolbar.setTitle("Entregar Pedido");
-                editaPunto = 0;
-                accion = "Guardar";
-                fragmentClass = FragmenEntregarPedido.class;
-            } else {
-                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
-            }
-
-        } else if (id == R.id.nav_bajas_super) {
+            String title_toolbar = "";
+            toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
             if (connectionDetector.isConnected()) {
-                toolbar.setTitle("Reporte de Bajas");
-                editaPunto = 0;
-                accion = "Guardar";
-                fragmentClass = FragmentBajasSupervisor.class;
+                if (getResponseUserStatic().getPerfil() == 2) {
+                    //Vendedor
+                    offLineDataVendedor();
+                } else if (getResponseUserStatic().getPerfil() == 3) {
+                    //Repartidor
+                    offLineDataRepartidor();
+                } else if (getResponseUserStatic().getPerfil() == 1) {
+                    //Supervisor
+                    offLineDataVendedor();
+                }
             } else {
-                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+                title_toolbar = "Offline";
+                toolbar.setBackgroundColor(Color.RED);
             }
 
-        } else if (id == R.id.nav_inventario) {
 
-            if (connectionDetector.isConnected()) {
-                toolbar.setTitle("Mi Inventario");
+            Class fragmentClass = null;
+
+            if (id == R.id.nav_home) {
+
+                toolbar.setTitle("Inicio Vendedor " + title_toolbar);
                 editaPunto = 0;
                 accion = "Guardar";
-                fragmentClass = FragmentInventarioRepartidor.class;
-            } else {
-                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
-            }
+                fragmentClass = FragmentHome.class;
 
-        }else if (id == R.id.nav_mis_pedidos_rep) {
+            } else if (id == R.id.nav_home_repartidor) {
 
-            if (connectionDetector.isConnected()) {
-                toolbar.setTitle("Mis Pedidos");
+                toolbar.setTitle("Inicio Repartidor " + title_toolbar);
                 editaPunto = 0;
                 accion = "Guardar";
-                fragmentClass = FragmentReportePedidosRepartidor.class;
-            } else {
-                Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+                fragmentClass = FragmentHomeRep.class;
+
+            } else if (id == R.id.nav_home_super) {
+
+                toolbar.setTitle("Inicio Supervisor " + title_toolbar);
+                editaPunto = 0;
+                accion = "Guardar";
+                fragmentClass = FragmentHomeSuperPrin.class;
+
+            } else if (id == R.id.nav_marcar_visita) {
+
+                toolbar.setTitle("Marcar Visita " + title_toolbar);
+                editaPunto = 0;
+                accion = "Guardar";
+                fragmentClass = FragmenMarcarvisita.class;
+
+            } else if (id == R.id.nav_planificar_punto) {
+
+                if (connectionDetector.isConnected()) {
+                    toolbar.setTitle("Planificar Visita");
+                    fragmentClass = FragmentPlanificar.class;
+                } else {
+                    Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+                }
+
+            } else if (id == R.id.nav_acpetar_pedido) {
+
+                if (connectionDetector.isConnected()) {
+                    toolbar.setTitle("Aceptar Pedido");
+                    fragmentClass = FragmentAceptPedido.class;
+                } else {
+                    Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+                }
+
+            } else if (id == R.id.nav_gestion_pdv) {
+
+                toolbar.setTitle("Gestión PDVS " + title_toolbar);
+                if (connectionDetector.isConnected()) {
+                    cargarVistaPunto();
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setCancelable(false);
+                    builder.setTitle("Offline");
+                    builder.setMessage("¿ Estás seguro crear un punto Offline ?");
+                    builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            cargarVistaPunto();
+                        }
+                    }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    builder.show();
+                }
+
+            } else if (id == R.id.nav_rutero_vendedor) {
+                if (connectionDetector.isConnected()) {
+                    toolbar.setTitle("Mi Rutero");
+                    editaPunto = 0;
+                    accion = "Guardar";
+                    fragmentClass = FragmentRuteroVendedor.class;
+                } else {
+                    Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+                }
+
+            } else if (id == R.id.nav_pedido_vendedor) {
+
+                if (connectionDetector.isConnected()) {
+                    toolbar.setTitle("Mis Pedidos");
+                    editaPunto = 0;
+                    accion = "Guardar";
+                    fragmentClass = FragmentMisPedidos.class;
+                } else {
+                    Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+                }
+
+            } else if (id == R.id.nav_pedido_super) {
+                if (connectionDetector.isConnected()) {
+                    toolbar.setTitle("Reporte de Pedidos");
+                    editaPunto = 0;
+                    accion = "Guardar";
+                    fragmentClass = FragmentPedidosSupervisor.class;
+                } else {
+                    Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+                }
+
+            } else if (id == R.id.nav_baja_vendedor) {
+                if (connectionDetector.isConnected()) {
+                    toolbar.setTitle("Mis Bajas");
+                    editaPunto = 0;
+                    accion = "Guardar";
+                    fragmentClass = FragmentMisBajas.class;
+                } else {
+                    Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+                }
+
+            } else if (id == R.id.nav_pdv_aprp) {
+
+                if (connectionDetector.isConnected()) {
+                    toolbar.setTitle("Aprobación PDVS");
+                    editaPunto = 0;
+                    accion = "Guardar";
+                    fragmentClass = FragmenteAproPdv.class;
+                } else {
+                    Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+                }
+
+            } else if (id == R.id.nav_aprobaciones_super) {
+                if (connectionDetector.isConnected()) {
+                    toolbar.setTitle("Reporte Aprobación PDVS");
+                    editaPunto = 0;
+                    accion = "Guardar";
+                    fragmentClass = FragmentReporteAprobacionPdv.class;
+                } else {
+                    Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+                }
+
+            } else if (id == R.id.nav_entregar_pedido) {
+
+                if (connectionDetector.isConnected()) {
+                    toolbar.setTitle("Entregar Pedido");
+                    editaPunto = 0;
+                    accion = "Guardar";
+                    fragmentClass = FragmenEntregarPedido.class;
+                } else {
+                    Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+                }
+
+            } else if (id == R.id.nav_bajas_super) {
+
+                if (connectionDetector.isConnected()) {
+                    toolbar.setTitle("Reporte de Bajas");
+                    editaPunto = 0;
+                    accion = "Guardar";
+                    fragmentClass = FragmentBajasSupervisor.class;
+                } else {
+                    Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+                }
+
+            } else if (id == R.id.nav_inventario) {
+
+                if (connectionDetector.isConnected()) {
+                    toolbar.setTitle("Mi Inventario");
+                    editaPunto = 0;
+                    accion = "Guardar";
+                    fragmentClass = FragmentInventarioRepartidor.class;
+                } else {
+                    Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+                }
+
+            } else if (id == R.id.nav_mis_pedidos_rep) {
+
+                if (connectionDetector.isConnected()) {
+                    toolbar.setTitle("Mis Pedidos");
+                    editaPunto = 0;
+                    accion = "Guardar";
+                    fragmentClass = FragmentReportePedidosRepartidor.class;
+                } else {
+                    Toast.makeText(this, "Esta opción solo es permitida si tiene internet", Toast.LENGTH_LONG).show();
+                }
             }
+            try {
+
+                Fragment fragment = (Fragment) fragmentClass.newInstance();
+
+                fragmentManager.beginTransaction().replace(R.id.contentPanel, fragment).commit();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
         }
-        try {
-
-            Fragment fragment = (Fragment) fragmentClass.newInstance();
-
-            fragmentManager.beginTransaction().replace(R.id.contentPanel, fragment).commit();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
 
         return true;
+
     }
 
     private void offLineDataRepartidor() {
-        alertDialog.show();
+        if (alertDialog != null)
+            alertDialog.show();
+
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "servicio_offline");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
@@ -442,8 +448,8 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
                         } else if (error instanceof ParseError) {
                             Toast.makeText(ActMainPeru.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
                         }
-
-                        alertDialog.dismiss();
+                        if (alertDialog != null)
+                            alertDialog.dismiss();
                     }
                 }
         ) {
@@ -489,9 +495,9 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
 
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        if (alertDialog != null)
+                        if (alertDialog != null) {
                             alertDialog.dismiss();
-
+                        }
                     }
                 });
             }
@@ -528,8 +534,8 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
                         } else if (error instanceof ParseError) {
                             Toast.makeText(ActMainPeru.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
                         }
-
-                        alertDialog.dismiss();
+                        if (alertDialog != null)
+                            alertDialog.dismiss();
                     }
                 }
         ) {

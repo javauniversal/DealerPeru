@@ -9,6 +9,7 @@
 
     <!-- URL BASE DESARROLLO -->
     <!-- <string name="url_base">http://190.248.152.140:8023/services.php?solicitud=</string> -->
+    <!-- <string name="url_base_correo">http://prueba.movilbox.net:88/movistar_peru/distribuidor/modulos/login/controlador.php</string> -->
     <!-- -->
 
     <!-- URL BASE PRUEBAS -->
@@ -18,6 +19,7 @@
 
     <!-- URL BASE PRODUCCION -->
     <!-- <string name="url_base">https://peru.movilbox.net/app/servicios/services.php?solicitud=</string> -->
+    <!-- <string name="url_base_correo">http://prueba.movilbox.net:88/movistar_peru/distribuidor/modulos/login/controlador.php</string> -->
     <!-- -->
 
 
@@ -41,53 +43,57 @@
     <string name="title_activity_act_carrito_pedido">Carrito Pedido</string>
     <string name="title_activity_act_detalle_combo_pedir">Tomar Pedido</string>
     <string name="title_activity_act_detalle_apro_punto">Aprobación de PDV</string>
-    <string name="title_activity_act_reporte_aprobacion_pdv">Reporte Aprobacion PDVS</string>
+    <string name="title_activity_act_reporte_aprobacion_pdv">Reporte Aprobación PDVS</string>
     <string name="title_activity_act_crear_pdvuno">Crear Punto</string>
     <string name="title_activity_act_crear_pdvdos">Crear Punto</string>
     <string name="title_activity_act_planificar_ordenar">Planificar Visitas</string>
     <string name="title_activity_act_entregar_pedido">Entregar Pedido</string>
     <string name="title_activity_act_inventariar">Inventariar Productos</string>
     <string name="title_activity_act_entregar_por_o">Entrega de pedido</string>
-    <string name="olvido_pass"><u>¿Haz olvidado tu contraseña?</u></string>
+    <string name="olvido_pass"><u>¿ Haz olvidado tu contraseña ?</u></string>
     <string name="txtEstimadaEntrega"><u>Detalle Pedido</u></string>
     <string name="title_activity_act_reporte_inventario_rep">Reporte de Inventario</string>
     <string name="estado_comercial">Estado Comercial</string>
     <string name="departamento">Departamento:</string>
-    <string name="ruta">Ruta:</string>
-    <string name="provincia">Provincia:</string>
-    <string name="distrito">Distrito:</string>
-    <string name="circuito">Circuito:</string>
-    <string name="id_pos">Id PDV:</string>
-    <string name="c_dula">Cédula:</string>
-    <string name="nombre">Nombre:</string>
+    <string name="ruta">Ruta</string>
+
+
+
+
+    <string name="provincia">Provincia</string>
+    <string name="distrito">Distrito</string>
+    <string name="circuito">Circuito</string>
+    <string name="id_pos">Id PDV</string>
+    <string name="c_dula">Cédula</string>
+    <string name="nombre">Nombre</string>
     <string name="hota">hota</string>
-    <string name="fecha">Fecha:</string>
-    <string name="estado">Estado:</string>
-    <string name="nombre_punto">Nombre PDV:</string>
+    <string name="fecha">Fecha</string>
+    <string name="estado">Estado</string>
+    <string name="nombre_punto">Nombre PDV</string>
     <string name="buscar">Buscar</string>
     <string name="tipo">Tipo</string>
     <string name="planificaci_n">Planificación</string>
     <string name="planificaci_n_visitas">Planificación Visitas</string>
     <string name="nro_pedido">Nro Pedido:</string>
-    <string name="cantidad">Cantidad:</string>
-    <string name="total">Total:</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="total">Total</string>
     <string name="cantidad_picking">Cantidad Picking:</string>
     <string name="total_picking">Total Picking:</string>
     <string name="hora">Hora:</string>
     <string name="tipo_solicitud">Tipo Solicitud:</string>
     <string name="nro_solicitud">Nro Solicitud:</string>
-    <string name="vendedor">Vendedor:</string>
+    <string name="vendedor">Vendedor</string>
     <string name="fecha_solicitud">Fecha Solicitud:</string>
-    <string name="fecha_acci_n">Fecha Acción:</string>
+    <string name="fecha_acci_n">Fecha Acción</string>
     <string name="hora_acci_n">Hora Acción:</string>
-    <string name="visitado">Visitado:</string>
+    <string name="visitado">Visitado</string>
     <string name="direcci_n">Dirección:</string>
-    <string name="ciudad">Ciudad:</string>
-    <string name="hora_de_visita">Hora de Visita:</string>
+    <string name="ciudad">Ciudad</string>
+    <string name="hora_de_visita">Hora de Visita</string>
     <string name="d_as">Días Visita:</string>
-    <string name="tel_fono">Teléfono:</string>
+    <string name="tel_fono">Teléfono</string>
     <string name="n_a">N/A</string>
-    <string name="id_pos_sin_punto">Id PDX</string>
+    <string name="id_pos_sin_punto">Id PDV</string>
     <string name="pn">PN</string>
     <string name="referencia">Referencia</string>
     <string name="title_activity_act_maps_punto">Mapa PDV</string>
@@ -98,7 +104,7 @@
     <string name="cam_frontal">Cam Frontal</string>
     <string name="memoria">Memoria</string>
     <string name="bluetooh">Bluetooh</string>
-    <string name="parametros_de_busqueda">Parametros de busqueda</string>
+    <string name="parametros_de_busqueda">Parámetros de Búsqueda</string>
     <string name="id_pdv">Id PDV</string>
     <string name="dni_ruc">DNI/RUC</string>
     <string name="estado_visita">Estado Visita</string>
@@ -143,5 +149,20 @@
     <string name="marcaci_n_de_visita">Marcación de visita</string>
     <string name="aceptar">Aceptar</string>
     <string name="cancelar">Cancelar</string>
+    <string name="fechan_de_entrega">Fechan de Entrega</string>
+    <string name="fecha_de_solicitud">Fecha de Solicitud</string>
+    <string name="cantidad_art_solicitados">Cantidad Art Solicitados</string>
+    <string name="cantidad_art_despachada">Cantidad Art Despachada</string>
+    <string name="impuesto_igv">Impuesto IGV</string>
+    <string name="sub_total">Sub Total</string>
+    <string name="total_impuesto_igv">Total Impuesto IGV</string>
+    <string name="total_del_pedido">Total del Pedido</string>
+    <string name="devolver">Devolver</string>
+    <string name="entregar">Entregar</string>
+    <string name="n_mero_de_comprobante">Número de Comprobante</string>
+    <string name="cantidad_del_pedido">Cantidad del Pedido</string>
+    <string name="total_pedido">Total Pedido</string>
+    <string name="fecha_estimada_de_entrega">Fecha estimada de entrega</string>
+    <string name="solicitud">Solicitud</string>
 
 </resources>

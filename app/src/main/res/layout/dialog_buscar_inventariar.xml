@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/dimen_letra_app_titulo"
-        android:text="Información del Punto"
+        android:text="@string/informaci_n_del_punto"
         android:textColor="@color/colorAccent"
         android:textStyle="bold" />
 
@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Id Pos"
+            android:text="@string/id_pdv"
             android:textStyle="bold"
             android:textSize="@dimen/dimen_letra_app_estandar"
             android:layout_centerVertical="true" />
@@ -47,7 +47,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Razón Social"
+            android:text="@string/raz_n_social"
             android:textSize="@dimen/dimen_letra_app_estandar"
             android:textStyle="bold"
             android:layout_centerVertical="true" />
@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/dimen_letra_app_estandar"
-        android:text="Tipo"
+        android:text="@string/tipo"
         android:textColor="@color/colorAccent"
         android:textStyle="bold" />
 

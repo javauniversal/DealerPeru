@@ -10,7 +10,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher2"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -104,22 +104,27 @@
         <activity
             android:name=".Activity.ActDetalleAproPunto"
             android:label="@string/title_activity_act_detalle_apro_punto"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.ActReporteAprobacionPdv"
             android:label="@string/title_activity_act_reporte_aprobacion_pdv"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.ActCrearPdvuno"
             android:label="@string/title_activity_act_crear_pdvuno"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.ActCrearPdvdos"
             android:label="@string/title_activity_act_crear_pdvdos"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.ActCrearPdvtres"
             android:label="@string/title_activity_act_crear_pdvdos"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.ActPlanificarOrdenar"
@@ -128,18 +133,22 @@
         <activity
             android:name=".Activity.ActEntregarPedido"
             android:label="@string/title_activity_act_entregar_pedido"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.ActEntregarPorPedido"
             android:label="@string/title_activity_act_entregar_por_o"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.ActInventariar"
             android:label="@string/title_activity_act_inventariar"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.ActReporteInventarioRep"
             android:label="@string/title_activity_act_reporte_inventario_rep"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service

@@ -127,7 +127,7 @@ public class AdapterEntregaPedidoPedido extends BaseAdapter {
 
                 AlertDialog.Builder builder2 = new AlertDialog.Builder(actx);
                 builder2.setCancelable(false);
-                builder2.setTitle("Notivo de devolución # " + referencias.getNroPedido());
+                builder2.setTitle("Motivo de devolución # " + referencias.getNroPedido());
                 builder2.setView(dialoglayout).setPositiveButton("Devolver", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 

@@ -14,8 +14,8 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ID POS"
+            android:layout_height="0dp"
+            android:text="@string/id_pdv"
             android:textSize="@dimen/dimen_letra_app_titulo"
             android:textStyle="bold"
             android:textColor="@color/actionBarColorText"
@@ -37,7 +37,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vendedor"
+            android:text="@string/vendedor"
             android:layout_weight="1"
             android:textStyle="bold" />
 
@@ -64,7 +64,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fechan de Entrega"
+            android:text="@string/fechan_de_entrega"
             android:layout_weight="1"
             android:textStyle="bold" />
 
@@ -91,7 +91,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fecha de Solicitud"
+            android:text="@string/fecha_de_solicitud"
             android:layout_weight="1"
             android:textStyle="bold" />
 
@@ -118,7 +118,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cantidad Art Solicitados"
+            android:text="@string/cantidad_art_solicitados"
             android:layout_weight="1"
             android:textStyle="bold" />
 
@@ -145,7 +145,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cantidad Art Despachada"
+            android:text="@string/cantidad_art_despachada"
             android:layout_weight="1"
             android:textStyle="bold" />
 
@@ -172,7 +172,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Impuesto IGV"
+            android:text="@string/impuesto_igv"
             android:layout_weight="1"
             android:textStyle="bold" />
 
@@ -199,7 +199,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sub Total"
+            android:text="@string/sub_total"
             android:layout_weight="1"
             android:textStyle="bold" />
 
@@ -226,7 +226,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total Impuesto IGV"
+            android:text="@string/total_impuesto_igv"
             android:layout_weight="1"
             android:textStyle="bold" />
 
@@ -253,7 +253,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total del Pedido"
+            android:text="@string/total_del_pedido"
             android:layout_weight="1"
             android:textStyle="bold" />
 
@@ -278,7 +278,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             style="@style/BrandButtonStyle2"
-            android:text="Devolver"
+            android:text="@string/devolver"
             android:layout_weight="1"
             android:id="@+id/btnDevolver"
             android:gravity="center_vertical|center_horizontal" />
@@ -288,7 +288,7 @@
             android:layout_weight="1"
             style="@style/BrandButtonStyle2"
             android:layout_height="match_parent"
-            android:text="Entregar"
+            android:text="@string/entregar"
             android:id="@+id/btn_guardar"
             android:gravity="center_vertical|center_horizontal" />
 

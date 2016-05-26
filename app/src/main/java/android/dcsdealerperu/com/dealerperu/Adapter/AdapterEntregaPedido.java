@@ -51,7 +51,7 @@ public class AdapterEntregaPedido extends BaseAdapter {
 
         final ResponseEntregarPedido referencias = getItem(position);
 
-        holder.txt_idpos.setText(String.format("Id Pos: %1$s", referencias.getIdpos()));
+        holder.txt_idpos.setText(String.format("Id PDV: %1$s", referencias.getIdpos()));
         holder.txtRazo.setText(String.format("Razón Social: %1$s", referencias.getRazon_social()));
         holder.txt_circuito.setText(String.format("Circuito: %1$s", referencias.getTerritorio()));
         holder.txt_ruta.setText(String.format("Ruta: %1$s", referencias.getZona()));

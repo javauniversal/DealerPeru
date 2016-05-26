@@ -13,9 +13,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_height="match_parent">
+            android:orientation="vertical">
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -37,51 +37,52 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/textView8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/dimen_letra_app_titulo"
-                        android:text="Parametros de busqueda"
+                        android:text="@string/parametros_de_busqueda"
                         android:textColor="@color/colorAccent"
-                        android:textStyle="bold"
-                        android:id="@+id/textView8" />
+                        android:textSize="@dimen/dimen_letra_app_titulo"
+                        android:textStyle="bold" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="18dp">
 
                         <ImageView
                             android:id="@+id/image_fecha_ini"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_event_black_24dp"
-                            android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:contentDescription="@string/accept"
+                            android:src="@drawable/ic_event_black_24dp"
+                            android:tint="@color/colorPrimary" />
 
 
                         <android.support.design.widget.TextInputLayout
                             android:id="@+id/input_fecha_ini"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_fecha_ini"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
                             android:layout_toRightOf="@+id/image_fecha_ini">
 
                             <EditText
+                                android:id="@+id/edit_fecha_ini"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:id="@+id/edit_fecha_ini"
-                                android:hint="Fecha Inicial"
                                 android:focusable="false"
-                                android:textSize="@dimen/dimen_letra_app_estandar"
-                                android:inputType="text" />
+                                android:hint="@string/fecha_inicial"
+                                android:inputType="text"
+                                android:textSize="@dimen/dimen_letra_app_estandar" />
 
                         </android.support.design.widget.TextInputLayout>
 
@@ -90,40 +91,41 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="18dp">
 
                         <ImageView
                             android:id="@+id/image_fecha_final"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_event_black_24dp"
-                            android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_event_black_24dp"
+                            android:tint="@color/colorPrimary"
+                            android:contentDescription="@string/accept" />
 
 
                         <android.support.design.widget.TextInputLayout
                             android:id="@+id/input_fecha_final"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_fecha_final"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
                             android:layout_toRightOf="@+id/image_fecha_final">
 
                             <EditText
+                                android:id="@+id/edit_fecha_fin"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:id="@+id/edit_fecha_fin"
-                                android:hint="Fecha Final"
                                 android:focusable="false"
-                                android:textSize="@dimen/dimen_letra_app_estandar"
-                                android:inputType="text" />
+                                android:hint="@string/fecha_final"
+                                android:inputType="text"
+                                android:textSize="@dimen/dimen_letra_app_estandar" />
 
                         </android.support.design.widget.TextInputLayout>
 
@@ -132,53 +134,53 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="18dp">
 
                         <ImageView
                             android:id="@+id/image_punto"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_vpn_key_black_24dp"
-                            android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:contentDescription="@string/accept"
+                            android:src="@drawable/ic_vpn_key_black_24dp"
+                            android:tint="@color/colorPrimary" />
 
 
                         <android.support.design.widget.TextInputLayout
                             android:id="@+id/input_idpos"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_punto"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
                             android:layout_toRightOf="@+id/image_punto">
 
                             <EditText
+                                android:id="@+id/edit_idpos"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:id="@+id/edit_idpos"
-                                android:hint="Id Pos"
-                                android:textSize="@dimen/dimen_letra_app_estandar"
-                                android:inputType="number" />
+                                android:hint="@string/id_pdv"
+                                android:inputType="number"
+                                android:textSize="@dimen/dimen_letra_app_estandar" />
 
                         </android.support.design.widget.TextInputLayout>
 
                     </RelativeLayout>
 
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:textStyle="bold"
-                        android:textSize="10sp"
+                        android:text="@string/vendedor"
                         android:textColor="@color/colorAccent"
-                        android:text="Vendedor" />
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -191,32 +193,33 @@
                             android:id="@+id/image_estado"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_perm_identity_black_24dp"
-                            android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_list_black_24dp"
+                            android:tint="@color/colorPrimary"
+                            android:contentDescription="@string/accept" />
 
 
                         <android.support.design.widget.TextInputLayout
                             android:id="@+id/input_estado"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_estado"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
                             android:layout_toRightOf="@+id/image_estado">
 
                             <Spinner
+                                android:id="@+id/spinner_vendedor"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/spinner_vendedor"
+                                android:layout_marginLeft="8dp"
                                 android:layout_marginStart="8dp"
                                 android:layout_toEndOf="@+id/image_estado"
-                                android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:layout_toRightOf="@+id/image_estado"
-                                android:layout_marginLeft="8dp" />
+                                android:textSize="@dimen/dimen_letra_app_estandar" />
 
                         </android.support.design.widget.TextInputLayout>
 
@@ -226,10 +229,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:textStyle="bold"
-                        android:textSize="10sp"
+                        android:text="@string/solicitud"
                         android:textColor="@color/colorAccent"
-                        android:text="Solicitud" />
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -242,31 +245,32 @@
                             android:id="@+id/image_solicitud"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_assignment_black_24dp"
-                            android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_list_black_24dp"
+                            android:tint="@color/colorPrimary"
+                            android:contentDescription="@string/accept" />
 
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/image_solicitud"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
                             android:layout_toRightOf="@+id/image_solicitud">
 
                             <Spinner
+                                android:id="@+id/spinner_solicitud"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/spinner_solicitud"
+                                android:layout_marginLeft="8dp"
                                 android:layout_marginStart="8dp"
                                 android:layout_toEndOf="@+id/image_solicitud"
-                                android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:layout_toRightOf="@+id/image_solicitud"
-                                android:layout_marginLeft="8dp" />
+                                android:textSize="@dimen/dimen_letra_app_estandar" />
 
                         </android.support.design.widget.TextInputLayout>
 
@@ -276,10 +280,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:textStyle="bold"
-                        android:textSize="10sp"
+                        android:text="@string/estado"
                         android:textColor="@color/colorAccent"
-                        android:text="Estado" />
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -291,29 +295,30 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:tint="@color/colorPrimary"
-                            android:src="@drawable/ic_assignment_black_24dp"
-                            android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_list_black_24dp"
+                            android:tint="@color/colorPrimary"
+                            android:contentDescription="@string/accept" />
 
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="8dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp">
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp">
 
                             <Spinner
+                                android:id="@+id/spinner_estado"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/spinner_estado"
+                                android:layout_marginLeft="8dp"
                                 android:layout_marginStart="8dp"
                                 android:layout_toEndOf="@+id/image_estado"
-                                android:textSize="@dimen/dimen_letra_app_estandar"
                                 android:layout_toRightOf="@+id/image_estado"
-                                android:layout_marginLeft="8dp" />
+                                android:textSize="@dimen/dimen_letra_app_estandar" />
 
                         </android.support.design.widget.TextInputLayout>
 

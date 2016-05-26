@@ -471,7 +471,7 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
 
                     AlertDialog.Builder dialogo1 = new AlertDialog.Builder(this);
                     dialogo1.setTitle(responseInsert.getMsg());
-                    dialogo1.setMessage(mDescribable.getNombre_punto() + "\n" + "ID POS: " + responseInsert.getIdpos());
+                    dialogo1.setMessage(mDescribable.getNombre_punto() + "\n" + "ID PDV: " + responseInsert.getIdpos());
                     dialogo1.setCancelable(false);
                     dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogo1, int id) {

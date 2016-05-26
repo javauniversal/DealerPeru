@@ -1,163 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:padding="5dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Número de Comprobante"
-            android:textSize="@dimen/dimen_letra_app_titulo"
-            android:textStyle="bold"
-            android:textColor="@color/actionBarColorText"
-            android:layout_weight="1"
             android:id="@+id/txtNumeroComprobante"
-            android:gravity="center_horizontal" />
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/n_mero_de_comprobante"
+            android:textColor="@color/actionBarColorText"
+            android:textSize="@dimen/dimen_letra_app_titulo"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="6dp"
         android:paddingLeft="6dp"
         android:paddingRight="6dp"
-        android:paddingTop="5dp"
-        android:layout_height="wrap_content">
+        android:paddingTop="5dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cantidad del Pedido"
             android:layout_weight="1"
+            android:text="@string/cantidad_del_pedido"
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Large Text"
-            android:layout_weight="1"
             android:id="@+id/txtCantidadPedida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:gravity="right" />
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="Large Text"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="6dp"
         android:paddingLeft="6dp"
-        android:paddingRight="6dp"
-        android:layout_height="wrap_content">
+        android:paddingRight="6dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total Pedido"
             android:layout_weight="1"
+            android:text="@string/total_pedido"
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Large Text"
-            android:layout_weight="1"
             android:id="@+id/txtTotalPedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:gravity="right" />
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="Large Text"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="6dp"
         android:paddingLeft="6dp"
-        android:paddingRight="6dp"
-        android:layout_height="wrap_content">
+        android:paddingRight="6dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID POS"
             android:layout_weight="1"
+            android:text="@string/id_pdv"
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Large Text"
-            android:layout_weight="1"
             android:id="@+id/txt_idpos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:gravity="right" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:paddingBottom="6dp"
-        android:paddingLeft="6dp"
-        android:paddingRight="6dp"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fecha estimada de entrega"
             android:layout_weight="1"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:gravity="right"
             android:text="Large Text"
-            android:layout_weight="1"
-            android:id="@+id/txtFechaEstimada"
-            android:layout_gravity="center_horizontal"
-            android:gravity="right" />
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="6dp"
         android:paddingLeft="6dp"
-        android:paddingRight="6dp"
-        android:layout_height="wrap_content">
+        android:paddingRight="6dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Detalle"
             android:layout_weight="1"
+            android:text="@string/fecha_estimada_de_entrega"
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/txtFechaEstimada"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/txtEstimadaEntrega"
-            android:layout_weight="1"
-            android:textColor="@color/colorPrimary"
-            android:id="@+id/txtDetalleLink"
             android:layout_gravity="center_horizontal"
-            android:gravity="right" />
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="Large Text"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="6dp"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/detalle"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtDetalleLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="@string/txtEstimadaEntrega"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -177,15 +177,16 @@
                 android:id="@+id/radioDevolver"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Devolver"
-                android:layout_weight="1" />
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:text="@string/devolver" />
 
             <RadioButton
                 android:id="@+id/radioAceptar"
                 android:layout_width="match_parent"
-                android:layout_weight="3"
                 android:layout_height="wrap_content"
-                android:text="Aceptar" />
+                android:layout_weight="2.2"
+                android:text="@string/aceptar" />
 
         </RadioGroup>
 
