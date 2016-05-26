@@ -123,7 +123,7 @@ public class ActCrearPdvtres extends AppCompatActivity implements View.OnClickLi
 
         Button btn_guardar = (Button) findViewById(R.id.btn_guardar);
         btn_guardar.setOnClickListener(this);
-        Button btn_regresar_ref = (Button) findViewById(R.id.btn_guardar);
+        Button btn_regresar_ref = (Button) findViewById(R.id.btn_regresar_ref);
         btn_regresar_ref.setOnClickListener(this);
 
         alertDialog = new SpotsDialog(this, R.style.Custom);

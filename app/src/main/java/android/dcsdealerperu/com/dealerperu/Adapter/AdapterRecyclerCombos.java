@@ -77,8 +77,8 @@ public class AdapterRecyclerCombos extends RecyclerView.Adapter<RowViewHolderCom
         final ReferenciasCombos items = responseHomeList.get(position);
 
         holder.txtReferencia.setText(items.getDescripcion());
-        holder.txtValorR.setText(String.format("S/. %s", format.format(items.getPrecio_referencia())));
-        holder.txtValorR2.setText(String.format("PVP: S/. %s", format.format(items.getPrecio_publico())));
+        holder.txtValorR.setText(String.format("S/. %s", items.getPrecio_referencia()));
+        holder.txtValorR2.setText(String.format("PVP: S/. %s", items.getPrecio_publico()));
         holder.txtcantidadGlo.setText(String.format("Cantidad %s", mydb.countReferenceProduct(iduser, idpos, items.getId())));
 
         loadeImagenView(holder.img_producto, items.getImg());

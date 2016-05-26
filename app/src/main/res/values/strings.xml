@@ -8,11 +8,12 @@
     <string name="title_activity_act_login_user">Ingresar MovilBox DCS</string>
 
     <!-- URL BASE DESARROLLO -->
-    <string name="url_base">http://190.248.152.140:8023/services.php?solicitud=</string>
+    <!-- <string name="url_base">http://190.248.152.140:8023/services.php?solicitud=</string> -->
     <!-- -->
 
     <!-- URL BASE PRUEBAS -->
-    <!-- <string name="url_base">http://prueba.movilbox.net:88/movistar_peru/appmovil/servicios/services.php?solicitud=</string> -->
+    <string name="url_base">http://prueba.movilbox.net:88/movistar_peru/appmovil/servicios/services.php?solicitud=</string>
+    <string name="url_base_correo">http://prueba.movilbox.net:88/movistar_peru/distribuidor/modulos/login/controlador.php</string>
     <!-- -->
 
     <!-- URL BASE PRODUCCION -->
@@ -142,6 +143,5 @@
     <string name="marcaci_n_de_visita">Marcación de visita</string>
     <string name="aceptar">Aceptar</string>
     <string name="cancelar">Cancelar</string>
-
 
 </resources>

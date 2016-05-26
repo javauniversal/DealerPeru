@@ -80,8 +80,8 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
         TextView link_pass = (TextView) findViewById(R.id.link_pass);
         link_pass.setOnClickListener(this);
 
-        editUsuario.setText("repartidor");
-        editPassword.setText("pro_123");
+        //editUsuario.setText("repartidor");
+        //editPassword.setText("pro_123");
 
         Button btnIngresar = (Button) findViewById(R.id.btnIngresar);
         btnIngresar.setOnClickListener(this);
@@ -90,7 +90,7 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
 
     private void enviarCorreo() {
         alertDialog.show();
-        String url = "http://192.168.2.24/web/movistar_peru/distribuidorbt/modulos/login/controlador.php";
+        String url = getString(R.string.url_base_correo); //"http://192.168.2.24/web/movistar_peru/distribuidorbt/modulos/login/controlador.php";
         rq = Volley.newRequestQueue(this);
 
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
@@ -132,7 +132,7 @@ public class ActLoginUser extends AppCompatActivity implements View.OnClickListe
                 return params;
             }
         };
-        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(60000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(70000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         rq.add(jsonRequest);
     }
 

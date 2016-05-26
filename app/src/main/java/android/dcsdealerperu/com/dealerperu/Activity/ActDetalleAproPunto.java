@@ -231,14 +231,8 @@ public class ActDetalleAproPunto extends AppCompatActivity {
         });
     }
 
-    private boolean isValidNumber(String number) {
-        return number == null || number.length() == 0;
-    }
-
     private void aprobarPedido(final int position, final int aprobar) {
-
         alertDialog.show();
-
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "guardar_rechazar_aprobacion");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,
@@ -314,6 +308,12 @@ public class ActDetalleAproPunto extends AppCompatActivity {
                     Toast.makeText(this, responseMarcarPedido.getMsg(), Toast.LENGTH_LONG).show();
                     mDescribable.remove(position);
                     actDetalleAproPunto.notifyDataSetChanged();
+
+                    if (mDescribable == null || mDescribable.size() == 0) {
+                        //Activity Principal, Para acceder al fragment
+                        finish();
+                    }
+
                 }
 
             } catch (IllegalStateException ex) {
@@ -436,6 +436,10 @@ public class ActDetalleAproPunto extends AppCompatActivity {
     private int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 getResources().getDisplayMetrics());
+    }
+
+    private boolean isValidNumber(String number) {
+        return number == null || number.length() == 0;
     }
 
 }

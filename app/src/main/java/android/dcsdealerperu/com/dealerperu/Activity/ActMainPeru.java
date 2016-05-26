@@ -499,7 +499,10 @@ public class ActMainPeru extends AppCompatActivity implements NavigationView.OnN
     }
 
     private void offLineDataVendedor() {
-        alertDialog.show();
+
+        if (alertDialog != null)
+            alertDialog.show();
+
         String url = String.format("%1$s%2$s", getString(R.string.url_base), "servicio_offline");
         rq = Volley.newRequestQueue(this);
         StringRequest jsonRequest = new StringRequest(Request.Method.POST, url,

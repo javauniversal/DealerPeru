@@ -103,6 +103,7 @@ public class FragmentCombos extends BaseVolleyFragment {
     }
 
     private void getComboLocal() {
+
         List<ReferenciasCombos> list = mydb.getProductosCombos(String.valueOf(mPosition));
 
         adapter2 = new AdapterRecyclerCombos(getActivity(), list, mPosition, getResponseUserStatic().getId());

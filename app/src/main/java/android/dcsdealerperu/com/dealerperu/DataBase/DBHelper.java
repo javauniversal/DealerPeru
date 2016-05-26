@@ -1286,7 +1286,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 " refe.so, refe.web, 0 quiebre, lprecio.valor_referencia, lprecio.valor_directo, refe.img " +
                 " FROM " +
                 "   referencia_combo refe LEFT JOIN lista_precios lprecio ON lprecio.id_referencia = refe.id AND lprecio.idpos = ? AND " +
-                "lprecio.tipo_pro = 2";
+                " lprecio.tipo_pro = 2";
 
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -1325,8 +1325,11 @@ public class DBHelper extends SQLiteOpenHelper {
                         referencia.setDias_inve(cursor_detalle.getDouble(4));
                         referencia.setProducto(cursor_detalle.getString(3));
                         referencia.setPn(cursor_detalle.getString(1));
+                        referencia.setPrecio_referencia(cursor_detalle.getDouble(8));
+                        referencia.setPrecio_publico(cursor_detalle.getDouble(9));
 
                         referenciaList.add(referencia);
+
                     } while (cursor_detalle.moveToNext());
                 }
 
@@ -1365,7 +1368,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 requestGuardarEditarPunto.setCiudad(cursor.getInt(5));
                 requestGuardarEditarPunto.setCodigo_cum(cursor.getString(6));
                 requestGuardarEditarPunto.setDepto(cursor.getInt(7));
-                requestGuardarEditarPunto.setTipo_ciudad(cursor.getInt(8));
+                requestGuardarEditarPunto.setDes_tipo_ciudad(cursor.getString(8));
                 requestGuardarEditarPunto.setDescripcion_vivienda(cursor.getString(9));
                 requestGuardarEditarPunto.setDistrito(cursor.getInt(10));
                 requestGuardarEditarPunto.setEmail(cursor.getString(11));
