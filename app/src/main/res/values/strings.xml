@@ -19,7 +19,7 @@
 
     <!-- URL BASE PRODUCCION -->
     <!-- <string name="url_base">https://peru.movilbox.net/app/servicios/services.php?solicitud=</string> -->
-    <!-- <string name="url_base_correo">http://prueba.movilbox.net:88/movistar_peru/distribuidor/modulos/login/controlador.php</string> -->
+    <!-- <string name="url_base_correo">https://peru.movilbox.net/distribuidor/modulos/login/controlador.php</string> -->
     <!-- -->
 
 
